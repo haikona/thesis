@@ -40,10 +40,88 @@
 
 This is a check to see if we can successfully cite! \cite{Bob-2011}
 
-Here is another line of text.
+Here is another line of text. We add some more text to check if the .tex file can compile locally. Cheese.
+
+\section{Bounding the Regulator}
+
+To define the regulator of a rational elliptic curve, we must first define the na\"ive logarithmic height, N\'eron-Tate canonical height and the N\'eron-Tate pairing on points on $E$.
+
+Let $E$ be an elliptic curve over $\QQ$ and $P \in E(\QQ)$ a rational point on $E$. 
+
+\begin{definition}
+The {\it na\"ive logarithmic height} of $P$ is a measure of the ``complexity'' of the coefficients of $P$. Specifically, any non-identity rational point $P$ may be written as $P = (\frac{a}{d^2},\frac{b}{d^3})$, with $a,b,d \in \ZZ$, $d>0$ and $\gcd(a,b,d) = 1$; we then define the na\"ive height of $P$ to be
+\begin{equation}
+	h(P) := \ln(d).
+\end{equation}
+Moreover, define $h(\cO) = 0$.
+\end{definition}
+If you compute the na\"ive heights of a number of points on an elliptic curve, you'll notice that the na\"ive height function is ``almost a quadratic form'' on $E$. That is $h(nP) \sim n^2 h(P)$ for integers $n$, up to some constant that doesn't depend on $P$. We can turn $h$ into a true quadratic form as follows:
+
+\begin{definition}
+The {\it N\'eron-Tate height} height function $\hat{h}: E(\QQ) \to \RR$ is defined as
+\begin{equation}
+	\hat{h}(P) := \lim_{n \to \infty} \frac{h(2^n P)}{(2^n)^2},
+\end{equation}
+where $h$ is the na\"ive logarithmic height defined above.
+\end{definition}
+
+\begin{theorem}[N\'eron-Tate]
+N\'eron-Tate has defines a canonical quadratic form on $E(\QQ)$ modulo torsion. That is,
+\begin{enumerate}
+	\item For all $P,Q \in E(\QQ)$,
+	\begin{equation}
+		\hat{h}(P+Q) + \hat{h}(P-Q) = 2\left[ \hat{h}(P) + \hat{h}(Q)\right]
+	\end{equation}
+	i.e. $\hat{h}$ obeys the parallelogram law;
+	\item For all $P \in E(\QQ)$ and $n \in \ZZ$,
+	\begin{equation}
+		\hat{h}(nP) = n^2 \hat{h}(P)
+	\end{equation}
+	\item $\hat{h}$ is even, and the pairing $\langle\;,\;\rangle: E(\QQ)\times E(\QQ) \to \RR$ by
+	\begin{equation}
+		\langle P,Q \rangle = \hat{h}(P+Q) - \hat{h}(P) - \hat{h}(Q)
+	\end{equation}
+	is bilinear;
+	\item $\hat{h}(P) = 0$ iff $P$ is torsion;
+	\item We may replace $h$ with another height function on $E(\QQ)$ that is ``almost quadratic'' without changing $\hat{h}$.
+\end{enumerate}
+\end{theorem}
+
+For a proof of this theorem and elaboration on the last point, see \cite[pp. 227-232]{Sil-1985}.
+
+\begin{definition}
+The {\it N\'eron-Tate pairing} on $E/\QQ$ is the bilinear form $\langle\;,\;\rangle: E(\QQ)\times E(\QQ) \to \RR$ by
+	\begin{equation}
+		\langle P,Q \rangle = \hat{h}(P+Q) - \hat{h}(P) - \hat{h}(Q)
+	\end{equation}
+\end{definition}
+Note that this definition may be extended to all pairs of points over $\QQbar$, but the definition above suffices for our purposes. \\
+
+If $E(\QQ)$ has rank $r$, then $E(\QQ)/E_{\text{tor}}(\QQ) \hookrightarrow \RR^r$ under the quadratic form $\hat{h}$ as a (rank $r$) lattice.
+
+\begin{definition}
+The {\it regulator} $\Reg_E$ of $E/\QQ$ is the covolume of the lattice that is the image of $E(\QQ)$ under $\hat{h}$. That is, if $\set{P_1,\ldots,P_r}$ generates $E(\QQ)$, then
+\begin{equation}
+	\Reg_E = \det\left(\langle P_i,P_j\rangle \right)_{1 \le i,j \le r}
+\end{equation}
+where $\left(\langle P_i,P_j\rangle \right)_{1 \le i,j \le r}$ is the matrix whose $(i,j)$th entry is the value of the pairing $\langle P_i,P_j\rangle$. If $E/\QQ$ has rank zero, then $\Reg_E$ is defined to be 1.
+\end{definition}
+
+Loosely, the regulator measures the ``density'' of rational points on $E$: positive rank elliptic curves with small regulators have many points with small coordinates, while those with large regulators have few such points. \\
+
+It turns out that one can construct elliptic curves with arbitrarily large regulators (for example, fix some $x_0$ and $y_0$ with large denominators, and then find $A$ and $B$ such that $P=(x,y)$ lies on $E: y^2 = x^2 + Ax + B$). However, the more interesting question to ask -- and the one that is relevant to this thesis -- is ``how small can the regulator get?''. Specifically, given $E/\QQ$ with discriminant $D_E$, what is the smallest $\Reg_E$ can be as a function of $D_E$?
+
+This is an open question. However, the following conjecture exists:
+
+\begin{conjecture}[Lang]
+Cheese
+\end{conjecture}
+
+
+
 
 
 \bibliography{bibliography}{}
-\bibliographystyle{amsplain}
+\bibliographystyle{amalpha}
 
 \end{document}
