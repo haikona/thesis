@@ -111,17 +111,39 @@ Loosely, the regulator measures the ``density'' of rational points on $E$: posit
 
 It turns out that one can construct elliptic curves with arbitrarily large regulators (for example, fix some $x_0$ and $y_0$ with large denominators, and then find $A$ and $B$ such that $P=(x,y)$ lies on $E: y^2 = x^2 + Ax + B$). However, the more interesting question to ask -- and the one that is relevant to this thesis -- is ``how small can the regulator get?''. Specifically, given $E/\QQ$ with discriminant $D_E$, what is the smallest $\Reg_E$ can be as a function of $D_E$?
 
-This is an open question. However, the following conjecture exists:
+This is an open question. However, the following conjecture has been made by Lang \cite{Lang-1997}:
 
-\begin{conjecture}[Lang]
-Cheese
+\begin{conjecture}
+Let $E/\QQ$ have minimal discriminant $\Delta_E$. There exists an absolute constant $M_{\QQ}>0$ independent of $E$ such that any non-torsion point $P \in E(\QQ)$ satisfies
+\begin{equation}
+\hat{h}(P) >= M_{\QQ} \log |\Delta_E| .
+\end{equation}
 \end{conjecture}
+That is, the minimum height of a non-torsion point on $E$ scales with the log of the absolute value of the curve's minimal discriminant. Hindry and Silverman in \cite{HiS-1988} show that the abc conjecture implies Lang's height conjecture; since we are already assuming strong abc, we have this result for free.
+
+A corollary of the height conjecture is that the regulator is bounded from below in terms of the curve's conductor:
+\begin{corollary}
+Let $E/\QQ$ have conductor $N_E$, and let $M_\QQ$ be the absolute constant in Lang's height conjecture. Then
+\begin{equation}
+\Reg_E \ge 3
+\end{equation}
+\end{corollary}
+\begin{proof}
+Let $E$ have minimal discriminant $\Delta_E$ and algebraic rank $r$. Since $|\Delta_E|\ge N_E$, it follows that 
+\begin{equation*}
+\Reg_E \ge \left(M_{\QQ} \log N_E \right)^r \ge M_{\QQ}^r
+\end{equation*}
+\end{proof}
+
+
+
+
 
 
 
 
 
 \bibliography{bibliography}{}
-\bibliographystyle{amalpha}
+\bibliographystyle{amsalpha}
 
 \end{document}

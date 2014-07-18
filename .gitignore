@@ -3,6 +3,10 @@
 *.sage-chat
 *.sage-backup
 
+# Mac OSX files
+*.DS_Store
+*~
+
 # Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
