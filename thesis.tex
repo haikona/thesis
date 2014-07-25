@@ -26,7 +26,8 @@
 \newcommand{\ldLf}[1]{\frac{L_f\pr}{L_f}\left(#1\right)}
 \newcommand{\ldLam}[1]{\frac{\Lambda_E\pr}{\Lambda_E}\left(#1\right)}
 \newcommand{\ldatzero}{\frac{L\pr(E,0)}{L(E,0)}}
-\newcommand{\Ensfpe}{E_{\text{ns}}(\FF_{p^e})}
+\newcommand{\xbar}{\overline{x}}
+\newcommand{\ybar}{\overline{y}}
 
 
 \title{Ph.D Dissertation}
@@ -38,9 +39,97 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-This is a check to see if we can successfully cite! \cite{Bob-2011}
+Let $E$ be an elliptic curve over the rational numbers. We can think of $E$ as the set of rational solutions $(x,y)$ to a two-variable cubic equation in the form:
+\begin{equation}
+E: y^2 = x^3 + Ax + B
+\end{equation}
+for some integers $A$ and $B$, along with an extra "point at infinity". An important criterion is that the $E$ be a smooth curve; this translates to the requirement that the discriminant $\Delta(E)$ of the curve, given by $\Delta(E) = -16(4A^3+27B^2)$, is not zero.
 
-Here is another line of text. We add some more text to check if the .tex file can compile locally. Cheese.
+One of the natural questions to ask when considering an elliptic curve is "how many rational solutions are there?" It turns out elliptic curves fall in that sweet spot where the answer could be zero, finitely many or infinitely many - and figuring out which is the case is a deeply non-trivial -- and as yet still open -- problem.
+
+The rational solutions on $E$ form an abelian group with a well-defined group operation that can be easily computed. By a theorem of Mordell, the group of rational points on an elliptic curve $E(\mathbb{Q})$ is finitely generated; we can therefore write
+\begin{equation}
+E(\mathbb{Q}) \approx T \times \mathbb{Z}^r,
+\end{equation}
+where $T$ is a finite group (called the torsion subgroup of $E$), and $r$ is denoted the algebraic rank of $E$.
+
+Determining the torsion subgroup of $E$ is relatively straightforward. By a celebrated theorem of Mazur, rational elliptic curves have torsion subgroups that are (non-canonically) isomorphic to one of precisely fifteen possibilities: $\mathbb{Z}/n\mathbb{Z}$ for $n = 1$ through $10$ or $12$; or $\mathbb{Z}/2\mathbb{Z}\oplus \mathbb{Z}/2n\mathbb{Z}$ for $n = 1$ though $4$. However, Computing the rank $r$ - the number of independent rational points on $E$ - is hard, and no unconditional method to do so currently exists. It is towards this end that the work in this dissertation hopes to contribute. \\
+
+Perhaps surprisingly, we can translate the algebraic problem of finding the number of rational solutions on $E$ to an analytic one - at least conjecturally. The method of doing so is via elliptic curve $L$-functions; these are complex-analytic entire functions that somehow encode a great deal of information about the elliptic curve they describe. Unfortunately, it takes a few steps to define them:
+
+\begin{definition}
+Let $p$ be a prime number.
+\begin{itemize}
+\item Define $N_p(E)$ to be the number of points on the {\it reduced curve} $E$ modulo $p$. That is (excepting the cases $p=2$ or $3$, for which the definition is slightly more complicated), if $E$ has equation $y^2 = x^3 + Ax+B$, then
+\begin{equation}
+N_p(E) = 1 + \#\set{(\xbar,\ybar) \in \Fp^2 : \;\; \ybar \equiv \xbar^3 + A\xbar + B \;\;(\text{mod }p)},
+\end{equation}
+where the 1 accounts for the aforementioned point at infinity on $E$ not captured by the above equation.
+\item Let $a_p(E) = p+1 - N_p(E)$.
+\end{itemize}
+\end{definition}
+Hasse's Theorem states that $a_p(E)$ is always less that $2\sqrt{p}$ in magnitude for any $p$, and the Sato-Tate conjecure (recently proven by Taylor et al) states that for a fixed elliptic curve, the $a_p$ (suitably normalized) are asymptotically distributed in a semi-circular distribution about zero.
+
+\begin{definition}  For prime $p$,
+\begin{itemize}
+\item Define the {\it local factor} $L_p(E,s)$ to be the function of the complex variable $s$ as follows:
+\begin{equation}
+L_p(s) = \left(1-a_p(E)p^{-s} + \epsilon(p)p^{-2s}\right)^{-1},
+\end{equation}
+where $\epsilon(p)$ is 0 if $p$ is a {\it prime of bad reduction}, and 1 otherwise. [For any elliptic curve $E$ there are only a finite number of primes of bad reduction; they are precisely the primes that divide the discriminant $\Delta(E)$ (again, sometimes including/excluding 2 or 3)].
+\item The {\bf (global) $L$-function $L(E,s)$ attached to $E$} is defined to be the product of all the local $L$-functions, namely
+\begin{equation}
+L(E,s)  = \prod_{p} L_p(E,s)
+\end{equation}
+\end{itemize}
+\end{definition}
+The above representation of $L_E(s)$ is called the Euler product form of the $L$-function. If we multiply out the terms and use power series inversion we can also write $L_E(s)$ as a {\it Dirichlet series}:
+\begin{equation}
+L(E,s) = \sum_{n=1}^{\infty} a_n(E) n^{-s},
+\end{equation}
+where for non-prime $n$ the coefficients $a_n$ are defined to be exactly the integers you get when you multiply out the Euler expansion.
+
+If you do some analysis, using Hasse's bound on the size of the $a_p(E)$ and their distribution according to Sato-Tate, one can show that the above to representations only converge absolutely when the real part of $s$ is greater than $\frac{3}{2}$, and conditionally for $\Re(s)>\frac{1}{2}$. However, the modularity theorem of Breuil, Conrad, Diamond, Taylor and Wiles \cite{BCDT-2011} \cite{TaWi-1995} \cite{Wil-1995} states that these elliptic curve $L$-functions can actually be analytically continued to the entire complex plane. That is, for every elliptic curve $L$-function $L(E,s)$ as defined above, there is an entire function on $\mathbb{C}$ which agrees with the Euler product/Dirichlet series definition for $\Re(s)>1$, but is also defined -- and explicitly computable -- for all other complex values of $s$. This entire function is what we actually call the $L$-function attached to $E$.
+
+The way we analytically continue $L(E,s)$ yields that the function is highly symmetric about the line $\Re(s)=1$; moreover, because the function is defined by real coefficients $L_E(s)$ also obeys a reflection symmetry along the real axis. The point $s=1$ is therefore in a very real sense the {\it central point} for the $L$-function, and it is the behavior of $L(E,s)$ at the central point that conjecturally captures the rank information of $E$. This is established concretely in the Birch and Swinnerton-Dyer Conjecture, the first part of which we state below (the second part is stated in the next section):
+
+\begin{conjecture}[Birch, Swinnerton-Dyer, part (a)]
+Let $E$ be an elliptic curve over $\Q$, with attached $L$-series $L(E,s)$. Then the Taylor series expansion of $L_E(s)$ about the central point $s=1$ is
+\begin{equation}
+L(E,1+s) = s^r\left[C  +O(s)\right],
+\end{equation}
+where
+$C \ne 0$.
+\end{conjecture}
+That is, the first part of the BSD conjecture asserts that the order of vanishing of $L(E,s)$ at the central point is precisely the algebraic rank of $E$.
+
+[Aside: Brian Birch and Peter Swinnerton-Dyer formulated the eponymous conjecture in the 1960s based in part on numerical evidence generated by the EDSAC computer at the University of Cambridge; this makes it one of the first instances of computer-generated results being used to support a mathematical hypothesis. The BSD conjecture has now been verified for millions of elliptic curves without a single counterexample having been found; it is thus widely held to be true.]
+
+We can therefore at least conjecturally determine the curve's algebraic rank by computing the order of vanishing of the elliptic curve's $L$-function at the central point. This converts an in general difficult algebraic problem into a perhaps more tractable numerical one.
+
+The work in this thesis hopes to address the question of how to effectively compute the order of vanishing of $L(E,s)$ at $s=1$, which is denoted $r_{an}$, the {\it analytic rank} of $E$. This, again, is a non-trivial task -- for example, how do you numerically determine if the $n$th Taylor coefficient of $L(E,s)$ is identically zero, or just so small that it appears to be zero given precision of your numerical calculations?
+
+The short answer is that you can't using a finite-precision black box computer. We need theorems governing the magnitude of the Taylor coefficients -- especially the leading coefficient $C$ in the BSD conjecture -- in order to make analytic rank explicitly computable. The next section more precisely lays out the problem and quotes the major results to this end derived in this work .
+
+\section{The $L$-Series Leading Coefficient}
+
+\begin{conjecture}[Birch, Swinnerton-Dyer, part (a)]
+Let $E$ be an elliptic curve over $\Q$, with attached $L$-series $L(E,s)$. Then the Taylor series expansion of $L_E(s)$ about the central point $s=1$ is
+\begin{equation}
+L(E,1+s) = s^r\left[\left(\frac{\Omega_E\cdot\Reg_E\cdot\#\Sha(E/\Q)\cdot\prod_p c_p}{(\#E_{\text{Tor}}(\Q))^2}\right)  +O(s)\right],
+\end{equation}
+where
+\begin{itemize}
+\item $r$ is the algebraic rank of $E(\Q)$,
+\item $\Omega_E$ is the real period of (an optimal model of) $E$,
+\item $\Reg_E$ is the regulator of $E$,
+\item $\#\Sha(E/\Q)$ is the order of the Shafarevich-Tate group attached to $E/\Q$,
+\item $\prod_p c_p$ is the product of the Tamagawa numbers of $E$, and
+\item $\#E_{\text{Tor}}(\Q)$ is the number of rational torsion points on $E$.
+\end{itemize}
+\end{conjecture}
+
+For an excellent description of the conjecture and a breakdown of the arithmetic invariants mentioned above, see Andrew Wiles' official description of the BSD Conjecture on the Clay Math website \cite{Wil-BSD}.
 
 \section{Bounding the Regulator}
 
