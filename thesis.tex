@@ -29,6 +29,8 @@
 \newcommand{\ldatzero}{\frac{L\pr(E,0)}{L(E,0)}}
 \newcommand{\xbar}{\overline{x}}
 \newcommand{\ybar}{\overline{y}}
+\newcommand{\AGM}{\text{AGM}}
+\newcommand{\conj}[1]{\overline{#1}}
 
 
 \title{Ph.D Dissertation}
@@ -37,7 +39,12 @@
 \begin{document}
 \maketitle
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+Something something elliptic curves and rank.
+\end{abstract}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
 Let $E$ be an elliptic curve over the rational numbers. We can think of $E$ as the set of rational solutions $(x,y)$ to a two-variable cubic equation in the form:
@@ -108,8 +115,8 @@ That is, the first part of the BSD conjecture asserts that the order of vanishin
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.8\textwidth]{graphics/L_values_ranks_012.png}
-    \caption{The values of three elliptic curve L-functions along the critical line $1+it$ for $-6 \le t \le 6$. Blue corresponds to the curve $y^2 = x^3-x-1$, a rank 0 curve, red is that of $y^2 = x^3+x+1$, a rank 1 curve, and green is $y^2 = x^3-4x+1$, a rank 2 curve. Note that close to the origin the graphs look like non-zero constant function, a straight line through the origin and a parabola through the origin respectively.}
+    \includegraphics[width=1.0\textwidth]{graphics/L-functions_at_origin.png}
+    \caption{The values of three elliptic curve L-functions along the critical line $1+it$ for $-6 \le t \le 6$. Blue corresponds to a rank 0 curve, red is that of a rank 1 curve, and green is a rank 2 curve. Note that close to the origin the graphs look like non-zero constant function, a straight line and a parabola respectively.}
     \label{fig:awesome_image}
 \end{figure}
 
@@ -122,7 +129,33 @@ The short answer is that, for a black box computer, you can't. We need theorems 
 The structure of this dissertation is as follows. Chapter 2 more precisely lays out the problem tackled in this work, quotes the major results obtained to this end and outlines the strategy used to prove these results. Chapter 3 consists of an exposition of the mathematical background relevant to this thesis; while chapter 4 contains proofs of the main results. Chapter 5 is dedicated to supporting numerical data, and chapter 6 contains ancillary results, and ideas for future work.
 
 \newpage
-\section{Problem Outline and Major Results}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem Outline and Major Results}\label{sec:defs_results}
+
+\subsection{Nomenclature and Definitions}
+For the rest of the body of this text (unless otherwise stated) we use the following terminology:
+\begin{itemize}
+\item $E$ is an elliptic curve over $\QQ$ given by minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a^6$, where $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$
+\item $D$, $N$ and $r$ are the discriminant, conductor and algebraic rank of $E$ respectively
+\item $r_{an}$ is the analytic rank of $E$
+\item $p$ is a (rational) prime number and $q$ is a prime power
+\item $s$ and $z$ are generic complex numbers
+\item $\eta$ is the Euler-Mascheroni constant $= 0.5772156649\ldots$
+\item $\gamma$ will always be used to denote the imaginary parts of nontrivial zeros of an $L$-function. \\
+\end{itemize}
+
+Furthermore, we define the following values associated to $E$:
+\begin{itemize}
+\item $b_2 = a_1^2 + 4a_2$
+\item $b_4 = a_1 a_3 + 2a_4$
+\item $b_6 = a_3^2 + 4a^6$
+\item $b_8 = a_1^2 a_6 + 4 a_2 a_6 - a_1 a_3 a_4 + a_2 a_3^2 - a_4^2$
+\item $c_4 = b_2^2 - 24 b_4$
+\item $c_6 = -b_2^3 + 36 b_2 b_4  - 216 b_6$
+\item $D = -b_2^2 b_8 - 8 b_4^3 - 27 b_6^2 + 9 b_2 b_4 b_6$; this is the definition of the discriminant of $E$
+\item $j = \frac{c_4}{D}$
+\item $\omega = \frac{dx}{2y + a_1 x + a_3} = \frac{dy}{3x^2 + 2a_2 x + a_4 - a_1 y}$
+\end{itemize}
 
 \begin{conjecture}[Birch, Swinnerton-Dyer, part (a)]
 Let $E$ be an elliptic curve over $\Q$, with attached $L$-series $L(E,s)$. Then the Taylor series expansion of $L_E(s)$ about the central point $s=1$ is
@@ -142,10 +175,70 @@ where
 
 For an excellent description of the conjecture and a breakdown of the arithmetic invariants mentioned above, see Andrew Wiles' official description of the BSD Conjecture on the Clay Math website \cite{Wil-BSD}.
 
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bounding the Real Period}
 
-Cheese.
+The real period of a rational elliptic curve $E$ is a measure of the ``size'' of the set of {\it real} points on $E$. \\
 
+Recall that $E(\CC)$, the group of complex points on $E$, is isomorphic via the (inverse of the) Weierstrass $\wp$-function to $\CC$ modulo a lattice under addition; that is, $E(\CC) \simeq \CC/\Lambda$, where $\Lambda = \ZZ\omega_1 + \ZZ\omega_2$, and $\omega_1,\omega_2 \in \CC$.
+If $E$ is defined over the real numbers (as rational elliptic curves are), then we may always write $\omega_1$ as being positive real. The second generator $\omega_2$ can be written as being positive imaginary when $E$ has positive discriminant, or in the upper half plane with real part $\frac{\omega_1}{2}$ when $E$ has negative discriminant.
+
+\begin{definition}
+Let $E/\QQ$ have discriminant $D$, and $E(\CC) \simeq \CC/\Lambda$, where $\Lambda = \ZZ\omega_1 + \ZZ\omega_2$ and $\omega_1 \in \RR$. The {\it real period} of $E$ is defined to be
+\begin{equation}
+\Omega_E = \begin{cases} 2\omega_1 & D > 0 \\ \omega_1 & D < 0 \end{cases}
+\end{equation}
+\end{definition}
+
+The real generator $\omega_1$ may be computed using the (real version of the) Gauss arithmetic-geometric mean. Recall its definition: let $a,b \in \RR_{\ge0}$. Set $a_0 = a$ and $b_0 = b$, and for $n\ge 0$ let $a_{n+1} = \frac{1}{2}(a_{n}+b_{n})$ and $b_{n+1} = \sqrt{a_{n}b_{n}}$. Then $\AGM(a,b)$ is defined to be the common limit of both the $a_n$ and the $b_n$. We omit the proof that both sequences converge to the same value, but convergence is quadratic (i.e. extremely quick).
+
+\begin{proposition}
+Let $E/\Q$ have minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a^6$. Write the equation in the form
+\begin{equation*}
+\left(y + \frac{a_1x + a_3}{2}\right)^2 = x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4} = (x-e_1)(x-e_2)(x-e_3)
+\end{equation*}
+where $e_1,e_2,e_3$ are the 3 complex roots of the polynomial in $x$ on the right hand side, and $b_2$, $b_4$ and $b_6$ are as defined at the beginning of section \ref{sec:defs_results}.
+\begin{enumerate}
+\item If $D > 0$, then $e_1,e_2,e_3 \in \RR$, so without loss of generality we may order them as $e_3 > e_2 > e_1$. Then
+\begin{equation}
+\omega_1 = \frac{\pi}{\AGM(\sqrt{e_3-e_1},\sqrt{e_3-e_2})}
+\end{equation}
+\item If $D < 0$, then the RHS polynomial has only one real root; we may write $e_3 \in \RR$ and $e_1 = \conj{e_2}$. Let $z = \sqrt{e_3-e_1} = s + it$; choose the root such that $s>0$. Then
+\begin{equation}
+\omega_1 = \frac{\pi}{\AGM(|z|,s)}
+\end{equation}
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+Cremona and Cremona-Thongjunthug give a good explanation and derivation of this formula in \cite{Cre-1997} and \cite{Cre-2013} respectively.
+\end{proof}
+
+We establish a lower bound on the real period $\Omega_E$ in terms of the elliptic discriminant $D$.
+\begin{theorem}[S.]
+For 
+\begin{equation}
+\Omega_E > \min\set{1,\frac{4\pi}{|D|^{1/3}+1}}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Recall that the elliptic discriminant is 16 times the discriminant of the polynomial $x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4}$. That is, we have
+\begin{equation}
+D = 16(e_3-e_1)^2(e_3-e_2)^2(e_2-e_1)^2.
+\end{equation}
+We consider the cases where $D>0$ and $D<0$ separately.
+\begin{enumerate}
+\item Minimizing $\omega_1$ for a given $D$ is equivalent to maximizing $\AGM(\sqrt{e_3-e_1},\sqrt{e_3-e_2})$. This occurs when $e_2-e_1$ is small, and the quantities $e_3-e_1$ and $e_3-e_2$ are approximately equal. So assume $e_2-e_1 << e_3-e_2$. Then
+\begin{equation}
+??
+\end{equation}
+\end{enumerate}
+\end{proof}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bounding the Regulator}
 
 To define the regulator of a rational elliptic curve, we must first define the na\"ive logarithmic height, N\'eron-Tate canonical height and the N\'eron-Tate pairing on points on $E$.
