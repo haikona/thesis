@@ -20,6 +20,7 @@
 \newcommand{\nrm}[1]{\left\|#1\right\|}
 \newcommand{\pr}{^{\prime}}
 \newcommand{\Les}{L_E(s)}
+\newcommand{\Lams}{\Lambda_E(s)}
 \newcommand{\Lfs}{L(f,s)}
 \newcommand{\ldLes}{\frac{L_E\pr}{L_E}(s)}
 \newcommand{\ldLfs}{\frac{L_f\pr}{L_f}(s)}
@@ -31,6 +32,8 @@
 \newcommand{\ybar}{\overline{y}}
 \newcommand{\AGM}{\text{AGM}}
 \newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\EQ}{E(\QQ)}
+\newcommand{\EFp}{E(\Fp)}
 
 
 \title{Ph.D Dissertation}
@@ -117,7 +120,7 @@ That is, the first part of the BSD conjecture asserts that the order of vanishin
     \centering
     \includegraphics[width=1.0\textwidth]{graphics/L-functions_at_origin.png}
     \caption{The values of three elliptic curve L-functions along the critical line $1+it$ for $-6 \le t \le 6$. Blue corresponds to a rank 0 curve, red is that of a rank 1 curve, and green is a rank 2 curve. Note that close to the origin the graphs look like non-zero constant function, a straight line and a parabola respectively.}
-    \label{fig:awesome_image}
+    \label{fig:L-functions_at_origin}
 \end{figure}
 
 We can therefore at least conjecturally determine the curve's algebraic rank by computing the order of vanishing of the elliptic curve's $L$-function at the central point. This converts an generally difficult algebraic problem into a perhaps more tractable numerical one.
@@ -130,12 +133,24 @@ The structure of this dissertation is as follows. Chapter 2 more precisely lays 
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Problem Outline and Major Results}\label{sec:defs_results}
+\section{Problem Outline and Major Results}\label{sec:outline_results}
 
-\subsection{Nomenclature and Definitions}
+The central question this thesis addresses is thus: Given a rational elliptic curve $E$, does algorithm exist to compute the rank of $E$ that has provable worst-case and average-case running times? We answer this question in the affirmative; however, to do so we must pay the price of having to assume the three big open conjectures in number theory: The Generalized Riemann Hypothesis, The Birch and Swinnerton-Dyer conjecture, and the ABC conjecture (henceforth referred to as GRH, BSD and ABC respectively).
+
+In this vein we establish the following results:
+
+% QUOTE MAJOR RESULTS
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+section{Notation, Definitions and Background}\label{sec:defs_background}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Notation}
+
 For the rest of the body of this text (unless otherwise stated) we use the following terminology:
 \begin{itemize}
-\item $E$ is an elliptic curve over $\QQ$ given by minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a^6$, where $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$
+\item $E$ is an elliptic curve over $\QQ$ given by minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$
 \item $D$, $N$ and $r$ are the discriminant, conductor and algebraic rank of $E$ respectively
 \item $r_{an}$ is the analytic rank of $E$
 \item $p$ is a (rational) prime number and $q$ is a prime power
@@ -144,7 +159,7 @@ For the rest of the body of this text (unless otherwise stated) we use the follo
 \item $\gamma$ will always be used to denote the imaginary parts of nontrivial zeros of an $L$-function. \\
 \end{itemize}
 
-Furthermore, we define the following values associated to $E$:
+Furthermore, we define the following values associated to $E$ (in all cases the dependence on $E$ is understood):
 \begin{itemize}
 \item $b_2 = a_1^2 + 4a_2$
 \item $b_4 = a_1 a_3 + 2a_4$
@@ -157,11 +172,202 @@ Furthermore, we define the following values associated to $E$:
 \item $\omega = \frac{dx}{2y + a_1 x + a_3} = \frac{dy}{3x^2 + 2a_2 x + a_4 - a_1 y}$
 \end{itemize}
 
-\begin{conjecture}[Birch, Swinnerton-Dyer, part (a)]
-Let $E$ be an elliptic curve over $\Q$, with attached $L$-series $L(E,s)$. Then the Taylor series expansion of $L_E(s)$ about the central point $s=1$ is
-\begin{equation}
-L(E,1+s) = s^r\left[\left(\frac{\Omega_E\cdot\Reg_E\cdot\#\Sha(E/\Q)\cdot\prod_p c_p}{(\#E_{\text{Tor}}(\Q))^2}\right)  +O(s)\right],
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Definitions: Elliptic curves and their $L$-functions}
+
+The rest of this chapter covers the basic definitions of and results surrounding elliptic curve $L$-functions. Feel free to skip this if you are familiar with them.
+
+\begin{definition}
+An elliptic curve $E$ is a genus 1 smooth projective curve with a marked point $\cO$. $E$ is defined over a field $K$ if $E$ may be represented by the {\it Weierstrass equation} $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a1,\ldots a_6 \in K$.
+\end{definition}
+
+For elliptic curves defined over $\QQ$, we may always find a model for $E$ such that $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$. Furthermore, there is the notion of {\it minimality} when it comes to models for elliptic curves. Without going into the definition thereof, we will always assume that any given elliptic curve Weierstrass equation is minimal and in the above form, unless otherwise stated.
+
+\begin{definition}
+The set of $K$-rational points on $E$ is denoted $E(K)$. $E(K)$ comprises an abelian group, with the ``point at infinity" $\cO$ acting as the group identity element.
+\end{definition}
+
+It is often useful to view an elliptic curve $E$ as the vanishing locus of the polynomial
+\begin{equation}\label{eqn:E_poly}
+f(x,y) = y^2 + a_1 xy + a_3 y^2 - x^3 - a_2 x^2 - a_4 x - a_6.
 \end{equation}
+ That is $E(K) = \set{(x,y) \in K^2: \; f(x,y) = 0}$, along with the point at infinity $\cO$. \\
+
+For a rational elliptic curve $E/\QQ$, we may consider the reduced curve $\tilde{E}/\Fp$ for any prime $p$. If $E/\QQ$ is given by $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, then for $p\ne 2$ or $3$ the reduced curve is given by $y^2 + \overline{a_1} xy + \overline{a_3} y^2 = x^3 + \overline{a_2} x^2 + \overline{a_4} x + \overline{a_6}$, where $\overline{a_i}$ is $a_i$ reduced modulo $p$. For $p = 2$ or $3$ we may have to move to a different model for $E$ first to avoid the reduced curve being automatically singular.
+
+\begin{definition}
+A prime $p$ is called {\it good} if $\tilde{E}/\Fp$ is non-singular. The reduced curve is an elliptic curve over $\Fp$ (by definition) which we denote by $E/\Fp$; $E$ is said to have {\it good reduction at $p$}. Otherwise, $p$ is said to be {\it bad}, the reduced (singular) curve is denoted $\tilde{E}/\Fp$, and $E$ is said to have {\it bad reduction at $p$}.
+\end{definition}
+
+\begin{theorem}
+For any $E/\QQ$, the set of bad primes is finite and non-empty.
+\end{theorem}
+
+Singular reduced curves may be thought of as finite-field analogues of singular cubics over the rationals, for example those given by $y^2 = x^3$ and $y^2 = x^3+x^2$ as seen below. Singular curves have a (unique) {\it singular point}, which is by definition where the partial derivatives $\frac{\partial f}{\partial x}$ and $\frac{\partial f}{\partial y}$ are both zero (here $f$ is as given by equation \ref{eqn:E_poly}).
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/singular_cubics.png}
+    \caption{An example of two singular cubics over the rationals. The singular point for both curves is at the origin; for the the left curve the singular point is a {\it cusp}, and for the right curve it is a {\it node}.}
+    \label{fig:singular_cubics}
+\end{figure}
+
+In the finite field setting the notion of partial derivatives still makes sense, so one may define singular points accordingly. Bad reduction at a prime may be classified into one of three types according to the nature of the tangent space at the singular point on $\tilde{E}/\Fp$.
+\begin{definition}
+Let $E$ have bad reduction at $p$; let $P$ be the singular point on $\tilde{E}/\Fp$, and let $T_P(E)$ be the tangent space at $P$.
+\begin{itemize}
+\item If the $T_P(E)$ is one-dimensional, then $P$ is a cusp, and $E$ is said to have {\it additive reduction} at $p$.
+\item Otherwise $T_P(E)$ is two-dimensional, and $P$ is then a node; $E$ is then said to have {\it multiplicative reduction} at $p$. Furthermore, multiplicative reduction can be decomposed into two cases:
+\begin{itemize}
+\item If $T_P(E)$ is defined over $\Fp$, then $E$ is said to have {\it split multiplicative reduction} at $p$
+\item Otherwise $T_P(E)$ is defined over a quadratic extension of $\Fp$, and $E$ is said to have {\it non-split multiplicative reduction} at $p$.
+\end{itemize}
+\end{itemize}
+\end{definition}
+
+Primes of bad reduction are packaged together into an invariant called the {\it conductor} of $E$:
+\begin{definition}
+The conductor of $E$, denoted by $N_E$ (or more often just $N$ when the choice of $E$ is unambiguous), is a positive integer given by
+\begin{equation}
+N_E = \prod_{p} p^{f_p(E)},
+\end{equation}
+where $p$ ranges over all primes, and for $p \ne 2$ or $3$,
+\begin{equation}
+f_p(E) = \begin{cases} 0, & \text{E has good reduction at $p$} \\ 1, & \text{E has multiplicative reduction at $p$} \\ 2, & \text{$E$ has additive reduction at $p$.}\end{cases}
+\end{equation}
+For $p=2$ and $3$, the exponent $f_p(E)$ is still zero if $p$ is good; however the exponent may be as large as $8$ and $5$ respectively if $p$ is bad.
+\end{definition}
+The ``proper" definition of the conductor is Galois representation-theoretic and is defined in terms of the representation of the inertia group at $p$ on the torsion subgroup of $E$; For $p\ne 2$ or $3$ this reduces to the definition given above, but for $2$ and $3$ there may be nontrivial wild ramification which increases the exponent up to the stated amounts. A full technical definition of the conductor is given in \cite[pp. 379-396]{Sil-1994}. In any case (including $2$ and $3$), the exponent $f_p(E)$ may be computed efficiently by Tate's algorithm, as detailed in the previous section of the same book \cite[pp. 361-379]{Sil-1994}. \\
+
+We now move on to the definition of the $L$-function attached to an elliptic curve. For this we must define the numbers $a_p(E)$:
+\begin{definition}\label{def:a_n} \mbox{}
+\begin{itemize}
+\item For good primes $p$ (i.e. when $p \nmid N$), let
+\begin{equation}
+a_p(E) = p+1-\#\set{\EFp},
+\end{equation}
+where $\#\set{\EFp}$ is the number of points on $E/\Fp$;
+\item For bad primes (when $p \mid N$), let
+\begin{equation}
+a_p(E) := \begin{cases}
++1 & \text{if $E$ has split multiplicative reduction at $p$} \\
+-1 & \text{if $E$ has non-split multiplicative reduction at $p$} \\
+0 & \text{if $E$ has additive reduction at $p$.}
+\end{cases}
+\end{equation}
+\end{itemize}
+\end{definition}
+
+Hasse's theorem states that the number of points on $E$ modulo $p$ can never be too far from $p+1$:
+\begin{theorem}[Hasse, 1936]
+For all elliptic curves $E/\QQ$ and all primes $p$,
+\begin{equation}
+|a_p(E)| \le \sqrt{p}
+\end{equation}
+\end{theorem}
+
+For ease of notation, when $E$ is fixed we will let $a_p := a_p(E)$, letting the dependence on $E$ be understood. \\
+
+The Sato-Tate Conjecture, now a theorem thanks to Taylor, goes even further, giving an asymptotic distribution on the $a_p$:
+\begin{theorem}[Taylor, 2006-]
+For fixed $E/\QQ$, the set of normalized $a_p$ values $\set{\frac{a_p}{2\sqrt{p}}: p \text{ prime}}$ obey a semicircular distribution on the interval $[-1,1]$. That is, for $1\le a \le b \le 1$, the asymptotic proportion of primes for which $a \le \frac{a_p}{2\sqrt{p}} \le b$ is equal to the proportion of the area under the unit semicircle between $a$ and $b$.
+\end{theorem}
+
+\begin{definition} \mbox{}
+
+The $L$-function attached to $E$ is a complex analytic function $L_E(s)$, defined initially on some right half-plane of the complex plane.
+\begin{itemize}
+\item The Euler product of the $L$-function attached to $E$ is given by
+\begin{equation}
+L(E,s) = \prod_{p} \frac{1}{1 - a_p p^{-s} + \epsilon(p)p^{1-2s}}
+\end{equation}
+where $\epsilon(p) = 0$ for bad $p$, and $1$ for good $p$.
+\item The Dirichlet series for $L_E(s)$ is given by
+\begin{equation}
+L(E,s) = \sum_{n=1}^{\infty} a_n n^{-s}.
+\end{equation}
+where for composite $n$, $a_n$ is defined to be the integer coefficient of $n^{-s}$ obtained by multiplying out the Euler product for $L(E,s)$.
+\end{itemize}
+\end{definition}
+Again, we will often write $\Les$ or just $L(s)$ to simplify notation. \\
+
+\begin{corollary} \mbox{}
+\begin{itemize}
+\item Hasse's Theorem implies that the Euler product and Dirichlet series for $\Les$ converge absolutely for $\Re(s) > \frac{3}{2}$.
+\item Sato-Tate implies that the Euler product and Dirichlet series for $\Les$ converge conditionally for $\Re(s) > \frac{1}{2}$.
+\end{itemize}
+\end{corollary}
+
+In this work we more often use the completed $L$-function attached to $E$:
+\begin{definition}
+The {\it completed $L$-function} attached to $E$ is given by
+\begin{equation}
+\Lambda_E(s) = N^{\frac{s}{2}}(2\pi)^{-s}\Gamma(s)\Les,
+\end{equation}
+where $N$ is the conductor of $E$ and $\Gamma(s)$ the usual Gamma function on $\CC$.
+\end{definition}
+
+Thanks to the modularity theorem, we may in fact analytically continue $\Les$ and $\Lams$ to be entire functions defined on all of $\CC$.
+\begin{theorem}[Breuille, Conrad, Diamond, Taylor, Wiles et al, 1995,1999,2001] \mbox{}\\
+There exists an integral newform $f = \sum_n a_n q^n$ of of weight $k=2$ and level $N$ such that $\Les = L_f(s)$.
+\end{theorem}
+
+The modularity theorem above is essentially the converse of the theorem by Shimura in the 1960s: if $f$ is a weight $2$ newform of level $N$, then there exists some elliptic curve $E/\Q$ of conductor $N$ such that $L_f(s) = L_E(s)$. Hence any theorem about elliptic curve $L$-functions is thus really a theorem about $L$-functions of weight 2 newforms in disguise. \\
+
+\begin{corollary} \mbox{}
+\begin{itemize}
+\item $\Lams$ extends to an entire function on $\CC$. Specifically, $\Lams$ obeys the functional equation
+\begin{equation}
+\Lams = w_E \Lambda_E(2-s),
+\end{equation}
+where $w_E \in \set{-1, 1}$ is the action of the Atkin-Lehner involution on the newform attached to $E$.
+\item $\Les$ extends to an entire function on $\CC$ via the definition of $\Lams$ and the functional equation above.
+\end{itemize}
+\end{corollary}
+
+For interest we reproduce the analytic continuation for $\Lams$ explicitly below. Define the auxiliary function $\lambda_E(s)$ by
+\begin{equation}
+\lambda_E(s) = \left(\frac{\sqrt{N}}{2\pi}\right)^{s} \sum_{n=1}^\infty a_n n^{-s}\Gamma \left(s,\frac{2\pi n}{\sqrt{N}}\right),
+\end{equation}
+where all the quantities are as defined previously, and $\Gamma(s,x)$ is the upper incomplete Gamma function on $\CC\cross \RR_{>0}$. The sum converges absolutely for any $s$, so $\lambda_E(s)$ is entire. Then
+\begin{equation}
+\Lambda_E(s) = \lambda_E(s) + w_E \lambda_E(2-s)
+\end{equation}
+Knapp goes through the proof of this formula in \cite[pp. 270-271]{Kna-1992}. \\
+
+The functional equation for $\Lams$ shows that it is either symmetric or antisymmetric about the line $\Re(s) = 1$; moreover, since all the constituent parts for $\Lams$ are defined over the reals, $\Lams$ is also conjugate symmetric about the real axis. It follows that the point $s=1$ is in a very real sense the {\it central point} for an elliptic curve $L$-function. This is formalized in the following statement:
+\begin{proposition}
+As a function of $s$, $\Lambda_E(1+s)$ is even if $w_E=1$, and odd if $w_E = -1$.
+\end{proposition}
+This follows immediately from the functional equation. \\
+
+Finally, we need the definition of analytic rank:
+\begin{definition}
+Let $E$ be an elliptic curve over $\Q$, and let $\Les$ be its $L$-series. The {\it analytic rank} of $E$, denoted $r_{an}(E)$ or just $r_{an}$ is the order of vanishing of $L_E(s)$ at the central point $s=1$. That is, if the Taylor series of $\Les$ about $s=1$ is
+\begin{equation}
+L_E(z) = a_0 + a_1 z + a_2 z^2 + \ldots
+\end{equation}
+where $z = s-1$, then $a_n = 0$ for $0 \le n < r_{an}$ and $a_{r_{an}} \ne 0$.
+\end{definition}
+We will end up working a lot with the leading coefficient of the $L$-seres at the central point. To this end:
+\begin{definition}
+The leading coefficient of $L_E(s)$ at the central point (the constant $a_{r_{an}}$ in the definition above) we denote by $C_E$, or just $C$.
+\end{definition}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Some Conjectures}
+
+The main results in this thesis are contingent on the Birch and Swinnerton-Dyer conjecture, The Generalized Riemann Hypothesis and the ABC conjecture. We reproduce the three conjectures in full below. \\
+
+The Birch and Swinnerton-Dyer conjecture (BSD) is needed to establish a way to compute and hence bound the magnitude of the leading coefficient of $\Les$ at the central point.
+\begin{conjecture}[Birch, Swinnerton-Dyer]\label{conj:BSD}
+\mbox{}
+\begin{enumerate}
+\item $r_{an} = r$; that is, the analytic rank of $E$ is equal to its algebraic rank.
+\item The leading coefficient at the central point in $L_E(s)$ is given by
+\begin{equation}
+C_E = \left(\frac{\Omega_E\cdot\Reg_E\cdot\#\Sha(E/\Q)\cdot\prod_p c_p}{(\#E_{\text{Tor}}(\Q))^2}\right),\end{equation}
 where
 \begin{itemize}
 \item $r$ is the algebraic rank of $E(\Q)$,
@@ -171,10 +377,55 @@ where
 \item $\prod_p c_p$ is the product of the Tamagawa numbers of $E$, and
 \item $\#E_{\text{Tor}}(\Q)$ is the number of rational torsion points on $E$.
 \end{itemize}
+\end{enumerate}
 \end{conjecture}
 
-For an excellent description of the conjecture and a breakdown of the arithmetic invariants mentioned above, see Andrew Wiles' official description of the BSD Conjecture on the Clay Math website \cite{Wil-BSD}.
+For an excellent description of the conjecture and a breakdown of the arithmetic invariants mentioned above, see Andrew Wiles' official description of the BSD Conjecture on the Clay Math website \cite{Wil-BSD}. \\
 
+\begin{conjecture}[Generalized Riemann Hypothesis for Elliptic Curves, version 1]\label{conj:GRH1}
+Let $E$ be an elliptic curve over $\Q$, and let $\Les$ be its $L$-series. If $\rho$ is a nontrivial zero of $\Les$ with nonzero imaginary part, then $\Re(\rho) = 1$. Moreover, all nontrivial noncentral zeros of $\Les$ are simple.
+\end{conjecture}
+That is, all nontrivial zeros of $\Les$ lie on the {\it critical line} $\Re(s)=1$, and the only place zeros can lie on top of each other is at the central point $s=1$. There are numerous equivalent formulations of GRH; we will most often use the following:
+\begin{conjecture}[Generalized Riemann Hypothesis for Elliptic Curves, version 2]\label{conj:GRH2}
+ \mbox{}
+ Let $E$ be an elliptic curve over $\Q$, and let $\Lams$ be the completed $L$-function attached to $E$. Then
+\begin{enumerate}
+\item $\Lambda_E(1+s) = 0 \Longrightarrow \Re(s) = 0$.
+\item $\Lambda_E(1+s) = 0$ and $\Lambda_E\pr(1+s) = 0 \Longrightarrow s=0$.
+\end{enumerate}
+\end{conjecture}
+
+Finally, we will need strong form of the ABC conjecture of Masser and Oesterl\'{e} in order to establish lower bounds on the regulator and real period of $E$.
+\begin{conjecture}[Masser-Oesterl\'{e}] \label{conj:ABC}
+Let $(a,b,c)$ be a triple of coprime positive integers such that $a+b = c$, and let $\rad(abc) = \prod_{p | abc} p$ be the product of all primes dividing $a$, $b$ and $c$. Then for any $\epsilon > 0$ there is a constant $K_{\epsilon}$ such that
+\begin{equation}
+c < K_{\epsilon}\rad(abc)^{1+\epsilon}.
+\end{equation}
+\end{conjecture}
+The ABC conjecture is famous for the large number of other results that it implies. Of these, we will need the following three that relate to elliptic curves:
+
+\begin{conjecture}[Szpiro]\label{conj:Szpiro}
+Let $E$ be an elliptic curve over $\QQ$ with conductor $N$ and minimal discriminant $D$. Then for any $\epsilon > 0$ there is a constant $K_{\epsilon}$ such that
+\begin{equation}
+|D| < K_{\epsilon}N^{6+\epsilon}.
+\end{equation}
+\end{conjecture}
+
+\begin{conjecture}[Lang]\label{conj:Lang}
+Let $E$ be an elliptic curve over $\QQ$ with minimal discriminant $D$. There is a positive constant $K$ such that for any nontorsion point $P\in E(\QQ)$,
+\begin{equation}
+\hat{h}(P) \ge K\log |D|,
+\end{equation}
+where $\hat{h}(P)$ is the N\'{e}ron-Tate canonical height of $P$.
+\end{conjecture}
+
+\begin{conjecture}[Hall]\label{conj:Hall}
+For any $\epsilon > 0$ there is a constant $K_{\epsilon}$ such that for any $x,y \in \ZZ$ such that $x^3-y^2 \ne 0$, we have
+\begin{equation}
+|x^3-y^2| \ge K_{\epsilon} |x|^{\frac{1}{2}-\epsilon}.
+\end{equation}
+\end{conjecture}
+That is, if $x^3-y^2 \ne 0$, then the difference cannot be closer than about $\sqrt{|x|}$.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -195,11 +446,11 @@ Let $E/\QQ$ have discriminant $D$, and $E(\CC) \simeq \CC/\Lambda$, where $\Lamb
 The real generator $\omega_1$ may be computed using the (real version of the) Gauss arithmetic-geometric mean. Recall its definition: let $a,b \in \RR_{\ge0}$. Set $a_0 = a$ and $b_0 = b$, and for $n\ge 0$ let $a_{n+1} = \frac{1}{2}(a_{n}+b_{n})$ and $b_{n+1} = \sqrt{a_{n}b_{n}}$. Then $\AGM(a,b)$ is defined to be the common limit of both the $a_n$ and the $b_n$. We omit the proof that both sequences converge to the same value, but convergence is quadratic (i.e. extremely quick).
 
 \begin{proposition}
-Let $E/\Q$ have minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a^6$. Write the equation in the form
+Let $E/\Q$ have minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$. Write the equation in the form
 \begin{equation*}
 \left(y + \frac{a_1x + a_3}{2}\right)^2 = x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4} = (x-e_1)(x-e_2)(x-e_3)
 \end{equation*}
-where $e_1,e_2,e_3$ are the 3 complex roots of the polynomial in $x$ on the right hand side, and $b_2$, $b_4$ and $b_6$ are as defined at the beginning of section \ref{sec:defs_results}.
+where $e_1,e_2,e_3$ are the 3 complex roots of the polynomial in $x$ on the right hand side, and $b_2$, $b_4$ and $b_6$ are as defined at the beginning of section \ref{sec:defs_background}.
 \begin{enumerate}
 \item If $D > 0$, then $e_1,e_2,e_3 \in \RR$, so without loss of generality we may order them as $e_3 > e_2 > e_1$. Then
 \begin{equation}
@@ -212,7 +463,7 @@ where $e_1,e_2,e_3$ are the 3 complex roots of the polynomial in $x$ on the righ
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-Cremona and Cremona-Thongjunthug give a good explanation and derivation of this formula in \cite{Cre-1997} and \cite{Cre-2013} respectively.
+Cremona and Cremona-Thongjunthug give a good explanations and derivations this formula in \cite{Cre-1997} and \cite{Cre-2013} respectively.
 \end{proof}
 
 We establish a lower bound on the real period $\Omega_E$ in terms of the elliptic discriminant $D$.
@@ -229,7 +480,7 @@ D = 16(e_3-e_1)^2(e_3-e_2)^2(e_2-e_1)^2.
 \end{equation}
 We consider the cases where $D>0$ and $D<0$ separately.
 \begin{enumerate}
-\item Minimizing $\omega_1$ for a given $D$ is equivalent to maximizing $\AGM(\sqrt{e_3-e_1},\sqrt{e_3-e_2})$. This occurs when $e_2-e_1$ is small, and the quantities $e_3-e_1$ and $e_3-e_2$ are approximately equal. So assume $e_2-e_1 << e_3-e_2$. Then
+\item Suppose $D>0$. Minimizing $\omega_1$ for a given $D$ is equivalent to maximizing $\AGM(\sqrt{e_3-e_1},\sqrt{e_3-e_2})$. This occurs when $e_2-e_1$ is small, and the quantities $e_3-e_1$ and $e_3-e_2$ are approximately equal. So assume $e_2-e_1 << e_3-e_2$. Then
 \begin{equation}
 ??
 \end{equation}
