@@ -34,6 +34,7 @@
 \newcommand{\conj}[1]{\overline{#1}}
 \newcommand{\EQ}{E(\QQ)}
 \newcommand{\EFp}{E(\Fp)}
+\newcommand{\Ensfpe}{E_{\text{ns}}(\FF_{p^e})}
 
 
 \title{Ph.D Dissertation}
@@ -240,7 +241,7 @@ For $p=2$ and $3$, the exponent $f_p(E)$ is still zero if $p$ is good; however t
 The ``proper" definition of the conductor is Galois representation-theoretic and is defined in terms of the representation of the inertia group at $p$ on the torsion subgroup of $E$; For $p\ne 2$ or $3$ this reduces to the definition given above, but for $2$ and $3$ there may be nontrivial wild ramification which increases the exponent up to the stated amounts. A full technical definition of the conductor is given in \cite[pp. 379-396]{Sil-1994}. In any case (including $2$ and $3$), the exponent $f_p(E)$ may be computed efficiently by Tate's algorithm, as detailed in the previous section of the same book \cite[pp. 361-379]{Sil-1994}. \\
 
 We now move on to the definition of the $L$-function attached to an elliptic curve. For this we must define the numbers $a_p(E)$:
-\begin{definition}\label{def:a_n} \mbox{}
+\begin{definition}\label{def:a_p} \mbox{}
 \begin{itemize}
 \item For good primes $p$ (i.e. when $p \nmid N$), let
 \begin{equation}
@@ -427,9 +428,126 @@ For any $\epsilon > 0$ there is a constant $K_{\epsilon}$ such that for any $x,y
 \end{conjecture}
 That is, if $x^3-y^2 \ne 0$, then the difference cannot be closer than about $\sqrt{|x|}$.
 
+
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bounding the Real Period}
+\section{Logarithmic Derivatives, Zero Sums and the Explicit Formula}
+
+Let $E/\QQ$  have conductor $N$.
+\begin{definition}
+The {\it logarithmic derivative} of the $L$-function attached to $E$ is
+\begin{equation}
+\ldLes := \frac{d}{ds} \log \Les = \frac{L_E^{\pr}(s)}{\Les}.
+\end{equation}
+\end{definition}
+Logarithmic derivatives have some useful properties. Importantly, the logarithmic derivative of the product of meromorphic functions is the sum of the logarithmic derivatives thereof. To this end:
+\begin{proposition}
+\begin{equation}\label{eqn:logderiv_relation}
+\ldLam{s} = \log\left(\frac{\sqrt{N}}{2\pi}\right) + \digamma(s) + \ldLe{s},
+\end{equation}
+where $\digamma(s) = \frac{\Gamma\pr}{\Gamma}(s)$ is the digamma function on $\C$.
+\end{proposition}
+This follows immediately from the definition of $\Lams = N^{\frac{s}{2}}(2\pi)^{-s}\Gamma(s)\Les$. \\
+
+
+Recall that for $p \nmid N$, the characteristic polynomial of Frobenius w.r.t.~$f$ at $p$ is $x^2 - a_p x + p^2$, where $a_p$ is as given by Definition \ref{def:a_p}. Let this quadratic polynomial split as $(x-\alpha_p)(x-\beta_p)$ in $\CC$, where for $\alpha_p$ and $\beta_p$ the dependance on $E$ is understood. \\
+
+\begin{definition}\label{bndef}
+For $n \in \NN$, let
+\begin{equation}
+b_n(E) := \begin{cases}
+-\left(\alpha_p^e+\beta_p^e\right)\cdot \log(p), & n=p^e\;\;\text{a prime power ($e\ge1$), and $p \nmid N$} \\
+-a_p^e \cdot \log(p), & n=p^e\;\;\text{and $p \mid N$} \\
+0, & \text{otherwise,} \end{cases}
+\end{equation}
+\end{definition}
+
+\begin{lemma}
+The Dirichlet series for $\ldLes$ is given by
+\begin{equation}
+\ldLes = \sum_{n=1}^{\infty} b_n(E)\, n^{-s}
+\end{equation}
+where the coefficients $b_n(E)$ are defined as in Definition \ref{bndef}. \\
+\end{lemma}
+\begin{proof}
+The proof is an exercise in taking the logarithmic derivative of the Euler product formula for $\Les$ and simplifying. Note we may write the Euler product of $\Les$ as
+\begin{equation}
+\Les = \prod_{p|N} \left(1-a_p p^{-s}\right)^{-1} \prod_{p\nmid N} \left(1-\alpha_p p^{-s}\right)^{-1}\left(1-\beta_p p^{-s}\right)^{-1}.
+\end{equation}
+The result follows by taking the logarithmic derivative of each term individually and then summing the results.
+\end{proof}
+
+The Dirichlet coefficients for $\ldLes$ have a beautiful characterization in terms of the number of points on $E$ over finite fields:
+\begin{theorem}[S.]
+\begin{equation}
+b_n(E) = \begin{cases}
+-\left(p^e + 1 - \#\widetilde{E}(\FF_{p^e})\right)\cdot \log(p), & n=p^e\;\;\text{a prime power,} \\
+0, & \text{otherwise} \end{cases}
+\end{equation}
+where $\#\widetilde{E}(\FF_{p^e})$ is the number of points over $\FF_{p^e}$ on the (possibly singular) curve obtained by reducing $E$ modulo $p$.
+\end{theorem}
+
+\begin{proof}
+It is a standard result that if $(x-\alpha_p)(x-\beta_p)$ is the characteristic polynomial for Frobenius on $E$ at prime $p$ of good reduction, then
+\begin{equation}
+\#E(\FF_{p^e}) = p^e + 1 - \alpha_p^e - \beta_p^e
+\end{equation}
+(see \cite[pp. 134-136]{Sil-1985} for a proof), from which the result at $p \nmid N$ follows. \\
+
+For primes of bad reduction, recall
+\begin{equation}
+a_p(E) := \begin{cases}
++1, & \text{$E$ has split multiplicative reduction at $p$} \\
+-1, & \text{$E$ has non-split multiplicative reduction at $p$} \\
+0, & \text{$E$ has additive reduction at $p$}
+\end{cases}
+\end{equation}
+Let $\Ensfpe$ be the group of nonsingular points on $\widetilde{E}(\FF_{p^e})$. \\
+When $E$ has additive reduction at $p$, $\Ensfpe \simeq (\F_{p^e},+)$, so together with the singular point $\#\widetilde{E}(\FF_{p^e}) = p^e+1$; \\
+Hence $(p^e + 1 - \#\widetilde{E}(\FF_{p^e}))\log(p) = 0 = a_p^e \log(p)$. \\
+When $E$ has split multiplicative reduction at $p$, $\Ensfpe \simeq (\F_{p^e}^*,\times)$, so together with the singular point $\#\widetilde{E}(\FF_{p^e}) = (p^e-1)+1 = p^e$; So $(p^e + 1 - \#\widetilde{E}(\FF_{p^e}))\log(p) = 1\cdot \log(p) = a_p^e \log(p)$. \\
+When $E$ has non-split multiplicative reduction at $p$, let $L/\FF_{p^e}$ be the quadratic extension obtained by adjoining to $\FF_{p^e}$ the slopes of the tangent lines  at the singular point; then $\Ensfpe \simeq \ker(\Norm_{L/\FF_{p^e}})$. \\
+Some thought should convince you that there are $p^e-(-1)^e$ elements in $L$ with norm 1, so together with the singular point $\#\widetilde{E}(\FF_{p^e}) = p^e+1-(-1)^e$; \\
+Hence $(p^e + 1 - \#\widetilde{E}(\FF_{p^e}))\log(p) = (-1)^e\cdot \log(p) = a_p^e \log(p)$.
+See \cite[pg. 180, Prop. 5.1]{Sil-1985} for the proofs of the above isomorphisms.\\
+\end{proof}
+
+With elliptic curve $L$-functions it is often easier to work with the shifted logarithmic derivative $\ldLe{s+1}$ as it places the critical point at the origin. We therefore define notation for the coefficients of the shifted Dirichlet series below:
+\begin{definition}\label{cndef}
+The logarithmic derivative of the shifted $L$-function $L_E(1+s)$ is given by Dirichlet series
+\begin{equation}
+\ldLe{s+1} := \sum_n c_n n^{-s} = \sum_{n} \frac{b_n}{n} n^{-s},
+\end{equation}
+i.e. $c_n = b_n/n$, where the $b_n$ are as defined in Definition \ref{bndef}.
+\end{definition}
+
+Because of its transparent Dirichlet series, we can bound the magnitude of $\ldLe{1+s}$ for $\Re(s)>\frac{1}{2}$. Let $\frac{\zeta\pr}{\zeta}$ be the logarithmic derivative of the Riemann zeta function. Then $\frac{\zeta\pr}{\zeta}(s) = \sum -\lambda(n) n^{-s}$ for $\Re(s)>1$, where $\lambda(n)$ is the von Mangoldt function, given by
+\begin{equation}\label{eqn:vonmangoldt}
+\lambda(n) = \begin{cases} \log p & n = p^e \;\;\text{a perfect prime power,} \\ 0 & \text{otherwise.} \end{cases}
+\end{equation}
+Observe that $\frac{\zeta\pr}{\zeta}(s)$ is strictly negative for $s > 1$ real and decays rapidly as $s \to \infty$. \\
+
+\begin{lemma}\label{lem:ldLe_bound}
+Let $E$ be an elliptic curve with conductor $N$ and L-function $L_E(s)$. Let $\Re(s)>\frac{1}{2}$ and write $\Re(s) = \sigma$. Then
+\begin{equation}
+\left| \ldLe{1+s}\right| < -2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By Hasse's Theorem we have that $|q + 1 - \#\widetilde{E}(\FF_{q})| \le 2\sqrt{q}$ for any prime power $q$. Hence
+\begin{align*}
+\left| \ldLe{1+s}\right| &\le \sum_n \frac{|b_n|}{n} n^\sigma < \sum_{n} \frac{2\sqrt{n} \cdot \lambda(n)}{n} n^{-\sigma}  = -2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right).
+\end{align*}
+The inequality in the middle is strict, as Hasse's bound cannot be hit when, say $n=2$.
+\end{proof}
+Note that this bound is global i.e. does not depend on the elliptic curve in any way.
+
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Real Period}
 
 The real period of a rational elliptic curve $E$ is a measure of the ``size'' of the set of {\it real} points on $E$. \\
 
@@ -490,7 +608,7 @@ We consider the cases where $D>0$ and $D<0$ separately.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bounding the Regulator}
+\section{The Regulator}
 
 To define the regulator of a rational elliptic curve, we must first define the na\"ive logarithmic height, N\'eron-Tate canonical height and the N\'eron-Tate pairing on points on $E$.
 
