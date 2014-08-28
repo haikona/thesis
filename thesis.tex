@@ -467,10 +467,15 @@ where $\digamma(s) = \frac{\Gamma\pr}{\Gamma}(s)$ is the digamma function on $\C
 \end{proposition}
 This follows immediately from the definition of $\Lams = N^{\frac{s}{2}}(2\pi)^{-s}\Gamma(s)\Les$. \\
 
+Note that the digamma function is well-understood and easily computable. For example, it has the following infinite sum expansion about $s=1$:
+\begin{equation}\label{eqn:digamma_sum}
+\digamma(1+s) = -\eta + \sum_{k=1}^{\infty} \frac{s}{k(k+s)}
+\end{equation}
+This series converges absolutely for any $s$ not equal to a negative integer, and uniformly on sets bounded away from the negative real axis.\\
 
-Recall that for $p \nmid N$, the characteristic polynomial of Frobenius w.r.t.~$f$ at $p$ is $x^2 - a_p x + p^2$, where $a_p$ is as given by Definition \ref{def:a_p}. Let this quadratic polynomial split as $(x-\alpha_p)(x-\beta_p)$ in $\CC$, where for $\alpha_p$ and $\beta_p$ the dependance on $E$ is understood. \\
+What is perhaps surprising, however, is that $\ldLe{s}$ can be represented by an elegant Dirichlet series. Recall that for $p \nmid N$, the characteristic polynomial of Frobenius w.r.t.~$f$ at $p$ is $x^2 - a_p x + p^2$, where $a_p$ is as given by Definition \ref{def:a_p}. Let this quadratic polynomial split as $(x-\alpha_p)(x-\beta_p)$ in $\CC$, where for $\alpha_p$ and $\beta_p$ the dependance on $E$ is understood. \\
 
-\begin{definition}\label{bndef}
+\begin{definition}\label{def:bn}
 For $n \in \NN$, let
 \begin{equation}
 b_n(E) := \begin{cases}
@@ -485,7 +490,7 @@ The Dirichlet series for $\ldLes$ is given by
 \begin{equation}
 \ldLes = \sum_{n=1}^{\infty} b_n(E)\, n^{-s}
 \end{equation}
-where the coefficients $b_n(E)$ are defined as in Definition \ref{bndef}. \\
+where the coefficients $b_n(E)$ are defined as in Definition \ref{def:bn}. \\
 \end{lemma}
 \begin{proof}
 The proof is an exercise in taking the logarithmic derivative of the Euler product formula for $\Les$ and simplifying. Note we may write the Euler product of $\Les$ as
@@ -531,12 +536,12 @@ See \cite[pg. 180, Prop. 5.1]{Sil-1985} for the proofs of the above isomorphisms
 \end{proof}
 
 With elliptic curve $L$-functions it is often easier to work with the shifted logarithmic derivative $\ldLe{1+s}$ as it places the critical point at the origin. We therefore define notation for the coefficients of the shifted Dirichlet series below:
-\begin{definition}\label{cndef}
+\begin{definition}\label{def:cn}
 The logarithmic derivative of the shifted $L$-function $L_E(1+s)$ is given by Dirichlet series
 \begin{equation}
 \ldLe{1+s} := \sum_n c_n n^{-s} = \sum_{n} \frac{b_n}{n} n^{-s},
 \end{equation}
-i.e. $c_n = b_n/n$, where the $b_n$ are as defined in Definition \ref{bndef}.
+i.e. $c_n = b_n/n$, where the $b_n$ are as defined in Definition \ref{def:bn}.
 \end{definition}
 
 Because of its transparent Dirichlet series, we can bound the magnitude of $\ldLe{1+s}$ for $\Re(s)>\frac{1}{2}$. Let $\frac{\zeta\pr}{\zeta}$ be the logarithmic derivative of the Riemann zeta function. Then $\frac{\zeta\pr}{\zeta}(s) = \sum -\lambda(n) n^{-s}$ for $\Re(s)>1$, where $\lambda(n)$ is the von Mangoldt function, given by
@@ -665,8 +670,8 @@ L_E(1+s) = Cs^{r_{an}}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]
 \end{equation}
 Then 
 \begin{align}
-a &= \eta + \log\left(\frac{2\pi}{\sqrt{N}}\right) \\
-2b &= \left[\eta + \log\left(\frac{2\pi}{\sqrt{N}}\right)\right]^2 - \frac{\pi^2}{6} + \beta,
+a &= -\left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right] \\
+2b &= \left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right]^2 - \frac{\pi^2}{6} + \beta,
 \end{align}
 where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$.
 \end{corollary}
@@ -679,7 +684,7 @@ We note that the digamma function has the following Taylor expansion about $s=1$
 where $\eta$ is the Euler-Mascheroni constant, and $\zeta(s)$ is the Riemann zeta function. \\
 Thus by equation \ref{eqn:logderiv_relation} and Corollary \ref{cor:ldLam_series_at_zero} we have that
 \begin{equation*}
-\ldLe{1+s} = \frac{r_{an}}{s} + \left[\eta + \log\left(\frac{2\pi}{\sqrt{N}}\right)\right] + \left[-\zeta(2) + \sum_{\gamma\ne0} \gamma^{-2}\right]\cdot s + O(s^2)
+\ldLe{1+s} = \frac{r_{an}}{s} - \left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right] + \left[-\zeta(2) + \sum_{\gamma\ne0} \gamma^{-2}\right]\cdot s + O(s^2)
 \end{equation*}
 But if $L_E(1+s) = Cs^{r_{an}}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]$, then careful logarithmic differentiation yields
 \begin{equation*}
@@ -687,10 +692,82 @@ But if $L_E(1+s) = Cs^{r_{an}}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]$, 
 \end{equation*}
 Comparing terms and solving for the relevant quantities produces the desired formulae.
 \end{proof}
-We may continue in the same vein to produce formulae for higher order coefficients of $L_E(s)$. As can be seen from above, these can in general be written in terms of sums of powers of $\left[\eta + \log\left(\frac{2\pi}{\sqrt{N}}\right)\right]$, inverse sums of even powers of the nontrivial zeros, and $\zeta(n)$ for $n$ a positive integer. \\
+We may continue in the same vein to produce formulae for higher order coefficients of $L_E(s)$. As can be seen from above, these can in general be written in terms of sums of powers of $\left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right]$, inverse sums of even powers of the nontrivial zeros, and $\zeta(n)$ for $n$ a positive integer. \\
 
 What's also worth pointing out here is that the above suggests that the Taylor expansion about $s=1$ of the $L$-series attached to $E$ essentially contains no new information about the curve's attached invariants beyond that which can be found in the first nonzero coefficient - unless that information is somehow encoded in the bites $\beta_{2n}(E)$ for $n \in \NN$. Whether this is the case or not, however, is an open question.
 
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Zero Sums and the Explicit Formula}
+
+Combining equations \ref{eqn:logderiv_relation}, \ref{eqn:digamma_sum} and \ref{eqn:ldLam_sum} we get the following equality:
+\begin{proposition}
+Let $E/\QQ$ have conductor $N$. Let $\gamma$ range over all nontrivial zeros of $\Les$ with multiplicity, let $\eta$ be the Euler-Mascheroni constant, and let the $c_n = c_n(E)$ be as given by definitions \ref{def:bn} and \ref{def:cn}. Then
+\begin{equation}\label{eqn:exp_form_1}
+\sum_{\gamma} \frac{s}{s^2 + \gamma^2} = \left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right] + \sum_{k=1}^{\infty} \frac{s}{k(s+k)} + \sum_{n=1}^{\infty} c_n n^{-s}
+\end{equation}
+\end{proposition}
+This is the prototypical {\it explicit formula} for elliptic curves: an equation relating a sum over the nontrivial zeros of $\Les$ to a sum over the logarithmic derivative coefficients of $\Les$, plus some easily smooth part that only depends on the curve's conductor. \\
+
+In general, the phrase ``explicit formula" is not applied to a specific equation, but rather to a suite of formula that resemble the above in some way. We reproduce lemma 2.1 from \cite{Bob-2011}, which is a more general version of the explicit formula, akin to the Weil formulation of the Riemann-von Mangoldt explicit formula for $\zeta(s)$.
+\begin{lemma}\label{lem:exp_form_2}
+Suppose that $f(z)$ is an entire function s.t. there exists a $\delta>0$ such that $f(x+iy) = O(x^{-(1+\delta)}$ for $|y|<1+\epsilon$ for some $\epsilon>0$. Suppose that the Fourier transform of $f$
+\begin{equation}
+\hat{f}(y) = \int_{-\infty}^{\infty} e^{-i x y}f(x)\; dx
+\end{equation}
+exists and is such that $\sum_{n=1}^{\infty} c_n \hat{f}\left(\log n\right)$ converges absolutely. Then
+\begin{equation}\label{eqn:exp_form_2}
+\sum_{\gamma} f(\gamma) = \frac{1}{\pi}\left[\log\left(\frac{\sqrt{N}}{2\pi}\right)\hat{f}(0) + \Re\int_{-\infty}^{\infty} \digamma(1+it)f(t) \; dt  + \frac{1}{2} \sum_{n=1}^{\infty} c_n \left( \hat{f}\left(\log n\right) + \hat{f}\left(-\log n\right)\right) \right]
+\end{equation}
+\end{lemma}
+A proof can be found in \cite[Theorem 5.12]{IwKo-2004}. Note that Equation \ref{eqn:exp_form_1} can be recovered by setting $f$ to be the Poisson kernel $f_s(x) = \frac{s}{s^2+x^2}$; then $\hat{f_s}(y) = e^{-s|y|}$, so $\hat{f_s}(\log n) = n^{-s}$. \\
+
+We give a distribution-theoretic reformulation of Lemma \ref{lem:exp_form_2}. While the subject of explicit formulae for $L$-functions of Hecke eigenforms is treated by a number of sources, the following doesn't seem to have been explicitly written down in the literature anywhere:
+\begin{proposition}[S.]
+Let $\gamma$ range over the imaginary parts of the zeros of $\Les$ with multiplicity. Let $\varphi_E = \sum_{\gamma} \delta(x-\gamma)$ be the complex-valued distribution on $\RR$ corresponding to summation over the zeros of $L_E(s)$, where $\delta(x)$ is the usual Dirac delta function. That is, for any test function $f: \RR \mapsto \CC$ such that $\sum_{\gamma}f(\gamma)$ converges, 
+\begin{equation}
+\langle f,\varphi_E \rangle = \int_{-\infty}^{\infty} f(x)\left(\sum_{\gamma\in S_E} \delta(x-\gamma)\right) \, dx = \sum_{\gamma\in S_E} f(\gamma).
+\end{equation}
+Then as distributions,
+\begin{equation}\label{eqn:exp_form_3}
+\varphi_E = \sum_{\gamma} \delta(x-\gamma) = \frac{1}{\pi}\left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right) +\sum_{k=1}^{\infty} \frac{x^2}{k(k^2+x^2)} + \frac{1}{2}\sum_{n=1}^{\infty} c_n \left(n^{ix}+n^{-ix}\right) \right].
+\end{equation}
+\end{proposition}
+In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\phi_E \right\rangle$ for $\Re(s) > 0$. Note that convergence on the right hand side is absolute for $\Re(s)>1$, and conditional (provably so thanks to Sato-Tate) for $0<\Re(s)\le 1$. \\
+
+\subsection{The Distribution of Nontrivial Zeros}
+
+\begin{definition}
+For non-negative $t$, let $M_E(t)$ be the modified non-trivial zero counting function for $\Les$, i.e.
+\begin{equation}
+M_E(t) := \sideset{}{\pr}\sum_{|\gamma| \le t} \frac{1}{2}
+\end{equation}
+where $\gamma$ runs over the imaginary parts of nontrivial zeros of $L_E(s)$, and the prime indicates that the final $\gamma$ is taken with half weight if $\gamma = t$. The central zero is taken with with multiplicity $r$, where $r$ is the analytic rank of $E$. \\
+\end{definition}
+
+Note that $M_E(0) = \frac{r}{2}$, and the function jumps by 1 across the locations of nontrivial zeros, since noncentral zeros come in conjugate pairs and (by GRH) are always simple. \\
+
+\begin{proposition}[S.]
+\begin{equation}\label{eqn:M_E(t)}
+M_E(t) = \frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) + \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n)\right]
+\end{equation}
+Convergence on the RHS is pointwise with respect to $t$ for both sums; for fixed $t$ convergence for the sums over $k$ and $n$ is absolute and conditional respectively (and {\it extremely} slow for the latter).
+\end{proposition}
+
+\begin{proof}
+Observe we may write $M_E(t) = \sum_{\gamma}f_t(\gamma)$, where
+\begin{equation}
+f_t(x) = \begin{cases} \frac{1}{2}, & |x|<t \\ \frac{1}{4}, & |x| = t \\ 0 & |x|> t \end{cases}
+\end{equation}
+Informally, we obtain the above formula by integrating both sides of Equation \ref{eqn:exp_form_3} against $f = f_t(x)$, noting that $\hat{f}_t(y) = \frac{\sin(ty)}{y}$. The integrals in the sum over $k$ give us no issue and we may swap the order of the integral and summation signs, since convergence there is absolute. However, some care must be taken when it comes to the sum over $n$, since here convergence is only conditional. 
+
+Formally, we must write $M_E(t)$ as a path integral of $\ldLam{1+s}$ on the path
+\begin{equation*}
+\epsilon-it \mapsto \epsilon+it \mapsto -\epsilon+it \mapsto -\epsilon-it \mapsto \epsilon-it
+\end{equation*}
+for some $\epsilon>0$, and invoke the Cauchy Residue Theorem. We may then shrink $\epsilon$ to zero (assuming GRH) to obtain that the RHS of \ref{eqn:M_E(t)} converges point wise to $M_E(t)$ as $m$ and $n \to \infty$.
+\end{proof}
 
 
 \newpage
