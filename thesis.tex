@@ -712,7 +712,7 @@ This is the prototypical {\it explicit formula} for elliptic curves: an equation
 
 In general, the phrase ``explicit formula" is not applied to a specific equation, but rather to a suite of formula that resemble the above in some way. We reproduce lemma 2.1 from \cite{Bob-2011}, which is a more general version of the explicit formula, akin to the Weil formulation of the Riemann-von Mangoldt explicit formula for $\zeta(s)$.
 \begin{lemma}\label{lem:exp_form_2}
-Suppose that $f(z)$ is an entire function s.t. there exists a $\delta>0$ such that $f(x+iy) = O(x^{-(1+\delta)}$ for $|y|<1+\epsilon$ for some $\epsilon>0$. Suppose that the Fourier transform of $f$
+Suppose that $f(z)$ is an entire function s.t. there exists a $\delta>0$ such that $f(x+iy) = O(x^{-(1+\delta)})$ for $|y|<1+\epsilon$ for some $\epsilon>0$. Suppose that the Fourier transform of $f$
 \begin{equation}
 \hat{f}(y) = \int_{-\infty}^{\infty} e^{-i x y}f(x)\; dx
 \end{equation}
@@ -734,7 +734,7 @@ Then as distributions,
 \varphi_E = \sum_{\gamma} \delta(x-\gamma) = \frac{1}{\pi}\left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right) +\sum_{k=1}^{\infty} \frac{x^2}{k(k^2+x^2)} + \frac{1}{2}\sum_{n=1}^{\infty} c_n \left(n^{ix}+n^{-ix}\right) \right].
 \end{equation}
 \end{proposition}
-In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\phi_E \right\rangle$ for $\Re(s) > 0$. Note that convergence on the right hand side is absolute for $\Re(s)>1$, and conditional (provably so thanks to Sato-Tate) for $0<\Re(s)\le 1$. \\
+In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\varphi_E \right\rangle$ for $\Re(s) > 0$. Note that convergence on the right hand side is absolute for $\Re(s)>1$, and conditional (provably so thanks to Sato-Tate) for $0<\Re(s)\le 1$. \\
 
 \subsection{The Distribution of Nontrivial Zeros}
 
@@ -768,6 +768,67 @@ Formally, we must write $M_E(t)$ as a path integral of $\ldLam{1+s}$ on the path
 \end{equation*}
 for some $\epsilon>0$, and invoke the Cauchy Residue Theorem. We may then shrink $\epsilon$ to zero (assuming GRH) to obtain that the RHS of \ref{eqn:M_E(t)} converges point wise to $M_E(t)$ as $m$ and $n \to \infty$.
 \end{proof}
+
+Equation \ref{eqn:M_E(t)} may be though of having two components. The first two terms comprise a smooth part that gives the ``expected number of zeros'' up to $t$; and the trigonometric sum over $n$ comprises the discretization information that yields the zeros' exact locations. We expect the trigonometric sum to be zero infinitely often, and asymptotically it should be positive as often as it is negative. As such the sum should average out to zero and shouldn't contribute any asymptotic bias to the density of zeros on the critical line. We can therefore talk in a real sense of the expected number of zeros up to $t$, which is given by
+\begin{equation}\label{eqn:M_E_smooth_part}
+\frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right)\right]
+\end{equation}
+
+Moreover, the trigonometric sum should grow very slowly with $t$. Put more formally, we have the following:
+\begin{conjecture}\label{conj:trig_sum_size}
+\begin{equation}
+\sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n) = O(\log t)
+\end{equation}
+\end{conjecture}
+This statement should follow from GRH, and is borne out by numerical evidence. \\
+
+%NUMERICAL EVIDENCE HERE
+
+\begin{lemma}\label{lem:arctan_sum_size}
+For $t\ge 0$, 
+\begin{equation}
+\sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) = t\log t - (1-\eta)t + \frac{\pi}{4} + O\left(\frac{1}{t}\right),
+\end{equation}
+where $\eta = 0.5772\ldots$ is the Euler-Mascheroni constant.
+\end{lemma}
+\begin{proof}
+We have
+\begin{equation*}
+\sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) = \int_{0}^{t} \sum_{k=1}^{\infty} \frac{x^2}{k(k^2+x^2)} \; dx = \int_{0}^{t} \Re\left(\digamma(1+ix) + \eta\right) \; dx,
+\end{equation*}
+where $\digamma(z)$ is the digamma function on $\CC$. Now along the critical line we have the following asymptotic expansion for the real part of the digamma function:
+\begin{equation}
+\Re\left(\digamma(1+ix)\right) = \log x + \frac{1}{12} x^{-2} + O(x^{-4})
+\end{equation}
+Hence $\int_{0}^{t} \Re\left(\digamma(1+ix)\right) \; dx = t(\log t - 1)  + O(1)$. The constant term of $\frac{\pi}{4}$ comes from integrating the difference between $\Re\left(\digamma(1+ix)\right)$ and $\log x$ between $0$ and $\infty$:
+\begin{equation*}
+\int_{0}^{\infty} \left[\Re\left(\digamma(1+ix)\right) - \log x\right] \; dx = \frac{\pi}{4}.
+\end{equation*}
+The result follows.
+\end{proof}
+
+Conjecture \ref{conj:trig_sum_size} and lemma \ref{lem:arctan_sum_size} combine to give us a precise asymptotic statement on the distribution of zeros up to $t$, in the same vein as von Mangoldt's asymptotic formula for the number of zeros up to $t$ for $\zeta$:
+
+\begin{theorem}[S.]
+Let $E$ have conductor $N$. Then for $t>>0$ we have
+\begin{equation}
+M_E(t) = \frac{t}{\pi}\left[\log\left(\frac{t\sqrt{N}}{2\pi}\right) -1 \right] + \frac{1}{4} + O(\log t),
+\end{equation}
+where the error term is positive as often as it negative and contributes no net bias.
+\end{theorem}
+
+
+We may also use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the lowest noncentral nontrivial zero of $\Les$:
+\begin{proposition}
+For a curve $E$ with large conductor $N$, the best guess for the imaginary part of the first nontrivial noncentral zero $\gamma_0$ of $\Les$ in the upper half plane is
+\begin{equation}
+\gamma_0 = \frac{(r_{an}+1)\pi}{\log(N) -2\log(2\pi) -2\eta}
+\end{equation}
+where $r_{an}$ is the analytic rank of $E$
+\end{proposition}
+The ``proof'' is as follows: The location of the first nontrivial noncentral zero is given by the value of $t$ for which $M_E(t)$ jumps from $r_{an}/2$ to $r_{an}/2+1$. At that point $M_E(t) = r_{an}/2 + 1/2 = \frac{r_{an}+1}{2}$, so the expected value of $\gamma_0$ is given by setting equation \ref{eqn:M_E(t)} equal to $\frac{r+1}{2}$ and solving for $t$. \\
+
+Now $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right]$ is $O(t^3)$ for small t, so the quantity expressed in equation \ref{eqn:M_E_smooth_part} is dominated by the $\frac{1}{\pi}\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t$ term when $N$ is large. Solving for $t$ yields the desired value.
 
 
 \newpage
