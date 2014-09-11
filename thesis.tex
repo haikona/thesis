@@ -108,10 +108,10 @@ The way we analytically continue $L(E,s)$ yields that the function is highly sym
 \begin{conjecture}[Birch, Swinnerton-Dyer, part (a)]
 Let $E$ be an elliptic curve over $\Q$, with attached $L$-series $L(E,s)$. Then the Taylor series expansion of $L_E(s)$ about the central point $s=1$ is
 \begin{equation}
-L(E,1+s) = s^r\left[C  +O(s)\right],
+L(E,1+s) = s^r\left[a  + bs + O(s^2)\right],
 \end{equation}
 where
-$C \ne 0$ and $r$ is the algebraic rank of $E$.
+$a \ne 0$ and $r$ is the algebraic rank of $E$.
 \end{conjecture}
 That is, the first part of the BSD conjecture asserts that the order of vanishing of $L(E,s)$ at the central point is precisely the algebraic rank of $E$.
 
@@ -368,10 +368,14 @@ L_E(z) = a_0 + a_1 z + a_2 z^2 + \ldots
 \end{equation}
 where $z = s-1$, then $a_n = 0$ for $0 \le n < r_{an}$ and $a_{r_{an}} \ne 0$.
 \end{definition}
-We will also work a lot with the leading coefficient of the $L$-seres at the central point. To this end:
-\begin{definition}
-The leading coefficient of $L_E(s)$ at the central point (the constant $a_{r_{an}}$ in the definition above) we denote by $C_E$, or just $C$.
+We will work a lot with the leading coefficient of the $L$-seres at the central point, so it's worth giving it a name. To this end:
+\begin{definition} \mbox{}
+\begin{itemize}
+\item Let $C^{\pr}_E$ (or just $C^{\pr}$ when $E$ is fixed) be the leading coefficient of $L_E(s)$ at the central point (the constant $a_{r_{an}}$ in the definition above)
+\item Let $C_E$ (or just $C$ when $E$ is fixed) be the leading coefficient of $\Lams$ at the central point.
+\end{itemize}
 \end{definition}
+Observe that $C_E = \frac{\sqrt{N}}{2\pi}\cdot C^{\pr}_E$. We will most often work with the former, hence the notation.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -386,7 +390,7 @@ The Birch and Swinnerton-Dyer conjecture (BSD) is needed to establish a way to c
 \item $r_{an} = r$; that is, the analytic rank of $E$ is equal to its algebraic rank.
 \item The leading coefficient at the central point in $L_E(s)$ is given by
 \begin{equation}
-C_E = \left(\frac{\Omega_E\cdot\Reg_E\cdot\#\Sha(E/\Q)\cdot\prod_p c_p}{(\#E_{\text{Tor}}(\Q))^2}\right),\end{equation}
+C_E^{\pr} = \left(\frac{\Omega_E\cdot\Reg_E\cdot\#\Sha(E/\Q)\cdot\prod_p c_p}{(\#E_{\text{Tor}}(\Q))^2}\right),\end{equation}
 where
 \begin{itemize}
 \item $r$ is the algebraic rank of $E(\Q)$,
@@ -573,15 +577,21 @@ $\Lambda_E(1+s)$ has no zeros outside the critical strip $|\Re(s)| \le \frac{1}{
 Recall that if $f$ is meromorphic on $\CC$, then $\frac{f\pr}{f}$ has a pole at $s=s_0$ iff $f$ has a zero or pole at $s_0$; moreover poles of $\frac{f\pr}{f}$ are simple and have residue equal to the multiplicity of the corresponding zero/pole of $f$. But by the above $\ldLe{1+s}$ converges absolutely for $\Re(s)>\frac{1}{2}$, so $\ldLam{1+s}$ is well-defined and bounded for $\Re(s)>\frac{1}{2}$, and hence cannot have any poles in this region. By symmetry the same is true for $\Re(s)<-\frac{1}{2}$. Hence $\Lambda_E(1+s)$ cannot have any zeros for $|\Re(s)| > \frac{1}{2}$.
 \end{proof}
 
-$\ldLam{1+s}$ has a particularly simple representation as a sum over its zeros:
-\begin{lemma}
-\begin{equation}\label{eqn:ldLam_sum}
+$\Lambda_E(1+s)$ has a particularly simple representation as a product over its zeros, from which we get a representation of $\ldLam{1+s}$ as a sum over its zeros.
+\begin{lemma}  \mbox{}
+\begin{enumerate}
+\item \begin{equation}\label{eqn:Lams_prod}
+\Lambda_E(1+s) = C_E\cdot r_{an}^s \cdot \prod_{\gamma > 0} \left(1+\frac{s^2}{\gamma^2}\right) 
+\end{equation}
+where $C_E$ is the leading coefficient of $\Les$ at the central point (i.e. that defined in Conjecture \ref{conj:BSD}), and the product is taken over all zeros of $\Lambda_E(1+s)$ in the upper half plane. The product converges absolutely for any $s$, and uniformly on any bounded set.
+\item \begin{equation}\label{eqn:ldLam_sum}
 \ldLam{1+s} = \sum_{\gamma} \frac{s}{s^2+\gamma^2}, 
 \end{equation}
-where the sum is taken over all nontrivial zeros of $\Lambda_E(1+s)$ with multiplicity. Furthermore, the sum converges absolutely for any given $s$ outside the set of nontrivial zeros for $L_E(1+s)$, and uniformly on any set bounded away from the imaginary axis. \\
+where the sum is taken over {\bf all} nontrivial zeros of $\Lambda_E(1+s)$ (including central zeros) with multiplicity. The sum converges absolutely for any $s$ outside the set of nontrivial zeros for $L_E(1+s)$, and uniformly on any bounded set. \\
+\end{enumerate}
 \end{lemma}
 
-Note that if we assume GRH (as we always do), then $\gamma^2$ is always a nonnegative real number in any of the above summands. Note also that since noncentral nontrivial zeros occur in conjugate pairs, each summand for$\gamma \ne 0$ appears twice. It is therefore often useful to rewrite the above as
+Note that if we assume GRH (as we always do), then $\gamma^2$ is always a nonnegative real number in any of the above expansions. Furthermore,  since noncentral nontrivial zeros occur in conjugate pairs, each term for $\gamma \ne 0$ in Equation \ref{eqn:ldLam_sum} appears exactly twice. It is therefore often useful to rewrite it as
 \begin{equation}\label{eqn:ldLam_sum_v2}
 \ldLam{1+s} = \frac{r_{an}}{s} + 2 \sum_{\gamma>0} \frac{s}{s^2+\gamma^2}.
 \end{equation}
@@ -591,19 +601,9 @@ Observe that $\Lambda_E(1+s)$ has a zero of order $r_{an}$ at the origin, and by
 
 Now since $\Lambda_E(1+s)$ is an entire function of finite order, we may express it as a Hadamard product over its zeros. As with the Hadamard product for the completed Riemann Zeta function, the symmetry of $\Lambda_E(1+s)$ simplifies this product to
 \begin{equation}
-\Lambda_E(1+s) = Cs^{r_{an}}\prod_{\gamma\ne0}\left(1-\frac{s}{i\gamma}\right),
+\Lambda_E(1+s) = C_E s^{r_{an}}\prod_{\gamma\ne0}\left(1-\frac{s}{i\gamma}\right),
 \end{equation}
-where $C$ is the leading nonzero coefficient of the Taylor series for $\Lambda_E(1+s)$ at the central point (whose value is the subject of the 2nd part of the BSD conjecture); for convergence the product should be taken over conjugate pairs of zeros. \\
-Logarithmic differentiation then yields
-\begin{align*}
-\ldLam{1+s} &= \frac{r_{an}}{s} + \sum_{\gamma\ne 0}\frac{-i\gamma}{1-\frac{s}{i\gamma}} \\
-&= \frac{r_{an}}{s} + \sum_{\gamma\ne0}\frac{1}{s-i\gamma},
-\end{align*}
-where again the sum converges if taken over pairs of nontrivial zeros. Now
-\[\frac{1}{s-i\gamma} + \frac{1}{s+i\gamma} = \frac{2s}{s^2+\gamma^2},\]
-so if we rewrite the sum by averaging over pairs of zeros and incorporating the central zero $\gamma=0$ with multiplicity, we get
-\[ \ldLam{1+s} = \sum_{\gamma} \frac{s}{s^2+\gamma^2} \]
-as desired, and the sum converges absolutely for any $s$ not coinciding with a nontrivial zero.
+where $C_E$ is the leading nonzero coefficient of the Taylor series for $\Lambda_E(1+s)$ at the central point; and for convergence the product should be taken over conjugate pairs of zeros. Combining conjugate pair terms yields Equation \ref{eqn:Lams_prod}; logarithmic differentiation then yields Equation \ref{eqn:ldLam_sum_v2}, which can be simplified to Equation \ref{eqn:ldLam_sum}.
 \end{proof}
 
 \begin{corollary}
@@ -698,7 +698,7 @@ What's also worth pointing out here is that the above suggests that the Taylor e
 
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Zero Sums and the Explicit Formula}
 
 Combining equations \ref{eqn:logderiv_relation}, \ref{eqn:digamma_sum} and \ref{eqn:ldLam_sum} we get the following equality:
@@ -736,7 +736,9 @@ Then as distributions,
 \end{proposition}
 In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\varphi_E \right\rangle$ for $\Re(s) > 0$. Note that convergence on the right hand side is absolute for $\Re(s)>1$, and conditional (provably so thanks to Sato-Tate) for $0<\Re(s)\le 1$. \\
 
-\subsection{The Distribution of Nontrivial Zeros}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Distribution of Nontrivial Zeros}
 
 \begin{definition}
 For non-negative $t$, let $M_E(t)$ be the modified non-trivial zero counting function for $\Les$, i.e.
@@ -780,14 +782,19 @@ Moreover, the trigonometric sum should grow very slowly with $t$. Put more forma
 \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n) = O(\log t)
 \end{equation}
 \end{conjecture}
-This statement should follow from GRH, and is borne out by numerical evidence. \\
+This statement should follow from GRH, and is borne out by numerical evidence:
 
-%NUMERICAL EVIDENCE HERE
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/M_E_trig_sum_bounds.png}
+    \caption{The oscillating sum $\sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n)$ for the curve with Cremona label $389a$ (with equation $y^2 + y = x^3 + x^2 - 2x$) versus $\pm \log(t)$ for $0\le t \le 200$. Numerically we actually see the maximum value of the sum grow slower than $\log(t)$ - possibly $\log(t)^{\alpha}$ for some $0<\alpha<1$, or even $\log\log(t)$.}
+    \label{fig:M_E_trig_sum_bounds}
+\end{figure}
 
 \begin{lemma}\label{lem:arctan_sum_size}
-For $t\ge 0$, 
+For $t >> 0$, 
 \begin{equation}
-\sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) = t\log t - (1-\eta)t + \frac{\pi}{4} + O\left(\frac{1}{t}\right),
+\sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) = t\log t + (\eta-1)t + \frac{\pi}{4} + O\left(\frac{1}{t}\right),
 \end{equation}
 where $\eta = 0.5772\ldots$ is the Euler-Mascheroni constant.
 \end{lemma}
@@ -817,6 +824,22 @@ M_E(t) = \frac{t}{\pi}\left[\log\left(\frac{t\sqrt{N}}{2\pi}\right) -1 \right] +
 where the error term is positive as often as it negative and contributes no net bias.
 \end{theorem}
 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/M_E_389.png}
+    \caption{The number of zeros up to $t$ versus $\frac{t}{\pi}\left[\log\left(\frac{t\sqrt{N}}{2\pi}\right) -1 \right] + \frac{1}{4}$ for the Cremona curve $389a$. The match up is extremely good.}
+    \label{fig:M_E_389}
+\end{figure}
+
+\begin{corollary}
+For $t>>0$, the number of zeros on the critical line in a unit interval
+\begin{equation}
+M_E(t)-M_E(t-1) = \frac{1}{\pi}\log\left(\frac{t\sqrt{N}}{2\pi}\right) + O(\log t),
+\end{equation}
+where again the error term contributes no net bias.
+\end{corollary}
+
+That is, zero density on the critical line grows like $\frac{1}{2}\log N + \log t$, where $N$ is the conductor of $E$ and $t$ the distance from the real axis. \\
 
 We may also use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the lowest noncentral nontrivial zero of $\Les$:
 \begin{proposition}
@@ -830,9 +853,18 @@ The ``proof'' is as follows: The location of the first nontrivial noncentral zer
 
 Now $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right]$ is $O(t^3)$ for small t, so the quantity expressed in equation \ref{eqn:M_E_smooth_part} is dominated by the $\frac{1}{\pi}\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t$ term when $N$ is large. Solving for $t$ yields the desired value.
 
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Central Leading Coefficient}
+
+Unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, are fairly easily obtainable by bounding $\ldLam{1+s}$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of bounding $C_E$ from below.
+
+\begin{proposition}
+Cheese
+\end{proposition}
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Real Period}
 
 The real period of a rational elliptic curve $E$ is a measure of the ``size'' of the set of {\it real} points on $E$. \\
