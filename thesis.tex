@@ -326,8 +326,8 @@ where $w_E \in \set{-1, 1}$ is the action of the Atkin-Lehner involution on the 
 \end{itemize}
 \end{corollary}
 
-For interest we reproduce the analytic continuation for $\Lams$ explicitly below. Define the auxiliary function $\lambda_E(s)$ by
-\begin{equation}
+We reproduce the analytic continuation for $\Lams$ explicitly below. Define the auxiliary function $\lambda_E(s)$ by
+\begin{equation}\label{eqn:Lams_analytic_continuation}
 \lambda_E(s) = \left(\frac{\sqrt{N}}{2\pi}\right)^{s} \sum_{n=1}^\infty a_n n^{-s}\Gamma \left(s,\frac{2\pi n}{\sqrt{N}}\right),
 \end{equation}
 where all the quantities are as defined previously, and $\Gamma(s,x)$ is the upper incomplete Gamma function on $\CC\cross \RR_{>0}$. The sum converges absolutely for any $s$, so $\lambda_E(s)$ is entire. Then
@@ -336,11 +336,41 @@ where all the quantities are as defined previously, and $\Gamma(s,x)$ is the upp
 \end{equation}
 Knapp goes through the proof of this formula in \cite[pp. 270-271]{Kna-1992}. \\
 
+\begin{definition}
+$E$ is said to have {\it even parity} if $w_E = 1$, and {\it odd parity} if $w_E = -1$.
+\end{definition}
+
 The functional equation for $\Lams$ shows that it is either symmetric or antisymmetric about the line $\Re(s) = 1$; moreover, since all the constituent parts for $\Lams$ are defined over the reals, $\Lams$ is also conjugate symmetric about the real axis. It follows that $\Lams$ is highly symmetric about the point $s=1$. This is formalized in the following statement:
 \begin{proposition}
-As a function of $s$, $\Lambda_E(1+s)$ is even if $w_E=1$, and odd if $w_E = -1$.
+As a function of $s$, $\Lambda_E(1+s)$ is even if $E$ has even parity, and odd if $E$ has odd parity.
 \end{proposition}
 This follows immediately from the functional equation. \\
+
+We may use Equation \ref{eqn:Lams_analytic_continuation} to produce formulae for the value of $\Lams$ and its higher derivatives at $s=1$:
+\begin{proposition} \mbox{}
+\begin{enumerate}
+\item \begin{equation}
+\Lambda_E(1) = \begin{cases} \frac{\sqrt{N}}{\pi} \sum_{n=1}^{\infty}\frac{a_n}{n} e^{-\frac{2\pi}{\sqrt{N}}\cdot n}, & w_E = 1 \\ 0, & w_E = -1 \end{cases}
+\end{equation}
+\item When $k$ has the same parity as $E$, the $k$th derivative of $\Lams$ at the central point is given by
+\begin{equation}\label{eqn:central_derivatives}
+\Lambda_E^{(k)}(1) = 2 \sum_{n=1}^\infty a_n \int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N}}\right)^k e^{-\frac{2\pi n}{\sqrt{N}}\cdot t} \; dx
+\end{equation}
+(when $k$ is opposite in parity to $E$, then $\Lambda_E^{(k)}(1) = 0$).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Observe we may write equation \ref{eqn:Lams_analytic_continuation}, after a change of variables and swapping integration and summation signs, as
+\begin{equation*}
+\lambda_E(1+s) = N^{\frac{1+s}{2}}  \int_{\frac{1}{\sqrt{N}}}^{\infty} x^s f_E(it) \; dt  = N^{\frac{1+s}{2}}  \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N}}}^{\infty} t^s e^{-2\pi nt} \; dt,
+\end{equation*}
+where $f_E$ is the cusp form attached to $E$. We may differentiate under the integral sign without issue and then evaluate at $s=1$ to get
+\begin{equation*}
+\lambda_E^{(k)}(1) = \sqrt{N}\cdot \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N}}}^{\infty} (\log t)^k e^{-2\pi n t} \; dt
+\end{equation*}
+Equation \ref{eqn:central_derivatives} follows by substituting $t \mapsto \sqrt{N} \cdot t$. For $k=0$ the integrals may be evaluated directly: $\int_{1}^{\infty} e^{-\frac{2\pi n t}{\sqrt{N}}} \; dt = \frac{\sqrt{N}}{2\pi n} e^{-\frac{2\pi n}{\sqrt{N}}}$.
+\end{proof}
 
 \begin{definition} For elliptic curve $L$-functions:
 \begin{itemize}
@@ -378,7 +408,7 @@ We will work a lot with the leading coefficient of the $L$-seres at the central 
 Observe that $C_E = \frac{\sqrt{N}}{2\pi}\cdot C^{\pr}_E$. We will most often work with the former, hence the notation.
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Some Conjectures}\label{sec:conjectures}
 
 The main results in this thesis are contingent on the Birch and Swinnerton-Dyer conjecture, The Generalized Riemann Hypothesis and the ABC conjecture. We reproduce the three conjectures in full below. \\
@@ -816,7 +846,7 @@ The result follows.
 
 Conjecture \ref{conj:trig_sum_size} and lemma \ref{lem:arctan_sum_size} combine to give us a precise asymptotic statement on the distribution of zeros up to $t$, in the same vein as von Mangoldt's asymptotic formula for the number of zeros up to $t$ for $\zeta$:
 
-\begin{theorem}[S.]
+\begin{theorem}[S.]\label{thm:zero_density}
 Let $E$ have conductor $N$. Then for $t>>0$ we have
 \begin{equation}
 M_E(t) = \frac{t}{\pi}\left[\log\left(\frac{t\sqrt{N}}{2\pi}\right) -1 \right] + \frac{1}{4} + O(\log t),
@@ -857,7 +887,18 @@ Now $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Central Leading Coefficient}
 
-Unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, are fairly easily obtainable by bounding $\ldLam{1+s}$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of bounding $C_E$ from below.
+It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor by doing some analysis on $\ldLam{1+s}$ and the bite $\beta(E)$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
+
+As zero density on the critical line grows proportional to $\log N$ (see Theorem \ref{thm:zero_density}), we expect the bite $\beta(E) = \sum_{\gamma\ne 0} \gamma^{-2}$ to grow proportional to $\log N$. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
+\begin{lemma}[S.]
+For all $\epsilon>0$ there is a constant $K_{\epsilon}>0$ such that for all $E$ with conductor $N$, the bite of $E$ obeys
+\begin{equation}
+\beta(E) = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{2+\epsilon} \log N - K_{\epsilon}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+
+\end{proof}
 
 \begin{proposition}
 Cheese
