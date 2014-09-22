@@ -611,7 +611,7 @@ $\Lambda_E(1+s)$ has a particularly simple representation as a product over its 
 \begin{lemma}  \mbox{}
 \begin{enumerate}
 \item \begin{equation}\label{eqn:Lams_prod}
-\Lambda_E(1+s) = C_E\cdot r_{an}^s \cdot \prod_{\gamma > 0} \left(1+\frac{s^2}{\gamma^2}\right) 
+\Lambda_E(1+s) = C_E\cdot s^{r_{an}} \cdot \prod_{\gamma > 0} \left(1+\frac{s^2}{\gamma^2}\right) 
 \end{equation}
 where $C_E$ is the leading coefficient of $\Les$ at the central point (i.e. that defined in Conjecture \ref{conj:BSD}), and the product is taken over all zeros of $\Lambda_E(1+s)$ in the upper half plane. The product converges absolutely for any $s$, and uniformly on any bounded set.
 \item \begin{equation}\label{eqn:ldLam_sum}
@@ -885,24 +885,39 @@ Now $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Central Leading Coefficient}
+\section{The Bite and the Central Leading Coefficient}
 
 It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor by doing some analysis on $\ldLam{1+s}$ and the bite $\beta(E)$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
 
-As zero density on the critical line grows proportional to $\log N$ (see Theorem \ref{thm:zero_density}), we expect the bite $\beta(E) = \sum_{\gamma\ne 0} \gamma^{-2}$ to grow proportional to $\log N$. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
+As zero density on the critical line grows proportional to $\frac{1}{2}\log N$ (see Theorem \ref{thm:zero_density}), we expect the bite $\beta(E) = \sum_{\gamma\ne 0} \gamma^{-2}$ to grow like $\frac{1}{2}\log N$. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
 \begin{lemma}[S.]
-For all $\epsilon>0$ there is a constant $K_{\epsilon}>0$ such that for all $E$ with conductor $N$, the bite of $E$ obeys
+For all $\epsilon>0$ there is a constant $K_{\epsilon}>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
 \begin{equation}
 \beta(E) = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{2+\epsilon} \log N - K_{\epsilon}.
 \end{equation}
+where $N$ is the conductor of $E$.
 \end{lemma}
 \begin{proof}
 
 \end{proof}
 
 \begin{proposition}
-Cheese
+Let $E$ have completed $L$-function $\Lams$ and analytic rank $r$. Then
+\begin{equation}
+\beta(E)\cdot C_E = \frac{\Lambda_E^{(r+2)}(1)}{(r+2)!},.
+\end{equation}
+where $\beta(E)$ is the bite of $E$, and $C_E$ is the leading coefficient of $\Lams$ at the central point.
 \end{proposition}
+\begin{proof}
+From equation \ref{eqn:Lams_prod} we have that 
+\begin{equation}
+\Lambda_E(1+s) = C_E\left(s^r + \beta(E) s^{r+2} + O(s^{r+4})\right)
+\end{equation}
+Differentiating $r+2$ times and evaluating at $s=0$ achieves the desired result.
+\end{proof}
+\begin{corollary}
+Something bounding the size of $\Lambda_E^{(r+2)}(1)$.
+\end{corollary}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
