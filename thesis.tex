@@ -465,11 +465,10 @@ Let $E$ be an elliptic curve over $\QQ$ with conductor $N$ and minimal discrimin
 \end{conjecture}
 
 \begin{conjecture}[Lang]\label{conj:Lang}
-Let $E$ be an elliptic curve over $\QQ$ with minimal discriminant $D$. There is a positive constant $K$ such that for any nontorsion point $P\in E(\QQ)$,
+There is a positive constant $K$ such that for any elliptic curve $E$ over $\QQ$ with minimal discriminant $D(E)$, the N\'{e}ron-Tate canonical height of any nontorsion point $P\in E(\QQ)$ is bounded from below by,
 \begin{equation}
-\hat{h}(P) \ge K\log |D|,
+\hat{h}(P) \ge K\log |D(E)|.
 \end{equation}
-where $\hat{h}(P)$ is the N\'{e}ron-Tate canonical height of $P$.
 \end{conjecture}
 
 \begin{conjecture}[Hall]\label{conj:Hall}
@@ -608,7 +607,7 @@ Recall that if $f$ is meromorphic on $\CC$, then $\frac{f\pr}{f}$ has a pole at 
 \end{proof}
 
 $\Lambda_E(1+s)$ has a particularly simple representation as a product over its zeros, from which we get a representation of $\ldLam{1+s}$ as a sum over its zeros.
-\begin{lemma}  \mbox{}
+\begin{proposition}\label{prop:logderiv_zero_rep}  \mbox{}
 \begin{enumerate}
 \item \begin{equation}\label{eqn:Lams_prod}
 \Lambda_E(1+s) = C_E\cdot s^{r_{an}} \cdot \prod_{\gamma > 0} \left(1+\frac{s^2}{\gamma^2}\right) 
@@ -619,7 +618,7 @@ where $C_E$ is the leading coefficient of $\Les$ at the central point (i.e. that
 \end{equation}
 where the sum is taken over {\bf all} nontrivial zeros of $\Lambda_E(1+s)$ (including central zeros) with multiplicity. The sum converges absolutely for any $s$ outside the set of nontrivial zeros for $L_E(1+s)$, and uniformly on any bounded set. \\
 \end{enumerate}
-\end{lemma}
+\end{proposition}
 
 Note that if we assume GRH (as we always do), then $\gamma^2$ is always a nonnegative real number in any of the above expansions. Furthermore,  since noncentral nontrivial zeros occur in conjugate pairs, each term for $\gamma \ne 0$ in Equation \ref{eqn:ldLam_sum} appears exactly twice. It is therefore often useful to rewrite it as
 \begin{equation}\label{eqn:ldLam_sum_v2}
@@ -640,17 +639,27 @@ where $C_E$ is the leading nonzero coefficient of the Taylor series for $\Lambda
 $\ldLam{1+s}$ is an odd function.
 \end{corollary}
 
+Lemma \ref{lem:ldLe_bound} and Equation \ref{eqn:ldLam_sum} may be used to provide a crude bound on the analytic rank of $E$ with respect to its conductor:
 \begin{corollary}\label{cor:logderiv_rank_bound}
 Let $E$ have analytic rank $r$ and conductor $N$. Then
 \begin{equation}
-r < \frac{\log N}{5}
+r < 1.6 + \frac{1}{2} \log N
 \end{equation}
 \end{corollary}
 \begin{proof}
-Cheese
+From Equation \ref{eqn:ldLam_sum} we have the point estimate
+\begin{equation}
+r < \sum_{\gamma} \frac{1}{1+\gamma^2} = \ldLam{2}
+\end{equation}
+while from Lemma \ref{lem:ldLe_bound} we get
+\begin{equation}
+\ldLam{2} =  \log\left(\frac{\sqrt{N}}{2\pi}\right) + \digamma(2) + \ldLe{2} < \frac{1}{2}\log N  - \log 2\pi + 1-\eta -2\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right),
+\end{equation}
+where $\digamma(s)$ is the digamma function on $\CC$ and $\eta$ is the Euler-Mascheroni constant $= 0.5772156649\ldots$. Collect constant terms and round up to get the stated bound.
 \end{proof}
+We will later use a related technique to show firstly that the constant of $1.6$ can be replaced with $-0.4$; better yet, we will in fact show that maximum analytic rank grows more slowly than $\epsilon \log N$ for any $\epsilon>0$. \\
 
-The following corollary will be of import in obtaining explicit bounds on the number of zeros of $L_E(s)$ in a given interval on the critical strip:
+The following corollary of Proposition \ref{prop:logderiv_zero_rep} will be of import in obtaining explicit bounds on the number of zeros of $L_E(s)$ in a given interval on the critical strip:
 \begin{corollary}\label{cor:Re_logderiv}
 Let $\Re(s) > 0$, and write $s = \sigma + i\tau$, i.e. $\sigma > 0$. Then
 \begin{equation}
@@ -977,7 +986,7 @@ Now
 while $\sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N}}}{n} \le \sum_{n=1}^{\infty} e^{-2\pi n\sqrt{N}} = \frac{1}{e^{2\pi\sqrt{N}}-1}$.
 \end{proof}
 
-Note that for fixed $N$, if we allow $k \to \infty$, we actually have that the $k$th derivative can grow like $O\left(\frac{k!!}{(2\pi e)^{k/2}}\right)$, where $k!! = k(k-2)\cdots$ is the double factorial on $k$ - i.e., faster than exponentially in $k$. However, this behavior only starts to show when $k>>\log N$ - hence our restriction on the magnitude of $k$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N$, we will never need to consider $\Lambda_E^{(k)}(1)$ for $k> \frac{1}{2}\log N$.
+Note that for fixed $N$, if we allow $k \to \infty$, we actually have that the $k$th derivative can grow like $O\left(\frac{k!!}{(2\pi e)^{k/2}}\right)$, where $k!! = k(k-2)\cdots$ is the double factorial on $k$ - i.e., faster than exponentially in $k$. However, this behavior only starts to show when $k>>\log N$ - hence our restriction on the magnitude of $k$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N$ (c.f. Corollary \ref{cor:logderiv_rank_bound}), we will never need to consider $\Lambda_E^{(k)}(1)$ for $k> \frac{1}{2}\log N$.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
