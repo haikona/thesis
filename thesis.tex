@@ -35,6 +35,8 @@
 \newcommand{\EQ}{E(\QQ)}
 \newcommand{\EFp}{E(\Fp)}
 \newcommand{\Ensfpe}{E_{\text{ns}}(\FF_{p^e})}
+\newcommand{\sinc}{\text{sinc}}
+\newcommand{\Li}{\text{Li}}
 
 
 \title{Ph.D Dissertation}
@@ -787,6 +789,49 @@ In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\varphi_E \
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Estimating Analytic Rank with the sinc$^2$ Sum}
+
+The Explicit Formula may be used to provide computationally effective upper bounds on the analytic rank of an elliptic curve. The method appears to have first been formulated by Mestre in \cite{Me-1986}, and used by Brumer in \cite{Bru-1992} to prove that, conditional on GRH, the average rank of elliptic curves was at most 2.3. This upper bound was improved to 2 by Heath-Brown in \cite{HeBr-2004}. \\
+
+The method stems from invoking the explicit formula as stated in Lemma \ref{lem:exp_form_2} on a function $f$ of a specific form:
+\begin{lemma}\label{lem:exp_form_nonneg_f_cpt_suppt}
+Let $\gamma$ range over the nontrivial zeros of $L_E(s)$. Let $f$ be a non-negative even real-valued function on $\RR$ such that $f(0)=1$. Suppose further that the Fourier transform $\hat{f}$ of $f$ has compact support, i.e. $\hat{f}(y) = 0$ for $|y|>R$ for some $R>0$. Then for any $\Delta>0$, we have
+\begin{equation}
+\sum_{\gamma} f(\Delta \gamma) = \frac{1}{\Delta \pi}\log\left(\frac{\sqrt{N}}{2\pi}\right) + \Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt  + \frac{1}{\Delta \pi}\sum_{n<e^{\Delta R}} c_n \hat{f}\left(\frac{\log n}{\Delta}\right)
+\end{equation}
+Moreover, the value of the sum bounds from above the analytic rank of $E$ for any given value of $\Delta$, and sum converges to $r_{\an}(E)$ as $\Delta \to \infty$.
+\end{lemma}
+
+\begin{proof}
+The formula as stated above is just an application of the explicit formula in Lemma \ref{lem:exp_form_2}, noting that the Fourier transform of $f(\Delta x)$ is $\frac{1}{\Delta}\hat{f}\left(\frac{\xi}{\Delta}\right)$. Since $f$ is $1$ at the origin, $\sum_{\gamma} f(\Delta \gamma) = r_{an} + \sum_{\gamma\ne 0} f(\Delta \gamma)$. Furthermore, $f$ is non-negative and integrable, so the sum over noncentral zeros is nonnegative and decreases to zero as $\Delta$ increases.
+\end{proof}
+
+While in theory any $f$ with the properties mentioned above work for bounding analytic rank, the function
+\begin{equation}
+f(x) = \sinc^2(x) = \left(\frac{\sin(\pi x)}{\pi x}\right)^2
+\end{equation}
+is what is used by Mestre, Brumer, Heath-Brown in the publications above, and by Bober in \cite{Bob-2011}. This is due to its Fourier transform is the triangular function:
+\begin{equation}
+\hat{f}(y) = \int_{-\infty}^{\infty} e^{-i x y}f(x)\; dx =  \begin{cases} 1 - \frac{|y|}{2\pi}, & |y|\le 2\pi \\ 0, & |y| > 2\pi\end{cases}
+\end{equation}
+Moreover, if $f(x) = \sinc^2(x)$, the integral $\Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt$ can be explicitly in terms of known constants and special functions:
+\begin{equation}
+\Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt = - \frac{\eta}{\pi \Delta} + \frac{1}{2\pi^2 \Delta^2}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right),
+\end{equation}
+where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$ and $\Li_2(x)$ is the dilogarithm function, defined as $\Li_2(x) = \sum_{k=1}^{\infty} \frac{x^k}{k^2}$ for $|x|\le 1$.
+
+Combining the above, we get a specialization of Lemma \ref{lem:exp_form_nonneg_f_cpt_suppt}:
+\begin{corollary}
+Let $\gamma$ range over the nontrivial zeros of $L_E(s)$, and let $\Delta > 0$. Then
+\begin{equation}
+\sum_{\gamma} \sinc^2(\Delta \gamma) = \frac{1}{\Delta \pi}\left[\left(-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right)+ \frac{1}{2\pi \Delta}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)  + \sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)\right]
+\end{equation}
+\end{corollary}
+
+What's notable about the above formula is that the right hand side is a finite computation, and only requires knowledge of the elliptic curve's conductor and its $a_p$ values up to some bound. Thus the zero sum is eminently computable, and results in a value that bounds from above the analytic rank of $E$.
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Distribution of Nontrivial Zeros}
 
 \begin{definition}
@@ -1176,7 +1221,7 @@ Since the conductor of a curve always divides the minimal discriminant, an immed
 \begin{corollary}
 Let $E/\QQ$ have conductor $N_E$. There exists an absolute constant $M_1 >0$ independent of $E$ such that any non-torsion point $P \in E(\QQ)$ satisfies
 \begin{equation}
-\hat{h}(P) >= M_0 \log N_E .
+\hat{h}(P) >= M_1 \log N_E .
 \end{equation}
 \end{corollary}
 (Note that the two versions of the height conjecture are fully equivalent under Szpiro's Conjecture). \\
@@ -1211,7 +1256,7 @@ From Lemma ??? we have that $r < \frac{1}{5}\log N$; hence
 
 
 
-
+\newpage
 \bibliography{bibliography}{}
 \bibliographystyle{amsalpha}
 
