@@ -823,12 +823,46 @@ where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$ and $\Li_2(x)$ is
 Combining the above, we get a specialization of Lemma \ref{lem:exp_form_nonneg_f_cpt_suppt}:
 \begin{corollary}
 Let $\gamma$ range over the nontrivial zeros of $L_E(s)$, and let $\Delta > 0$. Then
-\begin{equation}
+\begin{equation}\label{eqn:sincsquared_sum}
 \sum_{\gamma} \sinc^2(\Delta \gamma) = \frac{1}{\Delta \pi}\left[\left(-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right)+ \frac{1}{2\pi \Delta}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)  + \sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)\right]
 \end{equation}
 \end{corollary}
 
-What's notable about the above formula is that the right hand side is a finite computation, and only requires knowledge of the elliptic curve's conductor and its $a_p$ values up to some bound. Thus the zero sum is eminently computable, and results in a value that bounds from above the analytic rank of $E$.
+What's notable about the above formula is that the right hand side is a finite computation, and only requires knowledge of the elliptic curve's conductor and its $a_p$ values up to some bound. Thus the zero sum is eminently computable, and results in a value that bounds from above the analytic rank of $E$. \\
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/zero_sum_visualization.png}
+    \caption{A graphic representation of the $\sinc^2$ sum for the elliptic curve $E: y^2=x^3-18x+51$, a rank 1 curve with conductor $N=750384$, for three increasing values of the parameter $\Delta$. Vertical lines have been plotted at $x=\gamma$ whenever $L_E(1+i\gamma)=0$ -- red for the single central zero, and blue for noncentral zeros; the height of the darkened portion of each line is given by the black curve $\sinc^2(\Delta x)$. Summing up the lengths of the dark vertical lines thus gives the value of the $\sinc^2$ sum. We see that as $\Delta$ increases, the contribution from the blue lines -- corresponding to noncentral zeros -- goes to zero, while the contribution from the central zero in red remains at 1. Thus the sum must limit to 1 as $\Delta$ increases.}
+    \label{fig:zero_sum_visualization}
+\end{figure}
+
+
+A neat conclusion that can immediately be drawn from the finiteness of the $\sinc^2$ explicit formula sum, is that maximum analytic rank grows more slowly than $\log(N)$:
+
+\begin{corollary}
+For any $\epsilon >0$ there is a constant $K_{\epsilon}>0$ such that for any $E/\QQ$ with conductor $N$, we have
+\begin{equation}
+r_{an}(E) < \epsilon \log N + K_{\epsilon}
+\end{equation}
+\end{corollary}
+\begin{proof}
+We note that for any given $\Delta>0$, the sum $ \sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)$ is bounded by a constant that is independent of the choice of elliptic curve, as the $c_n$ values are bounded globally. Thus the right hand side of Equation \ref{eqn:sincsquared_sum} is equal to $\frac{1}{2\pi \Delta}\log N$ plus a number whose supremum magnitude depends only on $\Delta$ and not on $E$. Since the sum bounds analytic rank, taking $\epsilon = \frac{1}{2\pi \Delta}$ and letting $\epsilon \to 0$ proves the statement.
+\end{proof}
+
+This statement is already known in the literature, so nothing new has been proven here. In fact, it's conjectured that maximum analytic rank grows more like $\sqrt{\log N}$ (existing numerical evidence would seem to support this), but this is still very much an open problem. \\
+
+One other thing worth noting is that when $\Delta \le \frac{\log 2}{2\pi}$, the $c_n$ sum is empty. Thus we have the following:
+\begin{corollary}
+Let $E/\QQ$ have conductor $N$. Let $\eta$ be the Euler-Mascheroni constant $=0.5772\ldots$, and let $\gamma$ range over the nontrivial zeros of $\L_E(s)$. Then
+\begin{equation}
+\sum_{\gamma} \sinc^2\left(\frac{\log 2}{2\pi} \cdot \gamma \right) = \frac{\log N}{\log 2} + K,
+\end{equation}
+where $K = \frac{\pi^2}{6(\log 2)^2} - \frac{2\eta}{\log 2} - 2\frac{\log \pi}{\log 2} - 1 = -2.54476987\ldots$ is a global constant that is independent of $E$.
+\end{corollary}
+\begin{proof}
+Evaluate Equation \ref{eqn:sincsquared_sum} at $\Delta = \frac{\log 2}{2\pi}$ and simplify, noting that $\Li_2\left(\frac{1}{2}\right) = \frac{\pi^2}{6} - \frac{(\log 2)^2}{2}$.
+\end{proof}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
