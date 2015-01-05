@@ -692,7 +692,7 @@ The {\it bite} of $\Les$ is
 \end{equation}
 where the sum runs over the imaginary parts of all {\it noncentral} nontrivial zeros of $\Les$.
 \end{definition}
-This quantity ends up controlling the rate of convergence in many of the sums that appear in explicit formula-type relations for $\Les$. Again, the explicit dependence on $E$ may be left as understood if the choice of $E$ is unambiguous.
+This quantity ends up controlling the rate of convergence in many of the sums that appear in explicit formula-type relations for $\Les$. Again, the explicit dependence on $E$ may be left as understood if the choice of $E$ is unambiguous, or we may subsume the dependance on $E$ into a subscript and write $\beta_E$. \\
 
 Since sums of inverse higher powers of zeros also crop up, we generalize the notion of bite as follows:
 \begin{definition}
@@ -701,7 +701,7 @@ For positive integer $n$, the {\it higher order bite} of order $n$ for $\Les$ is
 \beta_n(E) := \sum_{\gamma \ne 0} \gamma^{-n}.
 \end{equation}
 \end{definition}
-Thus $\beta_2(E) = \beta(E)$ as defined previously. Note also that $\beta_n = 0$ for any odd $n$, since zeros come in conjugate pairs. \\
+Thus $\beta_2(E) = \beta_E$ as defined previously. Note also that $\beta_n = 0$ for any odd $n$, since zeros come in conjugate pairs. \\
 
 Equation \ref{eqn:ldLam_sum} gives us a description of the Laurent expansion of $\ldLam{1+s}$ about zero:
 \begin{corollary}\label{cor:ldLam_series_at_zero}
@@ -715,14 +715,14 @@ and this converges for $|s|<\gamma_0$, where $\gamma_0$ is the imaginary part of
 The proof of this follows immediately by expanding the sum in Equation \ref{eqn:ldLam_sum} and collecting terms. \\
 
 \begin{corollary}\label{cor:ldLe_expansion}
-Let $E/\QQ$ have conductor $N$, $L$-function $\Les$ and bite $\beta = \beta_2(E)$. Let the Taylor series expansion of $L_E$ about the central point be
+Let $E/\QQ$ have conductor $N$, $L$-function $\Les$ with bite $\beta_E = \beta_2(E)$ and central leading coefficient $C_E\pr$. Let the Taylor series expansion of $L_E$ about the central point be
 \begin{equation}
-L_E(1+s) = Cs^{r_{an}}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]
+L_E(1+s) = C_E\pr \, s^{r_{an}}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]
 \end{equation}
 Then 
 \begin{align}
 a &= -\left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right] \\
-2b &= \left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right]^2 - \frac{\pi^2}{6} + \beta,
+2b &= \left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right]^2 - \frac{\pi^2}{6} + \beta_E,
 \end{align}
 where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$.
 \end{corollary}
@@ -737,7 +737,7 @@ Thus by equation \ref{eqn:logderiv_relation} and Corollary \ref{cor:ldLam_series
 \begin{equation*}
 \ldLe{1+s} = \frac{r_{an}}{s} - \left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right] + \left[-\zeta(2) + \sum_{\gamma\ne0} \gamma^{-2}\right]\cdot s + O(s^2)
 \end{equation*}
-But if $L_E(1+s) = Cs^{r_{an}}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]$, then careful logarithmic differentiation yields
+But if $L_E(1+s) = C_E\pr \, s^{r_{an}}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]$, then careful logarithmic differentiation yields
 \begin{equation*}
 \ldLe{1+s} = \frac{r_{an}}{s} + a + \left(-a^2 + 2b\right)\cdot s + O(s^2)
 \end{equation*}
@@ -985,13 +985,13 @@ Now $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Bite and the Central Leading Coefficient}
 
-It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor by doing some analysis on $\ldLam{1+s}$ and the bite $\beta(E)$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
+It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor by doing some analysis on $\ldLam{1+s}$ and the bite $\beta_E$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
 
-As zero density on the critical line grows proportional to $\frac{1}{2}\log N$ (see Theorem \ref{thm:zero_density}), we expect the bite $\beta(E) = \sum_{\gamma\ne 0} \gamma^{-2}$ to grow like $\frac{1}{2}\log N$. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
+As zero density on the critical line grows proportional to $\frac{1}{2}\log N$ (see Theorem \ref{thm:zero_density}), we expect the bite $\beta_E = \sum_{\gamma\ne 0} \gamma^{-2}$ to grow like $\frac{1}{2}\log N$. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
 \begin{lemma}[S.]
 For all $\epsilon>0$ there is a constant $K_{\epsilon}>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
 \begin{equation}
-\beta(E) = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{2+\epsilon} \log N - K_{\epsilon}.
+\beta_E = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{2+\epsilon} \log N - K_{\epsilon}.
 \end{equation}
 where $N$ is the conductor of $E$.
 \end{lemma}
@@ -999,20 +999,35 @@ where $N$ is the conductor of $E$.
 
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}\label{prop:bite_times_leading_coeff}
 Let $E$ have completed $L$-function $\Lams$ and analytic rank $r$. Then
 \begin{equation}
-\beta(E)\cdot C_E = \frac{\Lambda_E^{(r+2)}(1)}{(r+2)!},.
+\beta_E\cdot C_E = \frac{\Lambda_E^{(r+2)}(1)}{(r+2)!},.
 \end{equation}
-where $\beta(E)$ is the bite of $E$, and $C_E$ is the leading coefficient of $\Lams$ at the central point.
+where $\beta_E$ is the bite of $E$, and $C_E$ is the leading coefficient of $\Lams$ at the central point.
 \end{proposition}
 \begin{proof}
 From equation \ref{eqn:Lams_prod} we have that 
 \begin{equation}
-\Lambda_E(1+s) = C_E\left(s^r + \beta(E) s^{r+2} + O(s^{r+4})\right)
+\Lambda_E(1+s) = C_E\left(s^r + \beta_E s^{r+2} + O(s^{r+4})\right)
 \end{equation}
 Differentiating $r+2$ times and evaluating at $s=0$ achieves the desired result.
 \end{proof}
+
+From this we derive a straightforward way to compute the bite of $E$ from the $r$th and $(r+2)$th Taylor coefficients of the $L$-series attached to $E$ (this of course relies on knowing the analytic rank of $E$):
+\begin{corollary}
+\begin{align}
+\beta_E \quad &= \frac{1}{(r+1)(r+2)} \cdot \frac{\Lambda_E^{(r+2)}(1)}{\Lambda_E^{(r)}(1)} \\
+&= \frac{2}{(r+1)(r+2)} \cdot \frac{L_E^{(r+2)}(1)}{L_E^{(r)}(1)} - \left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right)^2 + \frac{\pi^2}{6}
+\end{align}
+\end{corollary}
+\begin{proof}
+The first line follows immediately from Proposition \ref{prop:bite_times_leading_coeff} and the fact that $C_E = \frac{\Lambda^{(r)}(1)}{r!}$. The second line comes from the formula for the $(r+2)$th Taylor coefficient of $L_E$ at the central point derived in Corollary \ref{cor:ldLe_expansion}.
+\end{proof}
+This allows us to compute the bite of a curve {\it without} having to compute the locations of the zeros themselves. Moreover, the bite can be computed to arbitrary precision in polynomial time (in the conductor and the number of bits of precision) using, for example, Tim Dokchitser's {\tt computel} PARI code, which can compute the Taylor series expansion of a motivic $L$-function at a given point. \\
+
+%%%%% INCLUDE PICTURES OF BITE VS. CONDUCTOR AND LEADING COEFF HERE %%%%%
+
 \begin{corollary}
 Something bounding the size of $\Lambda_E^{(r+2)}(1)$.
 \end{corollary}
