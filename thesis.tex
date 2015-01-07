@@ -987,25 +987,38 @@ Observe that the $n$th nontrivial noncentral zero has imaginary part $t$ when $M
 \end{equation*}
 \end{proof}
 
+[Aside: The principle branch of the Lambert $W$-function has the asymptotic expansion $W_0(x) = \log x - \log \log x + o\left(1\right)$, for $n >> 0$ we recover the known asymptotic for the location of the $n$th nontrivial zero: $\gamma_n = O\left(\frac{n}{\log n} \right)$. Better yet, after some manipulation the asymptotic expansion gives us the proportionality constant explicitly:
+\begin{equation}
+\lim_{n \to \infty} \frac{\gamma_n}{\frac{n}{\log n}} = \pi
+\end{equation}
+Note, however, that the convergence rate is slow: $O(\frac{1}{\log n})$, and the constant in front scales with the log of the conductor of $E$.] \\
+
+A natural question to ask, given that we now have an expected value for $\gamma_n$, is: how much does the imaginary part of the $n$th zero deviate from its expected location? To this end we define the {\it dispersion} of the $n$th zero:
+\begin{definition}
+The dispersion $\delta_n(E) := \delta_n$ of the imaginary part of the $n$th nontrivial zero in the upper half plane is the difference between the true and predicted values of $\gamma_n$, i.e.
+\begin{equation}
+\delta_n = \gamma_n - \frac{2\pi e}{\sqrt{N}} \cdot \exp \left(W_0\left[\left(\frac{r}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N}}{2\pi e}\right]\right)
+\end{equation}
+\end{definition}
+
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1.0\textwidth]{graphics/gamma_n_deviations.png}
-    \caption{A scatter plot of $n$ vs. $\gamma_n - \frac{2\pi e}{\sqrt{N}} \cdot \exp \left(W_0\left[\left(\frac{r}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N}}{2\pi e}\right]\right)$ for the first 1000 nontrivial zeros of the Cremona curve 389a, the rank 3 curve with smallest conductor. The difference is seldom more than $\frac{1}{2}$.}
+    \caption{A scatter plot of zero dispersions for the first 1000 nontrivial zeros of the Cremona curve 389a, the rank 3 curve with smallest conductor. The values are seldom more than $\frac{1}{2}$.}
     \label{fig:gamma_n_deviations}
 \end{figure}
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1.0\textwidth]{graphics/gamma_n_dev_avg.png}
-    \caption{A cumulative average plot of the above, showing clearly that asymptotically, the average difference between the predicted and true values of $\gamma_n$ is zero. Interestingly, although the deviations might a priori appear completely random, there is a clear oscillating structure in the average, and the line about which the oscillation occurs appears to decrease to zero from above.}
+    \caption{A cumulative average plot of the above, showing clearly that asymptotically, the average difference between the predicted and true values of $\gamma_n$ is zero. The positive bias at the beginning comes from the $O(1/t)$ term in Lemma \ref{lem:arctan_sum_size}. Interestingly, although the deviations might a priori appear completely random, there is a clear oscillating structure in the average, and the line about which the oscillation occurs appears to decrease to zero from above.}
     \label{fig:gamma_n_dev_avg}
 \end{figure}
 
-Given that the principle branch of the Lambert $W$-function has the asymptotic expansion $W_0(x) = \log x - \log \log x + o\left(1\right)$, for $n >> 0$ we recover the known asymptotic for the location of the $n$th nontrivial zero: $\gamma_n = O\left(\frac{n}{\log n} \right)$. Better yet, after some manipulation the asymptotic expansion gives us the proportionality constant explicitly:
-\begin{equation}
-\lim_{n \to \infty} \frac{\gamma_n}{\frac{n}{\log n}} = \pi
-\end{equation}
-Note, however, that the convergence rate is slow: $O(\frac{1}{\log n})$, and the constant in front scales with the log of the conductor of $E$. \\
+Even though the above graph demonstrates that the zero dispersions are clearly not random, when viewed as a i.i.d. time series, the dispersions appear to limit to a constant Gaussian distribution. \\
+
+% HISTOGRAM OF 389a ZERO DISPERSIONS HERE %
+
 
 Finally, we may also go in the other direction and use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the {\it lowest} noncentral nontrivial zero of $\Les$ as a function of increasing conductor $N$:
 \begin{proposition}
