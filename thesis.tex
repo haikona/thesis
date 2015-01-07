@@ -50,6 +50,9 @@ Something something elliptic curves and rank.
 \end{abstract}
 
 \newpage
+\tableofcontents
+
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
@@ -946,8 +949,8 @@ Conjecture \ref{conj:trig_sum_size} and lemma \ref{lem:arctan_sum_size} combine 
 
 \begin{theorem}[S.]\label{thm:zero_density}
 Let $E$ have conductor $N$. Then for $t>>0$ we have
-\begin{equation}
-M_E(t) = \frac{t}{\pi}\left[\log\left(\frac{t\sqrt{N}}{2\pi}\right) -1 \right] + \frac{1}{4} + O(\log t),
+\begin{equation}\label{eqn:zero_density}
+M_E(t) = \frac{t}{\pi} \, \log\left(\frac{t\sqrt{N}}{2\pi e}\right) + \frac{1}{4} + O(\log t),
 \end{equation}
 where the error term is positive as often as it negative and contributes no net bias.
 \end{theorem}
@@ -969,17 +972,52 @@ where again the error term contributes no net bias.
 
 That is, zero density on the critical line grows like $\frac{1}{2}\log N + \log t$, where $N$ is the conductor of $E$ and $t$ the distance from the real axis. \\
 
-We may also use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the lowest noncentral nontrivial zero of $\Les$:
-\begin{proposition}
-For a curve $E$ with large conductor $N$, the best guess for the imaginary part of the first nontrivial noncentral zero $\gamma_0$ of $\Les$ in the upper half plane is
-\begin{equation}
-\gamma_0 = \frac{(r_{an}+1)\pi}{\log(N) -2\log(2\pi) -2\eta}
+Neglecting the oscilating error term in Equation \ref{eqn:zero_density}, we may solve for $t$ in terms of the Lambert $W$-function to obtain an explicit formula for the expected value of the imaginary part of the $n$th zero on the critical line. Recall the definition of the Lambert $W$-function: if $y = x e^x$, then $x = W(y)$. $W$ is a multiple-valued function; we make use of the principle branch $W_0$ below:
+\begin{corollary}
+Let $\gamma_n := \gamma_n(E)$ be the imaginary value of the $n$th nontrivial (and noncentral) zero in the upper half plane of $\Les$ with analytic rank $r$. Then
+\begin{equation}\label{approx:gamma_n}
+\gamma_n \sim \frac{2\pi e}{\sqrt{N}} \cdot \exp \left(W_0\left[\left(\frac{r}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N}}{2\pi e}\right]\right)
 \end{equation}
-where $r_{an}$ is the analytic rank of $E$
-\end{proposition}
-The ``proof'' is as follows: The location of the first nontrivial noncentral zero is given by the value of $t$ for which $M_E(t)$ jumps from $r_{an}/2$ to $r_{an}/2+1$. At that point $M_E(t) = r_{an}/2 + 1/2 = \frac{r_{an}+1}{2}$, so the expected value of $\gamma_0$ is given by setting equation \ref{eqn:M_E(t)} equal to $\frac{r+1}{2}$ and solving for $t$. \\
+in the sense that for a given curve, the difference between the above value and the true value of $\gamma_n$ will on average be zero as $n \to \infty$.
+\end{corollary}
+\begin{proof}
+Observe that the $n$th nontrivial noncentral zero has imaginary part $t$ when $M_E(t) = \frac{r}{2} + n - \frac{1}{2}$ (since the final zero is counted with half weight). Hence using Equation \ref{eqn:zero_density} sans the oscillating error term, we solve for $t$ in
+\begin{equation*}
+\frac{t}{\pi} \, \log\left(\frac{t\sqrt{N}}{2\pi e}\right) + \frac{1}{4} = \frac{r}{2} + n - \frac{1}{2}
+\end{equation*}
+\end{proof}
 
-Now $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right]$ is $O(t^3)$ for small t, so the quantity expressed in equation \ref{eqn:M_E_smooth_part} is dominated by the $\frac{1}{\pi}\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t$ term when $N$ is large. Solving for $t$ yields the desired value.
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/gamma_n_deviations.png}
+    \caption{A scatter plot of $n$ vs. $\gamma_n - \frac{2\pi e}{\sqrt{N}} \cdot \exp \left(W_0\left[\left(\frac{r}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N}}{2\pi e}\right]\right)$ for the first 1000 nontrivial zeros of the Cremona curve 389a, the rank 3 curve with smallest conductor. The difference is seldom more than $\frac{1}{2}$.}
+    \label{fig:gamma_n_deviations}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/gamma_n_dev_avg.png}
+    \caption{A cumulative average plot of the above, showing clearly that asymptotically, the average difference between the predicted and true values of $\gamma_n$ is zero. Interestingly, although the deviations might a priori appear completely random, there is a clear oscillating structure in the average, and the line about which the oscillation occurs appears to decrease to zero from above.}
+    \label{fig:gamma_n_dev_avg}
+\end{figure}
+
+Given that the principle branch of the Lambert $W$-function has the asymptotic expansion $W_0(x) = \log x - \log \log x + o\left(1\right)$, for $n >> 0$ we recover the known asymptotic for the location of the $n$th nontrivial zero: $\gamma_n = O\left(\frac{n}{\log n} \right)$. Better yet, after some manipulation the asymptotic expansion gives us the proportionality constant explicitly:
+\begin{equation}
+\lim_{n \to \infty} \frac{\gamma_n}{\frac{n}{\log n}} = \pi
+\end{equation}
+Note, however, that the convergence rate is slow: $O(\frac{1}{\log n})$, and the constant in front scales with the log of the conductor of $E$. \\
+
+Finally, we may also go in the other direction and use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the {\it lowest} noncentral nontrivial zero of $\Les$ as a function of increasing conductor $N$:
+\begin{proposition}
+For a curve $E$ with large conductor $N$, the best guess for the imaginary part of the first nontrivial noncentral zero $\gamma_1$ of $\Les$ in the upper half plane is
+\begin{equation}
+\gamma_1 = \frac{(r+1)\pi}{\log(N) -2\log(2\pi) -2\eta}
+\end{equation}
+where $r$ is the analytic rank of $E$
+\end{proposition}
+The derivation is similar to before. The location of the first nontrivial noncentral zero is given by the value of $t$ for which $M_E(t)$ jumps from $r/2$ to $r/2+1$; at that point $M_E(t) = r/2 + 1/2 = \frac{r+1}{2}$, so the expected value of $\gamma_1$ is given by setting equation \ref{eqn:M_E(t)} equal to $\frac{r+1}{2}$ and solving for $t$. \\
+
+Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right]$ is $O(t^3)$ for small t, so the quantity expressed in equation \ref{eqn:M_E_smooth_part} is dominated by the $\frac{1}{\pi}\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t$ term when $N$ is large. Solving for $t$ yields the desired value.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
