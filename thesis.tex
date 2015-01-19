@@ -853,9 +853,18 @@ r_{an}(E) < \epsilon \log N + K_{\epsilon}
 We note that for any given $\Delta>0$, the sum $ \sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)$ is bounded by a constant that is independent of the choice of elliptic curve, as the $c_n$ values are bounded globally. Thus the right hand side of Equation \ref{eqn:sincsquared_sum} is equal to $\frac{1}{2\pi \Delta}\log N$ plus a number whose supremum magnitude depends only on $\Delta$ and not on $E$. Since the sum bounds analytic rank, taking $\epsilon = \frac{1}{2\pi \Delta}$ and letting $\epsilon \to 0$ proves the statement.
 \end{proof}
 
-This statement is already known in the literature, so nothing new has been proven here. In fact, it's conjectured that maximum analytic rank grows more like $\sqrt{\log N}$ (existing numerical evidence would seem to support this), but this is still very much an open problem. \\
+[Aside: This statement is already known in the literature, so nothing new has been proven here. In fact, it's conjectured that maximum analytic rank grows more like $\sqrt{\log N}$ (existing numerical evidence would seem to support this), but this is still very much an open problem.] \\
 
-One other thing worth noting is that when $\Delta \le \frac{\log 2}{2\pi}$, the $c_n$ sum is empty. Thus we have the following:
+Choosing $\epsilon =\frac{1}{2}$ and collecting and bounding all the conductor-independent terms allows us to improve upon Corollary \ref{cor:logderiv_rank_bound}:
+\begin{corollary}\label{cor:better_an_bound}
+Let $E$ have analytic rank $r$ and conductor $N$. Then
+\begin{equation}
+r < \frac{1}{2} \log N - 0.4
+\end{equation}
+\end{corollary}
+We leave the details of the proof to the reader as a fun analysis exercise.\\
+
+Finally, one other thing worth noting is that when $\Delta \le \frac{\log 2}{2\pi}$, the $c_n$ sum is empty. Thus we have the following:
 \begin{corollary}
 Let $E/\QQ$ have conductor $N$. Let $\eta$ be the Euler-Mascheroni constant $=0.5772\ldots$, and let $\gamma$ range over the nontrivial zeros of $\L_E(s)$. Then
 \begin{equation}
@@ -1042,7 +1051,7 @@ Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Bite and the Central Leading Coefficient}
 
-It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor by doing some analysis on $\ldLam{1+s}$ and the bite $\beta_E$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
+It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor; this can be achieved by doing some analysis on $\ldLam{1+s}$ and the bite $\beta_E$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
 
 As zero density on the critical line grows proportional to $\frac{1}{2}\log N$ (see Theorem \ref{thm:zero_density}), we expect the bite $\beta_E = \sum_{\gamma\ne 0} \gamma^{-2}$ to grow like $\frac{1}{2}\log N$. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
 \begin{lemma}[S.]
@@ -1084,10 +1093,6 @@ The first line follows immediately from Proposition \ref{prop:bite_times_leading
 This allows us to compute the bite of a curve {\it without} having to compute the locations of the zeros themselves. Moreover, the bite can be computed to arbitrary precision in polynomial time (in the conductor and the number of bits of precision) using, for example, Tim Dokchitser's {\tt computel} PARI code, which can compute the Taylor series expansion of a motivic $L$-function at a given point. \\
 
 %%%%% INCLUDE PICTURES OF BITE VS. CONDUCTOR AND LEADING COEFF HERE %%%%%
-
-\begin{corollary}
-Something bounding the size of $\Lambda_E^{(r+2)}(1)$.
-\end{corollary}
 
 To establish bounds on the coefficients of the Taylor expansion of $\Lams$ about the central point, we will need the following technical lemma:
 \begin{lemma}\label{lem:central_deriv_int_bounds}
@@ -1315,47 +1320,54 @@ It turns out that one can construct elliptic curves with arbitrarily large regul
 
 This is an open question. However, the following conjecture has been made by Lang \cite{Lang-1997}:
 
-\begin{conjecture}
+\begin{conjecture}\label{conj:Lang_height}
 Let $E/\QQ$ have minimal discriminant $\Delta_E$. There exists an absolute constant $M_0 >0$ independent of $E$ such that any non-torsion point $P \in E(\QQ)$ satisfies
 \begin{equation}
 \hat{h}(P) >= M_0 \log |\Delta_E| .
 \end{equation}
 \end{conjecture}
-That is, the minimum height of a non-torsion point on $E$ scales with the log of the absolute value of the curve's minimal discriminant. Hindry and Silverman in \cite{HiS-1988} show that the abc conjecture implies Lang's height conjecture; since we are already assuming strong abc, we have this result for free. \\
+That is, the minimum height of a non-torsion point on $E$ scales with the log of the absolute value of the curve's minimal discriminant. Hindry and Silverman in \cite{HiS-1988} show that the ABC conjecture implies Lang's height conjecture; since we are already assuming strong ABC, we have this result for free. \\
 
-Since the conductor of a curve always divides the minimal discriminant, an immediate consequence of the height conjecture is the following:
-\begin{corollary}
-Let $E/\QQ$ have conductor $N_E$. There exists an absolute constant $M_1 >0$ independent of $E$ such that any non-torsion point $P \in E(\QQ)$ satisfies
+Conjecture \ref{conj:Lang_height} is not effective, and there is no consensus as to what the explicit value of the constant $M_0$ should be. A survey by Elkies and Stein \cite{ElSt-2002} reveals 54 known cases of points $P$ on curves over $\QQ$ where $\hat{h}(P) < \frac{1}{100}$, and the largest value of $\log|\Delta_E|/\hat{h}$ is $11822.2\ldots$, achieved by a point on a curve of conductor $N=3476880330$. Given the evidence in the data compiled by Elkies and Stein, it seems quite likely that there are as-yet undiscovered instances of points with exceptionally low height driving the quantity down even further.
+
+We therefore resort to making the more conservative explicit conjecture below:
+\begin{conjecture}\label{conj:point_height_explicit}
+There exists an absolute constant $M_1 >0$ independent of $E$ such that any non-torsion point $P$ on any elliptic curve $E(\QQ)$ satisfies
 \begin{equation}
-\hat{h}(P) >= M_1 \log N_E .
+\hat{h}(P) >= M_1 .
 \end{equation}
-\end{corollary}
-(Note that the two versions of the height conjecture are fully equivalent under Szpiro's Conjecture). \\
-
-\begin{conjecture}
-$M_0 = 0.000213016731929803\ldots$ and $M_1 = 0.00107510998642534\ldots$; these two constants are attained by the rank 1 curve $E: y^2+xy+y=x^3+x^2-125615x+61201397$ with Cremona label {\tt 3990v1}, conductor $N_E = 3990$ and minimal discriminant $\Delta_E = -1494018600480000000$. Furthermore, the curve's generator for the group of rational points $P = (7107,-602054)$ and its negative attain the minimum height of any non-torsion point on any elliptic curve over $\QQ$, namely $\hat{h}(P) = 0.00891432445568635\ldots$.
-\end{conjecture}
-This conjecture is grounded on numerical evidence. 
-
-This allows us to bound the regulator of $E$ from below in terms of its conductor and the global constant $M_1$:
-\begin{theorem}
-Let $E/\QQ$ have conductor $N_E$. Assume strong abc, and let $M_1$ be the absolute constant in Lang's height conjecture. Then
+Moreover, the $M_1$ can be taken to be
 \begin{equation}
-\Reg_E \ge \text{What goes here?}
+M_1 = 8.914\times 10^{-3};
+\end{equation}
+this is achieved by the point $P = (7107,-602054)$ and its negative on the curve with Cremona label {\tt 3990v1}, given by the equation $E: y^2+xy+y=x^3+x^2-125615x+61201397$.
+\end{conjecture}
+(Note that the Elkies' table uses a slightly different definition of height, equal to half the value of the height as defined above). \\
+
+This conjecture seems to comply better with numerical evidence; as one can see in Elkies' table that the know points of smallest height all belong to curves with small conductor. \\
+
+Having an explicit value for the global constant $M_1$, we bound from below the regulator of an arbitrary elliptic curve by an inverse power of its conductor:
+\begin{theorem}
+Let $E/\QQ$ have conductor $N$. Assuming BSD, GRH and Conjecture \ref{conj:point_height_explicit}, we have that
+\begin{equation}
+\Reg_E \ge 6.6064 \, N^{-2.36}
 \end{equation}
 \end{theorem}
 \begin{proof}
-Let $E$ have minimal discriminant $\Delta_E$ and algebraic rank $r$. Since $|\Delta_E|\ge N_E$, it follows that 
+Let $r$ be the algebraic rank of $E$. Since $\Reg_E$ is the volume of the co-lattice of point heights in $\RR^r$, by Conjecture \ref{conj:point_height_explicit}, we have that
 \begin{equation*}
-\Reg_E \ge \left(M_1 \log N_E \right)^r \ge M_1^r
+\Reg_E \ge \left(\min \set{ \hat{h}(P), \; P \in E(\QQ)}\right)^r \ge  (M_1)^r,
 \end{equation*}
-Numerically we determine that $M_1 < 1$. For example, the rank 1 curve with Cremonal label {\tt 1430k1} has a group generator with height $0.009739\ldots$; its regulator is therefore the same value. We thus must have that $M_1 \le 0.00974/\log(1430) = 0.001340\ldots$.
-
-From Lemma ??? we have that $r < \frac{1}{5}\log N$; hence 
-
+where $M_1 = 8.914\times 10^{-3}$. By BSD, $r = r_{an}$, so assuming GRH, from Corollary \ref{cor:better_an_bound} we have that \\
+$r < \frac{1}{2} \log N - 0.4$. Thus
+\begin{align*}
+\Reg_E &\ge (M_1)^{\frac{1}{2} \log N - 0.4} \\
+&= (M^1)^{-0.4} \cdot N^{\frac{1}{2} \log M_1} \\
+&= 6.606396\ldots \cdot N^{-2.3600479\ldots}
+\end{align*}
 \end{proof}
 
-
+Note that we do {\it not} expect this bound to be anywhere close to optimal; almost certainly more careful analysis could reduce the negative exponent of $N$ or increase the size of the constant in front of it. In practice, we see the regulator {\it grow} with the conductor, further highlighting that the above bound is rather crude. Nevertheless, this bound, along with a bound on the real period, allows us to explicitly bound the magnitude of the leading coefficient of $\Les$ at the central point from below.
 
 
 
