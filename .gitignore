@@ -2,6 +2,7 @@
 *.pyc
 *.sage-chat
 *.sage-backup
+*.sage-history
 
 # Mac OSX files
 *.DS_Store
