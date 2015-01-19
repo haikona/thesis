@@ -1003,22 +1003,28 @@ The dispersion $\delta_n(E) := \delta_n$ of the imaginary part of the $n$th nont
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=1.0\textwidth]{graphics/gamma_n_deviations.png}
+    \includegraphics[width=1.0\textwidth]{graphics/389a_zero_dispersions_scatterplot.png}
     \caption{A scatter plot of zero dispersions for the first 1000 nontrivial zeros of the Cremona curve 389a, the rank 3 curve with smallest conductor. The values are seldom more than $\frac{1}{2}$.}
-    \label{fig:gamma_n_deviations}
+    \label{fig:389a_zero_dispersions_scatterplot}
 \end{figure}
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=1.0\textwidth]{graphics/gamma_n_dev_avg.png}
+    \includegraphics[width=1.0\textwidth]{graphics/389a_zero_dispersions_cumulative_average.png}
     \caption{A cumulative average plot of the above, showing clearly that asymptotically, the average difference between the predicted and true values of $\gamma_n$ is zero. The positive bias at the beginning comes from the $O(1/t)$ term in Lemma \ref{lem:arctan_sum_size}. Interestingly, although the deviations might a priori appear completely random, there is a clear oscillating structure in the average, and the line about which the oscillation occurs appears to decrease to zero from above.}
-    \label{fig:gamma_n_dev_avg}
+    \label{fig:zero_dispersions_cumulative_average}
 \end{figure}
 
-Even though the above graph demonstrates that the zero dispersions are clearly not random, when viewed as a i.i.d. time series, the dispersions appear to limit to a constant Gaussian distribution. \\
+Even though the above graph demonstrates that the zero dispersions are clearly not random, when viewed as a i.i.d. time series, the dispersions appear be normally distributed. \\
 
-% HISTOGRAM OF 389a ZERO DISPERSIONS HERE %
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/389a_zero_dispersions_histagram.png}
+    \caption{A histogram of zero dispersions for the curve 389 for the 1000th through 11000th zeros (we discard the first 1000 zeros to avoid the small-height bias observable in the the cumulative average plot above. }
+    \label{fig:389a_zero_dispersions_histagram}
+\end{figure}
 
+For the data set used the graph above, the mean was $3.16\times10^{-5}$ (a good indicator that the expected value formula contains no systematic bias), standard deviation $0.1566$. The standard deviation appears to decrease with increasing $n$: we applied the Shapiro-Wilk normality test on batches of 1000 consecutive zero dispersions, and got $p$-values in excess of $0.2$ (and most of the time in excess of 0.5) in all cases. Moreover, the computed standard deviations decreased uniformly from $0.1745$ for the $n=1000$ to $2000$ dispersion set, to $0.1464$ in the $n=10000$ to $11000$ set. We hope to pursue this investigation in future work. \\
 
 Finally, we may also go in the other direction and use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the {\it lowest} noncentral nontrivial zero of $\Les$ as a function of increasing conductor $N$:
 \begin{proposition}
