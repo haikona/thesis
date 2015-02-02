@@ -152,14 +152,20 @@ The aforementioned algorithm is as follows:
 Given a rational elliptic curve $E$ represented by a global minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$ with known conductor $N$:
 \begin{steps}
 \item Compute the real period $\Omega_E$ of $E$. This takes $\tilde{O}(1)$ time and space.
-\item Establish a lower bound $K_E$ for the regulator $\Reg_E$ of $E$. This takes $\tilde{O}(1)$ time and space.
-\item Let $k = 2 + \log_2\left(\frac{256}{M\cdot \Omega_E}\right)$. The quantity $k$ is guaranteed to be $\tilde{O}(1)$ in size. Set $r=0$.
-\item Evaluate $L_E^{(r)}(1)$, the $r$th derivative of the $L$-function of $E$ at the central point, to $k$ bits precision. This can be provably computed in $\tilde{O}(k\cdot N^{\frac{1}{2}})$ time and $\tilde{O}(1)$ space. If all $k$ bits are zero, increment $r$ by 1 and repeat step $4$. This repeat is guaranteed to repeat at most $\tilde{O}(1)$ times.
+%\item Establish a lower bound $K_E$ for the regulator $\Reg_E$ of $E$. This takes $\tilde{O}(1)$ time and space.
+% IS THIS TRUE? VERIFY WITH MORE WORK
+%\item Let $k = 2 + \log_2\left(\frac{256}{M\cdot \Omega_E}\right)$. The quantity $k$ is guaranteed to be $\tilde{O}(1)$ in size. Set $r=0$.
+\item Let $k = 16 + 17\log_2 N - \log_2 \Omega_E$. The quantity $k$ is guaranteed to be $\tilde{O}(1)$ in size. Set $r=0$.
+\item Evaluate $\frac{L_E^{(r)}(1)}{r!}$, the $r$th Taylor coefficient of the $L$-function of $E$ at the central point, to $k$ bits precision. This can be provably computed in $\tilde{O}(k\cdot N^{\frac{1}{2}})$ time and $\tilde{O}(1)$ space. If all $k$ bits are zero, increment $r$ by 1 and repeat step $3$. This step is guaranteed to repeat at most $\tilde{O}(1)$ 	times.
 \item Output $r$ and halt.
 \end{steps}
 \end{algorithm}
 
-This algorithm or variations thereof is not new.
+This algorithm itself is not new -- it is just a refinement on computing the analytic rank of a curve. What is new is the body of results in this dissertation proving that, assuming the three big three letter conjectures, if the $n$th derivative of the $L$-series attached to $E$ is zero to $k$ bits precision, then it {\it is} identically zero. This allows us to convert algorithms that previously only provided upper bounds on analytic rank in polynomial time, to ones that compute rank exactly.\\
+
+The proof of Theorem \ref{thm:main_theorem} can be found in section \ref{sec:main_thrm_proof}, but will require results established in the preceding sections. \\
+
+Along the way, we also prove the following two results regarding bounds on the locations of the nontrivial zeros of the $L$-function attached to $E$:
 
 % QUOTE MAJOR RESULTS
 
@@ -170,10 +176,10 @@ This algorithm or variations thereof is not new.
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Notation}
 
-For the rest of the body of this text (unless otherwise stated) we use the following terminology:
+For the rest of the body of this text (unless otherwise stated) we set the following notation:
 \begin{itemize}
 \item $E$ is an elliptic curve over $\QQ$ given by minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$
-\item $D(E)$, $N(E)$ and $r(E)$  and $r_{an}(E)$ are the discriminant, conductor, algebraic rank and analytic rank of $E$ respectively. For ease of exposition, the dependence on $E$ will often be indicated by a subscript $E$ instead, and when there is no ambiguity, it may be dropped entirely.
+\item $D(E)$, $N(E)$ and $r(E)$  and $r_{an}(E)$ are the discriminant, conductor, algebraic rank and analytic rank of $E$ respectively. For ease of exposition, the dependence on $E$ will often be indicated by a subscript $E$ instead; when there is no ambiguity, it may be dropped entirely.
 \item $p$ is a (rational) prime number and $q$ is a prime power
 \item $s$ and $z$ are generic complex numbers
 \item $\eta$ is the Euler-Mascheroni constant $= 0.5772156649\ldots$
@@ -193,25 +199,53 @@ Furthermore, we define the following values associated to $E$ (in all cases the 
 \item $\omega = \frac{dx}{2y + a_1 x + a_3} = \frac{dy}{3x^2 + 2a_2 x + a_4 - a_1 y}$
 \end{itemize}
 
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Definitions}
 
+The rest of this chapter covers the basic definitions of and results needed for the rest of this work (namely, big-Oh notation, elliptic curves and $L$-functions). Feel free to skip this if you are familiar with them.
 
 %%%%%%%%%%%%
 \subsubsection{Big-Oh Notation}
 
-% DEFINITIONS ON BIG O NOTATION HERE
+Given that the running time of various algorithms will be discussed over the course of this work, we recall the definitions of big-Oh and soft-Oh notation, at least in the context of how they will be used here.
+
+\begin{definition}
+Let $x$ be a positive input, and let $g(x)$ be some positive-valued reference function on $x$.
+\begin{itemize}
+\item We say a function $f(x) = O(g(x))$ (read ``$f$ is big-Oh of $g$''), if
+\begin{equation}
+\limsup_{x \to \infty} \left| \frac{f(x)}{g(x)}\right| < \infty
+\end{equation}
+That is, $f(x) = O(g(x))$ if the asymptotic growth/decay rate of $f$ is bounded by some multiple of that of $g$.
+\item We say a function $f(x) = \tilde{O}(g(x))$ (read ``$f$ is soft-Oh of $g$''), if there is some $k>0$ such that
+\begin{equation}
+\limsup_{x \to \infty} \left| \frac{f(x)}{g(x)\left(\log g(x)\right)^k}\right| < \infty
+\end{equation}
+That is, $f(x) = \tilde{O}(g(x))$ if the asymptotic growth/decay rate of $f$ scales like that of $g$, up to the inclusion of log factors.
+\end{itemize}
+\end{definition}
+Note that $f(x) = \tilde{O}(g(x))$ is equivalent to the statement that $f(x) = O(g(x)^{1+\epsilon})$ for any $\epsilon>0$. \\
+
+\begin{definition}
+Let $A$ be an algorithm which takes input $n$, where for simplicity we may think of $n$ as a positive integer. Let $t_A(n)$ be the running time of $A$ on the input $n$.
+\begin{itemize}
+\item $A$ is said to have {\it polynomial time complexity} if there is some $k>0$ such that the running time of $t_A(n) = O(n^{k})$, i.e. the asymptotic running time of the algorithm scales like some polynomial function of $n$.
+\item If $t_A(n) = O(n^{\epsilon})$ for any $\epsilon>0$, then $A$ is said to have {\it sub-polynomial time complexity}. Note that if $t_A(n) = \tilde{O}(1)$, then $A$ has sub-polynomial time complexity.
+\item If no $k>0$ exists such that $t_A(n) = O(n^k)$, then $A$ is said to have {\it super-polynomial time complexity}. More specifically, if there is some $k>1$ such that $t_A(n) = O(k^n)$, then $A$ is said to have {\it exponential time complexity}.
+\end{itemize}
+\end{definition}
+The same terminology can be applied to the space requirements of an algorithm, wherein we would replace the word `time' with `space'.
+
 
 %%%%%%%%%%%%
 \subsubsection{Elliptic curves and their $L$-functions}
-
-The rest of this chapter covers the basic definitions of and results surrounding elliptic curve $L$-functions. Feel free to skip this if you are familiar with them.
 
 \begin{definition}
 An elliptic curve $E$ is a genus 1 smooth projective curve with a marked point $\cO$. $E$ is defined over a field $K$ if $E$ may be represented by the {\it Weierstrass equation} $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a1,\ldots a_6 \in K$.
 \end{definition}
 
-For elliptic curves defined over $\QQ$, we may always find a model for $E$ such that $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$. Furthermore, there is the notion of {\it minimality} when it comes to models for elliptic curves. Without going into the definition thereof, we will always assume that any given elliptic curve Weierstrass equation is minimal and in the above form, unless otherwise stated.
+For elliptic curves defined over $\QQ$, we may always find a model for $E$ such that $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$. Furthermore, there is the notion of {\it minimality} when it comes to models for elliptic curves. Without going into the definition thereof, unless stated otherwise we will assume that any given elliptic curve Weierstrass equation is minimal and in the above form.
 
 \begin{definition}
 The set of $K$-rational points on $E$ is denoted $E(K)$. $E(K)$ comprises an abelian group, with the ``point at infinity" $\cO$ acting as the group identity element.
@@ -1373,9 +1407,13 @@ Let $E/\QQ$ have minimal discriminant $D_E$. There exists an absolute constant $
 \hat{h}(P) >= M_0 \log |D_E| .
 \end{equation}
 \end{conjecture}
-That is, the minimum height of a non-torsion point on $E$ scales with the log of the absolute value of the curve's minimal discriminant. Hindry and Silverman in \cite{HiS-1988} show that the ABC conjecture implies Lang's height conjecture; since we are already assuming strong ABC, we have this result for free. \\
+That is, the minimum height of a non-torsion point on $E$ scales with the log of the absolute value of the curve's minimal discriminant. Hindry and Silverman in \cite{HiS-1988} show that the ABC conjecture implies Lang's height conjecture and give an explicit lower bound on $M_0$:
+\begin{equation}
+M_0 \ge 6\times 10^{-11}
+\end{equation}
+Since we are already assuming strong ABC, we have this result for free. \\
 
-Conjecture \ref{conj:Lang_height} is not effective, and there is no consensus as to what the explicit value of the constant $M_0$ should be. A survey by Elkies and Stein \cite{ElSt-2002} reveals 54 known cases of points $P$ on curves over $\QQ$ where $\hat{h}(P) < \frac{1}{100}$, and the largest value of $\log|D_E|/\hat{h}$ is $11822.2\ldots$, achieved by a point on a curve of conductor $N=3476880330$. Given the evidence in the data compiled by Elkies and Stein, it seems quite likely that there are as-yet undiscovered instances of points with exceptionally low height driving the quantity down even further.
+There is general agreement in the literature is that the value of $M_0$ above is in no way close to being optimal; however, there is also no strong consensus as to how much larger $M_0$ could be. A survey by Elkies and Stein \cite{ElSt-2002} reveals 54 known cases of points $P$ on curves over $\QQ$ where $\hat{h}(P) < \frac{1}{100}$, and the largest value of $\hat{h}/\log|D_E|$ is $\sim 8.46 \times 10^{-5}$, achieved by a point on a curve of conductor $N=3476880330$. Given the evidence in the data compiled by Elkies and Stein, it seems quite likely that there are as-yet undiscovered instances of points with exceptionally low height driving the quantity down even further.
 
 We therefore resort to making the more conservative explicit conjecture below:
 \begin{conjecture}\label{conj:point_height_explicit}
@@ -1419,7 +1457,12 @@ Note that we do {\it not} expect this bound to be anywhere close to optimal; alm
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Proof of the Main Theorem}
+\section{Proof of the Main Theorem}\label{sec:main_thrm_proof}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Remarks and Future Work}
 
 
 
