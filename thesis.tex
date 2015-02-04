@@ -125,7 +125,7 @@ That is, the first part of the BSD conjecture asserts that the order of vanishin
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1.0\textwidth]{graphics/L-functions_at_origin.png}
-    \caption{The values of three elliptic curve L-functions along the critical line $1+it$ for $-6 \le t \le 6$. Blue corresponds to a rank 0 curve, red is that of a rank 1 curve, and green is a rank 2 curve. Note that close to the origin the graphs look like non-zero constant function, a straight line and a parabola respectively.}
+    \caption{The values of three elliptic curve $L$-functions along the critical line $1+it$ for $-6 \le t \le 6$. Blue corresponds to a rank 0 curve, red is that of a rank 1 curve, and green is a rank 2 curve. Note that close to the origin the graphs look like non-zero constant function, a straight line and a parabola respectively.}
     \label{fig:L-functions_at_origin}
 \end{figure}
 
@@ -135,19 +135,19 @@ The work in this thesis hopes to address the question of how to effectively comp
 
 The short answer is that, for a black box computer, you can't. We need theorems governing the magnitude of the Taylor coefficients -- especially the leading coefficient $C$ in the BSD conjecture -- in order to make analytic rank explicitly computable. This work establishes those results, and details (assuming standard conjectures) an explicit algorithm with provable complexity to compute the analytic rank of a rational elliptic curve. \\
 
-The structure of this dissertation is as follows. Chapter 2 more precisely lays out the problem tackled in this work, quotes the major results obtained to this end and outlines the strategy used to prove these results. Chapter 3 consists of an exposition of the mathematical background relevant to this thesis; while chapter 4 contains proofs of the main results. Chapter 5 is dedicated to supporting numerical data, and chapter 6 contains ancillary results, and ideas for future work.
+The structure of this dissertation is as follows. Chapter 2 more precisely lays out the problem tackled in this work, quotes the major results obtained to this end and outlines the strategy used to prove these results. Chapter 3 consists of an exposition of the mathematical background relevant to this thesis; while chapter 4 contains proofs of the main results. Chapter 5 consists of alternate methods and results that allow one, for example, to obtain estimates on analytic rank when evaluating $\Les$ is directly is computationally infeasible. Chapter 6 consists of remarks and ideas for future work.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem Outline and Major Results}\label{sec:outline_results}
 
-The central question this thesis addresses is thus: Given a rational elliptic curve $E$, does an algorithm exist to compute the rank of $E$ that has provable time complexity in the conductor of the curve? We answer this question in the affirmative; however, to do so we must pay the price of having to assume three big open conjectures in number theory: the Generalized Riemann Hypothesis, The Birch and Swinnerton-Dyer conjecture, and the ABC conjecture (henceforth referred to as GRH, BSD and ABC respectively). \\
+The central question this thesis addresses is thus: Given a rational elliptic curve $E$, does an algorithm exist to compute the rank of $E$ that has provable polynomial time complexity in the conductor of the curve? We answer this question in the affirmative; however, to do so we must pay the price of having to assume three big open conjectures in number theory: the Generalized Riemann Hypothesis, The Birch and Swinnerton-Dyer conjecture, and the ABC conjecture (henceforth referred to as GRH, BSD and ABC respectively). \\
 
-In this vein we establish the following result:
+We establish the following result:
 \begin{theorem}\label{thm:main_theorem}
 Let $E/\QQ$ have conductor $N$. Contingent on BSD, GRH and ABC, there exists an algorithm to compute the algebraic rank $r$ of $E$ in $\tilde{O}(N^{\frac{1}{2}})$ time and $\tilde{O}(1)$ space. That is, for any $\epsilon>0$ the algorithm is guaranteed to terminate with a correct output in $O(N^{\frac{1}{2}+\epsilon})$ time, using only $O(N^{\epsilon})$ space.
 \end{theorem}
-The aforementioned algorithm is as follows:
+The algorithm in question is as follows:
 \begin{algorithm}{Compute the rank of an elliptic curve}\label{algo:compute_rank}
 Given a rational elliptic curve $E$ represented by a global minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$ with known conductor $N$:
 \begin{steps}
@@ -161,7 +161,9 @@ Given a rational elliptic curve $E$ represented by a global minimal Weierstrass 
 \end{steps}
 \end{algorithm}
 
-This algorithm itself is not new -- it is just a refinement on bounding the analytic rank of a curve. What is new is the body of results in this dissertation proving that, assuming the three big three letter conjectures, if the $n$th derivative of the $L$-series attached to $E$ is zero to $k$ bits precision, then it {\it is} identically zero. This allows us to convert a polynomial-time algorithm that a priori only provides upper bounds on analytic rank, to one that computes rank exactly.\\
+This algorithm is not new -- it is just a refinement on bounding the analytic rank of a curve. What {\it is} new is the body of results in this dissertation proving that, assuming the three big three letter conjectures, if the $n$th derivative of the $L$-series attached to $E$ is zero to $k$ bits precision, then it {\it is} identically zero. This allows us to convert an algorithm that a priori only provides upper bounds on analytic rank, to one that computes rank exactly. Furthermore, we show that the algorithm is guaranteed to terminate in polynomial time of the curve's conductor. \\
+
+Moreover, Algorithm \ref{algo:compute_rank} is in a sense optimal among analytic rank computation methods: since evaluating $\Les$ takes $\tilde{O}(\sqrt{N_E})$ time, we cannot hope to get the rank out in time faster than this. [Of course other rank computation methods do exist, but they don't involve working with $\Les$ directly.] \\
 
 The proof of Theorem \ref{thm:main_theorem} can be found in section \ref{sec:main_thrm_proof}, but will require results established in the preceding sections. \\
 
@@ -1218,16 +1220,57 @@ Note that for fixed $N$, if we allow $k \to \infty$, we actually have that the $
 The real period of a rational elliptic curve $E$ is a measure of the ``size'' of the set of {\it real} points on $E$. \\
 
 Recall that $E(\CC)$, the group of complex points on $E$, is isomorphic via the (inverse of the) Weierstrass $\wp$-function to $\CC$ modulo a lattice under addition; that is, $E(\CC) \simeq \CC/\Lambda$, where $\Lambda = \ZZ\omega_1 + \ZZ\omega_2$, and $\omega_1,\omega_2 \in \CC$.
-If $E$ is defined over the real numbers (as rational elliptic curves are), then we may always write $\omega_1$ as being positive real. The second generator $\omega_2$ can be written as being positive imaginary when $E$ has positive discriminant, or in the upper half plane with real part $\frac{\omega_1}{2}$ when $E$ has negative discriminant. [Note: some texts normalize $\omega_2$ to have imaginary part equal to $-\frac{\omega_1}{2}$ when $D<0$, as this makes some of the presentation more natural. Given that we are only interested in the real period below, however, this is a philosophical debate best left to another time.]
+If $E$ is defined over the real numbers (as rational elliptic curves are), then we may always write $\omega_1$ as being positive real. The second generator $\omega_2$ can be written as being positive imaginary when $E$ has positive discriminant, or in the upper half plane with real part $\frac{\omega_1}{2}$ when $E$ has negative discriminant. [Note: some texts normalize $\omega_2$ to have imaginary part equal to $-\frac{\omega_1}{2}$ when $D_E<0$, as this sometimes makes the presentation more natural. However, for the work below we will always assume that $\Re(\frac{\omega_2}{\omega_1}) = 0$ or $\frac{1}{2}$.]
 
-\begin{definition}
-Let $E/\QQ$ have discriminant $D$, and $E(\CC) \simeq \CC/\Lambda$, where $\Lambda = \ZZ\omega_1 + \ZZ\omega_2$ and $\omega_1 \in \RR$. The {\it real period} of $E$ is defined to be
+\begin{definition}\label{defn:real_period}
+Let $E/\QQ$ have discriminant $D_E$, and $E(\CC) \simeq \CC/\Lambda$, where $\Lambda = \ZZ\omega_1 + \ZZ\omega_2$ and $\omega_1 \in \RR$. The {\it real period} of $E$ is defined to be
 \begin{equation}
-\Omega_E = \begin{cases} 2\omega_1 & D > 0 \\ \omega_1 & D < 0 \end{cases}
+\Omega_E = \begin{cases} 2\omega_1 & D_E > 0 \\ \omega_1 & D_E < 0 \end{cases}
 \end{equation}
 \end{definition}
 
-The real generator $\omega_1$ may be computed using the (real version of the) Gauss arithmetic-geometric mean. Recall its definition: let $a,b \in \RR_{\ge0}$. Set $a_0 = a$ and $b_0 = b$, and for $n\ge 0$ let $a_{n+1} = \frac{1}{2}(a_{n}+b_{n})$ and $b_{n+1} = \sqrt{a_{n}b_{n}}$. Then $\AGM(a,b)$ is defined to be the common limit of both the $a_n$ and the $b_n$. We omit the proof that both sequences converge to the same value, but convergence is quadratic (i.e. extremely quick).
+We are interested in answering the question: For a curve of a given discriminant, how big and how small can $\Omega_0$ be? Can the real period be arbitrarily small or large, or does it scale in some meaningful way with the discriminant? For our purposes, establishing a lower bound on $\Omega_E$ is what is needed to bound the central leading Taylor coefficient of $\Les$ from below. However, we include the result giving an upper bound on $\Omega_E$, as we find its implication -- that $\Omega_E$ goes to zero as $N_E$ goes to infinity -- an interesting one. \\
+
+First, an upper bound. To this end, we have the following result from the complex theory of elliptic curves:
+\begin{proposition}
+Let $\Delta(z)$ be the Ramanujan Delta function on the complex upper half plane, i.e.
+\begin{equation}
+\Delta(z) = q \prod_{n=1}^{\infty} (1-q^n)^{24}
+\end{equation}
+where $q = e^{2\pi i z}$. Let $E/\CC$ have discriminant $D_E$ and lattice basis $(\omega_1,\omega_2)$ as defined above. Set $z = \frac{\omega_1}{\omega_2}$ (such that $\Im(z) > 0$). Then
+\begin{equation}\label{eqn:modular_discriminant}
+D = \left(\frac{2\pi}{\omega_1}\right)^{12} \Delta\left(z \right)
+\end{equation}
+\end{proposition}
+A good treatment of elliptic and modular functions, including a proof of the above, can be found in \cite{Sil-1994}. Using this result we can readily establish an upper bound on $\Omega_E$:
+\begin{proposition}\label{prop:real_period_upper_bound_discriminant}
+Let $E/\QQ$ have discriminant $D_E$ and real period $\Omega_E$. Then
+\begin{equation}
+\Omega_E < 4\pi \cdot (D_E)^{-\frac{1}{12}}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Equation \ref{eqn:modular_discriminant} yields
+\begin{equation}
+\omega_1 = 2\pi |D_E|^{-\frac{1}{12}} \left| \Delta\left(\frac{\omega_2}{\omega_1}\right)\right|^{\frac{1}{12}}
+\end{equation}
+Since $E$ is defined over $\QQ$, $z = \frac{\omega_2}{\omega_1}$ has real part either equal to zero (if $D_0>0$) or equal to $\frac{1}{2}$ (if $D_E<0$). When $D_E>0$, we see that $q = e^{2\pi i z}$ is positive with magnitude less than 1, so by direct inspection we see that $\Delta(z)$ has magnitude less than 1. \\
+
+When $D_0<0$ we have that $-1<q<0$; but $\Delta(q)$ is a bounded function on this interval (being a cuspidal modular form, $\Delta$ must decay to zero at $q = -1$ and $0$). Thus it achieves a maximum on this interval; this done for $q \sim -0.439$ for which $\Delta(q) \sim -59.28$, so $|\Delta(q)|^{\frac{1}{12}} < 2$ for $-1<q<0$ certainly. Relating $\omega_1$ back to $\Omega_E$ via Definition \ref{defn:real_period} completes the proof.
+\end{proof}
+
+\begin{corollary}
+For $E/\QQ$ with real period $\Omega_E$ and conductor $N_E$,
+\begin{equation}
+\Omega_E < 4\pi \cdot (N_E)^{-\frac{1}{12}}
+\end{equation}
+That is, the real period goes to zero as the conductor of the curve goes to infinity.
+\end{corollary}
+This follows immediately from Proposition \ref{prop:real_period_upper_bound_discriminant}, as the conductor of an elliptic curve always divides its discriminant. \\
+
+%%% INCLUDE EXAMPLE? %%%
+
+Equation \ref{eqn:modular_discriminant} fives us a way to compute the real period of $E$, but it is in general not the most efficient means of doing so (as $z = \frac{\omega_1}{\omega_2}$ must be found by inverting the $j$-invariant of $E$). Instead, $\omega_1$ may be computed using the (real version of the) Gauss arithmetic-geometric mean. Recall the definition thereof: let $a,b \in \RR_{\ge0}$. Set $a_0 = a$ and $b_0 = b$, and for $n\ge 0$ let $a_{n+1} = \frac{1}{2}(a_{n}+b_{n})$ and $b_{n+1} = \sqrt{a_{n}b_{n}}$. Then $\AGM(a,b)$ is defined to be the common limit of both the $a_n$ and the $b_n$. We omit the proof that both sequences converge to the same value, but convergence is quadratic (i.e. extremely quick).
 
 \begin{proposition}\label{prop:real_period_by_AGM}
 Let $E/\Q$ have minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$. Write the equation in the form
@@ -1236,75 +1279,63 @@ Let $E/\Q$ have minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2
 \end{equation}
 where $e_1,e_2,e_3$ are the 3 complex roots of the polynomial in $x$ on the right hand side, and $b_2$, $b_4$ and $b_6$ are as defined at the beginning of section \ref{sec:defs_background}.
 \begin{enumerate}
-\item If $D > 0$, then $e_1,e_2,e_3 \in \RR$, so without loss of generality we may order them as $e_3 > e_2 > e_1$. Then
+\item If $D_E > 0$, then $e_1,e_2,e_3 \in \RR$, so without loss of generality we may order them as $e_3 > e_2 > e_1$. Then
 \begin{equation}\label{eqn:omega_D_pos}
 \omega_1 = \frac{\pi}{\AGM(\sqrt{e_3-e_1},\sqrt{e_3-e_2})}
 \end{equation}
-\item If $D < 0$, then the RHS polynomial has only one real root; we may write $e_3 \in \RR$ and $e_1 = \conj{e_2}$. Let $z = \sqrt{e_3-e_1} = s + it$; choose the root such that $s>0$. Then
+\item If $D_E < 0$, then the RHS polynomial has only one real root; we may write $e_3 \in \RR$ and $e_1 = \conj{e_2}$. Let $z = \sqrt{e_3-e_1} = s + it$; choose the root such that $s>0$. Then
 \begin{equation}\label{eqn:omega_D_neg}
 \omega_1 = \frac{\pi}{\AGM(|z|,s)}
 \end{equation}
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-Cremona and Cremona-Thongjunthug give a good explanations and derivations this formula in \cite{Cre-1997} and \cite{Cre-2013} respectively.
+Cremona and Cremona-Thongjunthug give good explanations and derivations this formula in \cite{Cre-1997} and \cite{Cre-2013} respectively.
 \end{proof}
 
-Using the above we can readily establish an upper bound on $\Omega_E$:
-\begin{proposition}
-Let $E$ have discriminant $D$ and real period $\Omega_E$. Then
+To get a lower bound on $\Omega_E$ from the above definitions, we will need the following technical result.
+\begin{definition}
+For a given $E/\QQ$, let 
 \begin{equation}
-\Omega_E < \pi D^{-\frac{1}{12}}
+d(E) = \max\set{|e_i - e_j|: \; e_i,e_j \text{ are roots of }4x^3 + b_2  x^2 + 2 b_4 x + b_6, i\ne j}
 \end{equation}
-where the factor of 2 may be omitted if $D<0$. That is, the real period goes to zero as the discriminant of the curve goes to infinity.
-\end{proposition}
+be the maximum root separation of the cubic polynomial on the RHS of equation \ref{eqn:weierstrass_with_bn}
+(i.e. $b_2, b_4$ and $b_6$ are the $b$-invariants of $E$).
+\end{definition}
+Observe that for both the positive and negative discriminant cases, the AGM in the denominators in equations \ref{eqn:omega_D_pos} and \ref{eqn:omega_D_neg} is at most $\sqrt{d(E)}$. It is useful therefore to have a bound on the magnitude of $d(E)$ in terms of the $b$-invariants:
+\begin{lemma}\label{lem:root_separation_bound}
+Given the above setup,
+\begin{equation}
+d(E) < 2+\frac{1}{2}\max\set{|b_2|,2|b_4|,|b_6|}
+\end{equation}
+\end{lemma}
 \begin{proof}
-Cheese
-%%% FINISH PROOF %%% 
+We apply Rouche's Theorem on the polynomial $x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4}$. Observe that $|\frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4}| < |x^3|$ when $|x| < 1+\max\set{\frac{|b_2|}{4},\frac{|b_4|}{2},\frac{|b_6|}{4}}$, so by Rouche's Theorem we must have that any root $e$ of the cubic obeys $|e| <  1+\frac{1}{4}\max\set{|b_2|,2|b_4|,|b_6|}$. The result follows.
 \end{proof}
 
 \begin{corollary}
 Assuming ABC, the real period of an elliptic curve can be computed to a specified precision in polynomial time and space in the number of bits of the curve's conductor.
 \end{corollary}
 \begin{proof}
-We see from Proposition \ref{prop:real_period_by_AGM} that $\Omega_0$ can be computed by a) finding the roots of a cubic polynomial, and then b) applying the AGM to a certain simple function there. \\
+We see from Proposition \ref{prop:real_period_by_AGM} that $\Omega_0$ can be computed by a) finding the roots of a cubic polynomial related to the Weierstrass equation for $E$, and then b) applying the AGM to a certain simple function of that cubic's roots. \\
 
-Step a) can be achieved in polynomial time in log of the maximum magnitude of the $a$-invariants, which means it can be done in polynomial time in the $c$-invariants. By Modified Szpiro (Conjecture \ref{conj:modified_szpiro}) the conductor of of a curve is bounded by a polynomial in the $c$-invariants; chaining this all together gives us that step a) can be commuted in time polynomial in $\log(N_E)$, i.e. sub-polynomial in $N_E$. \\
+Step a) can be achieved in polynomial time in log of the maximum magnitude of the $a$-invariants, which means it can be done in polynomial time in the $c$-invariants. By Modified Szpiro (Conjecture \ref{conj:modified_szpiro}) the conductor of a curve is bounded in magnitude by a polynomial in the $c$-invariants; chaining this all together gives us that step a) can be commuted in time polynomial in $\log N_E$, i.e. sub-polynomial in $N_E$. \\
 
-The AGM converges quadratically when both the inputs are positive real. Hence step b) t
+In step b), Lemma \ref{lem:root_separation_bound} implies that the inputs to the AGM are bounded by a polynomial of the $b$-invariants of $E$, so again by Szpiro they are bounded by a power of $N_E$. The AGM converges quadratically when both the inputs are positive real; therefore it will converge to specified precision with time bounded by a polynomial of $\log N_E$. Thus altogether we see that the real period can be computed to a given precision with time polynomial in $\log N_E$, i.e. sub-polynomial in $N_E$ itself.
 \end{proof}
 
-%%% FINISH PROOF %%%%
+The take-away from the above result is that computing the real period is quick, and will never be the computational bottleneck when it comes to running algorithm \ref{algo:compute_rank}. \\
 
-
-Note that the real period is {\it not} invariant under isomorphism over $\QQ$. As the elliptic discriminant $D$ varies by a twelfth power of an integer as one considers $\QQ$-isomorphic models of $E$, the real period varies by the negative first power of that same integer. We formalize this statement with the following:
-\begin{lemma}
-Let $E$ be the global minimal model of a rational elliptic curve, and let $D_E$ and $\Omega_E$ be its discriminant and real period respectively. Let $E\pr$ be $\QQ$-isomorphic to $E$, and let $D_{E^{\pr}}$ and $\Omega_{E^{\pr}}$ be defined analogously. Then there exists a $u \in \ZZ$ such that $D_{E^{\pr}}=u^{12} D_E$ and $\Omega_{E^{\pr}}=\frac{1}{u}\Omega_E$.
-\end{lemma}
-A proof of the result regarding the discriminant can be found on pages 48-49 of \cite{Sil-1985}; the result regarding the real period follows, for example, from chasing through how the $a$- and $b$-invariants change under isomorphism in Proposition \ref{prop:real_period_by_AGM}. \\
-
-Regardless of the model chosen, however, we can establish a lower bound on the real period $\Omega_E$ in terms of that model's $b$-invariants:
-
-\begin{lemma}[S.]\label{ineq:Omega_bn_bound}
-Let $E/\Q$ have (not necessarily minimal) Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$ have real period $\Omega_E$, and define the invariants $b_2$, $b_4$ and $b_6$ as at the beginning of section \ref{sec:defs_background}. Then
+\begin{corollary}[S.]\label{ineq:Omega_bn_bound}
+Let $E/\Q$ have (not necessarily minimal) Weierstrass equation \\
+$y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$ have real period $\Omega_E$, and define $b_2$, $b_4$ and $b_6$ as at the beginning of section \ref{sec:defs_background}. Then
 \begin{equation}
 \Omega_E > \frac{\alpha \pi}{\sqrt{1+\frac{1}{4}\max\set{|b_2|,2|b_4|,|b_6|}}},
 \end{equation}
 where $\alpha = 1$ if $E$ has positive discriminant and $\frac{1}{2}$ if $E$ has negative discriminant.
-\end{lemma}
+\end{corollary}
 \begin{proof}
-Let
-\begin{equation}
-d(E) = \max\set{|e_i - e_j|: \; e_i,e_j \text{ are roots of }4x^3 + b_2  x^2 + 2 b_4 x + b_6, i\ne j}
-\end{equation}
-be the maximum root separation of the cubic polynomial on the RHS of equation \ref{eqn:weierstrass_with_bn}.
-Observe that for both positive and discriminant cases, the AGM in the denominators in equations \ref{eqn:omega_D_pos} and \ref{eqn:omega_D_neg} is at most $\sqrt{d}$. 
-
-We now apply Rouche's Theorem on $x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4}$. Observing that $|\frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4}| < |x^3|$ when $|x| < 1+\max\set{\frac{|b_2|}{4},\frac{|b_4|}{2},\frac{|b_6|}{4}}$, we obtain that $|e_i| <  1+\frac{1}{4}\max\set{|b_2|,2|b_4|,|b_6|}$. Hence
-\begin{equation*}
-\omega_1 \ge \frac{\pi}{\sqrt{\delta}} > \frac{\pi}{2\sqrt{1+\frac{1}{4}\max\set{|b_2|,2|b_4|,|b_6|}}}.
-\end{equation*}
-The result follows.
+This follows immediately from the definition of $\Omega_E$ given in Proposition \ref{prop:real_period_by_AGM} and Lemma \ref{lem:root_separation_bound}.
 \end{proof}
 
 This bound is close to optimal in the sense that the square root sign in the denominator cannot be replaced with any smaller exponent. To see this, consider the family of elliptic curves
@@ -1324,15 +1355,19 @@ On the other hand, for a given $n$
 \end{equation}
 for $n\ge 2$. So for this family of curves the lower bound given by inequality \ref{ineq:Omega_bn_bound} is $\frac{\pi}{\sqrt{1+n^2}}$. Since $\Omega_{E_n}$ asymptotes to twice this value, it is clear that the bound would be violated for sufficiently large $n$ if the square root were replaced with a smaller exponent. \\
 
-Finally, if we assume the Szpiro conjecture, Conjecture \ref{ineq:Omega_bn_bound} allows us to the real period of a minimal model of $E$ from below in terms of that curve's conductor. Recall the Szpiro Conjecture: if $D_E$ is the discriminant of a minimal model of $E$ and $N_E$ its conductor, then for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that $|D_E| \le K(\epsilon)\cdot (N_E)^{6+\epsilon}$.  In other words, the minimal discriminant of a curve can't be much bigger than the $(6+\epsilon)$th power of its conductor.
+Note that the real period is {\it not} invariant under isomorphism over $\QQ$. As the elliptic discriminant $D_E$ varies by a twelfth power of an integer as one considers $\QQ$-isomorphic models of $E$, the real period varies by the negative first power of that same integer. We formalize this statement with the following:
+\begin{lemma}
+Let $E$ be the global minimal model of a rational elliptic curve, and let $D_E$ and $\Omega_E$ be its discriminant and real period respectively. Let $E\pr$ be $\QQ$-isomorphic to $E$, and let $D_{E^{\pr}}$ and $\Omega_{E^{\pr}}$ be defined analogously. Then there exists a $u \in \ZZ$ such that $D_{E^{\pr}}=u^{12} D_E$ and $\Omega_{E^{\pr}}=\frac{1}{u}\Omega_E$.
+\end{lemma}
+A proof of the result regarding the discriminant can be found on pages 48-49 of \cite{Sil-1985}; the result regarding the real period follows, for example, from chasing through how the $a$- and $b$-invariants change under isomorphism in Proposition \ref{prop:real_period_by_AGM}. \\
 
-We will invoke a slight reformulation of Modified Szpiro (Conjecture \ref{conj:modified_szpiro}): Suppose the minimal short Weierstrass model of $E$ is $y^2 = x^3+Ax+B$, i.e. there does not exist any prime $p$ such that $p^4|A$ and $p^6|B$. Then for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that
+Finally, if we assume the Szpiro conjecture, Corollary \ref{ineq:Omega_bn_bound} allows us to the real period of a minimal model of $E$ from below in terms of that curve's conductor. We will invoke a slight reformulation of Modified Szpiro (Conjecture \ref{conj:modified_szpiro}): Suppose the minimal short Weierstrass model of $E$ is $y^2 = x^3+Ax+B$, i.e. there does not exist any prime $p$ such that $p^4|A$ and $p^6|B$. Then for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that
 \begin{equation}
 \max\set{|A|^3,|B|^2} \le K(\epsilon)\cdot (N_E)^{6+\epsilon}
 \end{equation}
 (Since for a curve in short Weierstrass form $c_4 = -48A$ and $c_6=-864B$, we see that the above statement and Modified Szpiro are entirely equivalent). Using this, we obtain the following:
 \begin{proposition}
-Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal model of $E$. Then (assuming ABC) for any $\epsilon>0$ there is a constant $K(\epsilon)$, independent of $E$, such that 
+Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal model of $E$. Then, assuming ABC, for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that 
 \begin{equation}
 \Omega_E > K(\epsilon) \cdot (N_E)^{-\frac{3}{2}-\epsilon}
 \end{equation}
@@ -1355,13 +1390,16 @@ where to achieve the last line we absorb 1 into $K$ and relabel as necessary to 
 Note that this is an overly conservative lower bound on $\Omega_E$: in reality we see
 %%% INSERT DATA ON REAL PERIOD HERE %%%
 
-The data suggests that for $\epsilon=\frac{1}{2}$ we can easily get away by choosing $K = 1$. We formalize this with the following conjecture:
+Thankfully, we do not need to assume a specific value of $K(\epsilon)$ for a given $\epsilon$ for Theorem \ref{thm:main_theorem} to hold. However, collected data suggests that for $\epsilon=\frac{1}{2}$ we can easily get away by choosing $K = 1$. We formalize this with the following conjecture:
 \begin{conjecture}
 Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal model of $E$.Then 
 \begin{equation}
 \Omega_E > (N_E)^{-2}
 \end{equation}
 \end{conjecture}
+
+%%% SPECIFIC EXAMPLE: CONGRUENT NUMBER CURVES %%%
+
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
