@@ -37,6 +37,7 @@
 \newcommand{\Ensfpe}{E_{\text{ns}}(\FF_{p^e})}
 \newcommand{\sinc}{\text{sinc}}
 \newcommand{\Li}{\text{Li}}
+\newcommand{\softO}{\tilde{O}}
 
 
 \title{Ph.D Dissertation}
@@ -150,27 +151,22 @@ In this work we answer this question in the affirmative by providing such an alg
 
 Specifically, we establish the following result:
 \begin{theorem}\label{thm:main_theorem}
-Let $E/\QQ$ have conductor $N$. Contingent on BSD, GRH and ABC, there exists an algorithm to compute the algebraic rank $r$ of $E$ in $\tilde{O}(N^{\frac{1}{2}})$ time and $\tilde{O}(1)$ space. That is, for any $\epsilon>0$ the algorithm is guaranteed to terminate with a correct output in $O(N^{\frac{1}{2}+\epsilon})$ time, using only $O(N^{\epsilon})$ space.
+Let $E/\QQ$ have conductor $N_E$. Contingent on BSD, GRH and ABC, there exists an algorithm to compute the algebraic rank $r$ of $E$ in $\softO\left(\sqrt{N_E}\right)$ time and $\softO(1)$ space. That is, for any $\epsilon>0$ the algorithm is guaranteed to terminate with a correct output in $O\left((N_E)^{\frac{1}{2}+\epsilon}\right)$ time, using only $O\left((N_E)^{\epsilon}\right)$ space.
 \end{theorem}
 The algorithm in question is as follows:
 \begin{algorithm}{Compute the rank of an elliptic curve}\label{algo:compute_rank}
-Given a rational elliptic curve $E$ represented by a global minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$ with known conductor $N$:
+Given a rational elliptic curve $E$ represented by a global minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$ with known conductor $N_E$:
 \begin{steps}
-\item Compute the real period $\Omega_E$ of $E$. This takes $\tilde{O}(1)$ time and space.
-%\item Establish a lower bound $K_E$ for the regulator $\Reg_E$ of $E$. This takes $\tilde{O}(1)$ time and space.
-% IS THIS TRUE? VERIFY WITH MORE WORK
-%\item Let $k = 2 + \log_2\left(\frac{256}{M\cdot \Omega_E}\right)$. The quantity $k$ is guaranteed to be $\tilde{O}(1)$ in size. Set $r=0$.
-\item Let $k = 4 + 10.5 \log_2 N - \log_2 \Omega_E$. The quantity $k$ is guaranteed to be $\tilde{O}(1)$ in size. Set $r=0$.
-\item Evaluate $\frac{L_E^{(r)}(1)}{r!}$, the $r$th Taylor coefficient of the $L$-function of $E$ at the central point, to $k$ bits precision. This can be provably computed in $\tilde{O}(k\cdot N^{\frac{1}{2}})$ time and $\tilde{O}(1)$ space. If all $k$ bits are zero, increment $r$ by 1 and repeat step $3$. This step is guaranteed to repeat at most $\tilde{O}(1)$ 	times.
+\item Compute the real period $\Omega_E$ of $E$.
+\item Set $k = 4 + 10.5 \log_2 N_E - \log_2 \Omega_E$, and set $r=0$.
+\item Evaluate $\frac{L_E^{(r)}(1)}{r!}$, the $r$th Taylor coefficient of the $L$-function of $E$ at the central point, to $k$ bits precision. If all $k$ bits are zero, increment $r$ by 1 and repeat this step.
 \item Output $r$ and halt.
 \end{steps}
 \end{algorithm}
 
-This algorithm is not new -- it is just a refinement on bounding the analytic rank of a curve. What {\it is} new is the body of results in this dissertation proving that, assuming the three big three letter conjectures, if the $n$th derivative of the $L$-series attached to $E$ is zero to $k$ bits precision, then it {\it is} identically zero. This allows us to convert an algorithm that a priori only provides upper bounds on analytic rank, to one that computes rank exactly. Furthermore, we show that the algorithm is guaranteed to terminate in polynomial time of the curve's conductor. \\
+This algorithm is not new -- it is just a refinement on bounding the analytic rank of a curve with an explicitly chosen precision. What {\it is} new is the body of results in this dissertation proving that, assuming the three big three letter conjectures, if the $n$th derivative of the $L$-series attached to $E$ is zero to $k$ bits precision, then it {\it is} identically zero. This allows us to convert an algorithm that a priori only provides upper bounds on analytic rank, to one that computes rank exactly. Furthermore, we show that the algorithm is guaranteed to terminate in time polynomial in the curve's conductor. \\
 
-Moreover, Algorithm \ref{algo:compute_rank} is in a sense optimal among analytic rank computation methods: since evaluating $\Les$ takes $\tilde{O}(\sqrt{N_E})$ time, we cannot hope to get the rank out in time faster than this. [Of course other rank computation methods do exist, but they don't involve working with $\Les$ directly.] \\
-
-The proof of Theorem \ref{thm:main_theorem} can be found in section \ref{sec:main_thrm_proof}, but will require results established in the preceding sections. \\
+Moreover, Algorithm \ref{algo:compute_rank} is in a sense optimal among analytic rank computation methods: since evaluating $\Les$ takes $\tilde{O}(\sqrt{N_E})$ time, we cannot hope to get the rank out in time faster than this. [Of course other rank computation methods do exist, but they don't involve working with $\Les$ directly.] The proof of Theorem \ref{thm:main_theorem} can be found in section \ref{sec:main_thrm_proof}, but will require results established in preceding and following sections. \\
 
 Along the way, we also prove the following interesting results regarding bounds on the locations of the nontrivial zeros of the $L$-function attached to $E$:
 
@@ -226,20 +222,20 @@ Let $x$ be a positive input, and let $g(x)$ be some positive-valued reference fu
 \limsup_{x \to \infty} \left| \frac{f(x)}{g(x)}\right| < \infty
 \end{equation}
 That is, $f(x) = O(g(x))$ if the asymptotic growth/decay rate of $f$ is bounded by some multiple of that of $g$.
-\item We say a function $f(x) = \tilde{O}(g(x))$ (read ``$f$ is soft-Oh of $g$''), if there is some $k>0$ such that
+\item We say a function $f(x) = \softO(g(x))$ (read ``$f$ is soft-Oh of $g$''), if there is some $k>0$ such that
 \begin{equation}
 \limsup_{x \to \infty} \left| \frac{f(x)}{g(x)\left(\log g(x)\right)^k}\right| < \infty
 \end{equation}
-That is, $f(x) = \tilde{O}(g(x))$ if the asymptotic growth/decay rate of $f$ scales like that of $g$, up to the inclusion of log factors.
+That is, $f(x) = \softO(g(x))$ if the asymptotic growth/decay rate of $f$ scales like that of $g$, up to the inclusion of log factors.
 \end{itemize}
 \end{definition}
-Note that $f(x) = \tilde{O}(g(x))$ is equivalent to the statement that $f(x) = O(g(x)^{1+\epsilon})$ for any $\epsilon>0$. \\
+Note that $f(x) = \softO(g(x))$ is equivalent to the statement that $f(x) = O(g(x)^{1+\epsilon})$ for any $\epsilon>0$. \\
 
 \begin{definition}
 Let $A$ be an algorithm which takes input $n$, where for simplicity we may think of $n$ as a positive integer. Let $t_A(n)$ be the running time of $A$ on the input $n$.
 \begin{itemize}
 \item $A$ is said to have {\it polynomial time complexity} if there is some $k>0$ such that the running time of $t_A(n) = O(n^{k})$, i.e. the asymptotic running time of the algorithm scales like some polynomial function of $n$.
-\item If $t_A(n) = O(n^{\epsilon})$ for any $\epsilon>0$, then $A$ is said to have {\it sub-polynomial time complexity}. Note that if $t_A(n) = \tilde{O}(1)$, then $A$ has sub-polynomial time complexity.
+\item If $t_A(n) = O(n^{\epsilon})$ for any $\epsilon>0$, then $A$ is said to have {\it sub-polynomial time complexity}. Note that if $t_A(n) = \softO(1)$, then $A$ has sub-polynomial time complexity.
 \item If no $k>0$ exists such that $t_A(n) = O(n^k)$, then $A$ is said to have {\it super-polynomial time complexity}. More specifically, if there is some $k>1$ such that $t_A(n) = O(k^n)$, then $A$ is said to have {\it exponential time complexity}.
 \end{itemize}
 \end{definition}
@@ -417,32 +413,6 @@ As a function of $s$, $\Lambda_E(1+s)$ is even if $E$ has even parity, and odd i
 \end{proposition}
 This follows immediately from the functional equation. \\
 
-We may use Equation \ref{eqn:Lams_analytic_continuation} to produce formulae for the value of $\Lams$ and its higher derivatives at $s=1$:
-\begin{proposition} \mbox{}
-\begin{enumerate}
-\item \begin{equation}
-\Lambda_E(1) = \begin{cases} \frac{\sqrt{N}}{\pi} \sum_{n=1}^{\infty}\frac{a_n}{n} e^{-\frac{2\pi}{\sqrt{N}}\cdot n}, & w_E = 1 \\ 0, & w_E = -1 \end{cases}
-\end{equation}
-\item When $k$ has the same parity as $E$, the $k$th derivative of $\Lams$ at the central point is given by
-\begin{equation}\label{eqn:central_derivatives}
-\Lambda_E^{(k)}(1) = 2 \sum_{n=1}^\infty a_n \int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N}}\right)^k e^{-\frac{2\pi n}{\sqrt{N}}\cdot t} \; dx
-\end{equation}
-(when $k$ is opposite in parity to $E$, then $\Lambda_E^{(k)}(1) = 0$).
-\end{enumerate}
-\end{proposition}
-
-\begin{proof}
-Observe we may write equation \ref{eqn:Lams_analytic_continuation}, after a change of variables and swapping integration and summation signs, as
-\begin{equation*}
-\lambda_E(1+s) = N^{\frac{1+s}{2}}  \int_{\frac{1}{\sqrt{N}}}^{\infty} x^s f_E(it) \; dt  = N^{\frac{1+s}{2}}  \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N}}}^{\infty} t^s e^{-2\pi nt} \; dt,
-\end{equation*}
-where $f_E$ is the cusp form attached to $E$. We may differentiate under the integral sign without issue and then evaluate at $s=1$ to get
-\begin{equation}\label{eqn:lambda_derivs}
-\lambda_E^{(k)}(1) = \sqrt{N}\cdot \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N}}}^{\infty} (\log t)^k e^{-2\pi n t} \; dt
-\end{equation}
-Equation \ref{eqn:central_derivatives} follows by substituting $t \mapsto \sqrt{N} \cdot t$. For $k=0$ the integrals may be evaluated directly: $\int_{1}^{\infty} e^{-\frac{2\pi n t}{\sqrt{N}}} \; dt = \frac{\sqrt{N}}{2\pi n} e^{-\frac{2\pi n}{\sqrt{N}}}$.
-\end{proof}
-
 \begin{definition} For elliptic curve $L$-functions:
 \begin{itemize}
 \item The point $s=1$ is called the {\it central point} or the {\it critical point}.
@@ -455,19 +425,24 @@ There is an oft-quoted anecdote that the way to differentiate analytic number th
 
 A standard result with $L$-functions of Hecke eigenforms (of elliptic curve $L$-functions are a subset) is that ``all the interesting stuff happens inside the critical strip'':
 \begin{proposition}
-$\Lambda_E(1+s) \ne 0$ for $|\Re(s)| > \frac{1}{2}$.
+For any $E/\QQ$,
+\begin{equation}
+\Lambda_E(1+s) \ne 0 \;\;\mbox{when}\;\; |\Re(s)| > \frac{1}{2}
+\end{equation}
 \end{proposition}
-This can be proven by showing that the logarithmic derivative of $\Lambda_E(1+s)$ converges absolutely for $\Re(s) > \frac{1}{2}$. See section \ref{sec:log_derivs} for a proof (the statement can in fact be strengthened to asserting that all zeros are {\it strictly} inside the critical strip). \\
-
+This can be proven by showing that the logarithmic derivative of $\Lambda_E(1+s)$ converges absolutely for $\Re(s) > \frac{1}{2}$. See section \ref{sec:log_derivs} for a proof (the statement can in fact be strengthened to asserting that all zeros are {\it strictly} inside the critical strip). In fact, the Generalized Riemann Hypothesis asserts that
+\begin{equation}
+\Lambda_E(1+s) \ne  \;\;\mbox{when}\;\; \Re(s) \neq 0
+\end{equation}
 From the functional equation we get that $\Les$ has simple zeros at the nonpositive integers; these are denoted the {\it trivial} zeros of $\Les$. Zeros inside the critical strip are called {\it nontrivial}. The Generalized Riemann Hypothesis (stated in full in section \ref{sec:conjectures}) asserts that all nontrivial zeros of $\Les$ lie on the critical line $\Re(s)=1$, and all zeros with nonzero imaginary part are simple. 
 
 If $\Les$ has a zero at the central point, it may or may not have multiplicity greater than 1. The multiplicity of this possible zero is denoted the analytic rank of $E$:
 \begin{definition}
 Let $E$ be an elliptic curve over $\Q$, and let $\Les$ be its $L$-series. The {\it analytic rank} of $E$, denoted $r_{an}(E)$ or just $r_{an}$ is the order of vanishing of $L_E(s)$ at the central point $s=1$. That is, if the Taylor series of $\Les$ about $s=1$ is
 \begin{equation}
-L_E(z) = a_0 + a_1 z + a_2 z^2 + \ldots
+L_E(1+s) = a_0 + a_1 s + a_2 s^2 + \ldots
 \end{equation}
-where $z = s-1$, then $a_n = 0$ for $0 \le n < r_{an}$ and $a_{r_{an}} \ne 0$.
+then $a_n = 0$ for $0 \le n < r_{an}$ and $a_{r_{an}} \ne 0$.
 \end{definition}
 We will work a lot with the leading coefficient of the $L$-seres at the central point, so it's worth giving it a name. To this end:
 \begin{definition} \mbox{}
@@ -476,7 +451,47 @@ We will work a lot with the leading coefficient of the $L$-seres at the central 
 \item Let $C_E$ (or just $C$ when $E$ is fixed) be the leading coefficient of $\Lams$ at the central point.
 \end{itemize}
 \end{definition}
-Observe that $C\pr_E = \frac{2\pi}{\sqrt{N}}\cdot C_E$. We will most often work with the latter, hence the notation.
+Observe that $C\pr_E = \frac{2\pi}{\sqrt{N}}\cdot C_E$. We will most often work with the latter, hence the notation. \\
+
+We may use Equation \ref{eqn:Lams_analytic_continuation} to produce formulae for the value of $\Lams$ and its higher derivatives at the central point:
+\begin{proposition} \mbox{}
+\begin{enumerate}
+\item \begin{equation}
+\Lambda_E(1) = \begin{cases} \frac{\sqrt{N}}{\pi} \sum_{n=1}^{\infty}\frac{a_n}{n} e^{-\frac{2\pi}{\sqrt{N}}\cdot n}, & w_E = 1 \\ 0, & w_E = -1 \end{cases}
+\end{equation}
+\item When $m$ has the same parity as $E$, the $m$th derivative of $\Lams$ at the central point is given by
+\begin{equation}\label{eqn:central_derivatives}
+\Lambda_E^{(m)}(1) = 2 \sum_{n=1}^\infty a_n \int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N}}\right)^m e^{-\frac{2\pi n}{\sqrt{N}}\cdot t} \; dx
+\end{equation}
+When $m$ is opposite in parity to $E$, then $\Lambda_E^{(m)}(1) = 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Observe we may write equation \ref{eqn:Lams_analytic_continuation}, after a change of variables and swapping integration and summation signs, as
+\begin{equation*}
+\lambda_E(1+s) = N^{\frac{1+s}{2}}  \int_{\frac{1}{\sqrt{N}}}^{\infty} x^s f_E(it) \; dt  = N^{\frac{1+s}{2}}  \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N}}}^{\infty} t^s e^{-2\pi nt} \; dt,
+\end{equation*}
+where $f_E$ is the cusp form attached to $E$. We may differentiate under the integral sign without issue and then evaluate at $s=1$ to get
+\begin{equation}\label{eqn:lambda_derivs}
+\lambda_E^{(m)}(1) = \sqrt{N}\cdot \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N}}}^{\infty} (\log t)^m e^{-2\pi n t} \; dt
+\end{equation}
+Equation \ref{eqn:central_derivatives} follows by substituting $t \mapsto \sqrt{N} \cdot t$. For $m=0$ the integrals may be evaluated directly: $\int_{1}^{\infty} e^{-\frac{2\pi n t}{\sqrt{N}}} \; dt = \frac{\sqrt{N}}{2\pi n} e^{-\frac{2\pi n}{\sqrt{N}}}$.
+\end{proof}
+
+Crucial to this thesis, $L_E(s)$ and its derivatives can be provably computed to a given precision in time polynomial in the the conductor of $E$:
+\begin{proposition}\label{prop:L_E_time_complexity}
+When $m<\frac{1}{2} \log N_E$, the $m$th derivative of $L_E(s)$ at the central point can be provably computed to $k$ bits precision in $\softO(k\cdot \sqrt{N_E})$ time, where $N_E$ is the conductor of $E$.
+\end{proposition}
+This is proven in full in the PhD thesis of Robert Bradshaw \cite{Bra-2010}. The basic argument is as follows:
+\begin{itemize}
+\item Since the two differ by an exponential and a Gamma factor, computing $L_E^{(m)}(1)$ takes the same order of magnitude time as computing $\Lambda_E^{(m)}(1)$. This may be achieved, for example, by the formula given in Equation \ref{eqn:central_derivatives};
+\item The integral $\int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N}}\right)^m e^{-\frac{2\pi n}{\sqrt{N}}\cdot t} \; dx$ can be computed to $k$ bits precision in time that scales proportional to $k$, is independant of $n$ and subpolynomial in $N_E$;
+\item The number of terms needed in the sum to achieve $k$ bits precision is $O\left( \log(N_E)^m\sqrt{N_E}\right)$;
+\item Computing $a_n$ can be done in time polynomial in $\log n$;
+\item Combining the above, computation time is dominated by evaluating $O( \log(N_E)^m\sqrt{N_E})$ integrals and $a_n$ values. That is, the sum can be evaluated to $k$ bits precision in time scaling with $k \sqrt{N_E}$ times some power of $\log N_E$.
+\end{itemize}
+We will use the result of Proposition \ref{prop:L_E_time_complexity} directly in the proof of Theorem \ref{thm:main_theorem}. In fact, the $\softO(\sqrt{N_E})$ time needed to evaluate central derivatives of $\Les$ is the computational bottleneck in algorithm \ref{algo:compute_rank}; all other steps scale in time subpolynomial in $N_E$. 
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -490,7 +505,7 @@ The Birch and Swinnerton-Dyer conjecture (BSD) is needed to establish a way to c
 \begin{enumerate}
 \item $r_{an} = r$; that is, the analytic rank of $E$ is equal to its algebraic rank.
 \item The leading coefficient at the central point in $L_E(s)$ is given by
-\begin{equation}
+\begin{equation}\label{eqn:BSD_formula}
 C\pr_E = \left(\frac{\Omega_E\cdot\Reg_E\cdot\#\Sha(E/\Q)\cdot\prod_p c_p}{(\#E_{\text{Tor}}(\Q))^2}\right),\end{equation}
 where
 \begin{itemize}
@@ -565,18 +580,59 @@ That is, if $x^3-y^2 \ne 0$, then it cannot be much smaller in magnitude than ab
 \section{An Algorithm to Compute Rank}
 \subsection{Proof of the Main Theorem}\label{sec:main_thrm_proof}
 
-In this section we prove Theorem \ref{thm:main_theorem}: specifically, that Algorithm \ref{algo:compute_rank} is guaranteed, assuming BSD, GRH and ABC, to correctly output an elliptic curve's rank in time $\tilde{O}(\sqrt{N_E})$, where $N_E$ is the conductor of the input curve. Note that the proof will quote certain results established later in this work. \\
+In this section we prove Theorem \ref{thm:main_theorem}: specifically, that Algorithm \ref{algo:compute_rank} is guaranteed, assuming BSD, GRH and ABC, to correctly output an elliptic curve's rank in time $\softO(\sqrt{N_E})$, where $N_E$ is the conductor of the input curve. Note that the proof will quote certain results established later in this work. \\
 
-\begin{proposition}\label{prop:leading_coeff_lower_bound}
-Let $E/\QQ$ have conductor $N_E$ and $L$-function $\Les$, and let $C\pr_E$ be the central leading Taylor coefficient of $\Les$, i.e. $L_E(1+s) = Cs^r  + O(s^{r+1})$. Then, assuming BSD and ABC, for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that
+\begin{proposition}\label{prop:k_bits_for_leading_coeff}
+Let $E$ have $L$-function $\Les$, conductor $N_E$ and real period $\Omega_E$, and let
 \begin{equation}
-C\pr_E > K(\epsilon) (N_E)
+k = 4 + 10.5 \log_2 N_E - \log_2 \Omega_E
 \end{equation}
+Assuming BSD and ABC, we have the following:
+\begin{itemize}
+\item $k = O((\log N_E)^m)$ for some $m$
+\item If $L_E^{(m)}(1)=0$ for all $0 \le m < n$ and $\frac{L_E^{(n)}(1)}{n!}$ is zero to $k$ bits precision, then $L_E^{(n)}(1)$ is identically zero.
+\end{itemize}
 \end{proposition}
 \begin{proof}
-Cheese
-%%% FINISH PROOF %%%
+The first statement follows immediately from Theorem \ref{thm:real_period_lower_bound}, which states that $\Omega_E$ is bounded away from zero by a negative power of $N_E$. To prove the second statement, observe that by BSD the leading non-zero Taylor coefficient of $\Les$ at the central point is given by Equation \ref{eqn:BSD_formula}. We thus have that
+\begin{equation}
+C_E\pr \ge \frac{1}{256} \cdot  \Reg_E \cdot\, \Omega_E
+\end{equation}
+since $\prod_p c_p \ge 1$, $\# \Sha_E \ge 1$, and by Mazur's Theorem $\# E_{\text{Tor}} \le 16$. Thus
+\begin{equation}
+\log_2 C_E\pr \ge -16 + \log_2 \Reg_E + \log_2 \Omega_E
+\end{equation}
+Now by Theorem \ref{thm:regulator_lower_bound} we have that $\Reg_E\ge 4429.16 N_E^{-10.49}$. Thus 
+$\log_2 \Reg_E \ge 12.11 - 10.49 \log_2 N_E$. We therefore have that
+\begin{equation}
+\log_2 C_E\pr \ge -3.89 - 10.49 \log_2 N_E + \log_2 \Omega_E > -k
+\end{equation}
+where $k$ is as defined above. Hence if the $n$th taylor coefficient of $\Les$ at the central point is zero to $k$ bits precision and all preceding Taylor coefficients are zero, then it {\it cannot} be the leading BSD coefficient, and so must be identically zero.
 \end{proof}
+In other words, the leading Taylor coefficient of $\Les$ at $s=1$ must be greater than $2^{-k}$ in magnitude. \\
+
+We now prove Theorem \ref{thm:main_theorem}: that, assuming BSD, GRH and ABC, Algorithm \ref{algo:compute_rank} computes the rank of an elliptic curve in $\softO\left(\sqrt{N_E}\right)$ time.
+\begin{proof}
+Let $k$ be as defined as above. That the algorithm terminates with correct output is a direct corollary from Proposition \ref{prop:k_bits_for_leading_coeff}: if $\frac{L_E^{(r)}}{r!}$ is computed to $k$ bits precision and some of those bits are nonzero {\it and} all preceding Taylor coefficients have been shown to be zero, then $r$ must be the rank of $E$; hence the output of rank$=r$ is correct. \\
+
+In terms of time complexity, observe that $k$ is $O(\log N_E)$ in magnitude, and by Corollary \ref{cor:real_period_time_complexity}, can be computed in time polynomial in $\log N_E$. By Corollary \ref{cor:better_an_bound}, we need to evaluate at most $\frac{1}{2}\log N_E - 0.4$ central Taylor coefficients of $\Les$ to $k$ bits precision; Proposition \ref{prop:L_E_time_complexity} states that each of these can be done in $\softO\left(k\cdot \sqrt{N_E}\right)$ time. Hence the algorithm is guaranteed to terminate in time at most 
+\begin{equation}
+O(\log N_E) + \left(\frac{1}{2}\log N_E - 0.4\right) \cdot \softO\left(k\cdot \sqrt{N_E}\right) = \softO\left(\sqrt{N_E}\right)
+\end{equation}
+since $k$ is sub-polynomial in $N_E$.
+\end{proof}
+
+
+%\begin{proposition}\label{prop:leading_coeff_lower_bound}
+%Let $E/\QQ$ have conductor $N_E$ and $L$-function $\Les$, and let $C\pr_E$ be the central leading Taylor coefficient of $\Les$, i.e. $L_E(1+s) = Cs^r  + O(s^{r+1})$. Then, assuming BSD and ABC, for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that
+%\begin{equation}
+%C\pr_E > K(\epsilon) (N_E)
+%\end{equation}
+%\end{proposition}
+%\begin{proof}
+%Cheese
+%%%% FINISH PROOF %%%
+%\end{proof}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -611,7 +667,7 @@ A good treatment of elliptic and modular functions, including a proof of the abo
 \begin{proposition}\label{prop:real_period_upper_bound_discriminant}
 Let $E/\QQ$ have discriminant $D_E$ and real period $\Omega_E$. Then
 \begin{equation}\label{eqn:real_period_upper_bound_discriminant}
-\Omega_E < 4\pi \cdot (D_E)^{-\frac{1}{12}}
+\Omega_E < 8.82921517\ldots \cdot (D_E)^{-\frac{1}{12}}
 \end{equation}
 \end{proposition}
 \begin{proof}
@@ -619,9 +675,12 @@ Equation \ref{eqn:modular_discriminant} yields
 \begin{equation}
 \omega_1 = 2\pi |D_E|^{-\frac{1}{12}} \left| \Delta\left(\frac{\omega_2}{\omega_1}\right)\right|^{\frac{1}{12}}
 \end{equation}
-Since $E$ is defined over $\QQ$, $z = \frac{\omega_2}{\omega_1}$ has real part either equal to zero (if $D_0>0$) or equal to $\frac{1}{2}$ (if $D_E<0$). When $D_E>0$, we see that $q = e^{2\pi i z}$ is positive with magnitude less than 1, so by direct inspection we see that $\Delta(z)$ has magnitude less than 1. \\
+Since $E$ is defined over $\QQ$, $z = \frac{\omega_2}{\omega_1}$ has real part either equal to zero (if $D_0>0$) or equal to $\frac{1}{2}$ (if $D_E<0$). Thus $D_E>0$ corresponds to $q = e^{2\pi i z}$ being positive real lying in the open interval $(0,1)$, while $D_E<0$ corresponds to $q \in (-1,0)$. Now $\Delta$ is a cuspidal modular form on $\SL_2(\ZZ)$, so $\Delta(q)$ is continuous on $(-1,1)$ and decays to zero at $q=-1$ and $q=1$. It must therefore achieve a maximum magnitude on $(-1,0)$ and $(0,1)$. \\
 
-When $D_0<0$ we have that $-1<q<0$; but $\Delta(q)$ is a bounded function on this interval (being a cuspidal modular form, $\Delta$ must decay to zero at $q = -1$ and $0$). Thus it achieves a maximum on this interval; this done for $q \sim -0.439$ for which $\Delta(q) \sim -59.28$, so $|\Delta(q)|^{\frac{1}{12}} < 2$ for $-1<q<0$ certainly. Relating $\omega_1$ back to $\Omega_E$ via Definition \ref{defn:real_period} completes the proof.
+The critical points of $\Delta$ have been studied in there own right -- see for example \cite{IJA-2013} and \cite{WoYo-2013}. We see that $\Delta(q)$ has precisely one critical point on each of the intervals $(-1,0)$ and $(0,1)$; these occur at $q = 0.03727681\ldots$ and $q =-0.43929305\ldots$ respectively (corresponding to $z=0.52352170\ldots i$ and $z=\frac{1}{2}+0.13091903\ldots i$ respectively). At these two values we have $|\Delta(q)|^{\frac{1}{12}}$ equal to $0.70258935\ldots$ and $1.40521323\ldots$ respectively. We conclude that
+\begin{equation}
+\Omega_E \le 2\pi\cdot 1.40521323\ldots \cdot  |D_E|^{-\frac{1}{12}} = 8.82921517\ldots \cdot |D_E|^{-\frac{1}{12}}
+\end{equation} 
 \end{proof}
 
 Note that the real period is {\it not} invariant under isomorphism over $\QQ$. As the elliptic discriminant $D_E$ varies by a twelfth power of an integer as one considers $\QQ$-isomorphic models of $E$, the real period varies by the negative first power of that same integer. This is an immediate consequence of the following statement:
@@ -650,16 +709,16 @@ This follows from the fact that $\frac{\omega_2}{\omega_1} = i$ for any of the $
 \begin{equation}
 \Omega_{E^d} = \frac{\Gamma(\frac{1}{4})^2}{\sqrt{\pi}} \cdot (D_{E^d})^{-\frac{1}{12}} = 7.416\ldots \cdot (D_{E^d})^{-\frac{1}{12}}
 \end{equation}
-Since $4\pi = 12.566\ldots$ this result conforms with the bound given in Equation \ref{eqn:real_period_upper_bound_discriminant}. It should also be clear from the example above that any family of quadratic twists of a given curve will have the real period scale with the $-\frac{1}{12}$th power of the discriminant, so the bound given in Equation \ref{eqn:real_period_upper_bound_discriminant} is in that sense optimal. \\
+Since $4\pi = 12.566\ldots$ this result conforms with the bound given in Equation \ref{eqn:real_period_upper_bound_discriminant}. It should also be clear from the example above that any family of quadratic twists of a given curve will have the real period scale with the $-\frac{1}{12}$th power of the discriminant. Furthermore, since the $j$-invariant is surjective, we can find $E/\QQ$ with $z=j^{-1}(E)$ arbitrarily close to $\frac{1}{2}+0.13091903\ldots i$, so the constant $8.82921517\ldots$ obtained in Proposition \ref{prop:real_period_upper_bound_discriminant} is also optimal. \\
 
 \begin{corollary}
 For $E/\QQ$ with real period $\Omega_E$ and conductor $N_E$,
 \begin{equation}
-\Omega_E < 4\pi \cdot (N_E)^{-\frac{1}{12}}
+\Omega_E < 8.82921517\ldots \cdot (N_E)^{-\frac{1}{12}}
 \end{equation}
 That is, the real period goes to zero as the conductor of the curve goes to infinity.
 \end{corollary}
-This follows immediately from Proposition \ref{prop:real_period_upper_bound_discriminant}, as the conductor of an elliptic curve always divides its discriminant. \\
+This follows immediately from Proposition \ref{prop:real_period_upper_bound_discriminant}, as the conductor of an elliptic curve always divides its discriminant. Again, by the same reasoning as before this bound should be optimal. \\
 
 Equation \ref{eqn:modular_discriminant} fives us a way to compute the real period of $E$, but it is in general not the most efficient means of doing so (as $z = \frac{\omega_1}{\omega_2}$ must be found by, for example, inverting the $j$-invariant of $E$). Instead, $\omega_1$ may be computed using the (real version of the) Gauss arithmetic-geometric mean. Recall the definition thereof: let $a,b \in \RR_{\ge0}$. Set $a_0 = a$ and $b_0 = b$, and for $n\ge 0$ let $a_{n+1} = \frac{1}{2}(a_{n}+b_{n})$ and $b_{n+1} = \sqrt{a_{n}b_{n}}$. Then $\AGM(a,b)$ is defined to be the common limit of both the $a_n$ and the $b_n$. We omit the proof that both sequences converge to the same value, but convergence is quadratic (i.e. extremely quick).
 
@@ -704,7 +763,7 @@ d(E) < 2+\frac{1}{2}\max\set{|b_2|,2|b_4|,|b_6|}
 We apply Rouche's Theorem on the polynomial $x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4}$. Observe that $|\frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4}| < |x^3|$ when $|x| < 1+\max\set{\frac{|b_2|}{4},\frac{|b_4|}{2},\frac{|b_6|}{4}}$, so by Rouche's Theorem we must have that any root $e$ of the cubic obeys $|e| <  1+\frac{1}{4}\max\set{|b_2|,2|b_4|,|b_6|}$. The result follows.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{cor:real_period_time_complexity}
 Assuming ABC, the real period of an elliptic curve can be computed to a specified precision in polynomial time and space in the number of bits of the curve's conductor.
 \end{corollary}
 \begin{proof}
@@ -715,7 +774,7 @@ Step a) can be achieved in polynomial time in log of the maximum magnitude of th
 In step b), Lemma \ref{lem:root_separation_bound} implies that the inputs to the AGM are bounded by a polynomial of the $b$-invariants of $E$, so again by Szpiro they are bounded by a power of $N_E$. The AGM converges quadratically when both the inputs are positive real; therefore it will converge to specified precision with time bounded by a polynomial of $\log N_E$. Thus altogether we see that the real period can be computed to a given precision with time polynomial in $\log N_E$, i.e. sub-polynomial in $N_E$ itself.
 \end{proof}
 
-The take-away from the above result is that computing the real period is quick, and will never be the computational bottleneck when it comes to running algorithm \ref{algo:compute_rank}. \\
+The take-away from the above result is that computing the real period is quick, and will never be the computational bottleneck when it comes to running Algorithm \ref{algo:compute_rank}. \\
 
 \begin{corollary}[S.]\label{ineq:Omega_bn_bound}
 Let $E/\Q$ have (not necessarily minimal) Weierstrass equation \\
@@ -751,12 +810,12 @@ Finally, if we assume the Szpiro conjecture, Corollary \ref{ineq:Omega_bn_bound}
 \max\set{|A|^3,|B|^2} \le K(\epsilon)\cdot (N_E)^{6+\epsilon}
 \end{equation}
 (Since for a curve in short Weierstrass form $c_4 = -48A$ and $c_6=-864B$, we see that the above statement and Modified Szpiro are equivalent). Using this, we obtain the following:
-\begin{proposition}
+\begin{theorem}\label{thm:real_period_lower_bound}
 Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal model of $E$. Then, assuming ABC, for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that 
 \begin{equation}
 \Omega_E > K(\epsilon) \cdot (N_E)^{-\frac{3}{2}-\epsilon}
 \end{equation}
-\end{proposition}
+\end{theorem}
 \begin{proof}
 Let $E$ be given by its minimal short Weierstrass equation $y^2 = x^3+Ax+B$. $E$ then has $b$-invariants $b_2=0$, $b_4 = 2A$ and $b_6 = 4B$, so by Lemma \ref{ineq:Omega_bn_bound} the real period of $E$ obeys
 \begin{equation}\label{eqn:Omega_bound_short_weierstrass}
@@ -884,7 +943,7 @@ Assuming BSD, there exists an absolute constant $M_1 >0$ independent of $E$ such
 The smallest absolute point height found in the aforementioned Elkies-Stein survey is $\hat{h}(P) = 8.914\times 10^{-3}$, achieved by the point $P = (7107,-602054)$ and its negative on the curve with Cremona label {\tt 3990v1}, given by the equation $E: y^2+xy+y=x^3+x^2-125615x+61201397$. (note that the Elkies' table uses a slightly different definition of height, equal to half the value of the height as defined above). One can see in Elkies' table that the known points of smallest height all belong to curves with small conductor, so it is perhaps more believable that this is indeed the point of smallest height on any rational elliptic curve -- for such a point is guaranteed to exist, assuming ABC. \\
 
 Even though the Hindry-Silverman bound above would seem so small as to be useless in all practical applications, we can use it to bound a curve's regulator from below in terms of an inverse power of its conductor.
-\begin{theorem}\label{them:regulator_lower_bound}
+\begin{theorem}\label{thm:regulator_lower_bound}
 Let $E/\QQ$ have conductor $N_E$. Assuming BSD, GRH and Conjecture \ref{conj:Lang_height}, we have that
 \begin{equation}
 \Reg_E \ge 4429.16 \cdot N_E^{-10.49}
@@ -912,7 +971,7 @@ Note that the first step isn't strictly necessary, and only serves to improve th
 \begin{equation}
 \Reg_E \ge 6.6064 \, (N_E)^{-2.36}
 \end{equation}
-Even so, we do {\it not} expect this bound to be anywhere close to optimal; almost certainly more careful analysis could further reduce the negative exponent of $N$ or increase the size of the constant in front of it. In practice, we see the smallest regulators tend to {\it grow} with conductor, further highlighting that the above bound is rather crude. However, the statement in Theorem \ref{them:regulator_lower_bound} is good enough for our purposes: it will help establish that the central leading coefficient of $\Les$ cannot be exponentially small in $N_E$. \\
+Even so, we do {\it not} expect this bound to be anywhere close to optimal; almost certainly more careful analysis could further reduce the negative exponent of $N$ or increase the size of the constant in front of it. In practice, we see the smallest regulators tend to {\it grow} with conductor, further highlighting that the above bound is rather crude. However, the statement in Theorem \ref{thm:regulator_lower_bound} is good enough for our purposes: it will help establish that the central leading coefficient of $\Les$ cannot be exponentially small in $N_E$. \\
 
 We invite the interested reader to improve upon this result, and thus ultimately speed up the runtime of Algorithm \ref{algo:compute_rank}.
 
@@ -920,6 +979,13 @@ We invite the interested reader to improve upon this result, and thus ultimately
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Zero Sums}
+
+Algorithm \ref{algo:compute_rank} allows us to compute the rank of an elliptic curve in $\softO\left(\sqrt{N_E}\right)$ time by evaluating successive derivatives of $\Les$ at the central point. However, there is an inescapable limitation of this algorithm: the $\sqrt{N_E}$ time dependence of evaluating $\Les$ means that it becomes infeasible to run on modern computer hardware when the conductor is larger than about $\sim~10^{16}$ or so. Moreover, since there is no known way to evaluate elliptic curve $L$-functions in faster than square-root-conductor time, there is essentially nothing we can do to make such a rank computation algorithm asymptotically faster. \\
+
+In this section we work toward presenting a method to bound analytic rank from above that does not require direct computation of a curve's $L$-function. The upside of such an algorithm is that it can be run on curves with much larger conductor, with the tightness of the bound scaling with how long one wants computation time to be. The downside is that we will have to sacrifice exactness: the method will only provide upper bounds on rank. \\
+
+Because the aforementioned method relies on sums over the zeros of $\Les$, for this entire section we will assume GRH unless explicitly stated otherwise.
+
 \subsection{Logarithmic Derivatives}\label{sec:log_derivs}
 
 Let $E/\QQ$  have conductor $N$.
@@ -938,11 +1004,11 @@ where $\digamma(s) = \frac{\Gamma\pr}{\Gamma}(s)$ is the digamma function on $\C
 \end{proposition}
 This follows immediately from the definition of $\Lams = N^{\frac{s}{2}}(2\pi)^{-s}\Gamma(s)\Les$. \\
 
-Note that the digamma function is well-understood and easily computable. For example, it has the following infinite sum expansion about $s=1$:
+Note that the digamma function is well-understood and easily computable. It has simple poles at the negative integers, and it has the following infinite sum expansion about $s=1$:
 \begin{equation}\label{eqn:digamma_sum}
 \digamma(1+s) = -\eta + \sum_{k=1}^{\infty} \frac{s}{k(k+s)}
 \end{equation}
-This series converges absolutely for any $s$ not equal to a negative integer, and uniformly on sets bounded away from the negative real axis.\\
+This series converges absolutely for any $s$ not equal to a negative integer, and uniformly on bounded sets (excluding the aforementioned negative integers).\\
 
 What is perhaps surprising, however, is that $\ldLe{s}$ can be represented by an elegant Dirichlet series. Recall that for $p \nmid N$, the characteristic polynomial of Frobenius w.r.t.~$f$ at $p$ is $x^2 - a_p x + p^2$, where $a_p$ is as given by Definition \ref{def:a_p}. Let this quadratic polynomial split as $(x-\alpha_p)(x-\beta_p)$ in $\CC$, where for $\alpha_p$ and $\beta_p$ the dependance on $E$ is understood. \\
 
@@ -972,14 +1038,14 @@ The result follows by taking the logarithmic derivative of each term individuall
 \end{proof}
 
 The Dirichlet coefficients for $\ldLes$ have a beautiful characterization in terms of the number of points on $E$ over finite fields:
-\begin{theorem}[S.]
+\begin{proposition}
 \begin{equation}
 b_n(E) = \begin{cases}
 -\left(p^e + 1 - \#\widetilde{E}(\FF_{p^e})\right)\cdot \log(p), & n=p^e\;\;\text{a prime power,} \\
 0, & \text{otherwise} \end{cases}
 \end{equation}
 where $\#\widetilde{E}(\FF_{p^e})$ is the number of points over $\FF_{p^e}$ on the (possibly singular) curve obtained by reducing $E$ modulo $p$.
-\end{theorem}
+\end{proposition}
 
 \begin{proof}
 It is a standard result that if $(x-\alpha_p)(x-\beta_p)$ is the characteristic polynomial for Frobenius on $E$ at prime $p$ of good reduction, then
@@ -1045,20 +1111,20 @@ Recall that if $f$ is meromorphic on $\CC$, then $\frac{f\pr}{f}$ has a pole at 
 \end{proof}
 
 $\Lambda_E(1+s)$ has a particularly simple representation as a product over its zeros, from which we get a representation of $\ldLam{1+s}$ as a sum over its zeros.
-\begin{proposition}\label{prop:logderiv_zero_rep}  \mbox{}
+\begin{proposition}\label{prop:logderiv_zero_rep}  Assuming GRH, we have
 \begin{enumerate}
 \item \begin{equation}\label{eqn:Lams_prod}
 \Lambda_E(1+s) = C_E\cdot s^{r_{an}} \cdot \prod_{\gamma > 0} \left(1+\frac{s^2}{\gamma^2}\right) 
 \end{equation}
-where $C_E$ is the leading coefficient of $\Les$ at the central point (i.e. that defined in Conjecture \ref{conj:BSD}), and the product is taken over all zeros of $\Lambda_E(1+s)$ in the upper half plane. The product converges absolutely for any $s$, and uniformly on any bounded set.
+where $C_E$ is the leading coefficient of $\Les$ at the central point (i.e. that defined in Conjecture \ref{conj:BSD}), and the product is taken over the imaginary parts of all nontrivial zeros of $\Lambda_E(1+s)$ in the upper half plane. The product converges absolutely for any $s$, and uniformly on any bounded set.
 \item \begin{equation}\label{eqn:ldLam_sum}
 \ldLam{1+s} = \sum_{\gamma} \frac{s}{s^2+\gamma^2}, 
 \end{equation}
-where the sum is taken over {\bf all} nontrivial zeros of $\Lambda_E(1+s)$ (including central zeros) with multiplicity. The sum converges absolutely for any $s$ outside the set of nontrivial zeros for $L_E(1+s)$, and uniformly on any bounded set. \\
+where the sum is taken over the imaginary parts of {\bf all} nontrivial zeros of $\Lambda_E(1+s)$, including central zeros with multiplicity. The sum converges absolutely for any $s$ outside the set of nontrivial zeros for $L_E(1+s)$, and uniformly on any bounded set outside of the set of zeros. \\
 \end{enumerate}
 \end{proposition}
 
-Note that if we assume GRH (as we always do), then $\gamma^2$ is always a nonnegative real number in any of the above expansions. Furthermore,  since noncentral nontrivial zeros occur in conjugate pairs, each term for $\gamma \ne 0$ in Equation \ref{eqn:ldLam_sum} appears exactly twice. It is therefore often useful to rewrite it as
+Note that contingent on GRH, $\gamma^2$ is always a nonnegative real number in any of the above expansions. Furthermore,  since noncentral nontrivial zeros occur in conjugate pairs, each term for $\gamma \ne 0$ in Equation \ref{eqn:ldLam_sum} appears exactly twice. It is therefore often useful to rewrite it as
 \begin{equation}\label{eqn:ldLam_sum_v2}
 \ldLam{1+s} = \frac{r_{an}}{s} + 2 \sum_{\gamma>0} \frac{s}{s^2+\gamma^2}.
 \end{equation}
@@ -1083,19 +1149,26 @@ Let $E$ have analytic rank $r$ and conductor $N$. Then
 \begin{equation}
 r < 1.6 + \frac{1}{2} \log N
 \end{equation}
+Moreover, this bound is {\it unconditional}; it does not require GRH to hold.
 \end{corollary}
 \begin{proof}
-From Equation \ref{eqn:ldLam_sum} we have the point estimate
-\begin{equation}
+We begin by assuming GRH. From Equation \ref{eqn:ldLam_sum} we have the point estimate
+\begin{equation}\label{eqn:r_an_point_estimate}
 r < \sum_{\gamma} \frac{1}{1+\gamma^2} = \ldLam{2}
 \end{equation}
 while from Lemma \ref{lem:ldLe_bound} we get
 \begin{equation}
 \ldLam{2} =  \log\left(\frac{\sqrt{N}}{2\pi}\right) + \digamma(2) + \ldLe{2} < \frac{1}{2}\log N  - \log 2\pi + 1-\eta -2\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right),
 \end{equation}
-where $\digamma(s)$ is the digamma function on $\CC$ and $\eta$ is the Euler-Mascheroni constant $= 0.5772156649\ldots$. Collect constant terms and round up to get the stated bound.
+where $\digamma(s)$ is the digamma function on $\CC$ and $\eta$ is the Euler-Mascheroni constant $= 0.5772156649\ldots$. Collect constant terms and round up to get the stated bound. \\
+
+If one does not assume GRH, then we must use a less simplified representation for the logarithmic derivative:
+\begin{equation}
+\ldLam{1+s} = \sum_{\rho} \frac{1}{2}\left( \frac{1}{s-\rho} + \frac{1}{s-\bar{\rho}}\right)
+\end{equation}
+where $\rho$ ranges over the nontrivial zeros of $L_E(1+s)$. However, everything else proceeds as before, and the point estimate given in Equation \ref{eqn:r_an_point_estimate} still holds.
 \end{proof}
-We will later use a related technique to show firstly that the constant of $1.6$ can be replaced with $-0.4$; better yet, we will in fact show that maximum analytic rank grows more slowly than $\epsilon \log N$ for any $\epsilon>0$. \\
+We will later use a related technique to show firstly that the constant of $1.6$ can be replaced with $-0.4$ at the expense of having to assume GRH. Better yet, we will in fact show that maximum analytic rank grows more slowly than $\epsilon \log N$ for any $\epsilon>0$. \\
 
 The following corollary of Proposition \ref{prop:logderiv_zero_rep} will be of import in obtaining explicit bounds on the number of zeros of $L_E(s)$ in a given interval on the critical strip:
 \begin{corollary}\label{cor:Re_logderiv}
@@ -1143,8 +1216,8 @@ Equation \ref{eqn:ldLam_sum} gives us a description of the Laurent expansion of 
 \begin{corollary}\label{cor:ldLam_series_at_zero}
 The Laurent expansion of $\ldLam{1+s}$ about zero is given by
 \begin{align}
-\ldLam{1+s} &= \frac{r_{an}}{s} + \beta_2(E) s - \beta_4(E) s^3 + \beta_6(E) s^5 - \ldots \\
-& = \frac{r_{an}}{s} + \sum_{k=1}^{\infty} \left[(-1)^{k-1}\beta_{2k}(E)\right] s^{2k-1}
+\ldLam{1+s} &= \frac{r_{an}}{s} + \beta_2\cdot s - \beta_4\cdot s^3 + \beta_6\cdot  s^5 - \ldots \\
+& = \frac{r_{an}}{s} + \sum_{k=1}^{\infty} (-1)^{k-1}\beta_{2k}\cdot s^{2k-1}
 \end{align}
 and this converges for $|s|<\gamma_0$, where $\gamma_0$ is the imaginary part of the lowest noncentral nontrivial zero of $\Les$ in the upper half plane.
 \end{corollary}
@@ -1181,7 +1254,7 @@ Comparing terms and solving for the relevant quantities produces the desired for
 \end{proof}
 We may continue in the same vein to produce formulae for higher order coefficients of $L_E(s)$. As can be seen from above, these can in general be written in terms of sums of powers of $\left[-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right]$, inverse sums of even powers of the nontrivial zeros, and $\zeta(n)$ for $n$ a positive integer. \\
 
-What's also worth pointing out here is that the above suggests that the Taylor expansion about $s=1$ of the $L$-series attached to $E$ essentially contains no new information about the curve's attached invariants beyond that which can be found in the first nonzero coefficient - unless that information is somehow encoded in the bites $\beta_{2n}(E)$ for $n \in \NN$. Whether this is the case or not, however, is an open question.
+The above suggests that the Taylor expansion about $s=1$ of the $L$-series attached to $E$ essentially contains no new information about the curve's attached invariants beyond that which can be found in the first nonzero coefficient - unless that information is somehow encoded in the bites $\beta_{2n}(E)$ for $n \in \NN$. Whether this is the case or not, however, is an open question.
 
 
 \newpage
@@ -1273,6 +1346,7 @@ What's notable about the above formula is that the right hand side is a finite c
     \label{fig:zero_sum_visualization}
 \end{figure}
 
+The $\sinc^2$ zero sum rank estimation method has been implemented in Sage (see Trac ticket \href{http://trac.sagemath.org/ticket/16773}), and used to successfully estimate ranks on a database of 18 million elliptic curves with conductor at most $\sim 10^{11}$. A range of $\Delta$ values was used, from $\Delta=1.0$ (for which average time per curve was $\sim 10^{-5}$ s), to $\Delta=2.0$ (average time per curve $\sim 10^{-1}$ s). See an upcoming paper by Ho, Balakrishnan, Kaplan, Weigandt and Spicer for details on the computations. \\
 
 A neat conclusion that can immediately be drawn from the finiteness of the $\sinc^2$ explicit formula sum, is that maximum analytic rank grows more slowly than $\log(N)$:
 
@@ -1312,6 +1386,8 @@ Evaluate Equation \ref{eqn:sincsquared_sum} at $\Delta = \frac{\log 2}{2\pi}$ an
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Distribution of Nontrivial Zeros}
+
+Though not necessary to prove Equation \ref{eqn:sincsquared_sum}, we may also use zero sums to provide estimates on the distribution and expected location of nontrivial zeros of $\Les$ as a function of the curve's conductor. \\
 
 \begin{definition}
 For non-negative $t$, let $M_E(t)$ be the modified non-trivial zero counting function for $\Les$, i.e.
@@ -1482,7 +1558,7 @@ Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Bite and the Central Leading Coefficient}
+\subsection{The Bite}
 
 It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor; this can be achieved by doing some analysis on $\ldLam{1+s}$ and the bite $\beta_E$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
 
