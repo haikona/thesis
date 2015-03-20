@@ -1,18 +1,19 @@
-\documentclass[10pt]{article}
+\documentclass [11pt, proquest] {thesis}[2015/03/03]
+ 
+\setcounter{tocdepth}{1}  % Print the chapter and sections to the toc
+ 
+
 \include{macros}
 
-\usepackage{fullpage}
+%\usepackage{fullpage}
 \usepackage{hyperref}
 \usepackage{microtype}
 \usepackage{mathtools}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage[pdftex]{graphicx}
-
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{url}
-%\usepackage{svg}
-
 
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\B}{\mathcal{B}}
@@ -39,24 +40,165 @@
 \newcommand{\Li}{\text{Li}}
 \newcommand{\softO}{\tilde{O}}
 
+\usepackage{alltt}  % 
+\newenvironment{demo}
+  {\begin{alltt}\leftskip3em
+     \def\\{\ttfamily\char`\\}%
+     \def\{{\ttfamily\char`\{}%
+     \def\}{\ttfamily\char`\}}}
+  {\end{alltt}}
+ 
+% metafont font.  If logo not available, use the second form
+%
+% \font\mffont=logosl10 scaled\magstep1
+\let\mffont=\sf
+% --- end-of-sample-stuff ---
+ 
 
-\title{Ph.D Dissertation}
-\author{{\bf Simon Spicer} \\ University of Washington}
-\date{\today}
 \begin{document}
-\maketitle
+ 
+% ==========   Preliminary pages
+%
+% ( revised 2012 for electronic submission )
+%
 
-\begin{abstract}
-Something something elliptic curves and rank.
-\end{abstract}
+\prelimpages
+ 
+%
+% ----- copyright and title pages
+%
+\Title{Low-lying Zeros of Elliptic Curve $L$-functions}
+\Author{Simon Spicer}
+\Year{2015}
+\Program{UW Mathematics}
 
-\newpage
+\Chair{William Stein}{Professor}{Mathematics}
+\Signature{Ralph Greenberg}
+\Signature{Neal Koblitz}
+\Signature{Bernard Deconinck, GSR}
+
+\copyrightpage
+
+% \titlepage  
+
+% --- sample stuff only -----
+% unusual footnote not found in a real thesis
+% You just use the \titlepage as commented out above
+
+{\Degreetext{A dissertation submitted in partial fulfillment \\of the requirements for the degree of}
+ \def\thefootnote{\fnsymbol{footnote}}
+ \let\footnoterule\relax
+ \titlepage
+ }
+\setcounter{footnote}{0}
+
+% --- end-of-sample-stuff ---
+ 
+%
+% ----- signature and quoteslip are gone
+%
+
+%
+% ----- abstract
+%
+
+
+\setcounter{page}{-1}
+\abstract{%
+Something something elliptic curves!
+}
+ 
+%
+% ----- contents & etc.
+%
 \tableofcontents
+\listoffigures
+%\listoftables  % I have no tables
+ 
+%%
+%% ----- glossary 
+%%
+%\chapter*{Glossary}      % starred form omits the `chapter x'
+%\addcontentsline{toc}{chapter}{Glossary}
+%\thispagestyle{plain}
+%%
+%\begin{glossary}
+%\item[argument] replacement text which customizes a \LaTeX\ macro for
+%each particular usage.
+%\item[back-up] a copy of a file to be used when catastrophe strikes
+%the original.  People who make no back-ups deserve
+%no sympathy.
+%\item[control sequence] the normal form of a command to \LaTeX.
+%\item[delimiter] something, often a character, that indicates
+%the beginning and ending of an argument.
+%More generally, a delimiter is a field separator.
+%\item[document class] a file of macros that tailors \LaTeX\ for
+%a particular document.  The macros described by this thesis
+%constitute a document class.
+%\item[document option] a macro or file of macros
+%that further modifies \LaTeX\ for
+%a particular document.  The option {\tt[chapternotes]}
+%constitutes a document option.
+%\item[figure] illustrated material, including graphs,
+%diagrams, drawings and photographs.
+%\item[font] a character set (the alphabet plus digits
+%and special symbols) of a particular size and style.  A couple of fonts
+%used in this thesis are twelve point roman and {\sl twelve point roman
+%slanted}.
+%\item[footnote] a note placed at the bottom of a page, end of a chapter,
+%or end of a thesis that comments on or cites a reference
+%for a designated part of the text.
+%\item[formatter] (as opposed to a word-processor) arranges printed
+%material according to instructions embedded in the text.
+%A word-processor, on the other hand, is normally controlled
+%by keyboard strokes that move text about on a display.
+%\item[\LaTeX] simply the ultimate in computerized typesetting.
+%\item[macro]  a complex control sequence composed of 
+%other control sequences.
+%\item[pica] an archaic unit of length.  One pica is twelve points and
+%six picas is about an inch.
+%\item[point] a unit of length.  72.27 points equals one inch.
+%\item[roman]  a conventional printing typestyle using serifs.
+%the decorations on the ends of letter strokes.
+%This thesis is set in roman type.
+%\item[rule] a straight printed line; e.g., \hrulefill.
+%\item[serif] the decoration at the ends of letter strokes.
+%\item[table] information placed in a columnar arrangement.
+%\item[thesis] either a master's thesis or a doctoral dissertation.
+%This document also refers to itself as a thesis, although it
+%really is not one.
+% 
+%\end{glossary}
+ 
+%
+% ----- acknowledgments
+%
+\acknowledgments{
+This dissertation was by no means produced in a vacuum. Many individuals have provided critical contributions over the course of my studies, and we are thankful to all of them. However, some we must mention specifically. Sincere thanks must be given to my advisor William Stein, who for many years has provided the patient mentorship and guidance needed to make this dissertation a reality. I would also like to extend a heartfelt thanks to the University of Washington department of Mathematics as a whole, and to the graduate student coordinator Brooke Miller in particular, for supporting me throughout my studies at UW. \\
 
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction}
+A number of mathematicians have given valuable advice. We are grateful for the correspondence with Barry Mazur on the explicit formula for elliptic curves, which was my entry point into the whole topic of elliptic curve $L$-functions. John Cremona and Noam Elkies gave sage insight on the topics of the real period and regulator respectively. And we are grateful to John Voight, who used an early version of my code and found a number of significant bugs. Finally, thanks must be given to Wei Ho, Jen Balakrishnan, Jamie Weigandt and Nathan Kaplan for putting up with my less-than-expert attempts to compute the ranks of large databases of elliptic curves.
+}
 
+%
+% ----- dedication
+%
+\dedication{\begin{center}To my wife Kimberly and son Bram, who comprise two thirds of the Spicer Theorem.\end{center}}
+
+%
+% end of the preliminary pages
+ 
+ 
+ 
+%
+% ==========      Text pages
+%
+
+\textpages
+ 
+% ========== Chapter 1
+ 
+\chapter {Introduction}
+ 
 Let $E$ be an elliptic curve over the rational numbers. We can think of $E$ as the set of rational solutions $(x,y)$ to a two-variable cubic equation in the form:
 \begin{equation}
 E: y^2 = x^3 + Ax + B
@@ -136,12 +278,12 @@ The work in this thesis hopes to address the question of how to effectively comp
 
 The short answer is that, using a black box computer, you can't. We need theorems governing the magnitude of the Taylor coefficients -- especially that leading coefficient $C$mentioned above -- in order to make analytic rank explicitly computable. This work establishes those results, and details (assuming standard conjectures) an explicit algorithm with provable complexity to compute the analytic rank of a rational elliptic curve. If you hold the BSD Conjecture as true, then this gives us a way to compute the algebraic rank of $E$. \\
 
-The structure of this dissertation is as follows. Chapter 2 more precisely lays out the problem tackled in this work, quotes the major results obtained to this end and outlines the strategy used to prove these results. Chapter 3 consists of an exposition of the mathematical background relevant to this thesis; while chapter 4 contains proofs of the main results. Chapter 5 consists of analytic methods and results that allow one, for example, to obtain estimates on analytic rank when evaluating a curve's $L$-function directly is computationally infeasible. Chapter 6 consists of remarks and ideas for future work. Supporting computational evidence is supplied where relevant, as opposed to being collected in its own chapter.
-
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Problem Outline and Major Results}\label{sec:outline_results}
-
+The structure of this dissertation is as follows. Chapter 2 more precisely lays out the problem tackled in this work, quotes the major results obtained to this end and outlines the strategy used to prove these results. Chapter 3 consists of an exposition of the mathematical background relevant to this thesis; while chapter 4 contains proofs of the main results. Chapter 5 consists of analytic methods and results that allow one, for example, to obtain estimates on analytic rank when evaluating a curve's $L$-function directly is computationally infeasible. Chapter 6 consists of remarks and ideas for future work. Supporting computational evidence is supplied where relevant, as opposed to being collected in its own chapter. 
+ 
+% ========== Chapter 2
+ 
+\chapter{Problem Outline and Major Results}\label{sec:outline_results}
+ 
 A natural question to ask in the field of computational number theory is: does an algorithm exist to compute the rank of an elliptic curve? Manin showed in \cite{Man-1971} that, contingent on the Birch and Swinnerton-Dyer conjecture, the answer to this question is yes. A rough outline of the method is as follows: by day you search for points on a curve and thus obtain a lower bound on the algebraic rank of the curve; by night you evaluate central derivatives of the curve's $L$-function and thus obtain an upper bound on the analytic rank. Assuming BSD, eventually the two bounds will match up, and you will have computed the curve's rank.
 
 However, although guaranteed to terminate, the above method is ineffective from a time complexity perspective -- there are no results establishing just how long it will take for the two bounds to match up. It is thus a somewhat less than satisfying answer to the question posed.
@@ -171,13 +313,13 @@ Moreover, Algorithm \ref{algo:compute_rank} is in a sense optimal among analytic
 Along the way, we also prove the following interesting results regarding bounds on the locations of the nontrivial zeros of the $L$-function attached to $E$:
 
 % QUOTE MAJOR RESULTS
-
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Notation, Definitions and Background}\label{sec:defs_background}
-
+ 
+% ========== Chapter 3
+ 
+\chapter{Notation, Definitions and Background}\label{sec:defs_background}
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Notation}\label{subsec:notation}
+\section{Notation}\label{subsec:notation}
 
 For the rest of the body of this text (unless otherwise stated) we set the following notation:
 \begin{itemize}
@@ -205,12 +347,12 @@ Furthermore, we define the following values associated to $E$ (in all cases the 
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Definitions}
+\section{Definitions}
 
 The rest of this chapter covers the basic definitions of and results needed for the rest of this work (namely, big-Oh notation, elliptic curves and $L$-functions). Feel free to skip this if you are familiar with them.
 
 %%%%%%%%%%%%
-\subsubsection{Big-Oh Notation}
+\subsection{Big-Oh Notation}
 
 Given that the running time of various algorithms will be discussed over the course of this work, we recall the definitions of big-Oh and soft-Oh notation, at least in the context of how they will be used here.
 
@@ -243,7 +385,7 @@ The same terminology can be applied to the space requirements of an algorithm, w
 
 
 %%%%%%%%%%%%
-\subsubsection{Elliptic curves and their $L$-functions}
+\subsection{Elliptic curves and their $L$-functions}
 
 \begin{definition}
 An elliptic curve $E$ is a genus 1 smooth projective curve with a marked point $\cO$. $E$ is defined over a field $K$ if $E$ may be represented by the {\it Weierstrass equation} $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a1,\ldots a_6 \in K$.
@@ -493,8 +635,7 @@ This is proven in full in the PhD thesis of Robert Bradshaw \cite{Bra-2010}. The
 \end{itemize}
 We will use the result of Proposition \ref{prop:L_E_time_complexity} directly in the proof of Theorem \ref{thm:main_theorem}. In fact, the $\softO(\sqrt{N_E})$ time needed to evaluate central derivatives of $\Les$ is the computational bottleneck in algorithm \ref{algo:compute_rank}; all other steps scale in time subpolynomial in $N_E$. 
 
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Some Conjectures}\label{sec:conjectures}
 
 The main results in this thesis are contingent on the Birch and Swinnerton-Dyer conjecture, The Generalized Riemann Hypothesis and the ABC conjecture. We reproduce the three conjectures in full below. \\
@@ -575,12 +716,14 @@ That is, if $x^3-y^2 \ne 0$, then it cannot be much smaller in magnitude than ab
 
 %%% Add statement: ABC implies the results we need, but the results we need are not equivalent to ABC, so don't need ABC itself (Check if true for Hindry-Silverman).
 
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{An Algorithm to Compute Rank}
-\subsection{Proof of the Main Theorem}\label{sec:main_thrm_proof}
 
-In this section we prove Theorem \ref{thm:main_theorem}: specifically, that Algorithm \ref{algo:compute_rank} is guaranteed, assuming BSD, GRH and ABC, to correctly output an elliptic curve's rank in time $\softO(\sqrt{N_E})$, where $N_E$ is the conductor of the input curve. Note that the proof will quote certain results established later in this work. \\
+% ========== Chapter 4
+ 
+\chapter{An Algorithm to Compute Rank}
+ 
+\section{Proof of the Main Theorem}\label{sec:main_thrm_proof}
+
+In this section we prove Theorem \ref{thm:main_theorem}: specifically, that Algorithm \ref{algo:compute_rank} is guaranteed, assuming BSD and ABC, to correctly output an elliptic curve's rank in time $\softO(\sqrt{N_E})$, where $N_E$ is the conductor of the input curve. Note that the proof will quote certain results established later in this work. \\
 
 \begin{proposition}\label{prop:k_bits_for_leading_coeff}
 Let $E$ have $L$-function $\Les$, conductor $N_E$ and real period $\Omega_E$, and let
@@ -636,7 +779,7 @@ since $k$ is sub-polynomial in $N_E$.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Real Period}
+\section{The Real Period}
 
 The real period of a rational elliptic curve $E$ is a measure of the ``size'' of the set of {\it real} points on $E$. \\
 
@@ -844,7 +987,7 @@ Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Regulator}
+\section{The Regulator}
 
 To define the regulator of a rational elliptic curve, we must first define the na\"ive logarithmic height, N\'eron-Tate canonical height and the N\'eron-Tate pairing on points on $E$.
 
@@ -975,12 +1118,12 @@ Note that the first step isn't strictly necessary; it only improves the constant
 \end{equation}
 Even so, we do {\it not} expect this bound to be anywhere close to optimal; almost certainly more careful analysis could further reduce the negative exponent of $N$ or increase the size of the constant in front of it. In practice, we see the smallest regulators tend to {\it grow} with conductor, further highlighting that the above bound is rather crude. However, the statement in Theorem \ref{thm:regulator_lower_bound} is good enough for our purposes: it will help establish that the central leading coefficient of $\Les$ cannot be exponentially small in $N_E$. \\
 
-We invite the interested reader to improve upon this result, and thus ultimately speed up the runtime of Algorithm \ref{algo:compute_rank}.
+We invite the interested reader to improve upon this result, and thus ultimately speed up the runtime of Algorithm \ref{algo:compute_rank}. 
 
 
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Zero Sums}
+% ========== Chapter 5
+ 
+\chapter{Zero Sums}
 
 Algorithm \ref{algo:compute_rank} allows us to compute the rank of an elliptic curve in $\softO\left(\sqrt{N_E}\right)$ time by evaluating successive derivatives of $\Les$ at the central point. However, there is an inescapable limitation of this algorithm: the $\sqrt{N_E}$ time dependence of evaluating $\Les$ means that it becomes infeasible to run on modern computer hardware when the conductor is larger than about $\sim~10^{16}$ or so. Moreover, since there is no known way to evaluate elliptic curve $L$-functions in faster than square-root-conductor time, there is essentially nothing we can do to make such a rank computation algorithm asymptotically faster. \\
 
@@ -988,7 +1131,8 @@ In this section we work toward presenting a method to bound analytic rank from a
 
 Because the aforementioned method relies on sums over the zeros of $\Les$, for this entire section we will assume GRH unless explicitly stated otherwise.
 
-\subsection{Logarithmic Derivatives}\label{sec:log_derivs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Logarithmic Derivatives}\label{sec:log_derivs}
 
 Let $E/\QQ$  have conductor $N$.
 \begin{definition}
@@ -1260,8 +1404,8 @@ The above suggests that the Taylor expansion about $s=1$ of the $L$-series attac
 
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Explicit Formula for Elliptic Curves}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Explicit Formula for Elliptic Curves}
 
 Combining equations \ref{eqn:logderiv_relation}, \ref{eqn:digamma_sum} and \ref{eqn:ldLam_sum} we get the following equality:
 \begin{proposition}
@@ -1299,8 +1443,8 @@ Then as distributions,
 In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\varphi_E \right\rangle$ for $\Re(s) > 0$. Note that convergence on the right hand side is absolute for $\Re(s)>1$, and conditional (provably so thanks to Sato-Tate) for $0<\Re(s)\le 1$. \\
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Estimating Analytic Rank with the sinc$^2$ Sum}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Estimating Analytic Rank with the sinc$^2$ Sum}
 
 The Explicit Formula may be used to provide computationally effective upper bounds on the analytic rank of an elliptic curve. The method appears to have first been formulated by Mestre in \cite{Me-1986}, and used by Brumer in \cite{Bru-1992} to prove that, conditional on GRH, the average rank of elliptic curves was at most 2.3. This upper bound was improved to 2 by Heath-Brown in \cite{HeBr-2004}. \\
 
@@ -1386,8 +1530,8 @@ Evaluate Equation \ref{eqn:sincsquared_sum} at $\Delta = \frac{\log 2}{2\pi}$ an
 \end{proof}
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Distribution of Nontrivial Zeros}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Distribution of Nontrivial Zeros}
 
 Though not necessary to prove Equation \ref{eqn:sincsquared_sum}, we may also use zero sums to provide estimates on the distribution and expected location of nontrivial zeros of $\Les$ as a function of the curve's conductor. \\
 
@@ -1559,8 +1703,8 @@ The derivation is similar to before. The location of the first nontrivial noncen
 Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right]$ is $O(t^3)$ for small t, so the quantity expressed in equation \ref{eqn:M_E_smooth_part} is dominated by the $\frac{1}{\pi}\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t$ term when $N$ is large. Solving for $t$ yields the desired value.
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Bite}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Bite}
 
 Recall by Definition \ref{defn:bite}, the {\it bite} $\beta_E$ of an elliptic curve is given by
 \begin{equation}
@@ -1671,10 +1815,9 @@ while $\sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N}}}{n} \le \sum_{n=1}^{\infty}
 Note that for fixed $N$, if we allow $k \to \infty$, we actually have that the $k$th derivative can grow like $O\left(\frac{k!!}{(2\pi e)^{k/2}}\right)$, where $k!! = k(k-2)\cdots$ is the double factorial on $k$ - i.e., faster than exponentially in $k$. However, this behavior only starts to show when $k>>\log N$ - hence our restriction on the magnitude of $k$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N$ (c.f. Corollary \ref{cor:logderiv_rank_bound}), we will never need to consider $\Lambda_E^{(k)}(1)$ for $k> \frac{1}{2}\log N$.
 
 
-
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Remarks and Future Work}
+% ========== Chapter 6
+ 
+\chapter{Remarks and Future Work}
 
 This dissertation pulls in results from a number of disparate topics related to elliptic curves, with the general approach being ``establish results that are good enough to support the main theorems". As such, many of the bounds and statements obtained of the course of this work are very far from optimal, and the ultimate running time of, say, Algorithm \ref{algo:compute_rank} could be considerably improved if these bounds were tightened. In this section we hope to list (in somewhat random order) the areas where results could be improved upon, and in so doing detail directions for possible future work.
 
@@ -1707,8 +1850,42 @@ What is perhaps a bit more tractable is to continue in the same vein as in the b
 We invoke ABC when proving lower bounds on the real period in terms of the conductor; however, this isn't strictly necessary.
 
 
-\newpage
-\bibliography{bibliography}{}
-\bibliographystyle{amsalpha}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printendnotes
+
+%
+% ==========   Bibliography
+%
+\nocite{*}   % include everything in the thesis.bib file
+\bibliographystyle{plain}
+\bibliography{bibliography}
+%
+% ==========   Appendices
+%
+\appendix
+\raggedbottom\sloppy
+ 
+% ========== Appendix A
+ 
+\chapter{Code and Blog Posts}
+ 
+The analytic rank estimation code mentioned in this thesis is hosted on GitHub, and is accessible to all free of charge under the GNU General Public License.
+
+\begin{itemize}
+\item The repo can be found at
+\begin{description}
+\item[] \verb%https://github.com/haikona/GSoC_2014%
+\end{description}
+
+\item Moreover, as it was being written the code was blogged about extensively; the posts on various aspects of the code's functionality can be found at
+\begin{description}
+\item[]  \verb%http://mathandhats.blogspot.com/%
+\end{description}
+
+\end{itemize}
+
+\vita{Simon Spicer was born and raised in Johannesburg, South Africa, but has spent the past six years in Seattle pursuing his mathematics PhD at the University of Washington. At the time of completing this thesis he and his wife Kimberly have just welcomed their first child, Bramwell, into the world. In his spare time Simon enjoys writing code, piloting airplanes and attempting to teach his family Afrikaans.}
+
 
 \end{document}
