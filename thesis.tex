@@ -842,9 +842,6 @@ Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal
 \end{equation}
 \end{conjecture}
 
-%%% SPECIFIC EXAMPLE: CONGRUENT NUMBER CURVES %%%
-
-
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Regulator}
@@ -915,7 +912,7 @@ Note that if $E/\QQ$ has rank 1, then its regulator is just the smallest height 
 
 Loosely, the regulator measures the ``density'' of rational points on $E$: positive rank elliptic curves with small regulators have many points with small coordinates, while those with large regulators have few such points.\\
 
-It is straightforward exercise to construct elliptic curves with arbitrarily large regulators. For example, one could fix some $x_0$ and $y_0$ with large denominators, and then find $A$ and $B$ such that $P=(x,y)$ lies on $E: y^2 = x^2 + Ax + B$. The more interesting question to ask -- and the one that is relevant to this thesis -- is ``how small can the regulator get?''. Specifically, given $E/\QQ$ with discriminant $D_E$, what is the smallest $\Reg_E$ can be as a function of $D_E$?
+It is straightforward exercise to construct elliptic curves with arbitrarily large regulators. For example, one could fix some $x_0$ and $y_0$ with large denominators, and then find $A$ and $B$ such that $P=(x,y)$ lies on $E: y^2 = x^2 + Ax + B$. The more interesting question to ask -- and the one that is relevant to this thesis -- is ``how small can the regulator be?''. Specifically, given $E/\QQ$ with (minimal) discriminant $D_E$, what is the smallest $\Reg_E$ can be as a function of $D_E$?
 
 This is an open question. However, the following conjecture has been made by Lang \cite{Lang-1997}:
 
@@ -925,13 +922,13 @@ Let $E/\QQ$ have minimal discriminant $D_E$. There exists an absolute constant $
 \hat{h}(P) >= M_0 \log |D_E| .
 \end{equation}
 \end{conjecture}
-That is, the minimum height of a non-torsion point on $E$ scales with the log of the absolute value of the curve's minimal discriminant. Hindry and Silverman in \cite{HiS-1988} show that the ABC conjecture implies Lang's height conjecture and give an explicit lower bound on $M_0$:
+That is, the minimum height of a non-torsion point on $E$ scales with the log of the absolute value of the curve's minimal discriminant. Hindry and Silverman in \cite{HiS-1988} show that the ABC conjecture implies Lang's height conjecture and, better yet, gives an explicit lower bound on $M_0$:
 \begin{equation}
 M_0 \ge 6\times 10^{-11}
 \end{equation}
-Since we are already assuming strong ABC, we have this result for free. \\
+Note that Theorem \ref{thm:main_theorem} requires the assumption of ABC for results regarding the real period of $E$; quoting the above result therefore requires no further unproven results. \\
 
-There is general agreement in the literature is that the value of $M_0$ above is in no way close to being optimal; however, there is no strong consensus as to how much larger $M_0$ could be. A survey by Elkies and Stein \cite{ElSt-2002} reveals 54 known cases of points $P$ on curves over $\QQ$ where $\hat{h}(P) < \frac{1}{100}$, and the largest value of $\hat{h}/\log|D_E|$ is $\sim 8.46 \times 10^{-5}$, achieved by a point on a curve of conductor $N=3476880330$. Given the evidence in the data compiled by Elkies and Stein, it seems quite likely that there are as-yet undiscovered instances of points with exceptionally low height driving the quantity down even further. \\
+There is general agreement in the literature is that the value of $M_0$ above is in no way close to being optimal; however, there is no strong consensus as to how much larger $M_0$ could be. A survey by Elkies \cite{ElSt-2002} reveals 54 known cases of points $P$ on curves over $\QQ$ where $\hat{h}(P) < \frac{1}{100}$, and the largest value of $\hat{h}/\log|D_E|$ is $\sim 8.46 \times 10^{-5}$, achieved by a point on a curve of conductor $N=3476880330$. Given the evidence in this and other compiled data, it seems quite likely that there are as-yet undiscovered instances of points with exceptionally low height driving the quantity down even further. \\
 
 One can make the more conservative following observation:
 \begin{corollary}\label{conj:point_height_lower_bound}
@@ -940,17 +937,21 @@ Assuming BSD, there exists an absolute constant $M_1 >0$ independent of $E$ such
 \hat{h}(P) >= M_1 .
 \end{equation}
 \end{corollary}
-The smallest absolute point height found in the aforementioned Elkies-Stein survey is $\hat{h}(P) = 8.914\times 10^{-3}$, achieved by the point $P = (7107,-602054)$ and its negative on the curve with Cremona label {\tt 3990v1}, given by the equation $E: y^2+xy+y=x^3+x^2-125615x+61201397$. (note that the Elkies' table uses a slightly different definition of height, equal to half the value of the height as defined above). One can see in Elkies' table that the known points of smallest height all belong to curves with small conductor, so it is perhaps more believable that this is indeed the point of smallest height on any rational elliptic curve -- for such a point is guaranteed to exist, assuming ABC. \\
+The smallest absolute point height found in the aforementioned survey is $\hat{h}(P) = 8.914\times 10^{-3}$, achieved by the point $P = (7107,-602054)$ and its negative on the curve with Cremona label {\tt 3990v1}, given by the equation $E: y^2+xy+y=x^3+x^2-125615x+61201397$. (note that the Elkies' table uses a slightly different definition of height, equal to half the value of the height as defined above). One can see in this table that the known points of smallest height all belong to curves with small conductor, so it is perhaps more believable that this is indeed the point of smallest height on any rational elliptic curve -- for such a point is guaranteed to exist, assuming ABC. \\
 
 Even though the Hindry-Silverman bound above would seem so small as to be useless in all practical applications, we can use it to bound a curve's regulator from below in terms of an inverse power of its conductor.
 \begin{theorem}\label{thm:regulator_lower_bound}
-Let $E/\QQ$ have conductor $N_E$. Assuming BSD, GRH and Conjecture \ref{conj:Lang_height}, we have that
+Let $E/\QQ$ have conductor $N_E$. Assuming BSD and Conjecture \ref{conj:Lang_height}, we have that
+\begin{equation}
+\Reg_E \ge 2.59 \times 10^{-15} \cdot N_E^{-10.49}
+\end{equation}
+If one further assumes GRH, then one has
 \begin{equation}
 \Reg_E \ge 4429.16 \cdot N_E^{-10.49}
 \end{equation}
 \end{theorem}
 \begin{proof}
-For curves of conductor $\le 350000$, we consulted Cremona's tables and verified numerically that the inequality holds. Thus without loss of generality we may assume $D_E > N_E > 350000$. Thus for any point $P \in E(\QQ)$ by Conjecture \ref{conj:Lang_height} we have that
+For curves of conductor $\le 350000$, we consulted Cremona's tables and verified numerically that the above inequalities holds. Thus without loss of generality we may assume $D_E > N_E > 350000$. Thus for any point $P \in E(\QQ)$ by Conjecture \ref{conj:Lang_height} we have that
 \begin{equation}
 \hat{h}(P) >= 6\times10^{-11} \cdot \log |D_E| \ge 6\times10^{-11} \cdot \log(350000) = 7.6594 \times 10^{-10}
 \end{equation}
@@ -959,15 +960,16 @@ Let $r$ be the algebraic rank of $E$. Since $\Reg_E$ is the volume of the co-lat
 \begin{equation*}
 \Reg_E \ge \left(\min \set{ \hat{h}(P), \; P \in E(\QQ)}\right)^r \ge  K^r,
 \end{equation*}
-where $K = 7.6594 \times 10^{-10}$. By BSD, $r = r_{an}$ so (assuming GRH) Corollary \ref{cor:better_an_bound} has $r < \frac{1}{2} \log N_E - 0.4$. Thus
+where $K = 7.6594 \times 10^{-10}$. By BSD, $r = r_{an}$ so . Thus by Corollary \ref{cor:logderiv_rank_bound} we have
 \begin{align*}
-\Reg_E &\ge K^{\frac{1}{2} \log N_E - 0.4} \\
-&= K^{-0.4} \cdot (N_E)^{\frac{1}{2} \log K} \\
-&= 4429.16 \ldots \cdot (N_E)^{-10.494957\ldots}
+\Reg_E &\ge K^{\frac{1}{2} \log N_E + 1.6} \\
+&= K^{1.6} \cdot (N_E)^{\frac{1}{2} \log K} \\
+&= 2.59843\ldots \times 10^{-15} \cdot (N_E)^{-10.494957\ldots}
 \end{align*}
+If one assumes GRH, the by Corollary \ref{cor:better_an_bound} we have $r < \frac{1}{2} \log N_E - 0.4$; proceed as above to obtain the second inequality.
 \end{proof}
 
-Note that the first step isn't strictly necessary, and only serves to improve the constants in bound by a small amount. However, it serves to highlight that the power of $N_E$ in this bound could theoretically be improved further by exhaustively checking all curves up to a higher conductor bound. If, for example, we believe that $8.914\times 10^{-3}$ is a global minimum point height over all rational elliptic curves, then we instead get
+Note that the first step isn't strictly necessary; it only improves the constants in the bounds by a small amount. However, it serves to highlight that the power of $N_E$ in this bound can theoretically be improved further by exhaustively checking all curves up to a higher conductor bound. If, for example, we believe that $8.914\times 10^{-3}$ is a global minimum point height over all rational elliptic curves, then (assuming GRH) we instead get
 \begin{equation}
 \Reg_E \ge 6.6064 \, (N_E)^{-2.36}
 \end{equation}
@@ -1194,7 +1196,7 @@ However, absolute convergence for $\sum_{\gamma} \frac{s}{s^2+\gamma^2}$ for any
 Observe that GRH implies that $\Re(\ldLam{1+s})>0$ for $\Re(s)>0$, since then each of the terms in the above sum are strictly positive. By oddness of $\ldLam{1+s}$ we also then have that $\Re(\ldLam{1+s})<0$ for all $\Re(s)<0$, and $\Re(\ldLam{1+s})=0 \Rightarrow \Re(s)=0$. \\
 
 Mazur and Stein in \cite{MaSt-2013} define the {\it bite} of an elliptic curve $L$-function:
-\begin{definition}
+\begin{definition}\label{defn:bite}
 The {\it bite} of $\Les$ is
 \begin{equation}
 \beta(E) := \sum_{\gamma \ne 0} \gamma^{-2},
@@ -1350,7 +1352,7 @@ The $\sinc^2$ zero sum rank estimation method has been implemented in Sage (see 
 
 A neat conclusion that can immediately be drawn from the finiteness of the $\sinc^2$ explicit formula sum, is that maximum analytic rank grows more slowly than $\log(N)$:
 
-\begin{corollary}
+\begin{corollary}\label{cor:rank_slower_than_log_N}
 For any $\epsilon >0$ there is a constant $K_{\epsilon}>0$ such that for any $E/\QQ$ with conductor $N$, we have
 \begin{equation}
 r_{an}(E) < \epsilon \log N + K_{\epsilon}
@@ -1538,7 +1540,7 @@ Even though the above graph demonstrates that the zero dispersions are clearly n
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1.0\textwidth]{graphics/389a_zero_dispersions_histagram.png}
-    \caption{A histogram of zero dispersions for the curve 389 for the 1000th through 11000th zeros (we discard the first 1000 zeros to avoid the small-height bias observable in the the cumulative average plot above. }
+    \caption{A histogram of zero dispersions for the curve 389 for the 1000th through 11000th zeros (we discard the first 1000 zeros to avoid the small-height bias observable in the the cumulative average plot above). }
     \label{fig:389a_zero_dispersions_histagram}
 \end{figure}
 
@@ -1560,15 +1562,21 @@ Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Bite}
 
-It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor; this can be achieved by doing some analysis on $\ldLam{1+s}$ and the bite $\beta_E$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
-
-As zero density on the critical line grows proportional to $\frac{1}{2}\log N$ (see Theorem \ref{thm:zero_density}), we expect the bite $\beta_E = \sum_{\gamma\ne 0} \gamma^{-2}$ to grow like $\frac{1}{2}\log N$. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
-\begin{lemma}[S.]
-For all $\epsilon>0$ there is a constant $K_{\epsilon}>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
+Recall by Definition \ref{defn:bite}, the {\it bite} $\beta_E$ of an elliptic curve is given by
 \begin{equation}
-\beta_E = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{2+\epsilon} \log N - K_{\epsilon}.
+\beta_E = \sum_{\gamma \ne 0} \frac{1}{\gamma^2}
 \end{equation}
-where $N$ is the conductor of $E$.
+where $\gamma$ ranges over the imaginary parts of the {\it non-central} nontrivial zeros of $\Les$. In this sections we establish some bounds on the bite, show how one can compute it efficiently without having to compute the locations of the zeros of $\Les$ explicitly, and finish off with a result showing that the lowest noncentral zero is bounded away from the central point in terms of a negative power of the conductor. \\
+
+%It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor; this can be achieved by doing some analysis on $\ldLam{1+s}$ and the bite $\beta_E$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
+
+As zero density on the critical line grows proportional to $\frac{1}{2}\log N_E$ (see Theorem \ref{thm:zero_density}), we expect the bite to grow like $\frac{1}{2}\log N_E$ too. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
+\begin{lemma}[S.]
+For all $\epsilon>0$ there is a constant $K(\epsilon)>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
+\begin{equation}
+\beta_E = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{2+\epsilon} \log N_E - K(\epsilon).
+\end{equation}
+where $N_E$ is the conductor of $E$.
 \end{lemma}
 \begin{proof}
 
@@ -1599,7 +1607,16 @@ From this we derive a straightforward way to compute the bite of $E$ from the $r
 \begin{proof}
 The first line follows immediately from Proposition \ref{prop:bite_times_leading_coeff} and the fact that $C_E = \frac{\Lambda^{(r)}(1)}{r!}$. The second line comes from the formula for the $(r+2)$th Taylor coefficient of $L_E$ at the central point derived in Corollary \ref{cor:ldLe_expansion}.
 \end{proof}
-This allows us to compute the bite of a curve {\it without} having to compute the locations of the zeros themselves. Moreover, the bite can be computed to arbitrary precision in polynomial time (in the conductor and the number of bits of precision) using, for example, Tim Dokchitser's {\tt computel} PARI code, which can compute the Taylor series expansion of a motivic $L$-function at a given point. \\
+This allows us to compute the bite of a curve {\it without} having to compute the locations of the zeros themselves. Moreover, the bite can be computed to arbitrary precision in polynomial time (in the conductor and the number of bits of precision) using, for example, Tim Dokchitser's {\tt computel} PARI code, which can compute the Taylor series expansion of a motivic $L$-function at a given point. [Important side-note: the aforementioned package uses approximations that have not (yet) been shown to be provably correct; however, one one could certainly write code to compute in polynomial time the central Taylor expansion of $\Les$ via the work of Bradshaw in \cite{Bra-2010}, which {\it does} produce provably correct $L$-function values.] \\
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/bites_vs_conductors_array.png}
+    \caption{The bites of all curves in the Cremona tables were computed using the above method. Above is a plot of $\log(\beta)$ vs. $\log(N)$ for curves of rank 0, 1, 2 and 3 respectively. }
+    \label{fig:bites_vs_conductors_array}
+\end{figure}
+
+One can see from he above plot that the bite obeys a sharp lower bound with respect to the conductor, but the upper bound is somewhat less tight. More interesting is the fact that the lower bound appears the same regardless of rank, while curves with anomalously large bits are predominantly rank $0$. This makes sense: large bites correspond to very low-lying zeros, and because of the well-documented zero repulsion effect, this can only really happen when there are no zeros at the central point. \\
 
 %%%%% INCLUDE PICTURES OF BITE VS. CONDUCTOR AND LEADING COEFF HERE %%%%%
 
@@ -1659,6 +1676,35 @@ Note that for fixed $N$, if we allow $k \to \infty$, we actually have that the $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Remarks and Future Work}
 
+This dissertation pulls in results from a number of disparate topics related to elliptic curves, with the general approach being ``establish results that are good enough to support the main theorems". As such, many of the bounds and statements obtained of the course of this work are very far from optimal, and the ultimate running time of, say, Algorithm \ref{algo:compute_rank} could be considerably improved if these bounds were tightened. In this section we hope to list (in somewhat random order) the areas where results could be improved upon, and in so doing detail directions for possible future work.
+
+\subsection{Bounding analytic rank from above in terms of conductor}
+
+To establish a lower bound on the regulator of an elliptic curve in terms of its conductor we require an upper bound on the analytic rank. To this end we invoke Corralaries \ref{cor:logderiv_rank_bound} and \ref{cor:better_an_bound}, stating that maximum analytic rank is bounded by $\frac{1}{2}\log N$ plus an explicit constant. \\
+
+However, Corollary \ref{cor:rank_slower_than_log_N} asserts that, contingent on GRH, maximum analytic rank of in fact grows slower than log of the conductor. This result has {\it not} been used directly, mainly because the constant $K(\epsilon)$ has not been made explicit in terms of the $\epsilon$ chosen. This translates to bounding the $c_n$ sum
+\begin{equation}
+\sum_{n < e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)
+\end{equation}
+in terms of the parameter $\Delta$. \\
+
+A natural question to ask, and hopefully answer, is ``can this be done effectively"? Empiracally, the $c_n$ sum is seldom more than a handful of units in magnitude; however, the fact that the sum is carried out over prime powers and large amounts of cancellation due to the changing signs of the $c_n$ coefficients mean this this term is tricky to control. Note that one can readily obtain a naive explicit bound, it is exponential in $\log \Delta$, and thus quite useless from a practical perspective. \\
+
+Nevertheless, if one could show that the sum grows at most polynomial in $\log \Delta$ (regardless of $E$) and obtain explicit constants, then a direct consequence would be that the lower bound on the regulator of $E$ would go to zero more slowly than any negative power of $N$. \\
+
+\subsection{The Regulator}
+
+Orthogonal to the above, a lower bound on $\Reg_E$ relies on Hindry-Silverman's \cite{HiS-1988} result that, contingent on ABC, minimum point height obeys the bound
+\begin{equation}
+\hat{h}(P) > 6\times 10^{-11}\cdot \log(D_E)
+\end{equation}
+where $D_E$ is the discriminant of $E$, and $P$ is any rational point on $E$. This result is in all probability {\it very} far from optimal; we recall that the minimum point height known is $8.9\times 10^{-4}$. An improvement in the lower bound on point height would result in a direct improvement on the constants involved in the lower bound on the regulator. Again, this is a deep topic, so new insight here won't come easily. \\
+
+What is perhaps a bit more tractable is to continue in the same vein as in the beginning of the proof of Theorem \ref{thm:regulator_lower_bound}: artificially increase the size of the constant, and check computationally that it holds for all curves up to a given conductor bound. We chose a bound of $N=350000$ simply because that is where Cremona's tables currently go to, but there is no theoretical reason one has to stop there. This option of course pays the price of being computationally much more tedious. \\
+
+\subsection{The Real Period}
+
+We invoke ABC when proving lower bounds on the real period in terms of the conductor; however, this isn't strictly necessary.
 
 
 \newpage
