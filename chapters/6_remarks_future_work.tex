@@ -1,0 +1,31 @@
+% ----- CHAPTER 6: REMARKS AND FUTURE WORK ----- %
+
+This dissertation pulls in results from a number of disparate topics related to elliptic curves, with the general approach being ``do just enough to establish results that are sufficient to support the main theorems". As such, many of the bounds and statements obtained of the course of this work are very far from optimal, and the ultimate running time of, say, Algorithm \ref{algo:compute_rank} could be considerably improved if these bounds were tightened. In this section we hope to list (in somewhat random order) the areas where results could be improved upon, and in so doing detail directions for possible future work.
+
+\subsection{Bounding analytic rank from above in terms of conductor}
+
+To establish a lower bound on the regulator of an elliptic curve in terms of its conductor we require an upper bound on the analytic rank. To this end we invoke Corralaries \ref{cor:logderiv_rank_bound} and \ref{cor:better_an_bound}, stating that maximum analytic rank is bounded by $\frac{1}{2}\log N$ plus an explicit constant. \\
+
+However, Corollary \ref{cor:rank_slower_than_log_N} asserts that, contingent on GRH, maximum analytic rank of in fact grows slower than log of the conductor. This result has {\it not} been used directly, mainly because the constant $K(\epsilon)$ has not been made explicit in terms of the $\epsilon$ chosen. This translates to bounding the $c_n$ sum
+\begin{equation}
+\sum_{n < e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)
+\end{equation}
+in terms of the parameter $\Delta$. \\
+
+A natural question to ask, and hopefully answer, is ``can this be done effectively"? Empiracally, the $c_n$ sum is seldom more than a handful of units in magnitude; however, the fact that the sum is carried out over prime powers and large amounts of cancellation due to the changing signs of the $c_n$ coefficients mean this this term is tricky to control. Note that one can readily obtain a naive explicit bound, it is exponential in $\log \Delta$, and thus quite useless from a practical perspective. \\
+
+Nevertheless, if one could show that the sum grows at most polynomial in $\log \Delta$ (regardless of $E$) and obtain explicit constants, then a direct consequence would be that the lower bound on the regulator of $E$ would go to zero more slowly than any negative power of $N$. \\
+
+\subsection{The Regulator}
+
+Orthogonal to the above, a lower bound on $\Reg_E$ relies on Hindry-Silverman's \cite{HiS-1988} result that, contingent on ABC, minimum point height obeys the bound
+\begin{equation}
+\hat{h}(P) > 6\times 10^{-11}\cdot \log(D_E)
+\end{equation}
+where $D_E$ is the discriminant of $E$, and $P$ is any rational point on $E$. This result is in all probability {\it very} far from optimal; we recall that the minimum point height known is $8.9\times 10^{-4}$. An improvement in the lower bound on point height would result in a direct improvement on the constants involved in the lower bound on the regulator. Again, this is a deep topic, so new insight here won't come easily. \\
+
+What is perhaps a bit more tractable is to continue in the same vein as in the beginning of the proof of Theorem \ref{thm:regulator_lower_bound}: artificially increase the size of the constant, and check computationally that it holds for all curves up to a given conductor bound. We chose a bound of $N=350000$ simply because that is where Cremona's tables currently go to, but there is no theoretical reason one has to stop there. This option of course pays the price of being computationally much more tedious. \\
+
+\subsection{The Real Period}
+
+We invoke ABC when proving lower bounds on the real period in terms of the conductor; however, this isn't strictly necessary.
