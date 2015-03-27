@@ -6,7 +6,7 @@ In this section we work toward presenting a method to bound analytic rank from a
 
 Because the aforementioned method relies on sums over the zeros of $\Les$, for this entire section we will assume GRH unless explicitly stated otherwise.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Logarithmic Derivatives}\label{sec:log_derivs}
 
 Let $E/\QQ$  have conductor $N$.
@@ -279,7 +279,7 @@ The above suggests that the Taylor expansion about $s=1$ of the $L$-series attac
 
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Explicit Formula for Elliptic Curves}
 
 Combining equations \ref{eqn:logderiv_relation}, \ref{eqn:digamma_sum} and \ref{eqn:ldLam_sum} we get the following equality:
@@ -318,7 +318,7 @@ Then as distributions,
 In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\varphi_E \right\rangle$ for $\Re(s) > 0$. Note that convergence on the right hand side is absolute for $\Re(s)>1$, and conditional (provably so thanks to Sato-Tate) for $0<\Re(s)\le 1$. \\
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Estimating Analytic Rank with the sinc$^2$ Sum}
 
 The Explicit Formula may be used to provide computationally effective upper bounds on the analytic rank of an elliptic curve. The method appears to have first been formulated by Mestre in \cite{Me-1986}, and used by Brumer in \cite{Bru-1992} to prove that, conditional on GRH, the average rank of elliptic curves was at most 2.3. This upper bound was improved to 2 by Heath-Brown in \cite{HeBr-2004}. \\
@@ -353,9 +353,10 @@ where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$ and $\Li_2(x)$ is
 Combining the above, we get a specialization of Lemma \ref{lem:exp_form_nonneg_f_cpt_suppt}:
 \begin{corollary}
 Let $\gamma$ range over the nontrivial zeros of $L_E(s)$, and let $\Delta > 0$. Then
-\begin{equation}\label{eqn:sincsquared_sum}
-\sum_{\gamma} \sinc^2(\Delta \gamma) = \frac{1}{\Delta \pi}\left[\left(-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right)+ \frac{1}{2\pi \Delta}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)  + \sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)\right]
-\end{equation}
+\begin{align}\label{eqn:sincsquared_sum}
+\sum_{\gamma} \sinc^2(\Delta \gamma) = \quad &\frac{1}{\Delta \pi}\left[\left(-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right)+ \frac{1}{2\pi \Delta}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)  \right. \nonumber \\
+&+ \left.\sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)\right]
+\end{align}
 \end{corollary}
 
 What's notable about the above formula is that the right hand side is a finite computation, and only requires knowledge of the elliptic curve's conductor and its $a_p$ values up to some bound. Thus the zero sum is eminently computable, and results in a value that bounds from above the analytic rank of $E$. \\
@@ -367,7 +368,7 @@ What's notable about the above formula is that the right hand side is a finite c
     \label{fig:zero_sum_visualization}
 \end{figure}
 
-The $\sinc^2$ zero sum rank estimation method has been implemented in Sage (see Trac ticket \href{http://trac.sagemath.org/ticket/16773}), and used to successfully estimate ranks on a database of 18 million elliptic curves with conductor at most $\sim 10^{11}$. A range of $\Delta$ values was used, from $\Delta=1.0$ (for which average time per curve was $\sim 10^{-5}$ s), to $\Delta=2.0$ (average time per curve $\sim 10^{-1}$ s). See an upcoming paper by Ho, Balakrishnan, Kaplan, Weigandt and Spicer for details on the computations. \\
+The $\sinc^2$ zero sum rank estimation method has been implemented in Sage (see Appendix A), and used to successfully estimate ranks on a database of 18 million elliptic curves with conductor at most $\sim 10^{11}$. A range of $\Delta$ values was used, from $\Delta=1.0$ (for which average time per curve was $\sim 10^{-5}$ s), to $\Delta=2.0$ (average time per curve $\sim 10^{-1}$ s). See an upcoming paper by Ho, Balakrishnan, Kaplan, Weigandt and S. for details on the computations. \\
 
 A neat conclusion that can immediately be drawn from the finiteness of the $\sinc^2$ explicit formula sum, is that maximum analytic rank grows more slowly than $\log(N)$:
 
@@ -392,7 +393,7 @@ r < \frac{1}{2} \log N - 0.4
 \end{corollary}
 We leave the details of the proof to the reader as a fun analysis exercise.\\
 
-Finally, one other thing worth noting is that when $\Delta \le \frac{\log 2}{2\pi}$, the $c_n$ sum is empty. Thus we have the following:
+It's worth noting is that when $\Delta \le \frac{\log 2}{2\pi}$, the $c_n$ sum is empty. Thus we have the following:
 \begin{corollary}
 Let $E/\QQ$ have conductor $N$. Let $\eta$ be the Euler-Mascheroni constant $=0.5772\ldots$, and let $\gamma$ range over the nontrivial zeros of $\L_E(s)$. Then
 \begin{equation}
@@ -405,7 +406,40 @@ Evaluate Equation \ref{eqn:sincsquared_sum} at $\Delta = \frac{\log 2}{2\pi}$ an
 \end{proof}
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Rank Estimation Fidelity and Choosing how to Scale $\Delta$}
+
+Observe that for a fixed choice of $\Delta$, evaluating Equation \ref{eqn:sincsquared_sum} has runtime that is almost independent of the conductor of $E$ (it should scale with some power of $\log N_E$ due to the complexity of basic arithmetic operations). However, as conductor increases the tightness of the provided bound decreases -- we can see this from the first term, which adds a positive bias to the sum proportion to $\log N_E$, which is not seen in the average ranks of curves as conductor increases. \\
+
+\begin{definition}
+The {\it fidelity} of a sinc$^2$ sum rank estimation with a given choice of $\Delta$, is the average tightness of the rank bound as a function of conductor of the curve in question. Specifically, we may define
+\begin{equation}
+\mbox{fid}(\Delta,N) = \mbox{mean}\set{\left(\sum_{\Lambda_E(\gamma)=0}\sinc^2(\gamma \Delta)\right) - r_{an}(E):\;\; N_E = N}
+\end{equation}
+where $E$ ranges over all rational elliptic curves with conductor $N$. Loosely, we may think of the fidelity of a given choice of $\Delta$ and $N$ to be the expected accuracy of the rank estimate, or the chance that the sum is tight (e.g. within 2 of the true rank, since we are always assuming parity is known) for a curve of conductor $N$. 
+\end{definition}
+
+In other words, for fixed curves fidelity increases as $\Delta$ increases, but for fixed $\Delta$ fidelity {\it decreases} as the conductor of the curve in question increases. It follows that $\Delta$ should scale with $N_E$ in order to obtain an estimates of constant fidelity. The natural question to ask then, given the statement of Equation \ref{eqn:sincsquared_sum}, is: how large does $\Delta$ need to be such that $\sum_{\Lambda_E(\gamma)=0}\sinc^2(\gamma \Delta) < r_{an}(E)+2$? \\
+
+Evaluating the sum will be dominated by the final sum over the $c_n$ coefficients, whose runtime in turn is exponential in $\Delta$, so we must be judicious in the choice of $\Delta$. Experimentally, we found that choosing $\Delta(E) = \alpha \cdot \log N_E$ for any constant value of $\alpha$ produces estimates of asymptotically constant fidelity. Such a choice makes the contribution from the first two terms in Equation \ref{eqn:sincsquared_sum} -- $\frac{1}{\Delta \pi}\left(-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right) + \frac{1}{2\pi^2 \Delta^2}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)$ -- asymptotically constant, so net bias in the sum does not increase as $N_E$ increases. \\
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/rkub_ne_rk.png}
+    \caption{The cumulative proportion of curves in the Cremona database for which the sinc$^2$ rank bound was not within 2 of the true rank of the curve, using the scaling $\Delta(E) = \frac{1}{\pi}\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)$. }
+    \label{fig:rkub_ne_rk}
+\end{figure}
+
+To generate Figure \ref{fig:rkub_ne_rk}, we used the scaling $\Delta(E) = \frac{1}{\pi}\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)$, and computed rank bounds on the entire Cremona database of all rational elliptic curves up to conductor 350000; this scaling was chosen so that the bias coming from the first term in the sinc$^2$ sum was always exactly $1$. It was found that the resulting bounds were within 2 of the true rank in 99.75\% of cases. The 4000 or so curves for which the bound exceeded $r_{an}+2$ all possess anomalously low-lying zeros that 'look like central zeros' when small values of $\Delta$ are used. \\
+
+Since the number of terms in the $c_n$ sum in Equation \ref{eqn:sincsquared_sum} is $e^{2\pi\Delta}$, choosing $\Delta(E) = \alpha \cdot \log N_E$ means that the evaluating the sum will have $\softO\left((N_E)^{2\pi \alpha} \right)$ runtime. That is, the scaling choice used to generate Figure \ref{fig:rkub_ne_rk} yielded an $\softO(N_E)$ computation time. In general, runtime can be made to be $\softO\left((N_E)^{\epsilon}\right)$ for any $\epsilon>0$, at the expense of lowering the fidelity of the bound. \\
+
+It is worth noting explicitly that the accuracy of the sinc$^2$ sum rank estimate is sensitive to low-lying zeros. Thus if it known a priori that the $L$-function of a particular curve does not have any low-lying zeros, a smaller value of $\Delta$ can be used. This fact is exploited in \cite{Bob-2011}, where Bober uses the method on curves of very large rank. There is a well-known phenomenon of zero repulsion in $L$-functions -- zeros tend not to fall as close to each other as could be expected if they were distributed purely randomly on the critical line -- and as such curves with large rank tend to have lowest zeros significantly higher up in the upper half plane than would be expected otherwise. \\
+
+This, for example, allowed Bober to use a $\Delta$ value of only $3.2$ to show that a curve with 28 independent points had analytic rank at most 30. The conductor of the curve in question is roughly $3.4\times 10^{141}$, so using the scaling $\Delta(E) = \frac{1}{\pi}\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)$ would require a $\Delta$ value of about $51.1$.
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Distribution of Nontrivial Zeros}
 
 Though not necessary to prove Equation \ref{eqn:sincsquared_sum}, we may also use zero sums to provide estimates on the distribution and expected location of nontrivial zeros of $\Les$ as a function of the curve's conductor. \\
@@ -578,7 +612,7 @@ The derivation is similar to before. The location of the first nontrivial noncen
 Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right]$ is $O(t^3)$ for small t, so the quantity expressed in equation \ref{eqn:M_E_smooth_part} is dominated by the $\frac{1}{\pi}\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t$ term when $N$ is large. Solving for $t$ yields the desired value.
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Bite}
 
 Recall by Definition \ref{defn:bite}, the {\it bite} $\beta_E$ of an elliptic curve is given by

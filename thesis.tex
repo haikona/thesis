@@ -66,16 +66,13 @@ chapters/6_remarks_future_work,
 \begin{document}
  
 % ==========   Preliminary pages
-%
-% ( revised 2012 for electronic submission )
-%
-
-\prelimpages
+2\prelimpages
  
 %
 % ----- copyright and title pages
 %
-\Title{Low-lying Zeros of Elliptic Curve $L$-functions}
+\Title{The Zeros of Elliptic Curve $L$-functions: \\
+Analytic Algorithms with Explicit Time Complexity}
 \Author{Simon Spicer}
 \Year{2015}
 \Program{UW Mathematics}
@@ -186,7 +183,7 @@ The second part of this work addresses the question of what can be done when the
 \acknowledgments{
 This dissertation was by no means produced in a vacuum. Many individuals have provided critical contributions over the course of my studies, and we are thankful to all of them. However, some we must mention specifically. Sincere thanks must be given to my advisor William Stein, who for many years has provided the patient mentorship and guidance needed to make this dissertation a reality. I would also like to extend a heartfelt thanks to the University of Washington department of Mathematics as a whole, and to the graduate student coordinator Brooke Miller in particular, for supporting me throughout my studies at UW. \\
 
-A number of mathematicians have given valuable advice. We are grateful for the correspondence with Barry Mazur on the explicit formula for elliptic curves, which was my entry point into the whole topic of elliptic curve $L$-functions. John Cremona and Noam Elkies gave sage insight on the topics of the real period and regulator respectively. And we are grateful to John Voight, who used an early version of my code and found a number of significant bugs. Finally, thanks must be given to Wei Ho, Jen Balakrishnan, Jamie Weigandt and Nathan Kaplan for putting up with my less-than-expert attempts to compute the ranks of large databases of elliptic curves.
+Beyond this, a number of mathematicians have given valuable advice. We are grateful for the correspondence with Barry Mazur on the explicit formula for elliptic curves, which was my entry point into the whole topic of elliptic curve $L$-functions; moreover we thank Peter Sarnak for his input on low-lying zeros of elliptic curve $L$-functions, and helping spur the formulation of the central idea of this thesis. John Cremona and Noam Elkies gave sage insight on the topics of the real period and regulator respectively. And we are grateful to John Voight, who used an early version of my rank estimation code and highlighted some significant bugs. Finally, thanks must be given to Wei Ho, Jen Balakrishnan, Jamie Weigandt and Nathan Kaplan for putting up with my less-than-expert attempts to compute the ranks of large databases of elliptic curves.
 }
 
 %
@@ -244,7 +241,7 @@ A number of mathematicians have given valuable advice. We are grateful for the c
  
 % ========== Appendix A
  
-\chapter{Code and Blog Posts}
+\chapter{Code Repo and Blog Posts}
  
 The analytic rank estimation code mentioned in this thesis is hosted on GitHub, and is accessible to all free of charge under the GNU General Public License.
 
@@ -252,6 +249,10 @@ The analytic rank estimation code mentioned in this thesis is hosted on GitHub, 
 \item The repo can be found at
 \begin{description}
 \item[] \verb%https://github.com/haikona/GSoC_2014%
+\end{description}
+The relevant Sage Trac ticket is
+\begin{description}
+\item[]\verb%http://trac.sagemath.org/ticket/16773%
 \end{description}
 
 \item Moreover, as it was being written the code was blogged about extensively; the posts on various aspects of the code's functionality can be found at

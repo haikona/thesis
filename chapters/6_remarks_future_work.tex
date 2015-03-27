@@ -2,7 +2,8 @@
 
 This dissertation pulls in results from a number of disparate topics related to elliptic curves, with the general approach being ``do just enough to establish results that are sufficient to support the main theorems". As such, many of the bounds and statements obtained of the course of this work are very far from optimal, and the ultimate running time of, say, Algorithm \ref{algo:compute_rank} could be considerably improved if these bounds were tightened. In this section we hope to list (in somewhat random order) the areas where results could be improved upon, and in so doing detail directions for possible future work.
 
-\subsection{Bounding analytic rank from above in terms of conductor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bounding analytic rank from above in terms of conductor}
 
 To establish a lower bound on the regulator of an elliptic curve in terms of its conductor we require an upper bound on the analytic rank. To this end we invoke Corralaries \ref{cor:logderiv_rank_bound} and \ref{cor:better_an_bound}, stating that maximum analytic rank is bounded by $\frac{1}{2}\log N$ plus an explicit constant. \\
 
@@ -16,7 +17,8 @@ A natural question to ask, and hopefully answer, is ``can this be done effective
 
 Nevertheless, if one could show that the sum grows at most polynomial in $\log \Delta$ (regardless of $E$) and obtain explicit constants, then a direct consequence would be that the lower bound on the regulator of $E$ would go to zero more slowly than any negative power of $N$. \\
 
-\subsection{The Regulator}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The regulator}
 
 Orthogonal to the above, a lower bound on $\Reg_E$ relies on Hindry-Silverman's \cite{HiS-1988} result that, contingent on ABC, minimum point height obeys the bound
 \begin{equation}
@@ -26,6 +28,37 @@ where $D_E$ is the discriminant of $E$, and $P$ is any rational point on $E$. Th
 
 What is perhaps a bit more tractable is to continue in the same vein as in the beginning of the proof of Theorem \ref{thm:regulator_lower_bound}: artificially increase the size of the constant, and check computationally that it holds for all curves up to a given conductor bound. We chose a bound of $N=350000$ simply because that is where Cremona's tables currently go to, but there is no theoretical reason one has to stop there. This option of course pays the price of being computationally much more tedious. \\
 
-\subsection{The Real Period}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The real period}
 
-We invoke ABC when proving lower bounds on the real period in terms of the conductor; however, this isn't strictly necessary.
+We invoke ABC and Szpiro's Conjecture when proving lower bounds on the real period in terms of the conductor; however, this isn't strictly necessary. Since the minimal discriminant of a rational elliptic curve is $12$th-power free (outside of $2$ and $3$), there is a natural power bound of the minimal discriminant in terms of the conductor:
+\begin{equation}
+|D_E| \le K\cdot \left(N_E\right)^{12}
+\end{equation}
+where $K$ is an explicit constant that accounts for the potentially higher powers of $2$ and $3$ (which can and should be easily made explicit). As such, we should be able to completely remove the dependence on Szpiro in Theorem \ref{thm:real_period_lower_bound}, at the expense of having less optimal constants. \\
+
+Note that this line was deliberately not pursued in this dissertation, as the assumption of ABC is required for bounds on the regulator in any case. However, ultimately we would like to remove reliance on ABC (if possible) entirely; bounds on the real period are not the obstruction when it comes to this.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Convergence rate and and convexity statements on the sinc$^2$ rank bounding sum}
+
+Equation \ref{eqn:sincsquared_sum} gives us that
+\begin{align}
+r_{an}(E) = \quad & \lim_{\Delta \to \infty} \;\; \frac{1}{\Delta \pi}\left[\left(-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right)+ \frac{1}{2\pi \Delta}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)  \right. \nonumber \\
+&+ \left.\sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)\right]
+\end{align}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/256944c1_zero_sum.png}
+    \caption{A graphic representation of the $\sinc^2$ sum for the Cremona curve {\tt 256944c1} , a rank 0 curve with conductor $N_E=256944$, for $\Delta = 0.5$, $1.0$ and $1.5$.}
+    \label{fig:256944c1_zero_sum}
+\end{figure}
+
+However, establishing results regarding the rate of convergence of this sum proves more elusive. Consider the example in Figure \ref{fig:256944c1_zero_sum}: the Cremona curve {\tt 256944c1}, a rank 0 curve, has a pathologically low-lying zero at $\gamma_0 = 0.02560\ldots$. For small values of $\Delta$, it therefore appears that this curve has analytic rank 2, not zero. In fact, only for $\Delta>\sim 2.815$ does the sum evaluate to a value less than 2 (which, after invoking parity, gives us that it is rank 0). This highlights the fact that some curves -- specifically those with low-lying zeros -- require $\Delta$ to be large for the sum to be within, say, 2 of the true rank of the curve. \\
+
+Furthermore, Figure \ref{fig:256944c1_zero_sum} shows that the convergence from above is unfortunately {\it not} even necessarily monotone: as $\Delta$ is increased the small outlying bumps of the sinc$^2$ function can travel over zeros and temporarily increase the value of the sum. \\
+
+Even though this is the case, we should be able to make some sort of a convexity statement regarding the convergence of the sinc$^2$ sum. This should allow us to use point estimates in the rank estimation code to decide which $\Delta$ values to use on a given curve, and in so doing make the code more efficient. We hope to revisit this issue in future, as it has the potential to significantly increase the effectiveness of the rank estimation code.
+
+
