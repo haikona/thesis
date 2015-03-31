@@ -3,12 +3,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Proof of the Main Theorem}\label{sec:main_thrm_proof}
 
-In this section we prove Theorem \ref{thm:main_theorem}: specifically, that Algorithm \ref{algo:compute_rank} is guaranteed, assuming BSD and ABC, to correctly output an elliptic curve's rank in time $\softO(\sqrt{N_E})$, where $N_E$ is the conductor of the input curve. Note that the proof will quote certain results established later in this work. \\
+In this section we prove Theorem \ref{thm:main_theorem}: specifically, that Algorithm \ref{algo:compute_rank} is guaranteed, assuming BSD and ABC and optionally GRH, to correctly output an elliptic curve's rank in time $\softO(\sqrt{N_E})$, where $N_E$ is the conductor of the input curve. Note that the proof will quote certain results established later in this work. \\
 
 \begin{proposition}\label{prop:k_bits_for_leading_coeff}
 Let $E$ have $L$-function $\Les$, conductor $N_E$ and real period $\Omega_E$, and let
-\begin{equation}
-k = 4 + 10.5 \log_2 N_E - \log_2 \Omega_E
+\begin{equation}\label{eqn:num_bits_without_GRH}
+k = 65 + 10.5 \log_2 N_E - \log_2 \Omega_E
 \end{equation}
 Assuming BSD and ABC, we have the following:
 \begin{itemize}
@@ -16,6 +16,11 @@ Assuming BSD and ABC, we have the following:
 \item If $L_E^{(m)}(1)=0$ for all $0 \le m < n$ and $\frac{L_E^{(n)}(1)}{n!}$ is zero to $k$ bits precision, then $L_E^{(n)}(1)$ is identically zero.
 \end{itemize}
 \end{proposition}
+If one further assumes GRH, we may instead let
+\begin{equation}\label{eqn:num_bits_with_GRH}
+k = 31 + 6.7 \log_2 N_E - \log_2 \Omega_E
+\end{equation}
+for the same results to hold.
 \begin{proof}
 The first statement follows immediately from Theorem \ref{thm:real_period_lower_bound}, which states that $\Omega_E$ is bounded away from zero by a negative power of $N_E$. To prove the second statement, observe that by BSD the leading non-zero Taylor coefficient of $\Les$ at the central point is given by Equation \ref{eqn:BSD_formula}. We thus have that
 \begin{equation}
@@ -25,37 +30,29 @@ since $\prod_p c_p \ge 1$, $\# \Sha_E \ge 1$, and by Mazur's Theorem $\# E_{\tex
 \begin{equation}
 \log_2 C_E\pr \ge -16 + \log_2 \Reg_E + \log_2 \Omega_E
 \end{equation}
-Now by Theorem \ref{thm:regulator_lower_bound} we have that $\Reg_E\ge 4429.16 N_E^{-10.49}$. Thus 
-$\log_2 \Reg_E \ge 12.11 - 10.49 \log_2 N_E$. We therefore have that
+Now by Theorem \ref{thm:regulator_lower_bound} we have that $\Reg_E\ge 2.59 \times 10^{-15} (N_E)^{-10.49}$. Thus 
+$\log_2 \Reg_E \ge -48.46 - 10.49 \log_2 N_E$. We therefore have that
 \begin{equation}
-\log_2 C_E\pr \ge -3.89 - 10.49 \log_2 N_E + \log_2 \Omega_E > -k
+\log_2 C_E\pr \ge -64.46 - 10.49 \log_2 N_E + \log_2 \Omega_E > -k
 \end{equation}
 where $k$ is as defined above. Hence if the $n$th taylor coefficient of $\Les$ at the central point is zero to $k$ bits precision and all preceding Taylor coefficients are zero, then it {\it cannot} be the leading BSD coefficient, and so must be identically zero.
-\end{proof}
-In other words, the leading Taylor coefficient of $\Les$ at $s=1$ must be greater than $2^{-k}$ in magnitude. \\
 
-We now prove Theorem \ref{thm:main_theorem}: that, assuming BSD, GRH and ABC, Algorithm \ref{algo:compute_rank} computes the rank of an elliptic curve in $\softO\left(\sqrt{N_E}\right)$ time.
+If one further assumes GRH, we instead have the bound $\Reg_E \ge 3.48 \times 10^{-5} \cdot (N_E)^{-6.70}$. Repeat as before to obtain the required precision stated in Equation \ref{eqn:num_bits_with_GRH}.
+\end{proof}
+
+Note that the $-16$ appearing in the right hand side of the above inequalities comes from bounding the order of the torsion group of $E$; this constant can therefore be reduced or eliminated by computing the torsion order of $E$ explicitly, which is quick to do. This is something that therefore should be done in any optimized implementation of Algorithm \ref{algo:compute_rank}. \\
+
+In other words, the leading Taylor coefficient of $\Les$ at $s=1$ must be greater than $2^{-k}$ in magnitude. We now prove Theorem \ref{thm:main_theorem}: that, assuming BSD and ABC and optionally GRH, Algorithm \ref{algo:compute_rank} computes the rank of an elliptic curve in $\softO\left(\sqrt{N_E}\right)$ time.
 \begin{proof}
-Let $k$ be as defined as above. That the algorithm terminates with correct output is a direct corollary from Proposition \ref{prop:k_bits_for_leading_coeff}: if $\frac{L_E^{(r)}}{r!}$ is computed to $k$ bits precision and some of those bits are nonzero {\it and} all preceding Taylor coefficients have been shown to be zero, then $r$ must be the rank of $E$; hence the output of rank$=r$ is correct. \\
+Let $k$ be as defined according to either Equation \ref{eqn:num_bits_without_GRH} or \ref{eqn:num_bits_with_GRH} depending on whether GRH is assumed or not. That the algorithm terminates with correct output is a direct corollary from Proposition \ref{prop:k_bits_for_leading_coeff}: if $\frac{L_E^{(r)}}{r!}$ is computed to $k$ bits precision and some of those bits are nonzero {\it and} all preceding Taylor coefficients have been shown to be zero, then $r$ must be the rank of $E$; hence the output of rank$=r$ is correct. \\
 
-In terms of time complexity, observe that $k$ is $O(\log N_E)$ in magnitude, and by Corollary \ref{cor:real_period_time_complexity}, can be computed in time polynomial in $\log N_E$. By Corollary \ref{cor:better_an_bound}, we need to evaluate at most $\frac{1}{2}\log N_E - 0.4$ central Taylor coefficients of $\Les$ to $k$ bits precision; Proposition \ref{prop:L_E_time_complexity} states that each of these can be done in $\softO\left(k\cdot \sqrt{N_E}\right)$ time. Hence the algorithm is guaranteed to terminate in time at most 
+In terms of time complexity, observe that $k$ is $O(\log N_E)$ in magnitude, and by Corollary \ref{cor:real_period_time_complexity}, can be computed in time polynomial in $\log N_E$. By Corollary \ref{cor:better_an_bound}, we need to evaluate at most $\frac{1}{2}\log N_E +1.6$ central Taylor coefficients of $\Les$ to $k$ bits precision; Proposition \ref{prop:L_E_time_complexity} states that each of these can be done in $\softO\left(k\cdot \sqrt{N_E}\right)$ time. Hence the algorithm is guaranteed to terminate in time at most 
 \begin{equation}
-O(\log N_E) + \left(\frac{1}{2}\log N_E - 0.4\right) \cdot \softO\left(k\cdot \sqrt{N_E}\right) = \softO\left(\sqrt{N_E}\right)
+O(\log N_E) + \left(\frac{1}{2}\log N_E + 1.6\right) \cdot \softO\left(k\cdot \sqrt{N_E}\right) = \softO\left(\sqrt{N_E}\right)
 \end{equation}
-since $k$ is sub-polynomial in $N_E$.
+since $k$ is sub-polynomial in $N_E$. The $\frac{1}{2}\log N_E + 1.6$ in the above statements may be replaced with $0.32\log N_E + 0.5$ if GRH is assumed, but resulting time complexity remains $\softO\left(\sqrt{N_E}\right)$.
 \end{proof}
 
-
-%\begin{proposition}\label{prop:leading_coeff_lower_bound}
-%Let $E/\QQ$ have conductor $N_E$ and $L$-function $\Les$, and let $C\pr_E$ be the central leading Taylor coefficient of $\Les$, i.e. $L_E(1+s) = Cs^r  + O(s^{r+1})$. Then, assuming BSD and ABC, for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that
-%\begin{equation}
-%C\pr_E > K(\epsilon) (N_E)
-%\end{equation}
-%\end{proposition}
-%\begin{proof}
-%Cheese
-%%%% FINISH PROOF %%%
-%\end{proof}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -366,11 +363,11 @@ Even though the Hindry-Silverman bound above would seem so small as to be useles
 \begin{theorem}\label{thm:regulator_lower_bound}
 Let $E/\QQ$ have conductor $N_E$. Assuming BSD and Conjecture \ref{conj:Lang_height}, we have that
 \begin{equation}
-\Reg_E \ge 2.59 \times 10^{-15} \cdot N_E^{-10.49}
+\Reg_E \ge 2.59 \times 10^{-15} \cdot (N_E)^{-10.49}
 \end{equation}
 If one further assumes GRH, then one has
 \begin{equation}
-\Reg_E \ge 4429.16 \cdot N_E^{-10.49}
+\Reg_E \ge 3.48 \times 10^{-5} \cdot (N_E)^{-6.70}
 \end{equation}
 \end{theorem}
 \begin{proof}
@@ -389,7 +386,7 @@ where $K = 7.6594 \times 10^{-10}$. By BSD, $r = r_{an}$ so . Thus by Corollary 
 &= K^{1.6} \cdot (N_E)^{\frac{1}{2} \log K} \\
 &= 2.59843\ldots \times 10^{-15} \cdot (N_E)^{-10.494957\ldots}
 \end{align*}
-If one assumes GRH, the by Corollary \ref{cor:better_an_bound} we have $r < \frac{1}{2} \log N_E - 0.4$; proceed as above to obtain the second inequality.
+If one assumes GRH, the by Corollary \ref{cor:better_an_bound} we instead have $r < 0.32 \log N_E + 0.5$; proceed as above to obtain the second inequality.
 \end{proof}
 
 Note that the first step isn't strictly necessary; it only improves the constants in the bounds by a small amount. However, it serves to highlight that the power of $N_E$ in this bound can theoretically be improved further by exhaustively checking all curves up to a higher conductor bound. If, for example, we believe that $8.914\times 10^{-3}$ is a global minimum point height over all rational elliptic curves, then (assuming GRH) we instead get

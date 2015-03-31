@@ -384,16 +384,16 @@ We note that for any given $\Delta>0$, the sum $ \sum_{n<e^{2\pi \Delta}} c_n \c
 
 [Aside: This statement is already known in the literature, so nothing new has been proven here. In fact, it's conjectured that maximum analytic rank grows more like $\sqrt{\log N}$ (existing numerical evidence would seem to support this), but this is still very much an open problem.] \\
 
-Choosing $\epsilon =\frac{1}{2}$ and collecting and bounding all the conductor-independent terms allows us to improve upon Corollary \ref{cor:logderiv_rank_bound}:
+The above allows us to provide bounds on analytic rank via point estimates by choosing particular values of $\epsilon$. For example, if we choose $\epsilon = \frac{1}{\log 23} \sim 0.3189\ldots$ and collect and bound all the conductor-independent terms in equation \ref{eqn:sincsquared_sum}, we can improve the result in Corollary \ref{cor:logderiv_rank_bound} to the following:
 \begin{corollary}\label{cor:better_an_bound}
-Let $E$ have analytic rank $r$ and conductor $N$. Then
+Let $E$ have analytic rank $r_E$ and conductor $N_E$. Then
 \begin{equation}
-r < \frac{1}{2} \log N - 0.4
+r_E < 0.32 \log N_E + 0.5
 \end{equation}
 \end{corollary}
 We leave the details of the proof to the reader as a fun analysis exercise.\\
 
-It's worth noting is that when $\Delta \le \frac{\log 2}{2\pi}$, the $c_n$ sum is empty. Thus we have the following:
+Finally, it's worth noting is that when $\Delta \le \frac{\log 2}{2\pi}$, the $c_n$ sum in Equation \ref{eqn:sincsquared_sum} is empty. Thus we have the following:
 \begin{corollary}
 Let $E/\QQ$ have conductor $N$. Let $\eta$ be the Euler-Mascheroni constant $=0.5772\ldots$, and let $\gamma$ range over the nontrivial zeros of $\L_E(s)$. Then
 \begin{equation}
