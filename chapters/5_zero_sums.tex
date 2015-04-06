@@ -442,19 +442,130 @@ This, for example, allowed Bober to use a $\Delta$ value of only $3.2$ to show t
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Distribution of Nontrivial Zeros}
 
-Though not necessary to prove Equation \ref{eqn:sincsquared_sum}, we may also use zero sums to provide estimates on the distribution and expected location of nontrivial zeros of $\Les$ as a function of the curve's conductor. \\
+Though not necessary to prove Equation \ref{eqn:sincsquared_sum}, we may also use zero sums to provide bounds on the density and estimates on the distribution and expected location of the nontrivial zeros of $\Les$ as a function of the curve's conductor.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Explicit Bounds on Zero Density on the Critical Line}
+
+We start by investigating the density of zeros on the critical line. We will see that zero density scales with $\log N$; because the explicit formula is used extensively in this section, all results are of course taken to be contingent on GRH. \\
+
+To this end, we define the {\it zero counting function}, which counts the number of zeros on the critical line up to a given bound:
 \begin{definition}\label{defn:zero_counting_function}
 For non-negative $t$, let $M_E(t)$ be the modified non-trivial zero counting function for $\Les$, i.e.
 \begin{equation}
 M_E(t) := \sideset{}{\pr}\sum_{|\gamma| \le t} \frac{1}{2}
 \end{equation}
-where $\gamma$ runs over the imaginary parts of nontrivial zeros of $L_E(s)$, and the prime indicates that the final $\gamma$ is taken with half weight if $\gamma = t$. The central zero is taken with with multiplicity $r$, where $r$ is the analytic rank of $E$. \\
+where $\gamma$ runs over the imaginary parts of nontrivial zeros of $L_E(s)$, and the prime indicates that the final $\gamma$ is taken with half weight if $\gamma = t$. The central zero is taken with with multiplicity $r$, where $r$ is the analytic rank of $E$.
 \end{definition}
 
 Note that $M_E(0) = \frac{r}{2}$, and the function jumps by 1 across the locations of nontrivial zeros, since noncentral zeros come in conjugate pairs and (by GRH) are always simple. \\
 
-\begin{proposition}[S.]
+%
+%Equation \ref{eqn:zero_density} gives us an accurate-up-to-$O(\log t)$ estimate for the number of zeros of $\Les$ on the critical line with imaginary part at most $t$ in magnitude. However, it is also useful to have explicit bounds on the number of zeros in a given interval on the critical line. The results in this section are therefore of course contingent on GRH. \\
+
+We may obtain bounds on $M_E(t)$ via the shifted completed logarithmic derivative $\ldLam{1+s}$. Our workhorse theorem places tight constraints on the sum $\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2}$ for positive $\sigma$ and real $\tau$. This is a shifted Cauchy distribution-type sum, giving us information on the density of zeros with imaginary part near $\tau$.
+\begin{theorem}\label{thm:poisson_sum_bound}
+Let $E$ be an elliptic curve with conductor $N_E$ and L-function $L_E(s)$. Let $\sigma > \frac{1}{2}$ and $\tau \in \RR$, and let $\gamma$ range over the imaginary parts of the nontrivial zeros of $L_E(s)$. Then
+\begin{equation}
+ \left| \sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right)\right] \right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $s = \sigma + i \tau$. By equations \ref{eqn:logderiv_relation} and \ref{cor:Re_logderiv} we have
+\begin{align*}
+\sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} &= \Re\left(\ldLam{1+s}\right) \\
+&= \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right) + \Re\left(\sum_n c_n n^{-s}\right)
+\end{align*}
+But by lemma \ref{lem:ldLe_bound}
+\begin{equation*}
+\left|\Re\left(\sum_n c_n n^{-s}\right)\right| \le \left|\ldLe{1+s}\right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right),
+\end{equation*}
+so
+\begin{equation*}
+\left|\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \log\left(\frac{\sqrt{N_E}}{2\pi}\right) - \Re\left(\digamma(1+\sigma+i \tau)\right)\right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right).
+\end{equation*}
+\end{proof}
+Note that $\frac{\zeta\pr}{\zeta}$ decays rapidly with increasing $\sigma$, i.e. we have
+\begin{equation*}
+\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right)\right] = O(\sigma^{-c})
+\end{equation*}
+for any $c>0$. \\
+
+\begin{corollary}\label{cor:zero_density}
+Let $M_E(t)$ be the zero counting function as given in Definition \ref{defn:zero_counting_function}. Then for $t \ge 1$ we have
+\begin{equation}
+M_E(t) \le t\log N_E +2t\log(t+1).
+\end{equation}
+If we restrict to $t>~1.32$ we may further simplify this to
+\begin{equation}
+M_E(t) \le t\log N_E +2t\log t.
+\end{equation}
+\end{corollary}
+\begin{proof}
+Take the right inequality in Theorem \ref{thm:poisson_sum_bound} with $\sigma = t$ and $\tau=0$, yielding
+\begin{equation*}
+\sum_{\gamma} \frac{t}{t^2+\gamma^2} \le \frac{1}{2}\log N_E - \log 2\pi + \digamma(1+t) - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+t\right),
+\end{equation*}
+since the digamma function is real on the real axis. \\
+
+Note that for $t \ge 1$ we have $-\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+t\right) < -\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right) = 1.50523\ldots$, since $-\frac{\zeta\pr}{\zeta}$ is decreasing with increasing $t$. Observe that this does not exceed $\log 2\pi = 1.83787\ldots$  \\
+
+Now $\digamma(1+t) < \log(1+t)$ for $t\ge0$. For the second inequality in the theorem, note that $-\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right) - \log 2\pi = 0.33264\ldots$, and $\digamma(1+t) \le \log(t) + 0.33264\ldots$ when $t\ge 1.32255\ldots$ \\
+
+Finally, we have that $\sum_{\gamma} \frac{t}{t^2+\gamma^2} \ge \frac{1}{2t}M_E(t)$, since all zeros in the interval $[-t,t]$ are counted with weight at least $\frac{1}{2t}$. Combining the above observations and collecting constants completes the proof.
+\end{proof}
+
+It is also useful to have an upper bound on the number of zeros in a given unit interval on the critical line.
+\begin{corollary}\label{cor:zeros_on_unit_interval}
+For $t\ge1$, $M_E(t+1)-M_E(t)$ gives the number of zeros $\gamma$ with $t < |\Im(\gamma)| \le t+1$. We have
+\begin{equation}\label{eqn:zeros_on_unit_interval}
+M_E(t+1)-M_E(t) < \frac{5}{4}\log(N_E) + \frac{5}{2}\log(t+1).
+\end{equation}
+\end{corollary}
+\begin{proof}
+Proceed as before, but now taking the right inequality in theorem \ref{thm:poisson_sum_bound} with $\sigma = 1$ and $\tau=t+\frac{1}{2}$. Observe that
+\begin{equation*}
+\sum_{\gamma}\frac{1}{1+\left(\gamma-t-\frac{1}{2}\right)^2} \ge \frac{4}{5}\cdot\frac{\left(M_E(t+1)-M_E(t)\right)}{2},
+\end{equation*}
+since we are only counting zeros in the upper half plane. Also note that similar to before,\\
+$\digamma\left(\frac{3}{2}+i\left(t+\frac{1}{2}\right)\right) - \log 2\pi - 2\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right) < \log(t+1)$ for $t \ge 1$.
+\end{proof}
+In a similar manner we derive for $t \ge 1$ that
+\begin{equation}\label{eqn:zeros_in_unit_ball}
+\#\set{\gamma:\;|\gamma-t|\le 1} < \log(N_E) + 2\log(t+1)
+\end{equation}
+(note that unlike equation \ref{eqn:zeros_on_unit_interval}, the above only considers zeros with non-negative imaginary part). \\
+
+Finally, recall the definition of the bite of $E$: $\beta_E = \sum_{\gamma \ne 0} \frac{1}{\gamma^2}$. We may use \ref{thm:poisson_sum_bound} to place an explicit bound on the tail end of the inverse square sum via the following:
+\begin{corollary}\label{cor:sum_tail_bound}
+For $\sigma \ge 1$ and $\tau \in \RR$ we have
+\begin{equation}
+\sum_{|\gamma-\tau|>\sigma} \frac{1}{(\gamma-\tau)^2} \le \frac{\log(N_E) + 2\log(|\tau|+1)}{\sigma}
+\end{equation}
+Specifically, when $\tau=0$ we have
+\begin{equation}
+\sum_{|\gamma|>\sigma} \frac{1}{\gamma^2} \le \frac{\log(N_E)}{\sigma}
+\end{equation}
+\end{corollary}
+\begin{proof}
+Observe that
+\begin{equation*}
+\frac{\sigma}{2}\cdot\sum_{|\gamma-\tau|>\sigma} \frac{1}{(\gamma-\tau)^2} \le \sum_{|\gamma-\tau|>\sigma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} \le\sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2},
+\end{equation*}
+and the rightmost sum is bounded by $\frac{1}{2}\log N_E + \log(|\tau|+1)$ as in the work above. \\
+\end{proof}
+
+Equation \ref{thm:poisson_sum_bound} may also used to put lower bounds on the above quantities in some cases, which we hope to pursue in future work.
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Expected Number of Zeros up to $t$}
+
+Corollary \ref{cor:zero_density} gives us explicit bounds on zero density, but the bound of $t \log N_E$ is not tight: empirically we see $M_E(t)$ grow more like $\frac{t}{2}\log N_E$; i.e. a factor of $2$ slower. We may again use the explicit formula to come up with a more accurate expansion for the zero counting function, at the expense of have a more nebulous error term that resists attempts to put explicit bounds on it.
+
+\begin{proposition}
+Contingent on GRH,
 \begin{equation}\label{eqn:M_E(t)}
 M_E(t) = \frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) + \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n)\right]
 \end{equation}
@@ -475,18 +586,18 @@ Formally, we must write $M_E(t)$ as a path integral of $\ldLam{1+s}$ on the path
 for some $\epsilon>0$, and invoke the Cauchy Residue Theorem. We may then shrink $\epsilon$ to zero (assuming GRH) to obtain that the RHS of \ref{eqn:M_E(t)} converges point wise to $M_E(t)$ as $m$ and $n \to \infty$.
 \end{proof}
 
-Equation \ref{eqn:M_E(t)} may be though of having two components. The first two terms comprise a smooth part that gives the ``expected number of zeros'' up to $t$; and the trigonometric sum over $n$ comprises the discretization information that yields the zeros' exact locations. We expect the trigonometric sum to be zero infinitely often, and asymptotically it should be positive as often as it is negative. As such the sum should average out to zero and shouldn't contribute any asymptotic bias to the density of zeros on the critical line. We can therefore talk in a real sense of the expected number of zeros up to $t$, which is given by
+Equation \ref{eqn:M_E(t)} may be though of having two components. The first two terms comprise a smooth part that gives the ``expected number of zeros'' up to $t$; and the trigonometric sum over $n$ comprises the discretization information that yields the zeros' exact values relative to their general expected location. We expect the trigonometric sum to be zero infinitely often, and asymptotically it should be positive as often as it is negative. As such the sum should average out to zero and shouldn't contribute any asymptotic bias to the density of zeros on the critical line. We can therefore talk in a real sense of the expected number of zeros up to $t$, which is given by
 \begin{equation}\label{eqn:M_E_smooth_part}
 \frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right)\right]
 \end{equation}
 
 Moreover, the trigonometric sum should grow very slowly with $t$. Put more formally, we have the following:
 \begin{conjecture}\label{conj:trig_sum_size}
+Contingent on GRH,
 \begin{equation}
 \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n) = O(\log t)
 \end{equation}
 \end{conjecture}
-This statement should follow from GRH, and is borne out by numerical evidence:
 
 \begin{figure}[!h]
     \centering
@@ -494,6 +605,8 @@ This statement should follow from GRH, and is borne out by numerical evidence:
     \caption{The oscillating sum $\sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n)$ for the curve with Cremona label $389a$ (with equation $y^2 + y = x^3 + x^2 - 2x$) versus $\pm \log(t)$ for $0\le t \le 200$. Numerically we actually see the maximum value of the sum grow slower than $\log(t)$ - possibly $\log(t)^{\alpha}$ for some $0<\alpha<1$, or even $\log\log(t)$.}
     \label{fig:M_E_trig_sum_bounds}
 \end{figure}
+
+We won't say much more about bounding the error term in this thesis, since it requires more advanced analytical tools not mentioned or developed here. \\
 
 \begin{lemma}\label{lem:arctan_sum_size}
 For $t >> 0$, 
@@ -611,128 +724,47 @@ The derivation is similar to before. The location of the first nontrivial noncen
 
 Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right]$ is $O(t^3)$ for small t, so the quantity expressed in equation \ref{eqn:M_E_smooth_part} is dominated by the $\frac{1}{\pi}\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t$ term when $N_E$ is large. Solving for $t$ yields the desired value.
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-\section{Explicit Bounds on Zero Density on the Critical Line}
-
-Equation \ref{eqn:zero_density} gives us an accurate-up-to-$O(\log t)$ estimate for the number of zeros of $\Les$ on the critical line with imaginary part at most $t$ in magnitude. However, it is also useful to have explicit bounds on the number of zeros in a given interval on the critical line. The results in this section are therefore of course contingent on GRH. \\
-
-Our workhorse theorem places tight constraints on the sum $\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2}$ for positive $\sigma$ and real $\tau$. This is a shifted Cauchy distribution-type sum, giving us information on the density of zeros with imaginary part near $\tau$.
-\begin{theorem}\label{thm:poisson_sum_bound}
-Let $E$ be an elliptic curve with conductor $N_E$ and L-function $L_E(s)$. Let $\sigma > \frac{1}{2}$ and $\tau \in \RR$, and let $\gamma$ range over the imaginary parts of the nontrivial zeros of $L_E(s)$. Then
-\begin{equation}
- \left| \sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right)\right] \right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
-\end{equation}
-\end{theorem}
-
-\begin{proof}
-Let $s = \sigma + i \tau$. By equations \ref{eqn:logderiv_relation} and \ref{cor:Re_logderiv} we have
-\begin{align*}
-\sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} &= \Re\left(\ldLam{1+s}\right) \\
-&= \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right) + \Re\left(\sum_n c_n n^{-s}\right)
-\end{align*}
-But by lemma \ref{lem:ldLe_bound}
-\begin{equation*}
-\left|\Re\left(\sum_n c_n n^{-s}\right)\right| \le \left|\ldLe{1+s}\right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right),
-\end{equation*}
-so
-\begin{equation*}
-\left|\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \log\left(\frac{\sqrt{N_E}}{2\pi}\right) - \Re\left(\digamma(1+\sigma+i \tau)\right)\right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right).
-\end{equation*}
-\end{proof}
-Note that $\frac{\zeta\pr}{\zeta}$ decays rapidly with increasing $\sigma$, i.e. we have
-\begin{equation*}
-\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right)\right] = O(\sigma^{-c})
-\end{equation*}
-for any $c>0$. \\
-
-\begin{corollary}\label{cor:zero_density}
-Let $M_E(t)$ be the zero counting function as given in Definition \ref{defn:zero_counting_function}. Then for $t \ge 1$ we have
-\begin{equation}
-M_E(t) \le t\log N_E +2t\log(t+1).
-\end{equation}
-If we restrict to $t>~1.32$ we may further simplify this to
-\begin{equation}
-M_E(t) \le t\log N_E +2t\log t.
-\end{equation}
-\end{corollary}
-\begin{proof}
-Take the right inequality in Theorem \ref{thm:poisson_sum_bound} with $\sigma = t$ and $\tau=0$, yielding
-\begin{equation*}
-\sum_{\gamma} \frac{t}{t^2+\gamma^2} \le \frac{1}{2}\log N_E - \log 2\pi + \digamma(1+t) - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+t\right),
-\end{equation*}
-since the digamma function is real on the real axis. \\
-
-Note that for $t \ge 1$ we have $-\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+t\right) < -\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right) = 1.50523\ldots$, since $-\frac{\zeta\pr}{\zeta}$ is decreasing with increasing $t$. Observe that this does not exceed $\log 2\pi = 1.83787\ldots$  \\
-
-Now $\digamma(1+t) < \log(1+t)$ for $t\ge0$. For the second inequality in the theorem, note that $-\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right) - \log 2\pi = 0.33264\ldots$, and $\digamma(1+t) \le \log(t) + 0.33264\ldots$ when $t\ge 1.32255\ldots$ \\
-
-Finally, we have that $\sum_{\gamma} \frac{t}{t^2+\gamma^2} \ge \frac{1}{2t}M_E(t)$, since all zeros in the interval $[-t,t]$ are counted with weight at least $\frac{1}{2t}$. Combining the above observations and collecting constants completes the proof.
-\end{proof}
-
-It is also useful to have an upper bound on the number of zeros in a given unit interval on the critical line.
-\begin{corollary}\label{cor:zeros_on_unit_interval}
-For $t\ge1$, $M_E(t+1)-M_E(t)$ gives the number of zeros $\gamma$ with $t < |\Im(\gamma)| \le t+1$. We have
-\begin{equation}\label{eqn:zeros_on_unit_interval}
-M_E(t+1)-M_E(t) < \frac{5}{4}\log(N_E) + \frac{5}{2}\log(t+1).
-\end{equation}
-\end{corollary}
-\begin{proof}
-Proceed as before, but now taking the right inequality in theorem \ref{thm:poisson_sum_bound} with $\sigma = 1$ and $\tau=t+\frac{1}{2}$. Observe that
-\begin{equation*}
-\sum_{\gamma}\frac{1}{1+\left(\gamma-t-\frac{1}{2}\right)^2} \ge \frac{4}{5}\cdot\frac{\left(M_E(t+1)-M_E(t)\right)}{2},
-\end{equation*}
-since we are only counting zeros in the upper half plane. Also note that similar to before,\\
-$\digamma\left(\frac{3}{2}+i\left(t+\frac{1}{2}\right)\right) - \log 2\pi - 2\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right) < \log(t+1)$ for $t \ge 1$.
-\end{proof}
-In a similar manner we derive for $t \ge 1$ that
-\begin{equation}\label{eqn:zeros_in_unit_ball}
-\#\set{\gamma:\;|\gamma-t|\le 1} < \log(N_E) + 2\log(t+1)
-\end{equation}
-(note that unlike equation \ref{eqn:zeros_on_unit_interval}, the above only considers zeros with non-negative imaginary part). \\
-
-Finally, recall the definition of the bite of $E$: $\beta_E = \sum_{\gamma \ne 0} \frac{1}{\gamma^2}$. We may use \ref{thm:poisson_sum_bound} to place an explicit bound on the tail end of the inverse square sum via the following:
-\begin{corollary}\label{cor:sum_tail_bound}
-For $\sigma \ge 1$ and $\tau \in \RR$ we have
-\begin{equation}
-\sum_{|\gamma-\tau|>\sigma} \frac{1}{(\gamma-\tau)^2} \le \frac{\log(N_E) + 2\log(|\tau|+1)}{\sigma}
-\end{equation}
-\end{corollary}
-\begin{proof}
-Observe that
-\begin{equation*}
-\frac{\sigma}{2}\cdot\sum_{|\gamma-\tau|>\sigma} \frac{1}{(\gamma-\tau)^2} \le \sum_{|\gamma-\tau|>\sigma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} \le\sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2},
-\end{equation*}
-and the rightmost sum is bounded by $\frac{1}{2}\log N_E + \log(|\tau|+1)$ as in the work above. \\
-\end{proof}
-
-Equation \ref{thm:poisson_sum_bound} may also used to put lower bounds on the above quantities in some cases, which we hope to pursue in future work.
-
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Bite}
+\section{The Bite}\label{sec:bite}
 
 Recall by Definition \ref{defn:bite}, the {\it bite} $\beta_E$ of an elliptic curve is given by
 \begin{equation}
 \beta_E = \sum_{\gamma \ne 0} \frac{1}{\gamma^2}
 \end{equation}
-where $\gamma$ ranges over the imaginary parts of the {\it non-central} nontrivial zeros of $\Les$. In this sections we establish some bounds on the bite, show how one can compute it efficiently without having to compute the locations of the zeros of $\Les$ explicitly, and finish off with a result showing that the lowest noncentral zero is bounded away from the central point in terms of a negative power of the conductor. \\
+where $\gamma$ ranges over the imaginary parts of the {\it non-central} nontrivial zeros of $\Les$. In this final section we establish some bounds on the bite and show how one can compute it efficiently without having to compute the locations of the zeros of $\Les$ explicitly. \\%, and finish off with a result showing that the lowest noncentral zero is bounded away from the central point in terms of a negative power of the conductor. \\
 
 %It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor; this can be achieved by doing some analysis on $\ldLam{1+s}$ and the bite $\beta_E$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
 
-As zero density on the critical line grows proportional to $\frac{1}{2}\log N_E$ (see Theorem \ref{thm:zero_density}), we expect the bite to grow like $\frac{1}{2}\log N_E$ at least too. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
-\begin{lemma}[S.]
-For all $\epsilon>0$ there is a constant $K(\epsilon)>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
-\begin{equation}
-\beta_E = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{2+\epsilon} \log N_E - K(\epsilon).
+As asymptotic zero density on the critical line grows proportional to $\log N_E$ (see Theorem \ref{thm:zero_density}), we expect the bite to grow at least like $\log N_E$ too, regardless of the limiting behavior of zeros near the central point. This is indeed the case, at least in terms of putting a lower bound on $\beta_E$:
+\begin{proposition}
+Contingent on GRH, for all $\epsilon>0$ there is a constant $K(\epsilon)>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
+\begin{equation}\label{eqn:bite_lower_bound}
+\beta_E = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{1+\epsilon} \log N_E - K(\epsilon).
 \end{equation}
 where $N_E$ is the conductor of $E$.
-\end{lemma}
+\end{proposition}
 \begin{proof}
-
+From Equation \ref{thm:poisson_sum_bound}, letting $\tau=0$, we get
+\begin{equation}
+\sum_\gamma \frac{\sigma}{\sigma^2+\gamma^2} > \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \digamma(1+\sigma) + 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
+\end{equation}
+But
+\begin{align*}
+\sum_\gamma \frac{\sigma}{\sigma^2+\gamma^2} &= \frac{1}{\sigma} \sum_\gamma \frac{1}{1+\left(\frac{\gamma}{\sigma}\right)^2} \\
+&< \frac{1}{\sigma}\left(r_{an} + \sum_{\gamma\ne 0} \frac{1}{\left(\frac{\gamma}{\sigma}\right)^2} \right) \\
+&= \frac{r_{an}}{\sigma} + \sigma\cdot \beta_E,
+\end{align*}
+where $r_{an}$ is the analytic rank of $E$. Hence
+\begin{equation}
+\beta_E > \frac{1}{2\sigma} \log N_E - \frac{r_{an}}{\sigma^2} + \frac{1}{\sigma}\left[\digamma(1+\sigma)-\log(2\pi) + 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)\right],
+\end{equation}
+where the term in the square brackets is independent of $N_E$ and is finite for any $\sigma>\frac{1}{2}$. Furthermore, by Corollary \ref{cor:rank_slower_than_log_N}, the rank $r_{an}$ grows slower than any multiple  of $\log N_E$. Hence for $\epsilon > 0$ we may, for example, take $r_{an} < \epsilon^2 \log N_E + K\pr(\epsilon^2)$ for some constant $K\pr$ dependent on $\epsilon^2$, and then let $\sigma = \frac{1}{2}+\frac{1}{2}\epsilon$. This allows the constant in front of the collected $\log N_E$ term to be made arbitrarily close to 1 from below, while all other terms sum to a finite value independent of $E$.
 \end{proof}
 
+In reality we expect the bite to grow faster than $\log N_E$ -- as zero density scales with $\log N_E$, the sum of the inverse squares thereof should naively grow with $(\log N_E)^2$. However, this is discounting any unusual behaviour of zeros near the central point. Sarnak has mentioned in private correspondence that it's believed that the lowest noncentral zero $\gamma_0$ actually approaches a constant limiting distribution as conductor goes to infinity, which would in turn decrease any lower bound that can be placed on the bite. \\
+
+One reason why the bite of a curve is of interest is due to it being intimately linked with the leading central Taylor coefficient $C_E$ of the completed $L$-function of $E$, as well as the values of higher derivatives at the central point.
 \begin{proposition}\label{prop:bite_times_leading_coeff}
 Let $E$ have completed $L$-function $\Lams$ and analytic rank $r$. Then
 \begin{equation}
@@ -767,56 +799,6 @@ This allows us to compute the bite of a curve {\it without} having to compute th
     \label{fig:bites_vs_conductors_array}
 \end{figure}
 
-One can see from he above plot that the bite obeys a sharp lower bound with respect to the conductor, but the upper bound is somewhat less tight. More interesting is the fact that the lower bound appears the same regardless of rank, while curves with anomalously large bites are predominantly rank $0$. This makes sense: large bites correspond to very low-lying zeros, and because of the well-documented zero repulsion effect, this usually only happens when there are no zeros at the central point. \\
+One can see from Figure \ref{fig:bites_vs_conductors_array} that the bite obeys a sharp lower bound with respect to the conductor, but the upper bound is somewhat less tight. More interesting is the fact that the lower bound appears the same regardless of rank, while curves with anomalously large bites are predominantly rank $0$. This makes sense: large bites correspond to very low-lying zeros, and because of the well-documented zero repulsion effect, this usually only happens when there are no zeros at the central point. \\
 
 %%%%% INCLUDE PICTURES OF BITE VS. CONDUCTOR AND LEADING COEFF HERE %%%%%
-
-To establish bounds on the coefficients of the Taylor expansion of $\Lams$ about the central point, we will need the following technical lemma:
-\begin{lemma}\label{lem:central_deriv_int_bounds}
-Let $N,n \in \ZZ_{>0}$, and suppose $k$ is a positive integer such that $k < \frac{1}{2}\log N$. Then
-\begin{equation}
-\left| \int_{\frac{1}{\sqrt{N}}}^{\infty} (\log t)^{k} e^{-2\pi n t} \; dt \right| < \frac{\left(\frac{1}{2} \log N\right)^{k}}{2\pi n}\left[ e^{-\frac{2\pi n}{\sqrt{N}}} + \frac{e^{-2\pi n\sqrt{N}}}{2\pi n \sqrt N} \right].
-\end{equation}
-\end{lemma}
-\begin{proof}
-We split the integral in two, dealing with the intervals $\frac{1}{\sqrt{N}}$ to $\sqrt{N}$ and $\sqrt{N}$ to $\infty$ separately. Now $(\log t)^{k}$ is at most $(\frac{1}{2}\log N)^k$ in magnitude on $[\frac{1}{\sqrt{N}},\sqrt{N}]$, so
-\begin{equation*}
-\left| \int_{\frac{1}{\sqrt{N}}}^{\sqrt{N}} (\log t)^{k} e^{-2\pi n t} \; dt \right| < \left(\frac{1}{2} \log N\right)^k \int_{\frac{1}{\sqrt{N}}}^{\sqrt{N}} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N\right)^{k}}{2\pi n}\left(e^{-\frac{2\pi n}{\sqrt{N}}} - e^{-2\pi n\sqrt{N}}\right)
-\end{equation*}
-For the integral on $[\sqrt{N},\infty)$, we use integration by parts to get
-\begin{equation*}
-\int_{\sqrt{N}}^{\infty} \left(\log t \right)^{k} e^{-2\pi n t} \; dt = \frac{\left(\frac{1}{2} \log N\right)^{k}}{2\pi n}\cdot e^{-2\pi n\sqrt{N}} + \frac{k}{2\pi n} \int_{\sqrt{N}}^{\infty} \frac{\left(\log t \right)^{k-1}}{t} e^{-2\pi n t} \; dt 
-\end{equation*}
-If $k < \frac{1}{2}\log N$, then $\frac{\left(\log t \right)^{k-1}}{t}$ is decreasing for $t > \sqrt{N}$, so we have
-\begin{equation*}
-\frac{k}{2\pi n} \int_{\sqrt{N}}^{\infty} \frac{\left(\log t \right)^{k-1}}{t} e^{-2\pi n t} \; dt < \frac{k\left(\frac{1}{2} \log N\right)^{k-1}}{2\pi n\sqrt{N}} \int_{\sqrt{N}}^{\infty} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N\right)^{k}}{(2\pi n)^2 \sqrt{N}} \cdot e^{-2\pi n \sqrt{N}}.
-\end{equation*}
-Add up all the values and you get the established result.
-\end{proof}
-
-With the above lemma in hand, we establish an upper bound on the magnitude of the $k$th Taylor coefficient of $\Lams$ at the central point.
-\begin{proposition}\label{prop:central_deriv_bounds}
-Let $E$ have conductor $N$ and completed $L$-function $\Lams$. Then so long as $k<\frac{1}{2}\log N$, the $k$th derivative of $\Lams$ at the central point is bounded explicitly in terms of $N$ and $k$ by
-\begin{equation}
-\left| \Lambda_E^{(k)}(1)\right| < \frac{(\frac{1}{2}\log N)^k}{2\pi^2}\left(N + \frac{1}{e^{2\pi\sqrt{N}}-1} \right).
-\end{equation}
-That is, for fixed $k$ the $k$th Taylor coefficient of $\Lams$ is $O\left( N(\frac{1}{2}\log N)^k\right)$; the second term inside the final parentheses is negligible for $N>>1$.
-\end{proposition}
-
-\begin{proof}
-From Lemma \ref{lem:central_deriv_int_bounds} and Equation \ref{eqn:lambda_derivs} we have that
-\begin{equation*}
-\left| \Lambda_E^{(k)}(1)\right| < 2 \sqrt{N} \sum_{n=1}^{\infty} |a_n| \cdot \left[\frac{\left(\frac{1}{2} \log N\right)^{k}}{2\pi n}\left( e^{-\frac{2\pi n}{\sqrt{N}}} + \frac{e^{-2\pi n\sqrt{N}}}{2\pi n \sqrt N} \right)\right]
-\end{equation*}
-Using the bound $|a_n(E)| \le n$ for any $E$, we get
-\begin{equation*}
-\left| \Lambda_E^{(k)}(1)\right| < \frac{ \sqrt{N}\left(\frac{1}{2} \log N\right)^{k}}{\pi} \sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N}}} + \frac{\left(\frac{1}{2} \log N\right)^{k}}{2\pi^2} \sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N}}}{n}
-\end{equation*}
-Now
-\begin{equation*}
-\sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N}}} = \frac{1}{e^{\frac{2\pi n}{\sqrt{N}}}-1}< \frac{\sqrt{N}}{2\pi},
-\end{equation*}
-while $\sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N}}}{n} \le \sum_{n=1}^{\infty} e^{-2\pi n\sqrt{N}} = \frac{1}{e^{2\pi\sqrt{N}}-1}$.
-\end{proof}
-
-Note that for fixed $N$, if we allow $k \to \infty$, we actually have that the $k$th derivative can grow like $O\left(\frac{k!!}{(2\pi e)^{k/2}}\right)$, where $k!! = k(k-2)\cdots$ is the double factorial on $k$ - i.e., faster than exponentially in $k$. However, this behavior only starts to show when $k>>\log N$ - hence our restriction on the magnitude of $k$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N$ (c.f. Corollary \ref{cor:logderiv_rank_bound}), we will never need to consider $\Lambda_E^{(k)}(1)$ for $k> \frac{1}{2}\log N$.

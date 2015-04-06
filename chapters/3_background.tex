@@ -303,6 +303,58 @@ where $f_E$ is the cusp form attached to $E$. We may differentiate under the int
 Equation \ref{eqn:central_derivatives} follows by substituting $t \mapsto \sqrt{N} \cdot t$. For $m=0$ the integrals may be evaluated directly: $\int_{1}^{\infty} e^{-\frac{2\pi n t}{\sqrt{N}}} \; dt = \frac{\sqrt{N}}{2\pi n} e^{-\frac{2\pi n}{\sqrt{N}}}$.
 \end{proof}
 
+
+Equation \ref{eqn:central_derivatives} allows us to establish bounds on the coefficients of the Taylor expansion of $\Lams$ about the central point. For this we will need the following technical lemma:
+\begin{lemma}\label{lem:central_deriv_int_bounds}
+Let $N,n \in \ZZ_{>0}$, and suppose $m$ is a positive integer such that $m < \frac{1}{2}\log N$. Then
+\begin{equation}
+\left| \int_{\frac{1}{\sqrt{N}}}^{\infty} (\log t)^{m} e^{-2\pi n t} \; dt \right| < \frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi n}\left[ e^{-\frac{2\pi n}{\sqrt{N}}} + \frac{e^{-2\pi n\sqrt{N}}}{2\pi n \sqrt N} \right].
+\end{equation}
+\end{lemma}
+\begin{proof}
+We split the integral in two, dealing with the intervals $\frac{1}{\sqrt{N}}$ to $\sqrt{N}$ and $\sqrt{N}$ to $\infty$ separately. Now $(\log t)^{m}$ is at most $(\frac{1}{2}\log N)^m$ in magnitude on $[\frac{1}{\sqrt{N}},\sqrt{N}]$, so
+\begin{equation*}
+\left| \int_{\frac{1}{\sqrt{N}}}^{\sqrt{N}} (\log t)^{m} e^{-2\pi n t} \; dt \right| < \left(\frac{1}{2} \log N\right)^m \int_{\frac{1}{\sqrt{N}}}^{\sqrt{N}} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi n}\left(e^{-\frac{2\pi n}{\sqrt{N}}} - e^{-2\pi n\sqrt{N}}\right)
+\end{equation*}
+For the integral on $[\sqrt{N},\infty)$, we use integration by parts to get
+\begin{equation*}
+\int_{\sqrt{N}}^{\infty} \left(\log t \right)^{m} e^{-2\pi n t} \; dt = \frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi n}\cdot e^{-2\pi n\sqrt{N}} + \frac{m}{2\pi n} \int_{\sqrt{N}}^{\infty} \frac{\left(\log t \right)^{m-1}}{t} e^{-2\pi n t} \; dt 
+\end{equation*}
+If $m < \frac{1}{2}\log N$, then $\frac{\left(\log t \right)^{m-1}}{t}$ is decreasing for $t > \sqrt{N}$, so we have
+\begin{equation*}
+\frac{m}{2\pi n} \int_{\sqrt{N}}^{\infty} \frac{\left(\log t \right)^{m-1}}{t} e^{-2\pi n t} \; dt < \frac{m\left(\frac{1}{2} \log N\right)^{m-1}}{2\pi n\sqrt{N}} \int_{\sqrt{N}}^{\infty} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N\right)^{m}}{(2\pi n)^2 \sqrt{N}} \cdot e^{-2\pi n \sqrt{N}}.
+\end{equation*}
+Add up all the values and you get the established result.
+\end{proof}
+
+With the above lemma in hand, we establish an upper bound on the magnitude of the $m$th Taylor coefficient of $\Lams$ at the central point.
+\begin{proposition}\label{prop:central_deriv_bounds}
+Let $E$ have conductor $N$ and completed $L$-function $\Lams$. Then so long as $m<\frac{1}{2}\log N$, the $m$th derivative of $\Lams$ at the central point is bounded explicitly in terms of $N$ and $m$ by
+\begin{equation}
+\left| \Lambda_E^{(m)}(1)\right| < \frac{(\frac{1}{2}\log N)^m}{2\pi^2}\left(N + \frac{1}{e^{2\pi\sqrt{N}}-1} \right).
+\end{equation}
+That is, for fixed $m$ the $m$th Taylor coefficient of $\Lams$ is $O\left( N(\frac{1}{2}\log N)^m\right)$; the second term inside the final parentheses is negligible for $N>>1$.
+\end{proposition}
+
+\begin{proof}
+From Lemma \ref{lem:central_deriv_int_bounds} and Equation \ref{eqn:lambda_derivs} we have that
+\begin{equation*}
+\left| \Lambda_E^{(m)}(1)\right| < 2 \sqrt{N} \sum_{n=1}^{\infty} |a_n| \cdot \left[\frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi n}\left( e^{-\frac{2\pi n}{\sqrt{N}}} + \frac{e^{-2\pi n\sqrt{N}}}{2\pi n \sqrt N} \right)\right]
+\end{equation*}
+Using the bound $|a_n(E)| \le n$ for any $E$, we get
+\begin{equation*}
+\left| \Lambda_E^{(m)}(1)\right| < \frac{ \sqrt{N}\left(\frac{1}{2} \log N\right)^{m}}{\pi} \sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N}}} + \frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi^2} \sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N}}}{n}
+\end{equation*}
+Now
+\begin{equation*}
+\sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N}}} = \frac{1}{e^{\frac{2\pi n}{\sqrt{N}}}-1}< \frac{\sqrt{N}}{2\pi},
+\end{equation*}
+while $\sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N}}}{n} \le \sum_{n=1}^{\infty} e^{-2\pi n\sqrt{N}} = \frac{1}{e^{2\pi\sqrt{N}}-1}$.
+\end{proof}
+
+Note that for fixed $N$, if we allow $m \to \infty$, we actually have that the $m$th derivative can grow like $O\left(\frac{m!!}{(2\pi e)^{m/2}}\right)$, where $m!! = m(m-2)\cdots$ is the double factorial on $m$ i.e. faster than exponentially in $m$. However, this behavior only starts to show when $m>>\log N$ -- hence our restriction on the magnitude of $m$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N$ (c.f. Corollary \ref{cor:logderiv_rank_bound}), we will never need to consider $\Lambda_E^{(m)}(1)$ for $m> \frac{1}{2}\log N$. \\
+
+
 Crucial to this thesis, $L_E(s)$ and its derivatives can be provably computed to a given precision in time polynomial in the the conductor of $E$:
 \begin{proposition}\label{prop:L_E_time_complexity}
 When $m<\frac{1}{2} \log N_E$, the $m$th derivative of $L_E(s)$ at the central point can be provably computed to $k$ bits precision in $\softO(k\cdot \sqrt{N_E})$ time, where $N_E$ is the conductor of $E$.

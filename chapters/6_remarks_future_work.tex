@@ -13,7 +13,7 @@ However, Corollary \ref{cor:rank_slower_than_log_N} asserts that, contingent on 
 \end{equation}
 in terms of the parameter $\Delta$. \\
 
-A natural question to ask, and hopefully answer, is ``can this be done effectively"? Empiracally, the $c_n$ sum is seldom more than a handful of units in magnitude; however, the fact that the sum is carried out over prime powers and large amounts of cancellation due to the changing signs of the $c_n$ coefficients mean this this term is tricky to control. Note that one can readily obtain a naive explicit bound, it is exponential in $\log \Delta$, and thus quite useless from a practical perspective. \\
+A natural question to ask, and hopefully answer, is ``can this be done effectively"? Empirically, the $c_n$ sum is seldom more than a handful of units in magnitude; however, the fact that the sum is carried out over prime powers and large amounts of cancellation due to the changing signs of the $c_n$ coefficients means that this term is tricky to control [note that one can readily obtain a naive explicit bound, it is exponential in $\log \Delta$, and thus quite useless from a practical perspective]. \\
 
 Nevertheless, if one could show that the sum grows at most polynomial in $\log \Delta$ (regardless of $E$) and obtain explicit constants, then a direct consequence would be that the lower bound on the regulator of $E$ would go to zero more slowly than any negative power of $N$. \\
 
@@ -39,7 +39,7 @@ where $K$ is an explicit constant that accounts for the potentially higher power
 
 Note that this line was deliberately not pursued in this dissertation, as the assumption of ABC is required for bounds on the regulator in any case. However, ultimately we would like to remove reliance on ABC (if possible) entirely; bounds on the real period are not the obstruction when it comes to this.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Convergence rate and and convexity statements on the sinc$^2$ rank bounding sum}
 
 Equation \ref{eqn:sincsquared_sum} gives us that
@@ -60,5 +60,17 @@ However, establishing results regarding the rate of convergence of this sum prov
 Furthermore, Figure \ref{fig:256944c1_zero_sum} shows that the convergence from above is unfortunately {\it not} even necessarily monotone: as $\Delta$ is increased the small outlying bumps of the sinc$^2$ function can travel over zeros and temporarily increase the value of the sum. \\
 
 Even though this is the case, we should be able to make some sort of a convexity statement regarding the convergence of the sinc$^2$ sum. This should allow us to use point estimates in the rank estimation code to decide which $\Delta$ values to use on a given curve, and in so doing make the code more efficient. We hope to revisit this issue in future, as it has the potential to significantly increase the effectiveness of the rank estimation code.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Better bounds on the bite}
+
+Section \ref{sec:bite} touches fairly briefly on the topic of the bite of an elliptic curve, namely the quantity
+\begin{equation}
+\beta_E = \sum_{\gamma \ne 0} \frac{1}{\gamma^2}
+\end{equation}
+
+It would be useful to have bounds in either direction for this quantity. In terms of bounding from below, we are reasonably confident that the constant $K(\epsilon)$ in Equation \ref{eqn:bite_lower_bound} can be made explicit in terms of $\epsilon$, given more diligent controlling of the various zero sum-based inequalities. Better yet, it would seem that the bite must grow faster than any multiple of $\log N_E$, and we would like to show that this is the case; it is conceivable that this could also be achieved using the methods detailed in this work. \\
+
+On the other hand, placing an upper bound on the bite is equivalent to bounding the lowest noncentral zero away from the central point. This is a much deeper and more difficult endeavour, equivalent to placing a lower bound on the leading central Taylor coefficient of $\Les$. The latter is done in Chapter \ref{chap:main_theorem}, and in fact a direct corollary of this is that the lowest noncentral zero $\gamma_0$ is bounded below by $(N_E)^{-\alpha}$ for some $\alpha>0$. However, in the leading Taylor coefficient bound a constant introduced from the bound on the real period is never made explicit; while this is good enough to get a polynomial-time rank algorithm out, it {\it isn't} good enough to make the lower bound on $\gamma_0$ explicit. Again, we hope that this issue can be resolved in future work, perhaps by making all constants in bounds on the real period completely explicit.
 
 
