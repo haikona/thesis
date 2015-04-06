@@ -444,7 +444,7 @@ This, for example, allowed Bober to use a $\Delta$ value of only $3.2$ to show t
 
 Though not necessary to prove Equation \ref{eqn:sincsquared_sum}, we may also use zero sums to provide estimates on the distribution and expected location of nontrivial zeros of $\Les$ as a function of the curve's conductor. \\
 
-\begin{definition}
+\begin{definition}\label{defn:zero_counting_function}
 For non-negative $t$, let $M_E(t)$ be the modified non-trivial zero counting function for $\Les$, i.e.
 \begin{equation}
 M_E(t) := \sideset{}{\pr}\sum_{|\gamma| \le t} \frac{1}{2}
@@ -456,7 +456,7 @@ Note that $M_E(0) = \frac{r}{2}$, and the function jumps by 1 across the locatio
 
 \begin{proposition}[S.]
 \begin{equation}\label{eqn:M_E(t)}
-M_E(t) = \frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) + \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n)\right]
+M_E(t) = \frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) + \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n)\right]
 \end{equation}
 Convergence on the RHS is pointwise with respect to $t$ for both sums; for fixed $t$ convergence for the sums over $k$ and $n$ is absolute and conditional respectively (and {\it extremely} slow for the latter).
 \end{proposition}
@@ -477,7 +477,7 @@ for some $\epsilon>0$, and invoke the Cauchy Residue Theorem. We may then shrink
 
 Equation \ref{eqn:M_E(t)} may be though of having two components. The first two terms comprise a smooth part that gives the ``expected number of zeros'' up to $t$; and the trigonometric sum over $n$ comprises the discretization information that yields the zeros' exact locations. We expect the trigonometric sum to be zero infinitely often, and asymptotically it should be positive as often as it is negative. As such the sum should average out to zero and shouldn't contribute any asymptotic bias to the density of zeros on the critical line. We can therefore talk in a real sense of the expected number of zeros up to $t$, which is given by
 \begin{equation}\label{eqn:M_E_smooth_part}
-\frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right)\right]
+\frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right)\right]
 \end{equation}
 
 Moreover, the trigonometric sum should grow very slowly with $t$. Put more formally, we have the following:
@@ -521,9 +521,9 @@ The result follows.
 Conjecture \ref{conj:trig_sum_size} and lemma \ref{lem:arctan_sum_size} combine to give us a precise asymptotic statement on the distribution of zeros up to $t$, in the same vein as von Mangoldt's asymptotic formula for the number of zeros up to $t$ for $\zeta$:
 
 \begin{theorem}[S.]\label{thm:zero_density}
-Let $E$ have conductor $N$. Then for $t>>0$ we have
+Let $E$ have conductor $N_E$. Then for $t>>0$ we have
 \begin{equation}\label{eqn:zero_density}
-M_E(t) = \frac{t}{\pi} \, \log\left(\frac{t\sqrt{N}}{2\pi e}\right) + \frac{1}{4} + O(\log t),
+M_E(t) = \frac{t}{\pi} \, \log\left(\frac{t\sqrt{N_E}}{2\pi e}\right) + \frac{1}{4} + O(\log t),
 \end{equation}
 where the error term is positive as often as it negative and contributes no net bias.
 \end{theorem}
@@ -531,32 +531,32 @@ where the error term is positive as often as it negative and contributes no net 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1.0\textwidth]{graphics/M_E_389.png}
-    \caption{The number of zeros up to $t$ versus $\frac{t}{\pi}\left[\log\left(\frac{t\sqrt{N}}{2\pi}\right) -1 \right] + \frac{1}{4}$ for the Cremona curve $389a$. The match up is extremely good.}
+    \caption{The number of zeros up to $t$ versus $\frac{t}{\pi}\left[\log\left(\frac{t\sqrt{N_E}}{2\pi}\right) -1 \right] + \frac{1}{4}$ for the Cremona curve $389a$. The match up is extremely good.}
     \label{fig:M_E_389}
 \end{figure}
 
 \begin{corollary}
 For $t>>0$, the number of zeros on the critical line in a unit interval
 \begin{equation}
-M_E(t)-M_E(t-1) = \frac{1}{\pi}\log\left(\frac{t\sqrt{N}}{2\pi}\right) + O(\log t),
+M_E(t)-M_E(t-1) = \frac{1}{\pi}\log\left(\frac{t\sqrt{N_E}}{2\pi}\right) + O(\log t),
 \end{equation}
 where again the error term contributes no net bias.
 \end{corollary}
 
-That is, zero density on the critical line grows like $\frac{1}{2}\log N + \log t$, where $N$ is the conductor of $E$ and $t$ the distance from the real axis. \\
+That is, zero density on the critical line grows like $\frac{1}{2}\log N_E + \log t$, where $N_E$ is the conductor of $E$ and $t$ the distance from the real axis. \\
 
 Neglecting the oscilating error term in Equation \ref{eqn:zero_density}, we may solve for $t$ in terms of the Lambert $W$-function to obtain an explicit formula for the expected value of the imaginary part of the $n$th zero on the critical line. Recall the definition of the Lambert $W$-function: if $y = x e^x$, then $x = W(y)$. $W$ is a multiple-valued function; we make use of the principle branch $W_0$ below:
 \begin{corollary}
 Let $\gamma_n := \gamma_n(E)$ be the imaginary value of the $n$th nontrivial (and noncentral) zero in the upper half plane of $\Les$ with analytic rank $r$. Then
 \begin{equation}\label{approx:gamma_n}
-\gamma_n \sim \frac{2\pi e}{\sqrt{N}} \cdot \exp \left(W_0\left[\left(\frac{r}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N}}{2 e}\right]\right)
+\gamma_n \sim \frac{2\pi e}{\sqrt{N_E}} \cdot \exp \left(W_0\left[\left(\frac{r}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N_E}}{2 e}\right]\right)
 \end{equation}
 in the sense that for a given curve, the difference between the above value and the true value of $\gamma_n$ will on average be zero as $n \to \infty$.
 \end{corollary}
 \begin{proof}
 Observe that the $n$th nontrivial noncentral zero has imaginary part $t$ when $M_E(t) = \frac{r}{2} + n - \frac{1}{2}$ (since the final zero is counted with half weight). Hence using Equation \ref{eqn:zero_density} sans the oscillating error term, we solve for $t$ in
 \begin{equation*}
-\frac{t}{\pi} \, \log\left(\frac{t\sqrt{N}}{2\pi e}\right) + \frac{1}{4} = \frac{r}{2} + n - \frac{1}{2}
+\frac{t}{\pi} \, \log\left(\frac{t\sqrt{N_E}}{2\pi e}\right) + \frac{1}{4} = \frac{r}{2} + n - \frac{1}{2}
 \end{equation*}
 \end{proof}
 
@@ -570,7 +570,7 @@ A natural question to ask, given that we now have an expected value for $\gamma_
 \begin{definition}
 The dispersion $\delta_n(E) := \delta_n$ of the imaginary part of the $n$th nontrivial zero in the upper half plane is the difference between the true and predicted values of $\gamma_n$, i.e.
 \begin{equation}
-\delta_n = \gamma_n - \frac{2\pi e}{\sqrt{N}} \cdot \exp \left(W_0\left[\left(\frac{r}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N}}{2 e}\right]\right)
+\delta_n = \gamma_n - \frac{2\pi e}{\sqrt{N_E}} \cdot \exp \left(W_0\left[\left(\frac{r}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N_E}}{2 e}\right]\right)
 \end{equation}
 \end{definition}
 
@@ -599,20 +599,118 @@ Even though the above graph demonstrates that the zero dispersions are clearly n
 
 For the data set used the graph above, the mean was $3.16\times10^{-5}$ (a good indicator that the expected value formula contains no systematic bias), standard deviation $0.1566$. The standard deviation appears to decrease with increasing $n$: we applied the Shapiro-Wilk normality test on batches of 1000 consecutive zero dispersions, and got $p$-values in excess of $0.2$ (and most of the time in excess of 0.5) in all cases. Moreover, the computed standard deviations decreased uniformly from $0.1745$ for the $n=1000$ to $2000$ dispersion set, to $0.1464$ in the $n=10000$ to $11000$ set. We hope to pursue this investigation in future work. \\
 
-Finally, we may also go in the other direction and use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the {\it lowest} noncentral nontrivial zero of $\Les$ as a function of increasing conductor $N$:
+Finally, we may also go in the other direction and use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the {\it lowest} noncentral nontrivial zero of $\Les$ as a function of increasing conductor $N_E$:
 \begin{proposition}
-For a curve $E$ with large conductor $N$, the best guess for the imaginary part of the first nontrivial noncentral zero $\gamma_1$ of $\Les$ in the upper half plane is
+For a curve $E$ with large conductor $N_E$, the best guess for the imaginary part of the first nontrivial noncentral zero $\gamma_1$ of $\Les$ in the upper half plane is
 \begin{equation}
-\gamma_1 = \frac{(r+1)\pi}{\log(N) -2\log(2\pi) -2\eta}
+\gamma_1 = \frac{(r+1)\pi}{\log(N_E) -2\log(2\pi) -2\eta}
 \end{equation}
 where $r$ is the analytic rank of $E$
 \end{proposition}
 The derivation is similar to before. The location of the first nontrivial noncentral zero is given by the value of $t$ for which $M_E(t)$ jumps from $r/2$ to $r/2+1$; at that point $M_E(t) = r/2 + 1/2 = \frac{r+1}{2}$, so the expected value of $\gamma_1$ is given by setting equation \ref{eqn:M_E(t)} equal to $\frac{r+1}{2}$ and solving for $t$. \\
 
-Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right]$ is $O(t^3)$ for small t, so the quantity expressed in equation \ref{eqn:M_E_smooth_part} is dominated by the $\frac{1}{\pi}\left(-\eta+\log\left(\frac{\sqrt{N}}{2\pi}\right)\right) t$ term when $N$ is large. Solving for $t$ yields the desired value.
+Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right]$ is $O(t^3)$ for small t, so the quantity expressed in equation \ref{eqn:M_E_smooth_part} is dominated by the $\frac{1}{\pi}\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t$ term when $N_E$ is large. Solving for $t$ yields the desired value.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Explicit Bounds on Zero Density on the Critical Line}
+
+Equation \ref{eqn:zero_density} gives us an accurate-up-to-$O(\log t)$ estimate for the number of zeros of $\Les$ on the critical line with imaginary part at most $t$ in magnitude. However, it is also useful to have explicit bounds on the number of zeros in a given interval on the critical line. The results in this section are therefore of course contingent on GRH. \\
+
+Our workhorse theorem places tight constraints on the sum $\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2}$ for positive $\sigma$ and real $\tau$. This is a shifted Cauchy distribution-type sum, giving us information on the density of zeros with imaginary part near $\tau$.
+\begin{theorem}\label{thm:poisson_sum_bound}
+Let $E$ be an elliptic curve with conductor $N_E$ and L-function $L_E(s)$. Let $\sigma > \frac{1}{2}$ and $\tau \in \RR$, and let $\gamma$ range over the imaginary parts of the nontrivial zeros of $L_E(s)$. Then
+\begin{equation}
+ \left| \sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right)\right] \right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $s = \sigma + i \tau$. By equations \ref{eqn:logderiv_relation} and \ref{cor:Re_logderiv} we have
+\begin{align*}
+\sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} &= \Re\left(\ldLam{1+s}\right) \\
+&= \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right) + \Re\left(\sum_n c_n n^{-s}\right)
+\end{align*}
+But by lemma \ref{lem:ldLe_bound}
+\begin{equation*}
+\left|\Re\left(\sum_n c_n n^{-s}\right)\right| \le \left|\ldLe{1+s}\right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right),
+\end{equation*}
+so
+\begin{equation*}
+\left|\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \log\left(\frac{\sqrt{N_E}}{2\pi}\right) - \Re\left(\digamma(1+\sigma+i \tau)\right)\right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right).
+\end{equation*}
+\end{proof}
+Note that $\frac{\zeta\pr}{\zeta}$ decays rapidly with increasing $\sigma$, i.e. we have
+\begin{equation*}
+\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right)\right] = O(\sigma^{-c})
+\end{equation*}
+for any $c>0$. \\
+
+\begin{corollary}\label{cor:zero_density}
+Let $M_E(t)$ be the zero counting function as given in Definition \ref{defn:zero_counting_function}. Then for $t \ge 1$ we have
+\begin{equation}
+M_E(t) \le t\log N_E +2t\log(t+1).
+\end{equation}
+If we restrict to $t>~1.32$ we may further simplify this to
+\begin{equation}
+M_E(t) \le t\log N_E +2t\log t.
+\end{equation}
+\end{corollary}
+\begin{proof}
+Take the right inequality in Theorem \ref{thm:poisson_sum_bound} with $\sigma = t$ and $\tau=0$, yielding
+\begin{equation*}
+\sum_{\gamma} \frac{t}{t^2+\gamma^2} \le \frac{1}{2}\log N_E - \log 2\pi + \digamma(1+t) - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+t\right),
+\end{equation*}
+since the digamma function is real on the real axis. \\
+
+Note that for $t \ge 1$ we have $-\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+t\right) < -\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right) = 1.50523\ldots$, since $-\frac{\zeta\pr}{\zeta}$ is decreasing with increasing $t$. Observe that this does not exceed $\log 2\pi = 1.83787\ldots$  \\
+
+Now $\digamma(1+t) < \log(1+t)$ for $t\ge0$. For the second inequality in the theorem, note that $-\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right) - \log 2\pi = 0.33264\ldots$, and $\digamma(1+t) \le \log(t) + 0.33264\ldots$ when $t\ge 1.32255\ldots$ \\
+
+Finally, we have that $\sum_{\gamma} \frac{t}{t^2+\gamma^2} \ge \frac{1}{2t}M_E(t)$, since all zeros in the interval $[-t,t]$ are counted with weight at least $\frac{1}{2t}$. Combining the above observations and collecting constants completes the proof.
+\end{proof}
+
+It is also useful to have an upper bound on the number of zeros in a given unit interval on the critical line.
+\begin{corollary}\label{cor:zeros_on_unit_interval}
+For $t\ge1$, $M_E(t+1)-M_E(t)$ gives the number of zeros $\gamma$ with $t < |\Im(\gamma)| \le t+1$. We have
+\begin{equation}\label{eqn:zeros_on_unit_interval}
+M_E(t+1)-M_E(t) < \frac{5}{4}\log(N_E) + \frac{5}{2}\log(t+1).
+\end{equation}
+\end{corollary}
+\begin{proof}
+Proceed as before, but now taking the right inequality in theorem \ref{thm:poisson_sum_bound} with $\sigma = 1$ and $\tau=t+\frac{1}{2}$. Observe that
+\begin{equation*}
+\sum_{\gamma}\frac{1}{1+\left(\gamma-t-\frac{1}{2}\right)^2} \ge \frac{4}{5}\cdot\frac{\left(M_E(t+1)-M_E(t)\right)}{2},
+\end{equation*}
+since we are only counting zeros in the upper half plane. Also note that similar to before,\\
+$\digamma\left(\frac{3}{2}+i\left(t+\frac{1}{2}\right)\right) - \log 2\pi - 2\frac{\zeta\pr}{\zeta}\left(\frac{3}{2}\right) < \log(t+1)$ for $t \ge 1$.
+\end{proof}
+In a similar manner we derive for $t \ge 1$ that
+\begin{equation}\label{eqn:zeros_in_unit_ball}
+\#\set{\gamma:\;|\gamma-t|\le 1} < \log(N_E) + 2\log(t+1)
+\end{equation}
+(note that unlike equation \ref{eqn:zeros_on_unit_interval}, the above only considers zeros with non-negative imaginary part). \\
+
+Finally, recall the definition of the bite of $E$: $\beta_E = \sum_{\gamma \ne 0} \frac{1}{\gamma^2}$. We may use \ref{thm:poisson_sum_bound} to place an explicit bound on the tail end of the inverse square sum via the following:
+\begin{corollary}\label{cor:sum_tail_bound}
+For $\sigma \ge 1$ and $\tau \in \RR$ we have
+\begin{equation}
+\sum_{|\gamma-\tau|>\sigma} \frac{1}{(\gamma-\tau)^2} \le \frac{\log(N_E) + 2\log(|\tau|+1)}{\sigma}
+\end{equation}
+\end{corollary}
+\begin{proof}
+Observe that
+\begin{equation*}
+\frac{\sigma}{2}\cdot\sum_{|\gamma-\tau|>\sigma} \frac{1}{(\gamma-\tau)^2} \le \sum_{|\gamma-\tau|>\sigma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} \le\sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2},
+\end{equation*}
+and the rightmost sum is bounded by $\frac{1}{2}\log N_E + \log(|\tau|+1)$ as in the work above. \\
+\end{proof}
+
+Equation \ref{thm:poisson_sum_bound} may also used to put lower bounds on the above quantities in some cases, which we hope to pursue in future work.
 
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Bite}
 
 Recall by Definition \ref{defn:bite}, the {\it bite} $\beta_E$ of an elliptic curve is given by
@@ -623,7 +721,7 @@ where $\gamma$ ranges over the imaginary parts of the {\it non-central} nontrivi
 
 %It is a relatively straightforward affair to obtain unconditional upper bounds on the magnitude of $C_E$, the central leading coefficient of $\Les$, as a function of the curve's conductor; this can be achieved by doing some analysis on $\ldLam{1+s}$ and the bite $\beta_E$. Lower bounds are more difficult, however. It is only by assuming full BSD that we have any way of obtain $C_E$ from below. \\
 
-As zero density on the critical line grows proportional to $\frac{1}{2}\log N_E$ (see Theorem \ref{thm:zero_density}), we expect the bite to grow like $\frac{1}{2}\log N_E$ too. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
+As zero density on the critical line grows proportional to $\frac{1}{2}\log N_E$ (see Theorem \ref{thm:zero_density}), we expect the bite to grow like $\frac{1}{2}\log N_E$ at least too. This is indeed the case, at least in terms of concrete lower bounds on $\beta_E$:
 \begin{lemma}[S.]
 For all $\epsilon>0$ there is a constant $K(\epsilon)>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
 \begin{equation}
@@ -669,7 +767,7 @@ This allows us to compute the bite of a curve {\it without} having to compute th
     \label{fig:bites_vs_conductors_array}
 \end{figure}
 
-One can see from he above plot that the bite obeys a sharp lower bound with respect to the conductor, but the upper bound is somewhat less tight. More interesting is the fact that the lower bound appears the same regardless of rank, while curves with anomalously large bits are predominantly rank $0$. This makes sense: large bites correspond to very low-lying zeros, and because of the well-documented zero repulsion effect, this can only really happen when there are no zeros at the central point. \\
+One can see from he above plot that the bite obeys a sharp lower bound with respect to the conductor, but the upper bound is somewhat less tight. More interesting is the fact that the lower bound appears the same regardless of rank, while curves with anomalously large bites are predominantly rank $0$. This makes sense: large bites correspond to very low-lying zeros, and because of the well-documented zero repulsion effect, this usually only happens when there are no zeros at the central point. \\
 
 %%%%% INCLUDE PICTURES OF BITE VS. CONDUCTOR AND LEADING COEFF HERE %%%%%
 
