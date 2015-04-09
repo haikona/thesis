@@ -5,7 +5,7 @@ This dissertation pulls in results from a number of disparate topics related to 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bounding analytic rank from above in terms of conductor}
 
-To establish a lower bound on the regulator of an elliptic curve in terms of its conductor we require an upper bound on the analytic rank. To this end we invoke Corralaries \ref{cor:logderiv_rank_bound} and \ref{cor:better_an_bound}, stating that maximum analytic rank is bounded by $\frac{1}{2}\log N$ plus an explicit constant. \\
+To establish a lower bound on the regulator of an elliptic curve in terms of its conductor we require an upper bound on the analytic rank. To this end we invoke Corralaries \ref{cor:logderiv_rank_bound} and \ref{cor:better_an_bound}, stating that maximum analytic rank is bounded by $\frac{1}{2}\log N_E$ plus an explicit constant. \\
 
 However, Corollary \ref{cor:rank_slower_than_log_N} asserts that, contingent on GRH, maximum analytic rank of in fact grows slower than log of the conductor. This result has {\it not} been used directly, mainly because the constant $K(\epsilon)$ has not been made explicit in terms of the $\epsilon$ chosen. This translates to bounding the $c_n$ sum
 \begin{equation}
@@ -42,9 +42,9 @@ Note that this line was deliberately not pursued in this dissertation, as the as
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Convergence rate and and convexity statements on the sinc$^2$ rank bounding sum}
 
-Equation \ref{eqn:sincsquared_sum} gives us that
+Equation \ref{eqn:sincsquared_sum} gives the analytic rank of $E$ as a limit:
 \begin{align}
-r_{an}(E) = \quad & \lim_{\Delta \to \infty} \;\; \frac{1}{\Delta \pi}\left[\left(-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right)+ \frac{1}{2\pi \Delta}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)  \right. \nonumber \\
+r_E = \quad & \lim_{\Delta \to \infty} \;\; \frac{1}{\Delta \pi}\left[\left(-\eta + \log\left(\frac{\sqrt{N}}{2\pi}\right)\right)+ \frac{1}{2\pi \Delta}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)  \right. \nonumber \\
 &+ \left.\sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)\right]
 \end{align}
 
@@ -64,12 +64,12 @@ Even though this is the case, we should be able to make some sort of a convexity
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Better bounds on the bite}
 
-Section \ref{sec:bite} touches fairly briefly on the topic of the bite of an elliptic curve, namely the quantity
+Section \ref{sec:bite} discusses at the topic of the bite of an elliptic curve, namely the quantity
 \begin{equation}
 \beta_E = \sum_{\gamma \ne 0} \frac{1}{\gamma^2}
 \end{equation}
 
-It would be useful to have bounds in either direction for this quantity. In terms of bounding from below, we are reasonably confident that the constant $K(\epsilon)$ in Equation \ref{eqn:bite_lower_bound} can be made explicit in terms of $\epsilon$, given more diligent controlling of the various zero sum-based inequalities. Better yet, it would seem that the bite must grow faster than any multiple of $\log N_E$, and we would like to show that this is the case; it is conceivable that this could also be achieved using the methods detailed in this work. \\
+It would be useful to have better bounds in either direction for this quantity. In terms of bounding from below, we are reasonably confident that the constant $K(\epsilon)$ in Equation \ref{eqn:bite_lower_bound} can be made explicit in terms of $\epsilon$, given more diligent controlling of the various zero sum-based inequalities. Better yet, it would seem that the bite must grow faster than any multiple of $\log N_E$, and we would like to show that this is the case. It is conceivable that this could also be achieved using the methods detailed in this work. \\
 
 On the other hand, placing an upper bound on the bite is equivalent to bounding the lowest noncentral zero away from the central point. This is a much deeper and more difficult endeavour, equivalent to placing a lower bound on the leading central Taylor coefficient of $\Les$. The latter is done in Chapter \ref{chap:main_theorem}, and in fact a direct corollary of this is that the lowest noncentral zero $\gamma_0$ is bounded below by $(N_E)^{-\alpha}$ for some $\alpha>0$. However, in the leading Taylor coefficient bound a constant introduced from the bound on the real period is never made explicit; while this is good enough to get a polynomial-time rank algorithm out, it {\it isn't} good enough to make the lower bound on $\gamma_0$ explicit. Again, we hope that this issue can be resolved in future work, perhaps by making all constants in bounds on the real period completely explicit.
 

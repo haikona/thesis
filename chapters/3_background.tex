@@ -6,7 +6,7 @@
 For the rest of the body of this text (unless otherwise stated) we set the following notation:
 \begin{itemize}
 \item $E$ is an elliptic curve over $\QQ$ given by minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$
-\item $D(E)$, $N(E)$ and $r(E)$  and $r_{an}(E)$ are the discriminant, conductor, algebraic rank and analytic rank of $E$ respectively. For ease of exposition, the dependence on $E$ will often be indicated by a subscript $E$ instead; when there is no ambiguity, it may be dropped entirely.
+\item $D(E)$, $N(E)$ and $r_{al}(E)$  and $r_{an}(E)$ are the discriminant, conductor, algebraic rank and analytic rank of $E$ respectively. For ease of exposition, the dependence on $E$ will often be indicated by a subscript $E$ instead, and when there is no ambiguity it may be dropped entirely. Also, since much of this body of work assumes the validity of the the BSD conjecture, the algebraic and analytic rank of a curve will most often be assumed to be equal, in which case it will just be denoted $r_E$.
 \item $p$ is a (rational) prime number and $q$ is a prime power
 \item $s$ and $z$ are generic complex numbers
 \item $L(E,s)$ and $\Lambda(E,s)$ are the standard and completed $L$-functions attached to $E$ respectively. Again, for ease of exposition we will in general subsume the $E$ into a subscript and write $\Les$ and $\Lams$.
@@ -119,7 +119,7 @@ Let $E$ have bad reduction at $p$; let $P$ be the singular point on $\tilde{E}/\
 
 Primes of bad reduction are packaged together into an invariant called the {\it conductor} of $E$:
 \begin{definition}
-The conductor of $E$, denoted by $N_E$ (or more often just $N$ when the choice of $E$ is unambiguous), is a positive integer given by
+The conductor of $E$, denoted by $N_E$, is a positive integer given by
 \begin{equation}
 N_E = \prod_{p} p^{f_p(E)},
 \end{equation}
@@ -134,12 +134,12 @@ The ``proper" definition of the conductor is Galois representation-theoretic and
 We now move on to the definition of the $L$-function attached to an elliptic curve. For this we must define the numbers $a_p(E)$:
 \begin{definition}\label{def:a_p} \mbox{}
 \begin{itemize}
-\item For good primes $p$ (i.e. when $p \nmid N$), let
+\item For good primes $p$ (i.e. when $p \nmid N_E$), let
 \begin{equation}
 a_p(E) = p+1-\#\set{\EFp},
 \end{equation}
 where $\#\set{\EFp}$ is the number of points on $E/\Fp$;
-\item For bad primes (when $p \mid N$), let
+\item For bad primes (when $p \mid N_E$), let
 \begin{equation}
 a_p(E) := \begin{cases}
 +1 & \text{if $E$ has split multiplicative reduction at $p$} \\
@@ -194,17 +194,17 @@ In this work we more often use the completed $L$-function attached to $E$:
 \begin{definition}
 The {\it completed $L$-function} attached to $E$ is given by
 \begin{equation}
-\Lambda_E(s) = N^{\frac{s}{2}}(2\pi)^{-s}\Gamma(s)\Les,
+\Lambda_E(s) = (N_E)^{\frac{s}{2}}(2\pi)^{-s}\Gamma(s)\Les,
 \end{equation}
-where $N$ is the conductor of $E$ and $\Gamma(s)$ the usual Gamma function on $\CC$.
+where $N_E$ is the conductor of $E$ and $\Gamma(s)$ the usual Gamma function on $\CC$.
 \end{definition}
 
 Thanks to the modularity theorem, we may in fact analytically continue $\Les$ and $\Lams$ to be entire functions defined on all of $\CC$.
 \begin{theorem}[Breuille, Conrad, Diamond, Taylor, Wiles et al, 1995,1999,2001] \mbox{}\\
-There exists an integral newform $f = \sum_n a_n q^n$ of of weight $k=2$ and level $N$ such that $\Les = L_f(s)$.
+There exists an integral newform $f = \sum_n a_n q^n$ of of weight $k=2$ and level $N_E$ such that $\Les = L_f(s)$.
 \end{theorem}
 
-The modularity theorem above is essentially the converse of the theorem by Shimura in the 1960s: if $f$ is a weight $2$ newform of level $N$, then there exists some elliptic curve $E/\Q$ of conductor $N$ such that $L_f(s) = L_E(s)$. Hence any theorem about elliptic curve $L$-functions is thus really a theorem about $L$-functions of weight 2 newforms in disguise. \\
+The modularity theorem above is essentially the converse of the theorem by Shimura in the 1960s: if $f$ is a weight $2$ newform of level $N_E$, then there exists some elliptic curve $E/\Q$ of conductor $N_E$ such that $L_f(s) = L_E(s)$. Hence any theorem about elliptic curve $L$-functions is thus really a theorem about $L$-functions of weight 2 newforms in disguise. \\
 
 \begin{corollary} \mbox{}
 \begin{itemize}
@@ -219,7 +219,7 @@ where $w_E \in \set{-1, 1}$ is the action of the Atkin-Lehner involution on the 
 
 We reproduce the analytic continuation for $\Lams$ explicitly below. Define the auxiliary function $\lambda_E(s)$ by
 \begin{equation}\label{eqn:Lams_analytic_continuation}
-\lambda_E(s) = \left(\frac{\sqrt{N}}{2\pi}\right)^{s} \sum_{n=1}^\infty a_n n^{-s}\Gamma \left(s,\frac{2\pi n}{\sqrt{N}}\right),
+\lambda_E(s) = \left(\frac{\sqrt{N_E}}{2\pi}\right)^{s} \sum_{n=1}^\infty a_n n^{-s}\Gamma \left(s,\frac{2\pi n}{\sqrt{N_E}}\right),
 \end{equation}
 where all the quantities are as defined previously, and $\Gamma(s,x)$ is the upper incomplete Gamma function on $\CC\cross \RR_{>0}$. The sum converges absolutely for any $s$, so $\lambda_E(s)$ is entire. Then
 \begin{equation}
@@ -254,7 +254,7 @@ For any $E/\QQ$,
 \Lambda_E(1+s) \ne 0 \;\;\mbox{when}\;\; |\Re(s)| > \frac{1}{2}
 \end{equation}
 \end{proposition}
-This can be proven by showing that the logarithmic derivative of $\Lambda_E(1+s)$ converges absolutely for $\Re(s) > \frac{1}{2}$. See section \ref{sec:log_derivs} for a proof (the statement can in fact be strengthened to asserting that all zeros are {\it strictly} inside the critical strip). In fact, the Generalized Riemann Hypothesis asserts that
+This can be proven by showing that the logarithmic derivative of $\Lambda_E(1+s)$ converges absolutely for $\Re(s) > \frac{1}{2}$; see the corollary to Proposition \ref{lem:ldLe_bound} for a proof. The statement can with a bit more work be strengthened to asserting that all zeros are {\it strictly} inside the critical strip). In fact, the Generalized Riemann Hypothesis asserts that
 \begin{equation}
 \Lambda_E(1+s) \ne  \;\;\mbox{when}\;\; \Re(s) \neq 0
 \end{equation}
@@ -275,17 +275,17 @@ We will work a lot with the leading coefficient of the $L$-seres at the central 
 \item Let $C_E$ (or just $C$ when $E$ is fixed) be the leading coefficient of $\Lams$ at the central point.
 \end{itemize}
 \end{definition}
-Observe that $C\pr_E = \frac{2\pi}{\sqrt{N}}\cdot C_E$. We will most often work with the latter, hence the notation. \\
+Observe that $C\pr_E = \frac{2\pi}{\sqrt{N_E}}\cdot C_E$. We will most often work with the latter, hence the notation. \\
 
 We may use Equation \ref{eqn:Lams_analytic_continuation} to produce formulae for the value of $\Lams$ and its higher derivatives at the central point:
 \begin{proposition} \mbox{}
 \begin{enumerate}
 \item \begin{equation}
-\Lambda_E(1) = \begin{cases} \frac{\sqrt{N}}{\pi} \sum_{n=1}^{\infty}\frac{a_n}{n} e^{-\frac{2\pi}{\sqrt{N}}\cdot n}, & w_E = 1 \\ 0, & w_E = -1 \end{cases}
+\Lambda_E(1) = \begin{cases} \frac{\sqrt{N_E}}{\pi} \sum_{n=1}^{\infty}\frac{a_n}{n} e^{-\frac{2\pi}{\sqrt{N_E}}\cdot n}, & w_E = 1 \\ 0, & w_E = -1 \end{cases}
 \end{equation}
 \item When $m$ has the same parity as $E$, the $m$th derivative of $\Lams$ at the central point is given by
 \begin{equation}\label{eqn:central_derivatives}
-\Lambda_E^{(m)}(1) = 2 \sum_{n=1}^\infty a_n \int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N}}\right)^m e^{-\frac{2\pi n}{\sqrt{N}}\cdot t} \; dx
+\Lambda_E^{(m)}(1) = 2 \sum_{n=1}^\infty a_n \int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N_E}}\right)^m e^{-\frac{2\pi n}{\sqrt{N_E}}\cdot t} \; dx
 \end{equation}
 When $m$ is opposite in parity to $E$, then $\Lambda_E^{(m)}(1) = 0$.
 \end{enumerate}
@@ -294,65 +294,65 @@ When $m$ is opposite in parity to $E$, then $\Lambda_E^{(m)}(1) = 0$.
 \begin{proof}
 Observe we may write equation \ref{eqn:Lams_analytic_continuation}, after a change of variables and swapping integration and summation signs, as
 \begin{equation*}
-\lambda_E(1+s) = N^{\frac{1+s}{2}}  \int_{\frac{1}{\sqrt{N}}}^{\infty} x^s f_E(it) \; dt  = N^{\frac{1+s}{2}}  \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N}}}^{\infty} t^s e^{-2\pi nt} \; dt,
+\lambda_E(1+s) = N_E^{\frac{1+s}{2}}  \int_{\frac{1}{\sqrt{N_E}}}^{\infty} x^s f_E(it) \; dt  = N_E^{\frac{1+s}{2}}  \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N_E}}}^{\infty} t^s e^{-2\pi nt} \; dt,
 \end{equation*}
 where $f_E$ is the cusp form attached to $E$. We may differentiate under the integral sign without issue and then evaluate at $s=1$ to get
 \begin{equation}\label{eqn:lambda_derivs}
-\lambda_E^{(m)}(1) = \sqrt{N}\cdot \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N}}}^{\infty} (\log t)^m e^{-2\pi n t} \; dt
+\lambda_E^{(m)}(1) = \sqrt{N_E}\cdot \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N_E}}}^{\infty} (\log t)^m e^{-2\pi n t} \; dt
 \end{equation}
-Equation \ref{eqn:central_derivatives} follows by substituting $t \mapsto \sqrt{N} \cdot t$. For $m=0$ the integrals may be evaluated directly: $\int_{1}^{\infty} e^{-\frac{2\pi n t}{\sqrt{N}}} \; dt = \frac{\sqrt{N}}{2\pi n} e^{-\frac{2\pi n}{\sqrt{N}}}$.
+Equation \ref{eqn:central_derivatives} follows by substituting $t \mapsto \sqrt{N_E} \cdot t$. For $m=0$ the integrals may be evaluated directly: $\int_{1}^{\infty} e^{-\frac{2\pi n t}{\sqrt{N_E}}} \; dt = \frac{\sqrt{N_E}}{2\pi n} e^{-\frac{2\pi n}{\sqrt{N_E}}}$.
 \end{proof}
 
 
 Equation \ref{eqn:central_derivatives} allows us to establish bounds on the coefficients of the Taylor expansion of $\Lams$ about the central point. For this we will need the following technical lemma:
 \begin{lemma}\label{lem:central_deriv_int_bounds}
-Let $N,n \in \ZZ_{>0}$, and suppose $m$ is a positive integer such that $m < \frac{1}{2}\log N$. Then
+Let $N_E,n \in \ZZ_{>0}$, and suppose $m$ is a positive integer such that $m < \frac{1}{2}\log N_E$. Then
 \begin{equation}
-\left| \int_{\frac{1}{\sqrt{N}}}^{\infty} (\log t)^{m} e^{-2\pi n t} \; dt \right| < \frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi n}\left[ e^{-\frac{2\pi n}{\sqrt{N}}} + \frac{e^{-2\pi n\sqrt{N}}}{2\pi n \sqrt N} \right].
+\left| \int_{\frac{1}{\sqrt{N_E}}}^{\infty} (\log t)^{m} e^{-2\pi n t} \; dt \right| < \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\left[ e^{-\frac{2\pi n}{\sqrt{N_E}}} + \frac{e^{-2\pi n\sqrt{N_E}}}{2\pi n \sqrt N_E} \right].
 \end{equation}
 \end{lemma}
 \begin{proof}
-We split the integral in two, dealing with the intervals $\frac{1}{\sqrt{N}}$ to $\sqrt{N}$ and $\sqrt{N}$ to $\infty$ separately. Now $(\log t)^{m}$ is at most $(\frac{1}{2}\log N)^m$ in magnitude on $[\frac{1}{\sqrt{N}},\sqrt{N}]$, so
+We split the integral in two, dealing with the intervals $\frac{1}{\sqrt{N_E}}$ to $\sqrt{N_E}$ and $\sqrt{N_E}$ to $\infty$ separately. Now $(\log t)^{m}$ is at most $(\frac{1}{2}\log N_E)^m$ in magnitude on $[\frac{1}{\sqrt{N_E}},\sqrt{N_E}]$, so
 \begin{equation*}
-\left| \int_{\frac{1}{\sqrt{N}}}^{\sqrt{N}} (\log t)^{m} e^{-2\pi n t} \; dt \right| < \left(\frac{1}{2} \log N\right)^m \int_{\frac{1}{\sqrt{N}}}^{\sqrt{N}} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi n}\left(e^{-\frac{2\pi n}{\sqrt{N}}} - e^{-2\pi n\sqrt{N}}\right)
+\left| \int_{\frac{1}{\sqrt{N_E}}}^{\sqrt{N_E}} (\log t)^{m} e^{-2\pi n t} \; dt \right| < \left(\frac{1}{2} \log N_E\right)^m \int_{\frac{1}{\sqrt{N_E}}}^{\sqrt{N_E}} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\left(e^{-\frac{2\pi n}{\sqrt{N_E}}} - e^{-2\pi n\sqrt{N_E}}\right)
 \end{equation*}
-For the integral on $[\sqrt{N},\infty)$, we use integration by parts to get
+For the integral on $[\sqrt{N_E},\infty)$, we use integration by parts to get
 \begin{equation*}
-\int_{\sqrt{N}}^{\infty} \left(\log t \right)^{m} e^{-2\pi n t} \; dt = \frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi n}\cdot e^{-2\pi n\sqrt{N}} + \frac{m}{2\pi n} \int_{\sqrt{N}}^{\infty} \frac{\left(\log t \right)^{m-1}}{t} e^{-2\pi n t} \; dt 
+\int_{\sqrt{N_E}}^{\infty} \left(\log t \right)^{m} e^{-2\pi n t} \; dt = \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\cdot e^{-2\pi n\sqrt{N_E}} + \frac{m}{2\pi n} \int_{\sqrt{N_E}}^{\infty} \frac{\left(\log t \right)^{m-1}}{t} e^{-2\pi n t} \; dt 
 \end{equation*}
-If $m < \frac{1}{2}\log N$, then $\frac{\left(\log t \right)^{m-1}}{t}$ is decreasing for $t > \sqrt{N}$, so we have
+If $m < \frac{1}{2}\log N_E$, then $\frac{\left(\log t \right)^{m-1}}{t}$ is decreasing for $t > \sqrt{N_E}$, so we have
 \begin{equation*}
-\frac{m}{2\pi n} \int_{\sqrt{N}}^{\infty} \frac{\left(\log t \right)^{m-1}}{t} e^{-2\pi n t} \; dt < \frac{m\left(\frac{1}{2} \log N\right)^{m-1}}{2\pi n\sqrt{N}} \int_{\sqrt{N}}^{\infty} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N\right)^{m}}{(2\pi n)^2 \sqrt{N}} \cdot e^{-2\pi n \sqrt{N}}.
+\frac{m}{2\pi n} \int_{\sqrt{N_E}}^{\infty} \frac{\left(\log t \right)^{m-1}}{t} e^{-2\pi n t} \; dt < \frac{m\left(\frac{1}{2} \log N_E\right)^{m-1}}{2\pi n\sqrt{N_E}} \int_{\sqrt{N_E}}^{\infty} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{(2\pi n)^2 \sqrt{N_E}} \cdot e^{-2\pi n \sqrt{N_E}}.
 \end{equation*}
 Add up all the values and you get the established result.
 \end{proof}
 
 With the above lemma in hand, we establish an upper bound on the magnitude of the $m$th Taylor coefficient of $\Lams$ at the central point.
 \begin{proposition}\label{prop:central_deriv_bounds}
-Let $E$ have conductor $N$ and completed $L$-function $\Lams$. Then so long as $m<\frac{1}{2}\log N$, the $m$th derivative of $\Lams$ at the central point is bounded explicitly in terms of $N$ and $m$ by
+Let $E$ have conductor $N_E$ and completed $L$-function $\Lams$. Then so long as $m<\frac{1}{2}\log N_E$, the $m$th derivative of $\Lams$ at the central point is bounded explicitly in terms of $N_E$ and $m$ by
 \begin{equation}
-\left| \Lambda_E^{(m)}(1)\right| < \frac{(\frac{1}{2}\log N)^m}{2\pi^2}\left(N + \frac{1}{e^{2\pi\sqrt{N}}-1} \right).
+\left| \Lambda_E^{(m)}(1)\right| < \frac{(\frac{1}{2}\log N_E)^m}{2\pi^2}\left(N_E + \frac{1}{e^{2\pi\sqrt{N_E}}-1} \right).
 \end{equation}
-That is, for fixed $m$ the $m$th Taylor coefficient of $\Lams$ is $O\left( N(\frac{1}{2}\log N)^m\right)$; the second term inside the final parentheses is negligible for $N>>1$.
+That is, for fixed $m$ the $m$th Taylor coefficient of $\Lams$ is $O\left( N_E(\frac{1}{2}\log N_E)^m\right)$; the second term inside the final parentheses is negligible for $N_E>>1$.
 \end{proposition}
 
 \begin{proof}
 From Lemma \ref{lem:central_deriv_int_bounds} and Equation \ref{eqn:lambda_derivs} we have that
 \begin{equation*}
-\left| \Lambda_E^{(m)}(1)\right| < 2 \sqrt{N} \sum_{n=1}^{\infty} |a_n| \cdot \left[\frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi n}\left( e^{-\frac{2\pi n}{\sqrt{N}}} + \frac{e^{-2\pi n\sqrt{N}}}{2\pi n \sqrt N} \right)\right]
+\left| \Lambda_E^{(m)}(1)\right| < 2 \sqrt{N_E} \sum_{n=1}^{\infty} |a_n| \cdot \left[\frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\left( e^{-\frac{2\pi n}{\sqrt{N_E}}} + \frac{e^{-2\pi n\sqrt{N_E}}}{2\pi n \sqrt N_E} \right)\right]
 \end{equation*}
 Using the bound $|a_n(E)| \le n$ for any $E$, we get
 \begin{equation*}
-\left| \Lambda_E^{(m)}(1)\right| < \frac{ \sqrt{N}\left(\frac{1}{2} \log N\right)^{m}}{\pi} \sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N}}} + \frac{\left(\frac{1}{2} \log N\right)^{m}}{2\pi^2} \sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N}}}{n}
+\left| \Lambda_E^{(m)}(1)\right| < \frac{ \sqrt{N_E}\left(\frac{1}{2} \log N_E\right)^{m}}{\pi} \sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N_E}}} + \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi^2} \sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N_E}}}{n}
 \end{equation*}
 Now
 \begin{equation*}
-\sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N}}} = \frac{1}{e^{\frac{2\pi n}{\sqrt{N}}}-1}< \frac{\sqrt{N}}{2\pi},
+\sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N_E}}} = \frac{1}{e^{\frac{2\pi n}{\sqrt{N_E}}}-1}< \frac{\sqrt{N_E}}{2\pi},
 \end{equation*}
-while $\sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N}}}{n} \le \sum_{n=1}^{\infty} e^{-2\pi n\sqrt{N}} = \frac{1}{e^{2\pi\sqrt{N}}-1}$.
+while $\sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N_E}}}{n} \le \sum_{n=1}^{\infty} e^{-2\pi n\sqrt{N_E}} = \frac{1}{e^{2\pi\sqrt{N_E}}-1}$.
 \end{proof}
 
-Note that for fixed $N$, if we allow $m \to \infty$, we actually have that the $m$th derivative can grow like $O\left(\frac{m!!}{(2\pi e)^{m/2}}\right)$, where $m!! = m(m-2)\cdots$ is the double factorial on $m$ i.e. faster than exponentially in $m$. However, this behavior only starts to show when $m>>\log N$ -- hence our restriction on the magnitude of $m$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N$ (c.f. Corollary \ref{cor:logderiv_rank_bound}), we will never need to consider $\Lambda_E^{(m)}(1)$ for $m> \frac{1}{2}\log N$. \\
+Note that for fixed $N_E$, if we allow $m \to \infty$, we actually have that the $m$th derivative can grow like $O\left(\frac{m!!}{(2\pi e)^{m/2}}\right)$, where $m!! = m(m-2)\cdots$ is the double factorial on $m$ i.e. faster than exponentially in $m$. However, this behavior only starts to show when $m>>\log N_E$ -- hence our restriction on the magnitude of $m$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N_E$ (c.f. Corollary \ref{cor:logderiv_rank_bound}), we will never need to consider $\Lambda_E^{(m)}(1)$ for $m> \frac{1}{2}\log N_E$. \\
 
 
 Crucial to this thesis, $L_E(s)$ and its derivatives can be provably computed to a given precision in time polynomial in the the conductor of $E$:
@@ -362,7 +362,7 @@ When $m<\frac{1}{2} \log N_E$, the $m$th derivative of $L_E(s)$ at the central p
 This is proven in full in the PhD thesis of Robert Bradshaw \cite{Bra-2010}. The basic argument is as follows:
 \begin{itemize}
 \item Since the two differ by an exponential and a Gamma factor, computing $L_E^{(m)}(1)$ takes the same order of magnitude time as computing $\Lambda_E^{(m)}(1)$. This may be achieved, for example, by the formula given in Equation \ref{eqn:central_derivatives};
-\item The integral $\int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N}}\right)^m e^{-\frac{2\pi n}{\sqrt{N}}\cdot t} \; dx$ can be computed to $k$ bits precision in time that scales proportional to $k$, is independant of $n$ and subpolynomial in $N_E$;
+\item The integral $\int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N_E}}\right)^m e^{-\frac{2\pi n}{\sqrt{N_E}}\cdot t} \; dx$ can be computed to $k$ bits precision in time that scales proportional to $k$, is independant of $n$ and subpolynomial in $N_E$;
 \item The number of terms needed in the sum to achieve $k$ bits precision is $O\left( \log(N_E)^m\sqrt{N_E}\right)$;
 \item Computing $a_n$ can be done in time polynomial in $\log n$;
 \item Combining the above, computation time is dominated by evaluating $O( \log(N_E)^m\sqrt{N_E})$ integrals and $a_n$ values. That is, the sum can be evaluated to $k$ bits precision in time scaling with $k \sqrt{N_E}$ times some power of $\log N_E$.

@@ -376,11 +376,11 @@ For curves of conductor $\le 350000$, we consulted Cremona's tables and verified
 \hat{h}(P) >= 6\times10^{-11} \cdot \log |D_E| \ge 6\times10^{-11} \cdot \log(350000) = 7.6594 \times 10^{-10}
 \end{equation}
 
-Let $r$ be the algebraic rank of $E$. Since $\Reg_E$ is the volume of the co-lattice of point heights in $\RR^r$, we must have that
+Let $r_E$ be the algebraic rank of $E$. Since $\Reg_E$ is the volume of the co-lattice of point heights in $\RR^{r_E}$, we must have that
 \begin{equation*}
-\Reg_E \ge \left(\min \set{ \hat{h}(P), \; P \in E(\QQ)}\right)^r \ge  K^r,
+\Reg_E \ge \left(\min \set{ \hat{h}(P), \; P \in E(\QQ)}\right)^{r_E} \ge  K^{r_E},
 \end{equation*}
-where $K = 7.6594 \times 10^{-10}$. By BSD, $r = r_{an}$ so . Thus by Corollary \ref{cor:logderiv_rank_bound} we have
+where $K = 7.6594 \times 10^{-10}$. By BSD, the algebraic and analytic rank are equal so by Corollary \ref{cor:logderiv_rank_bound} we have
 \begin{align*}
 \Reg_E &\ge K^{\frac{1}{2} \log N_E + 1.6} \\
 &= K^{1.6} \cdot (N_E)^{\frac{1}{2} \log K} \\

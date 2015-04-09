@@ -10,26 +10,26 @@ The relevant measure of arithmetic complexity is the conductor $N_E$; below we p
 
 Specifically, we establish the following result:
 \begin{theorem}\label{thm:main_theorem}
-Let $E/\QQ$ have conductor $N_E$. Contingent on BSD and ABC, there exists an algorithm to compute the algebraic rank $r$ of $E$ in $\softO\left(\sqrt{N_E}\right)$ time and $\softO(1)$ space. That is, for any $\epsilon>0$ the algorithm is guaranteed to terminate with a correct output in $O\left((N_E)^{\frac{1}{2}+\epsilon}\right)$ time, using only $O\left((N_E)^{\epsilon}\right)$ space.
+Let $E/\QQ$ have conductor $N_E$. Contingent on BSD and ABC, there exists an algorithm to compute the algebraic rank $r_E$ of $E$ in $\softO\left(\sqrt{N_E}\right)$ time and $\softO(1)$ space. That is, for any $\epsilon>0$ the algorithm is guaranteed to terminate with a correct output in $O\left((N_E)^{\frac{1}{2}+\epsilon}\right)$ time, using only $O\left((N_E)^{\epsilon}\right)$ space.
 \end{theorem}
 The algorithm in question is as follows:
 \begin{algorithm}{Compute the rank of an elliptic curve}\label{algo:compute_rank}
 Given a rational elliptic curve $E$ represented by a global minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$ with known conductor $N_E$:
 \begin{steps}
 \item Compute the real period $\Omega_E$ of $E$.
-\item Set $k = 4 + 10.5 \log_2 N_E - \log_2 \Omega_E$, and set $r=0$.
-\item Evaluate $\frac{L_E^{(r)}(1)}{r!}$, the $r$th Taylor coefficient of the $L$-function of $E$ at the central point, to $k$ bits precision. If all $k$ bits are zero, increment $r$ by 1 and repeat this step.
-\item Output $r$ and halt.
+\item Set $k = 65 + 10.5 \log_2 N_E - \log_2 \Omega_E$, and set $m=0$.
+\item Evaluate $\frac{L_E^{(m)}(1)}{m!}$, the $m$th Taylor coefficient of the $L$-function of $E$ at the central point, to $k$ bits precision. If all $k$ bits are zero, increment $m$ by 1 and repeat this step.
+\item Output $r_E=m$ and halt.
 \end{steps}
 \end{algorithm}
 
 Furthermore, if one also assumes GRH, step 2. can be replaced with:
 \begin{enumerate}
-\item[2.] Set $k = 4 + 10.5 \log_2 N_E - \log_2 \Omega_E$, and set $r=0$.
+\item[2.] Set $k = 31 + 6.7 \log_2 N_E - \log_2 \Omega_E$, and set $r=0$.
 \end{enumerate}
 This will reduce the runtime of Algorithm \ref{algo:compute_rank} by a constant factor. \\
 
-This algorithm is not new -- it is just a refinement on bounding the analytic rank of a curve with an explicitly chosen precision. What {\it is} new is the body of results in this dissertation proving that, assuming BSD and ABC (and optionally GRH), if the $n$th derivative of the $L$-series attached to $E$ is zero to $k$ bits precision, then it {\it is} identically zero. This allows us to convert an algorithm that a priori only provides upper bounds on analytic rank, to one that computes rank exactly. Furthermore, we show that the algorithm is guaranteed to terminate in time polynomial in the curve's conductor. \\
+This algorithm is not new -- it is just a refinement on bounding the analytic rank of a curve with an explicitly chosen precision. What {\it is} new is the body of results in this dissertation proving that, assuming BSD and ABC (and optionally GRH), if the $m$th derivative of the $L$-series attached to $E$ is zero to $k$ bits precision, then it {\it is} identically zero. This allows us to convert an algorithm that a priori only provides upper bounds on analytic rank, to one that computes rank exactly. Furthermore, we show that the algorithm is guaranteed to terminate in time polynomial in the curve's conductor. \\
 
 Moreover, Algorithm \ref{algo:compute_rank} is in a sense optimal among analytic rank computation methods: since evaluating $\Les$ takes $\tilde{O}(\sqrt{N_E})$ time, we cannot hope to get the rank out in time faster than this. [Of course other rank computation methods do exist, but they don't involve working with $\Les$ directly.] The proof of Theorem \ref{thm:main_theorem} can be found in section \ref{sec:main_thrm_proof}, but will require results established in preceding and following sections. \\
 
