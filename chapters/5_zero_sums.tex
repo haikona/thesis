@@ -460,7 +460,9 @@ Since the number of terms in the $c_n$ sum in Equation \ref{eqn:sincsquared_sum}
 
 It is worth noting explicitly that the accuracy of the sinc$^2$ sum rank estimate is sensitive to low-lying zeros. Thus if it known a priori that the $L$-function of a particular curve does not have any low-lying zeros, a smaller value of $\Delta$ can be used. This fact is exploited in \cite{Bob-2011}, where Bober uses the method on curves of very large rank. There is a well-known phenomenon of zero repulsion in $L$-functions -- zeros tend not to fall as close to each other as could be expected if they were distributed purely randomly on the critical line -- and as such curves with large rank tend to have lowest zeros significantly higher up in the upper half plane than would be expected otherwise. \\
 
-This, for example, allowed Bober to use a $\Delta$ value of only $3.2$ to show that a curve with 28 independent points had analytic rank at most 30. The conductor of the curve in question is roughly $3.4\times 10^{141}$, so using the scaling $\Delta(E) = \frac{1}{\pi}\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)$ would require a $\Delta$ value of about $51.1$.
+This, for example, allowed Bober to use a $\Delta$ value of only $3.2$ to show that a curve with 28 independent points had analytic rank at most 30. The conductor of the curve in question is roughly $3.4\times 10^{141}$, so using the scaling $\Delta(E) = \frac{1}{\pi}\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)$ would require a $\Delta$ value of about $51.1$. \\
+
+A related question we can of course ask is: how large does $\Delta$ have to be for the $\sinc^2$ sum rank bound to have perfect fidelity, i.e. guaranteed to be less than $1$ more than the rank of $E$? We will answer this question at the end of section \ref{sec:bite}, though in a way that requires knowledge of an extra invariant attached to $E$, namely the bite $\beta_E$.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -657,7 +659,7 @@ The result follows.
 
 Conjecture \ref{conj:trig_sum_size} and lemma \ref{lem:arctan_sum_size} combine to give us a precise asymptotic statement on the distribution of zeros up to $t$, in the same vein as von Mangoldt's asymptotic formula for the number of zeros up to $t$ for $\zeta$:
 
-\begin{theorem}[S.]\label{thm:zero_density}
+\begin{theorem}\label{thm:zero_density}
 Let $E$ have conductor $N_E$. Then for $t>>0$ we have
 \begin{equation}\label{eqn:zero_density}
 M_E(t) = \frac{t}{\pi} \, \log\left(\frac{t\sqrt{N_E}}{2\pi e}\right) + \frac{1}{4} + O(\log t),
@@ -683,7 +685,7 @@ where again the error term contributes no net bias.
 That is, zero density on the critical line grows like $\frac{1}{2}\log N_E + \log t$, where $N_E$ is the conductor of $E$ and $t$ the distance from the real axis. \\
 
 Neglecting the oscilating error term in Equation \ref{eqn:zero_density}, we may solve for $t$ in terms of the Lambert $W$-function to obtain an explicit formula for the expected value of the imaginary part of the $n$th zero on the critical line. Recall the definition of the Lambert $W$-function: if $y = x e^x$, then $x = W(y)$. $W$ is a multiple-valued function; we make use of the principle branch $W_0$ below:
-\begin{corollary}
+\begin{corollary}\label{cor:gamma_n_approx_value}
 Let $\gamma_n := \gamma_n(E)$ be the imaginary value of the $n$th nontrivial (and noncentral) zero in the upper half plane of $\Les$ with analytic rank $r_E$. Then
 \begin{equation}\label{approx:gamma_n}
 \gamma_n \sim \frac{2\pi e}{\sqrt{N_E}} \cdot \exp \left(W_0\left[\left(\frac{r_E}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N_E}}{2 e}\right]\right)
@@ -844,9 +846,9 @@ Differentiating $r_E+2$ times and evaluating at $s=0$ achieves the desired resul
 
 It is worth noting explicitly that one cannot hope to be able to compute the bite of a curve without knowing its analytic rank -- we have to know how many zeros are precisely at the central point and not just $\epsilon$ away from the central point, otherwise $\beta_E$ could be arbitrarily large. This obstruction notwithstanding, Proposition \ref{prop:bite_times_leading_coeff} gives us a straightforward way to compute the bite of $E$ from the $r_E$th and $(r_E+2)$th Taylor coefficients of $L_E(1+s)$:
 \begin{corollary}
-\begin{align}
-\beta_E \quad &= \frac{1}{(r_E+1)(r_E+2)} \cdot \frac{\Lambda_E^{(r_E+2)}(1)}{\Lambda_E^{(r_E)}(1)} \\
-&= \frac{2}{(r_E+1)(r_E+2)} \cdot \frac{L_E^{(r_E+2)}(1)}{L_E^{(r_E)}(1)} - \left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)^2 + \frac{\pi^2}{6}
+\begin{align}\
+\beta_E \quad &= \frac{1}{(r_E+1)(r_E+2)} \cdot \frac{\Lambda_E^{(r_E+2)}(1)}{\Lambda_E^{(r_E)}(1)} \label{eqn:bite_via_Lams} \\
+&= \frac{2}{(r_E+1)(r_E+2)} \cdot \frac{L_E^{(r_E+2)}(1)}{L_E^{(r_E)}(1)} - \left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)^2 + \frac{\pi^2}{6} \label{eqn:bite_via_L_E}
 \end{align}
 \end{corollary}
 \begin{proof}
@@ -861,4 +863,25 @@ We can therefore compute the bite of a curve {\it without} having to compute the
     \label{fig:bites_vs_conductors_array}
 \end{figure}
 
-%%%%% INCLUDE PICTURES OF BITE VS. CONDUCTOR AND LEADING COEFF HERE %%%%%
+We finish off this section with a result giving an indication of one other area in which the bite of a curve comes into play: controlling convergence rates in explicit formula type sums. This is a topic worthy of its own paper, so we shall just present a single example relevant to the work in this thesis.
+
+\begin{theorem}
+Let $\sum_{\gamma} \sinc^2(\Delta \gamma)$ be the $\sinc^2$ sum for $E$ with parameter $\Delta$, as detailed in Equation \ref{eqn:sincsquared_sum}. If we let $\Delta = \frac{1}{\pi}\cdot \sqrt{\frac{\beta_E}{n}}$, then the sum will evaluate to a value less than than $r_E+n$, where $r_E$ is the analytic rank of $E$.
+\end{theorem}
+\begin{corollary}\label{cor:sinc_squared_sum_with_bite}
+The analytic rank of $E$ is the largest integer less than
+\begin{equation}\label{eqn:sinc_squared_sum_with_bite}
+\frac{1}{\sqrt{\beta_E}}\left[\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)+ \frac{1}{2 \sqrt{\beta_E}}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\sqrt{\beta_E}}\right)\right) + \sum_{\log n<2\sqrt{\beta_E}} c_n \cdot \left(1-\frac{\log n}{2\sqrt{\beta_E}}\right)\right]
+\end{equation}
+\end{corollary}
+\begin{proof}
+We note that 
+\begin{equation}
+\sum_{\gamma} \sinc^2(\Delta \gamma) = r_E + \sum_{\gamma\ne 0} \sinc^2(\Delta \gamma) <  r_E + \sum_{\gamma\ne 0} \frac{1}{(\pi \Delta \gamma)^2} = r_E + \frac{1}{\pi^2 \Delta^2} \cdot \beta_E
+\end{equation}
+So choosing $\Delta = \frac{1}{\pi}\cdot \sqrt{\frac{\beta_E}{n}}$ bounds the sum value from above by $r_E + n$. The corollary follows immediately from Equation \ref{eqn:sincsquared_sum} the case with $n=1$.
+\end{proof}
+
+This formula comes with one giant caveat that renders it of little use practically -- it requires knowing the bite of a curve, which of course in itself requires knowing the curve's analytic rank a priori. Nevertheless, the above serves to underscore that determining the bite and determining the analytic rank of a curve are computationally equivalent: we can compute the bite knowing the rank via Equations \ref{eqn:bite_via_Lams} or \ref{eqn:bite_via_L_E}, and we can compute the rank knowing the bite via Formula \ref{eqn:sinc_squared_sum_with_bite}. \\
+
+
