@@ -154,8 +154,9 @@ $\Lambda_E(1+s)$ has no zeros outside the critical strip $|\Re(s)| \le \frac{1}{
 This may be proven via either set of inequalities in the above proposition; we will use the latter. Recall that if $f$ is meromorphic on $\CC$, then $\frac{f\pr}{f}$ has a pole at $s=s_0$ iff $f$ has a zero or pole at $s_0$; moreover poles of $\frac{f\pr}{f}$ are simple and have residue equal to the multiplicity of the corresponding zero/pole of $f$. But by the above $\ldLe{1+s}$ converges absolutely for $\Re(s)>\frac{1}{2}$, so $\ldLam{1+s}$ is well-defined and bounded for $\Re(s)>\frac{1}{2}$, and hence cannot have any poles in this region. By symmetry the same is true for $\Re(s)<-\frac{1}{2}$. Hence $\Lambda_E(1+s)$ cannot have any zeros for $|\Re(s)| > \frac{1}{2}$.
 \end{proof}
 
-$\Lambda_E(1+s)$ has a particularly simple representation as a product over its zeros, from which we get a representation of $\ldLam{1+s}$ as a sum over its zeros.
-\begin{proposition}\label{prop:logderiv_zero_rep}  Assuming GRH, we have
+If one assumes GRH, $\Lambda_E(1+s)$ has a particularly simple representation as a product over its zeros, from which we get a representation of $\ldLam{1+s}$ as a sum over its zeros.
+\begin{proposition}[GRH]
+\label{prop:logderiv_zero_rep} We have
 \begin{enumerate}
 \item \begin{equation}\label{eqn:Lams_prod}
 \Lambda_E(1+s) = C_E\cdot s^{r_E} \cdot \prod_{\gamma > 0} \left(1+\frac{s^2}{\gamma^2}\right) 
@@ -168,7 +169,7 @@ where the sum is taken over the imaginary parts of {\bf all} nontrivial zeros of
 \end{enumerate}
 \end{proposition}
 
-Note that contingent on GRH, $\gamma^2$ is always a nonnegative real number in any of the above expansions. Furthermore,  since noncentral nontrivial zeros occur in conjugate pairs, each term for $\gamma \ne 0$ in Equation \ref{eqn:ldLam_sum} appears exactly twice. It is therefore sometimes useful to rewrite it as
+Note that by GRH, $\gamma^2$ is always a nonnegative real number in any of the above expansions. Furthermore,  since noncentral nontrivial zeros occur in conjugate pairs, each term for $\gamma \ne 0$ in Equation \ref{eqn:ldLam_sum} appears exactly twice. It is therefore sometimes useful to rewrite it as
 \begin{equation}\label{eqn:ldLam_sum_v2}
 \ldLam{1+s} = \frac{r_E}{s} + 2 \sum_{\gamma>0} \frac{s}{s^2+\gamma^2},
 \end{equation}
@@ -187,6 +188,7 @@ where $C_E$ is the leading nonzero coefficient of the Taylor series for $\Lambda
 \begin{corollary}
 $\ldLam{1+s}$ is an odd function.
 \end{corollary}
+Note this result holds independent of GRH. \\
 
 Lemma \ref{lem:ldLe_bound} and Equation \ref{eqn:ldLam_sum} may be used to provide a crude bound on the analytic rank of $E$ with respect to its conductor:
 \begin{corollary}\label{cor:logderiv_rank_bound}
@@ -213,10 +215,10 @@ If one does not assume GRH, then we must use a less simplified representation fo
 \end{equation}
 where $\rho$ ranges over the nontrivial zeros of $L_E(1+s)$. However, everything else proceeds as before, and the point estimate given in Equation \ref{eqn:r_an_point_estimate} still holds.
 \end{proof}
-We will later use a related technique to show firstly that the constant of $1.6$ can be replaced with $-0.4$ at the expense of having to assume GRH. Better yet, we will in fact show that maximum analytic rank grows more slowly than $\epsilon \log N_E$ for any $\epsilon>0$. \\
+We will later use a related technique to show firstly that the the factor in front of $\log N_E$ can be made arbitrarily small, at the expense of having to assume GRH and having to increase the added constant. \\
 
 The following corollary of Proposition \ref{prop:logderiv_zero_rep} will be of import in obtaining explicit bounds on the number of zeros of $L_E(s)$ in a given interval on the critical strip:
-\begin{corollary}\label{cor:Re_logderiv}
+\begin{corollary}\label{cor:Re_logderiv}[GRH]
 Let $\Re(s) > 0$, and write $s = \sigma + i\tau$, i.e. $\sigma > 0$. Then
 \begin{equation}
 \sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} = \Re\left(\ldLam{1+s}\right),
@@ -238,76 +240,12 @@ However, absolute convergence for $\sum_{\gamma} \frac{s}{s^2+\gamma^2}$ for any
 \end{proof}
 Observe that GRH implies that $\Re(\ldLam{1+s})>0$ for $\Re(s)>0$, since then each of the terms in the above sum are strictly positive. By oddness of $\ldLam{1+s}$ we also then have that $\Re(\ldLam{1+s})<0$ for all $\Re(s)<0$, and $\Re(\ldLam{1+s})=0 \Rightarrow \Re(s)=0$. \\
 
-Mazur and Stein in \cite{MaSt-2013} define the {\it bite} of an elliptic curve $L$-function:
-\begin{definition}\label{defn:bite}
-The {\it bite} of $\Les$ is
-\begin{equation}
-\beta(E) := \sum_{\gamma \ne 0} \gamma^{-2},
-\end{equation}
-where the sum runs over the imaginary parts of all {\it noncentral} nontrivial zeros of $\Les$.
-\end{definition}
-This quantity ends up controlling the rate of convergence in many of the sums that appear in explicit formula-type relations for $\Les$. Again, the explicit dependence on $E$ may be left as understood if the choice of $E$ is unambiguous, or we may subsume the dependance on $E$ into a subscript and write $\beta_E$. \\
-
-Since sums of inverse higher powers of zeros also crop up, we generalize the notion of bite as follows:
-\begin{definition}
-For positive integer $n$, the {\it higher order bite} of order $n$ for $\Les$ is
-\begin{equation}
-\beta_n(E) := \sum_{\gamma \ne 0} \gamma^{-n}.
-\end{equation}
-\end{definition}
-Thus $\beta_2(E) = \beta_E$ as defined previously. Note also that $\beta_n = 0$ for any odd $n$, since zeros come in conjugate pairs. \\
-
-Equation \ref{eqn:ldLam_sum} gives us a description of the Laurent expansion of $\ldLam{1+s}$ about zero:
-\begin{corollary}\label{cor:ldLam_series_at_zero}
-The Laurent expansion of $\ldLam{1+s}$ about zero is given by
-\begin{align}
-\ldLam{1+s} &= \frac{r_E}{s} + \beta_2\cdot s - \beta_4\cdot s^3 + \beta_6\cdot  s^5 - \ldots \\
-& = \frac{r_E}{s} + \sum_{k=1}^{\infty} (-1)^{k-1}\beta_{2k}\cdot s^{2k-1}
-\end{align}
-and this converges for $|s|<\gamma_0$, where $\gamma_0$ is the imaginary part of the lowest noncentral nontrivial zero of $\Les$ in the upper half plane.
-\end{corollary}
-The proof of this follows immediately by expanding the sum in Equation \ref{eqn:ldLam_sum} and collecting terms. \\
-
-\begin{corollary}\label{cor:ldLe_expansion}
-Let $E/\QQ$ have conductor $N_E$, $L$-function $\Les$ with bite $\beta_E = \beta_2(E)$ and central leading coefficient $C_E\pr$. Let the Taylor series expansion of $L_E$ about the central point be
-\begin{equation}
-L_E(1+s) = C_E\pr \, s^{r_E}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]
-\end{equation}
-Then 
-\begin{align}
-a &= -\left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right] \\
-2b &= \left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right]^2 - \frac{\pi^2}{6} + \beta_E,
-\end{align}
-where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$.
-\end{corollary}
-
-\begin{proof}
-We note that the digamma function has the following Taylor expansion about $s=1$:
-\begin{equation}
-\digamma(1+s) = -\eta - \sum_{k=1}^{\infty} (-1)^k \zeta(k+1) s^k,
-\end{equation}
-where $\eta$ is the Euler-Mascheroni constant, and $\zeta(s)$ is the Riemann zeta function. \\
-Thus by equation \ref{eqn:logderiv_relation} and Corollary \ref{cor:ldLam_series_at_zero} we have that
-\begin{equation*}
-\ldLe{1+s} = \frac{r_E}{s} - \left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right] + \left[-\zeta(2) + \sum_{\gamma\ne0} \gamma^{-2}\right]\cdot s + O(s^2)
-\end{equation*}
-But if $L_E(1+s) = C_E\pr \, s^{r_E}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]$, then careful logarithmic differentiation yields
-\begin{equation*}
-\ldLe{1+s} = \frac{r_E}{s} + a + \left(-a^2 + 2b\right)\cdot s + O(s^2)
-\end{equation*}
-Comparing terms and solving for the relevant quantities produces the desired formulae.
-\end{proof}
-We may continue in the same vein to produce formulae for higher order coefficients of $L_E(s)$. As can be seen from above, these can in general be written in terms of sums of powers of $\left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right]$, inverse sums of even powers of the nontrivial zeros, and $\zeta(n)$ for $n$ a positive integer. \\
-
-The above suggests that the Taylor expansion about $s=1$ of the $L$-series attached to $E$ essentially contains no new information about the curve's attached invariants beyond that which can be found in the first nonzero coefficient - unless that information is somehow encoded in the bites $\beta_{2n}(E)$ for $n \in \NN$. Whether this is the case or not, however, is an open question.
-
-
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Explicit Formula for Elliptic Curves}
 
 Combining equations \ref{eqn:logderiv_relation}, \ref{eqn:digamma_sum} and \ref{eqn:ldLam_sum} we get the following equality:
-\begin{proposition}
+\begin{proposition}[GRH]
 Let $E/\QQ$ have conductor $N_E$. Let $\gamma$ range over all nontrivial zeros of $\Les$ with multiplicity, let $\eta$ be the Euler-Mascheroni constant, and let the $c_n = c_n(E)$ be as given by definitions \ref{def:bn} and \ref{def:cn}. Then
 \begin{equation}\label{eqn:exp_form_1}
 \sum_{\gamma} \frac{s}{s^2 + \gamma^2} = \left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right] + \sum_{k=1}^{\infty} \frac{s}{k(s+k)} + \sum_{n=1}^{\infty} c_n n^{-s}
@@ -315,8 +253,9 @@ Let $E/\QQ$ have conductor $N_E$. Let $\gamma$ range over all nontrivial zeros o
 \end{proposition}
 This is the prototypical {\it explicit formula} for elliptic curves: an equation relating a sum over the nontrivial zeros of $\Les$ to a sum over the logarithmic derivative coefficients of $\Les$, plus some easily smooth part that only depends on the curve's conductor. \\
 
-In general, the phrase ``explicit formula" is not applied to a specific equation, but rather to a suite of formula that resemble the above in some way. We reproduce lemma 2.1 from \cite{Bob-2011}, which is a more general version of the explicit formula, akin to the Weil formulation of the Riemann-von Mangoldt explicit formula for $\zeta(s)$.
-\begin{lemma}\label{lem:exp_form_2}
+In general, the phrase ``explicit formula" is not applied to a specific equation, but rather to a suite of equalities that resemble the above in some way. We reproduce lemma 2.1 from \cite{Bob-2011}, which is a more general version of the explicit formula, akin to the Weil formulation of the Riemann-von Mangoldt explicit formula for $\zeta(s)$.
+\begin{lemma}[GRH]
+\label{lem:exp_form_2}
 Suppose that $f(z)$ is an entire function s.t. there exists a $\delta>0$ such that $f(x+iy) = O(x^{-(1+\delta)})$ for $|y|<1+\epsilon$ for some $\epsilon>0$. Suppose that the Fourier transform of $f$
 \begin{equation}
 \hat{f}(y) = \int_{-\infty}^{\infty} e^{-i x y}f(x)\; dx
@@ -329,7 +268,7 @@ exists and is such that $\sum_{n=1}^{\infty} c_n \hat{f}\left(\log n\right)$ con
 A proof can be found in \cite[Theorem 5.12]{IwKo-2004}. Note that Equation \ref{eqn:exp_form_1} can be recovered by setting $f$ to be the Poisson kernel $f_s(x) = \frac{s}{s^2+x^2}$; then $\hat{f_s}(y) = e^{-s|y|}$, so $\hat{f_s}(\log n) = n^{-s}$. \\
 
 We give a distribution-theoretic reformulation of Lemma \ref{lem:exp_form_2}. While the subject of explicit formulae for $L$-functions of Hecke eigenforms is treated by a number of sources, the following doesn't seem to have been explicitly written down in the literature anywhere:
-\begin{proposition}[S.]
+\begin{proposition}[GRH]\label{prop:exp_form_as_distribution}
 Let $\gamma$ range over the imaginary parts of the zeros of $\Les$ with multiplicity. Let $\varphi_E = \sum_{\gamma} \delta(x-\gamma)$ be the complex-valued distribution on $\RR$ corresponding to summation over the zeros of $L_E(s)$, where $\delta(x)$ is the usual Dirac delta function. That is, for any test function $f: \RR \mapsto \CC$ such that $\sum_{\gamma}f(\gamma)$ converges, 
 \begin{equation}
 \langle f,\varphi_E \rangle = \int_{-\infty}^{\infty} f(x)\left(\sum_{\gamma\in S_E} \delta(x-\gamma)\right) \, dx = \sum_{\gamma\in S_E} f(\gamma).
@@ -348,7 +287,7 @@ In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\varphi_E \
 The Explicit Formula may be used to provide computationally effective upper bounds on the analytic rank of an elliptic curve. The method appears to have first been formulated by Mestre in \cite{Me-1986}, and used by Brumer in \cite{Bru-1992} to prove that, conditional on GRH, the average rank of elliptic curves was at most 2.3. This upper bound was improved to 2 by Heath-Brown in \cite{HeBr-2004}. \\
 
 The method stems from invoking the explicit formula as stated in Lemma \ref{lem:exp_form_2} on a function $f$ of a specific form:
-\begin{lemma}\label{lem:exp_form_nonneg_f_cpt_suppt}
+\begin{lemma}[GRH]\label{lem:exp_form_nonneg_f_cpt_suppt}
 Let $\gamma$ range over the nontrivial zeros of $L_E(s)$. Let $f$ be a non-negative even real-valued function on $\RR$ such that $f(0)=1$. Suppose further that the Fourier transform $\hat{f}$ of $f$ has compact support, i.e. $\hat{f}(y) = 0$ for $|y|>R$ for some $R>0$. Then for any $\Delta>0$, we have
 \begin{equation}
 \sum_{\gamma} f(\Delta \gamma) = \frac{1}{\Delta \pi}\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt  + \frac{1}{\Delta \pi}\sum_{n<e^{\Delta R}} c_n \hat{f}\left(\frac{\log n}{\Delta}\right)
@@ -375,7 +314,7 @@ Moreover, if $f(x) = \sinc^2(x)$, the integral $\Re\int_{-\infty}^{\infty} \diga
 where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$ and $\Li_2(x)$ is the dilogarithm function, defined as $\Li_2(x) = \sum_{k=1}^{\infty} \frac{x^k}{k^2}$ for $|x|\le 1$.
 
 Combining the above, we get a specialization of Lemma \ref{lem:exp_form_nonneg_f_cpt_suppt}:
-\begin{corollary}
+\begin{corollary}[GRH]
 Let $\gamma$ range over the nontrivial zeros of $L_E(s)$, and let $\Delta > 0$. Then
 \begin{align}\label{eqn:sincsquared_sum}
 \sum_{\gamma} \sinc^2(\Delta \gamma) = \quad &\frac{1}{\Delta \pi}\left[\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)+ \frac{1}{2\pi \Delta}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)  \right. \nonumber \\
@@ -396,7 +335,7 @@ The $\sinc^2$ zero sum rank estimation method has been implemented in Sage (see 
 
 A neat conclusion that can immediately be drawn from the finiteness of the $\sinc^2$ explicit formula sum, is that maximum analytic rank grows more slowly than $\log N_E$:
 
-\begin{corollary}\label{cor:rank_slower_than_log_N}
+\begin{corollary}[GRH]\label{cor:rank_slower_than_log_N}
 For any $\epsilon >0$ there is a constant $K_{\epsilon}>0$ such that for any $E/\QQ$ with conductor $N_E$, we have
 \begin{equation}
 r_E < \epsilon \log N_E + K_{\epsilon}
@@ -409,7 +348,7 @@ We note that for any given $\Delta>0$, the sum $ \sum_{n<e^{2\pi \Delta}} c_n \c
 [Aside: This statement is already known in the literature, so nothing new has been proven here. In fact, it's conjectured that maximum analytic rank grows more like $\sqrt{\log N_E}$ (existing numerical evidence would seem to support this), but this is still very much an open problem.] \\
 
 The above allows us to provide bounds on analytic rank via point estimates by choosing particular values of $\epsilon$. For example, if we choose $\epsilon = \frac{1}{\log 23} \sim 0.3189\ldots$ and collect and bound all the conductor-independent terms in equation \ref{eqn:sincsquared_sum}, we can improve the result in Corollary \ref{cor:logderiv_rank_bound} to the following:
-\begin{corollary}\label{cor:better_an_bound}
+\begin{corollary}[GRH]\label{cor:better_an_bound}
 Let $E$ have analytic rank $r_E$ and conductor $N_E$. Then
 \begin{equation}
 r_E < 0.32 \log N_E + 0.5
@@ -418,7 +357,7 @@ r_E < 0.32 \log N_E + 0.5
 We leave the details of the proof to the reader as a fun analysis exercise.\\
 
 Finally, it's worth noting is that when $\Delta \le \frac{\log 2}{2\pi}$, the $c_n$ sum in Equation \ref{eqn:sincsquared_sum} is empty. Thus we have the following:
-\begin{corollary}
+\begin{corollary}[GRH]
 Let $E/\QQ$ have conductor $N_E$. Let $\eta$ be the Euler-Mascheroni constant $=0.5772\ldots$, and let $\gamma$ range over the nontrivial zeros of $\L_E(s)$. Then
 \begin{equation}
 \sum_{\gamma} \sinc^2\left(\frac{\log 2}{2\pi} \cdot \gamma \right) = \frac{\log N_E}{\log 2} + K,
@@ -490,7 +429,8 @@ Note that $M_E(0) = \frac{r_E}{2}$, and the function jumps by 1 across the locat
 %Equation \ref{eqn:zero_density} gives us an accurate-up-to-$O(\log t)$ estimate for the number of zeros of $\Les$ on the critical line with imaginary part at most $t$ in magnitude. However, it is also useful to have explicit bounds on the number of zeros in a given interval on the critical line. The results in this section are therefore of course contingent on GRH. \\
 
 We may obtain bounds on $M_E(t)$ via the shifted completed logarithmic derivative $\ldLam{1+s}$. Our workhorse theorem places tight constraints on the sum $\sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2}$ for positive $\sigma$ and real $\tau$. This is a shifted Cauchy distribution-type sum, giving us information on the density of zeros with imaginary part near $\tau$.
-\begin{theorem}\label{thm:poisson_sum_bound}
+\begin{theorem}[GRH]
+\label{thm:poisson_sum_bound}
 Let $E$ be an elliptic curve with conductor $N_E$ and L-function $L_E(s)$. Let $\sigma > \frac{1}{2}$ and $\tau \in \RR$, and let $\gamma$ range over the imaginary parts of the nontrivial zeros of $L_E(s)$. Then
 \begin{equation}
  \left| \sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right)\right] \right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
@@ -518,7 +458,7 @@ Note that $\frac{\zeta\pr}{\zeta}$ decays rapidly with increasing $\sigma$, i.e.
 \end{equation*}
 for any $c>0$. \\
 
-\begin{corollary}\label{cor:zero_density}
+\begin{corollary}[GRH]\label{cor:zero_density}
 Let $M_E(t)$ be the zero counting function as given in Definition \ref{defn:zero_counting_function}. Then for $t \ge 1$ we have
 \begin{equation}
 M_E(t) \le t\log N_E +2t\log(t+1).
@@ -543,7 +483,7 @@ Finally, we have that $\sum_{\gamma} \frac{t}{t^2+\gamma^2} \ge \frac{1}{2t}M_E(
 \end{proof}
 
 It is also useful to have an upper bound on the number of zeros in a given unit interval on the critical line.
-\begin{corollary}\label{cor:zeros_on_unit_interval}
+\begin{corollary}[GRH]\label{cor:zeros_on_unit_interval}
 For $t\ge1$, $M_E(t+1)-M_E(t)$ gives the number of zeros $\gamma$ with $t < |\Im(\gamma)| \le t+1$. We have
 \begin{equation}\label{eqn:zeros_on_unit_interval}
 M_E(t+1)-M_E(t) < \frac{5}{4}\log(N_E) + \frac{5}{2}\log(t+1).
@@ -564,7 +504,7 @@ In a similar manner we derive for $t \ge 1$ that
 (note that unlike equation \ref{eqn:zeros_on_unit_interval}, the above only considers zeros with non-negative imaginary part). \\
 
 Finally, recall the definition of the bite of $E$: $\beta_E = \sum_{\gamma \ne 0} \frac{1}{\gamma^2}$. We may use \ref{thm:poisson_sum_bound} to place an explicit bound on the tail end of the inverse square sum via the following:
-\begin{corollary}\label{cor:sum_tail_bound}
+\begin{corollary}[GRH]\label{cor:sum_tail_bound}
 For $\sigma \ge 1$ and $\tau \in \RR$ we have
 \begin{equation}
 \sum_{|\gamma-\tau|>\sigma} \frac{1}{(\gamma-\tau)^2} \le \frac{\log(N_E) + 2\log(|\tau|+1)}{\sigma}
@@ -590,8 +530,8 @@ Equation \ref{thm:poisson_sum_bound} may also used to put lower bounds on the ab
 
 Corollary \ref{cor:zero_density} gives us explicit bounds on zero density, but the bound of $t \log N_E$ is not tight: empirically we see $M_E(t)$ grow more like $\frac{t}{2}\log N_E$; i.e. a factor of $2$ slower. We may again use the explicit formula to come up with a more accurate expansion for the zero counting function, at the expense of have a more nebulous error term that resists attempts to put explicit bounds on it.
 
-\begin{proposition}
-Contingent on GRH,
+\begin{proposition}[GRH]
+We have
 \begin{equation}\label{eqn:M_E(t)}
 M_E(t) = \frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) + \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n)\right]
 \end{equation}
@@ -618,8 +558,8 @@ Equation \ref{eqn:M_E(t)} may be though of having two components. The first two 
 \end{equation}
 
 Moreover, the trigonometric sum should grow very slowly with $t$. Put more formally, we have the following:
-\begin{conjecture}\label{conj:trig_sum_size}
-Contingent on GRH,
+\begin{conjecture}[GRH]\label{conj:trig_sum_size}
+GRH implies that
 \begin{equation}
 \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n) = O(\log t)
 \end{equation}
@@ -632,7 +572,7 @@ Contingent on GRH,
     \label{fig:M_E_trig_sum_bounds}
 \end{figure}
 
-We won't say much more about bounding the error term in this thesis, since it requires more advanced analytical tools not mentioned or developed here. \\
+We won't say much more about bounding the error term in this thesis (or attemp to prove anything about its magnitude), since it requires more advanced analytical tools not mentioned or developed here. \\
 
 \begin{lemma}\label{lem:arctan_sum_size}
 For $t >> 0$, 
@@ -659,7 +599,7 @@ The result follows.
 
 Conjecture \ref{conj:trig_sum_size} and lemma \ref{lem:arctan_sum_size} combine to give us a precise asymptotic statement on the distribution of zeros up to $t$, in the same vein as von Mangoldt's asymptotic formula for the number of zeros up to $t$ for $\zeta$:
 
-\begin{theorem}\label{thm:zero_density}
+\begin{theorem}[GRH]\label{thm:zero_density}
 Let $E$ have conductor $N_E$. Then for $t>>0$ we have
 \begin{equation}\label{eqn:zero_density}
 M_E(t) = \frac{t}{\pi} \, \log\left(\frac{t\sqrt{N_E}}{2\pi e}\right) + \frac{1}{4} + O(\log t),
@@ -674,7 +614,7 @@ where the error term is positive as often as it negative and contributes no net 
     \label{fig:M_E_389}
 \end{figure}
 
-\begin{corollary}
+\begin{corollary}[GRH]
 For $t>>0$, the number of zeros on the critical line in a unit interval
 \begin{equation}
 M_E(t)-M_E(t-1) = \frac{1}{\pi}\log\left(\frac{t\sqrt{N_E}}{2\pi}\right) + O(\log t),
@@ -685,7 +625,7 @@ where again the error term contributes no net bias.
 That is, zero density on the critical line grows like $\frac{1}{2}\log N_E + \log t$, where $N_E$ is the conductor of $E$ and $t$ the distance from the real axis. \\
 
 Neglecting the oscilating error term in Equation \ref{eqn:zero_density}, we may solve for $t$ in terms of the Lambert $W$-function to obtain an explicit formula for the expected value of the imaginary part of the $n$th zero on the critical line. Recall the definition of the Lambert $W$-function: if $y = x e^x$, then $x = W(y)$. $W$ is a multiple-valued function; we make use of the principle branch $W_0$ below:
-\begin{corollary}\label{cor:gamma_n_approx_value}
+\begin{corollary}[GRH]\label{cor:gamma_n_approx_value}
 Let $\gamma_n := \gamma_n(E)$ be the imaginary value of the $n$th nontrivial (and noncentral) zero in the upper half plane of $\Les$ with analytic rank $r_E$. Then
 \begin{equation}\label{approx:gamma_n}
 \gamma_n \sim \frac{2\pi e}{\sqrt{N_E}} \cdot \exp \left(W_0\left[\left(\frac{r_E}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N_E}}{2 e}\right]\right)
@@ -739,7 +679,7 @@ Even though the above graph demonstrates that the zero dispersions are clearly n
 For the data set used the graph above, the mean was $3.16\times10^{-5}$ (a good indicator that the expected value formula contains no systematic bias), standard deviation $0.1566$. The standard deviation appears to decrease with increasing $n$: we applied the Shapiro-Wilk normality test on batches of 1000 consecutive zero dispersions, and got $p$-values in excess of $0.2$ (and most of the time in excess of 0.5) in all cases. Moreover, the computed standard deviations decreased uniformly from $0.1745$ for the $n=1000$ to $2000$ dispersion set, to $0.1464$ in the $n=10000$ to $11000$ set. We hope to pursue this investigation in future work. \\
 
 Finally, we may also go in the other direction and use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the {\it lowest} noncentral nontrivial zero of $\Les$ as a function of increasing conductor $N_E$:
-\begin{proposition}
+\begin{proposition}[GRH]
 For a curve $E$ with large conductor $N_E$ and analytic rank $r_E$, the best guess for the imaginary part of the first nontrivial noncentral zero $\gamma_1$ of $\Les$ in the upper half plane is
 \begin{equation}
 \gamma_1 = \frac{(r_E+1)\pi}{\log(N_E) -2\log(2\pi) -2\eta}
@@ -753,24 +693,81 @@ Now, however, $\frac{1}{\pi}\sum_{k=1}^{\infty} \left[\frac{t}{k} - \arctan\left
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Bite}\label{sec:bite}
 
-Recall by Definition \ref{defn:bite}, the {\it bite} $\beta_E$ of an elliptic curve is given by
+Mazur and Stein in \cite{MaSt-2013} define the {\it bite} of an elliptic curve:
+\begin{definition}\label{defn:bite}
+The {\it bite} of $\Les$ is
 \begin{equation}
-\beta_E = \sum_{\gamma \ne 0} \frac{1}{\gamma^2}
+\beta(E) := \sum_{\gamma \ne 0} \gamma^{-2},
 \end{equation}
-where $\gamma$ ranges over the imaginary parts of the {\it non-central} nontrivial zeros of $\Les$. In this final section we establish some bounds involving the bite and show how one can compute it efficiently without having to compute the locations of the zeros of $\Les$ explicitly. \\%, and finish off with a result showing that the lowest noncentral zero is bounded away from the central point in terms of a negative power of the conductor. \\
+where the sum runs over the imaginary parts of all {\it noncentral} nontrivial zeros of $\Les$.
+\end{definition}
+This quantity is of interest for a variety of reasons: it controls the rate of convergence in many explicit formula-type sums for $\Les$, and is intimately linked with the analytic rank and leading central Taylor coefficient for the $L$-series of $E$. Again, the explicit dependence on $E$ may be left as understood if the choice of $E$ is unambiguous, or we may subsume the dependance on $E$ into a subscript and write $\beta_E$. In this final section we establish some bounds involving the bite, show how one can compute it efficiently without having to compute the locations of the zeros of $\Les$ explicitly, and give some zero sum examples relevant to this thesis where the bite comes into play. \\
 
-One reason why the bite of a curve is of interest is due to it being intimately linked with the leading central Taylor coefficient $C_E$ of $\Lambda_E(1+s)$ and the (analytic) rank $r_E$. Specifically, the three quantities are linked by a suite of explicit inequalities derived from point estimates on the $L$-function of $E$ and the logarithmic derivative thereof. First, we will need the following technical lemma:
-\begin{lemma}\label{lem:bite_rank_sigma_inequality}
-Let $\sigma > \frac{1}{2}$. Contingent on GRH, the bite $\beta_E$ and analytic rank $r_E$ of a curve $E$ obey
+Since sums of inverse higher powers of zeros also crop up, we generalize the notion of bite as follows:
+\begin{definition}
+For positive integer $n$, the {\it higher order bite} of order $n$ for $\Les$ is
 \begin{equation}
-\sigma \cdot \beta_E + \frac{r_E}{\sigma} > \frac{1}{2} \log N_E + \digamma(1+\sigma)-\log(2\pi) + 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
+\beta_n(E) := \sum_{\gamma \ne 0} \gamma^{-n}.
+\end{equation}
+\end{definition}
+Thus $\beta_2(E) = \beta_E$ as defined previously. Note also that $\beta_n = 0$ for any odd $n$, since zeros come in conjugate pairs. \\
+
+Equation \ref{eqn:ldLam_sum} gives us a description of the Laurent expansion of $\ldLam{1+s}$ about zero:
+\begin{proposition}[GRH]\label{prop:ldLam_series_at_zero}
+The Laurent expansion of $\ldLam{1+s}$ about zero is given by
+\begin{align}
+\ldLam{1+s} &= \frac{r_E}{s} + \beta_2\cdot s - \beta_4\cdot s^3 + \beta_6\cdot  s^5 - \ldots \\
+& = \frac{r_E}{s} + \sum_{k=1}^{\infty} (-1)^{k-1}\beta_{2k}\cdot s^{2k-1}
+\end{align}
+and this converges for $|s|<\gamma_0$, where $\gamma_0$ is the imaginary part of the lowest noncentral nontrivial zero of $\Les$ in the upper half plane.
+\end{proposition}
+The proof of this follows immediately by expanding the sum in Equation \ref{eqn:ldLam_sum} and collecting terms. \\
+
+\begin{corollary}[GRH]\label{cor:ldLe_expansion}
+Let $E/\QQ$ have conductor $N_E$, $L$-function $\Les$ with bite $\beta_E = \beta_2(E)$ and central leading coefficient $C_E\pr$. Let the Taylor series expansion of $L_E$ about the central point be
+\begin{equation}
+L_E(1+s) = C_E\pr \, s^{r_E}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]
+\end{equation}
+Then 
+\begin{align}
+a &= -\left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right] \\
+2b &= \left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right]^2 - \frac{\pi^2}{6} + \beta_E,
+\end{align}
+where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$.
+\end{corollary}
+
+\begin{proof}
+We note that the digamma function has the following Taylor expansion about $s=1$:
+\begin{equation}
+\digamma(1+s) = -\eta - \sum_{k=1}^{\infty} (-1)^k \zeta(k+1) s^k,
+\end{equation}
+where $\eta$ is the Euler-Mascheroni constant, and $\zeta(s)$ is the Riemann zeta function. \\
+Thus by equation \ref{eqn:logderiv_relation} and Proposition \ref{prop:ldLam_series_at_zero} we have that
+\begin{equation*}
+\ldLe{1+s} = \frac{r_E}{s} - \left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right] + \left[-\zeta(2) + \sum_{\gamma\ne0} \gamma^{-2}\right]\cdot s + O(s^2)
+\end{equation*}
+But if $L_E(1+s) = C_E\pr \, s^{r_E}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]$, then careful logarithmic differentiation yields
+\begin{equation*}
+\ldLe{1+s} = \frac{r_E}{s} + a + \left(-a^2 + 2b\right)\cdot s + O(s^2)
+\end{equation*}
+Comparing terms and solving for the relevant quantities produces the desired formulae.
+\end{proof}
+We may continue in the same vein to produce formulae for higher order coefficients of $L_E(s)$. As can be seen from above, these can in general be written in terms of sums of powers of the quantity $\left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right]$ (which is the constant term in the Laurent series of $\ldLam{1+s}$), inverse sums of even powers of the nontrivial zeros, and $\zeta(n)$ for $n$ a positive integer. \\
+
+In other words, $\beta_E$ and higher-order bites encode information about higher order terms in the Taylor expansion of $L_E(1+s)$; moreover, the Taylor series thereof contains no new information about the curve's attached invariants beyond that which can be found in the first nonzero coefficient and the bites $\beta_{2n}(E)$. Whether the bites do indeed have any arithmetic significance, however, is an open question. \\
+
+As can be seen from the above, the bite of a curve is of interest is due to it being intimately linked with the leading central Taylor coefficient $C_E$ of $\Lambda_E(1+s)$ and the (analytic) rank $r_E$. We may link the three quantities explicitly with a suite of inequalities derived from point estimates on the $L$-function of $E$ and the logarithmic derivative thereof. First, we will need the following technical lemma:
+\begin{lemma}[GRH]\label{lem:bite_rank_sigma_inequality}
+Let $\sigma > \frac{1}{2}$. The bite $\beta_E$ and analytic rank $r_E$ of a curve $E$ obey
+\begin{equation}
+\sigma \cdot \beta_E + \frac{r_E}{\sigma} > \frac{1}{2} \log N_E + \digamma(1+\sigma)-\log(2\pi) - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
 \end{equation}
 where $\digamma(s) = \frac{\Gamma\pr}{\Gamma}(s)$ is the digamma function on $\CC$, $\zeta(s)$ is the Riemann zeta function and $N_E$ is the conductor of $E$.
 \end{lemma}
 \begin{proof}
 From Equation \ref{thm:poisson_sum_bound}, letting $\tau=0$, we get
 \begin{equation}
-\sum_\gamma \frac{\sigma}{\sigma^2+\gamma^2} > \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \digamma(1+\sigma) + 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
+\sum_\gamma \frac{\sigma}{\sigma^2+\gamma^2} > \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \digamma(1+\sigma) - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
 \end{equation}
 But
 \begin{align*}
@@ -782,7 +779,7 @@ Combining inequalities completes the proof.
 \end{proof}
 
 We then have the following:
-\begin{proposition}\label{prop:beta_C_r_bounds}
+\begin{proposition}[GRH]\label{prop:beta_C_r_bounds}
 Let $\beta_E$, $C_E$, $r_E$ and $N_E$ be the bite, completed $L$-function leading central Taylor coefficient, analytic rank and conductor of $E$ respectively. Then
 \begin{align}
 (1+\beta_E)\cdot C_E & < 0.173 \cdot N_E \\
@@ -800,8 +797,8 @@ noting that $1+\beta_E < \prod_{\gamma \ne 0} \left(1+\frac{1}{\gamma^2}\right) 
 The take-away from Proposition \ref{prop:beta_C_r_bounds} is that the bite and the leading Taylor coefficient $C_E$ cannot both be very large or very small simultaneously relative to the conductor. Similarly, the larger the rank of a curve, the smaller $\beta_E$ can be relative to $N_E$. \\
 
 We can go even further and establish a lower bound on $\beta_E$ in terms of $N_E$ independent of $C_E$ and $r_E$, at the expense of introducing a non-explicit constant. As asymptotic zero density on the critical line grows proportional to $\log N_E$ (see Theorem \ref{thm:zero_density}), we expect the bite to grow at least like $\log N_E$ too, regardless of the limiting behavior of zeros near the central point. This is indeed the case:
-\begin{proposition}
-Contingent on GRH, for all $\epsilon>0$ there is a constant $K(\epsilon)>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
+\begin{proposition}[GRH]
+For all $\epsilon>0$ there is a constant $K(\epsilon)>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
 \begin{equation}\label{eqn:bite_lower_bound}
 \beta_E = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{1+\epsilon} \log N_E - K(\epsilon).
 \end{equation}
@@ -829,7 +826,7 @@ One can see from Figure \ref{fig:bites_vs_conductors_array} that the bite obeys 
 How does one go about computing the bite of an elliptic curve? The na\"{i}ve way would be to compute the location of the $n$ zeros up to some bound and then add up their inverse squares to get an approximation of $\beta_E$. This can indeed be done, for example via Rubinstein's {\tt lcalc} package. However it is slow and inefficient, and one will always introduce some truncation error via this method.  \\
 
 Instead, the following result allows us to relate the bite directly to the leading Taylor coefficient $C_E$ and higher derivatives of $\Lambda_E(s)$ at the central point:
-\begin{proposition}\label{prop:bite_times_leading_coeff}
+\begin{proposition}[GRH]\label{prop:bite_times_leading_coeff}
 Let $E$ have completed $L$-function $\Lams$ and analytic rank $r_E$. Then
 \begin{equation}
 \beta_E\cdot C_E = \frac{\Lambda_E^{(r_E+2)}(1)}{(r_E+2)!},.
@@ -845,7 +842,7 @@ Differentiating $r_E+2$ times and evaluating at $s=0$ achieves the desired resul
 \end{proof}
 
 It is worth noting explicitly that one cannot hope to be able to compute the bite of a curve without knowing its analytic rank -- we have to know how many zeros are precisely at the central point and not just $\epsilon$ away from the central point, otherwise $\beta_E$ could be arbitrarily large. This obstruction notwithstanding, Proposition \ref{prop:bite_times_leading_coeff} gives us a straightforward way to compute the bite of $E$ from the $r_E$th and $(r_E+2)$th Taylor coefficients of $L_E(1+s)$:
-\begin{corollary}
+\begin{corollary}[GRH]
 \begin{align}\
 \beta_E \quad &= \frac{1}{(r_E+1)(r_E+2)} \cdot \frac{\Lambda_E^{(r_E+2)}(1)}{\Lambda_E^{(r_E)}(1)} \label{eqn:bite_via_Lams} \\
 &= \frac{2}{(r_E+1)(r_E+2)} \cdot \frac{L_E^{(r_E+2)}(1)}{L_E^{(r_E)}(1)} - \left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)^2 + \frac{\pi^2}{6} \label{eqn:bite_via_L_E}
@@ -863,12 +860,12 @@ We can therefore compute the bite of a curve {\it without} having to compute the
     \label{fig:bites_vs_conductors_array}
 \end{figure}
 
-We finish off this section with a result giving an indication of one other area in which the bite of a curve comes into play: controlling convergence rates in explicit formula type sums. This is a topic worthy of its own paper, so we shall just present a single example relevant to the work in this thesis.
+We finish off this section with a result giving an indication of one other area in which the bite of a curve comes into play: controlling convergence rates in explicit formula type sums. This is a topic worthy of its own paper, so we shall just present two examples relevant to the work in this thesis.
 
-\begin{theorem}
+\begin{theorem}[GRH]\label{thm:sinc_squared_sum_with_bite}
 Let $\sum_{\gamma} \sinc^2(\Delta \gamma)$ be the $\sinc^2$ sum for $E$ with parameter $\Delta$, as detailed in Equation \ref{eqn:sincsquared_sum}. If we let $\Delta = \frac{1}{\pi}\cdot \sqrt{\frac{\beta_E}{n}}$, then the sum will evaluate to a value less than than $r_E+n$, where $r_E$ is the analytic rank of $E$.
 \end{theorem}
-\begin{corollary}\label{cor:sinc_squared_sum_with_bite}
+\begin{corollary}[GRH]\label{cor:sinc_squared_sum_with_bite}
 The analytic rank of $E$ is the largest integer less than
 \begin{equation}\label{eqn:sinc_squared_sum_with_bite}
 \frac{1}{\sqrt{\beta_E}}\left[\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)+ \frac{1}{2 \sqrt{\beta_E}}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\sqrt{\beta_E}}\right)\right) + \sum_{\log n<2\sqrt{\beta_E}} c_n \cdot \left(1-\frac{\log n}{2\sqrt{\beta_E}}\right)\right]
@@ -884,4 +881,17 @@ So choosing $\Delta = \frac{1}{\pi}\cdot \sqrt{\frac{\beta_E}{n}}$ bounds the su
 
 This formula comes with one giant caveat that renders it of little use practically -- it requires knowing the bite of a curve, which of course in itself requires knowing the curve's analytic rank a priori. Nevertheless, the above serves to underscore that determining the bite and determining the analytic rank of a curve are computationally equivalent: we can compute the bite knowing the rank via Equations \ref{eqn:bite_via_Lams} or \ref{eqn:bite_via_L_E}, and we can compute the rank knowing the bite via Formula \ref{eqn:sinc_squared_sum_with_bite}. \\
 
+Using the bite we have an even simpler way to compute the analytic rank of an elliptic curve:
+\begin{theorem}[GRH]\label{thm:compute_rank_by_logderiv}
+\begin{equation}
+r_E = \left\lfloor\frac{1}{\sqrt{\beta_E}}\cdot \ldLam{1+\frac{1}{\sqrt{\beta_E}}}\right\rfloor
+\end{equation}
+\end{theorem}
+\begin{proof}
+By Equation \ref{eqn:ldLam_sum}, the Hadamard product expansion of $\ldLam{1+s}$ gives us \begin{equation}
+s\cdot \ldLam{1+s} = s\cdot \prod_{\gamma} \frac{s}{s^2+\gamma^2} = r_E + \prod_{\gamma\ne 0} \frac{1}{1+(\frac{\gamma}{s})^2} < r_E + s^2\cdot \beta_E
+\end{equation}
+So, analogous to the method used in the proof of Theorem \ref{thm:sinc_squared_sum_with_bite}, evaluating at $s = \sqrt{\frac{n}{\beta_E}}$ gives a real value bounded by $r_E+n$.
+\end{proof}
 
+Again, there are subtle issues present with this formula. Apart from again having to know the bite of a curve, even though we can evaluate $\Lambda_E(s)$ and its derivative to any given precision in $\softO(\sqrt{N_E})$ time, the same is not true for the logarithmic derivative. Namely, we may encounter destructive precision loss near the central point if $r_E$ has high analytic rank and/or low-lying zeros. We therefore caution against using this method to determine analytic rank willy-nilly, as in our mind it does {\it not} constitute a method to compute rank provably without doing more work.

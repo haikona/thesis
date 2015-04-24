@@ -25,13 +25,13 @@ Furthermore, we define the following values associated to $E$ (in all cases the 
 \item $c_4 = b_2^2 - 24 b_4$
 \item $c_6 = -b_2^3 + 36 b_2 b_4  - 216 b_6$
 \item $D = D_E = -b_2^2 b_8 - 8 b_4^3 - 27 b_6^2 + 9 b_2 b_4 b_6$; this is the definition of the discriminant of $E$
-\item $j = \frac{c_4}{D}$
-\item $\omega = \frac{dx}{2y + a_1 x + a_3} = \frac{dy}{3x^2 + 2a_2 x + a_4 - a_1 y}$
+\item $j = \frac{c_4}{D}$ is the $j$-invariant of $E$
+%\item $\omega = \frac{dx}{2y + a_1 x + a_3} = \frac{dy}{3x^2 + 2a_2 x + a_4 - a_1 y}$
 \end{itemize}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Definitions}
+\section{Definitions and Basic Results}
 
 The rest of this chapter covers the basic definitions of and results needed for the rest of this work (namely, big-Oh notation, elliptic curves and $L$-functions). Feel free to skip this if you are familiar with them.
 
@@ -69,7 +69,7 @@ The same terminology can be applied to the space requirements of an algorithm, w
 
 
 %%%%%%%%%%%%
-\subsection{Elliptic curves and their $L$-functions}
+\subsection{Elliptic curves}
 
 \begin{definition}
 An elliptic curve $E$ is a genus 1 smooth projective curve with a marked point $\cO$. $E$ is defined over a field $K$ if $E$ may be represented by the {\it Weierstrass equation} $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a1,\ldots a_6 \in K$.
@@ -132,6 +132,9 @@ f_p(E) = \begin{cases} 0, & \text{$E$ has good reduction at $p$} \\ 1, & \text{$
 For $p=2$ and $3$, the exponent $f_p(E)$ is still zero if $p$ is good; however the exponent may be as large as $8$ and $5$ respectively if $p$ is bad.
 \end{definition}
 The ``proper" definition of the conductor is Galois representation-theoretic and is defined in terms of the representation of the inertia group at $p$ on the torsion subgroup of $E$; For $p\ne 2$ or $3$ this reduces to the definition given above, but for $2$ and $3$ there may be nontrivial wild ramification which increases the exponent up to the stated amounts. A full technical definition of the conductor is given in \cite[pp. 379-396]{Sil-1994}. In any case (including $2$ and $3$), the exponent $f_p(E)$ may be computed efficiently by Tate's algorithm, as detailed in the previous section of the same book \cite[pp. 361-379]{Sil-1994}. \\
+
+%%%%%%%%%%%%
+\subsection{Elliptic curve $L$-functions}
 
 We now move on to the definition of the $L$-function attached to an elliptic curve. For this we must define the numbers $a_p(E)$:
 \begin{definition}\label{def:a_p} \mbox{}
@@ -372,12 +375,12 @@ This is proven in full in the PhD thesis of Robert Bradshaw \cite{Bra-2010}. The
 We will use the result of Proposition \ref{prop:L_E_time_complexity} directly in the proof of Theorem \ref{thm:main_theorem}. In fact, the $\softO(\sqrt{N_E})$ time needed to evaluate central derivatives of $\Les$ is the computational bottleneck in algorithm \ref{algo:compute_rank}; all other steps scale in time subpolynomial in $N_E$. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Some Conjectures}\label{sec:conjectures}
+\section{The Three Big Conjectures}\label{sec:conjectures}
 
-The main results in this thesis are contingent on the Birch and Swinnerton-Dyer conjecture, The Generalized Riemann Hypothesis and the ABC conjecture. We reproduce the three conjectures in full below. \\
+The main results in this thesis are contingent on the Birch and Swinnerton-Dyer conjecture, The Generalized Riemann Hypothesis and the ABC conjecture. We reproduce the three conjectures in full below; citations for the papers in which they first appeared or are fully formulated are listed at the top of each conjecture. \\
 
 The Birch and Swinnerton-Dyer conjecture (BSD) is needed to establish a way to compute and hence bound the magnitude of the leading coefficient of $\Les$ at the central point.
-\begin{conjecture}[Birch, Swinnerton-Dyer]\label{conj:BSD}
+\begin{conjecture}[Birch, Swinnerton-Dyer]\label{conj:BSD} \cite{BSD-1965}
 \mbox{}
 \begin{enumerate}
 \item $r_{an} = r$; that is, the analytic rank of $E$ is equal to its algebraic rank.
@@ -398,29 +401,35 @@ where
 
 For an excellent description of the conjecture and a breakdown of the arithmetic invariants mentioned above, see Andrew Wiles' official description of the BSD Conjecture on the Clay Math website \cite{Wil-BSD}. \\
 
-\begin{conjecture}[Generalized Riemann Hypothesis for Elliptic Curves, version 1]\label{conj:GRH1}
+The Generalized Riemann Hypothesis (GRH), as the name suggests, generalizes the famous conjecture first posed by Bernhard Riemann in 1959 \cite{Rie-1859}. The (standard) Riemann Hypothesis asserts that all nontrivial zeros of the Riemann zeta function $\zeta(s)$ occur on the vertical line $\Re(s)=\frac{1}{2}$ and are simple. It is hard to track down where the Generalized Riemann Hypothesis was first formulated in its full generality (but Conrey gives a good exposition in \cite{Con-2003}), but it asserts that for a large class of suitably defined $L$-functions, the nontrivial nonreal zeros will occur on a single vertical line in the complex plane and will all be simple. We use GRH as it applies to elliptic curve $L$-functions:
+\begin{conjecture}[Generalized Riemann Hypothesis for Elliptic Curves, version 1] \cite{Rie-1859} \cite{Con-2003}
+\label{conj:GRH1}
+\mbox{}
 Let $E$ be an elliptic curve over $\Q$, and let $\Les$ be its $L$-series. If $\rho$ is a nontrivial zero of $\Les$ with nonzero imaginary part, then $\Re(\rho) = 1$. Moreover, all nontrivial noncentral zeros of $\Les$ are simple.
 \end{conjecture}
 That is, all nontrivial zeros of $\Les$ lie on the {\it critical line} $\Re(s)=1$, and the only place zeros can lie on top of each other is at the central point $s=1$. There are numerous equivalent formulations of GRH; we will most often use the following:
-\begin{conjecture}[Generalized Riemann Hypothesis for Elliptic Curves, version 2]\label{conj:GRH2}
+\begin{conjecture}[Generalized Riemann Hypothesis for Elliptic Curves, version 2] \cite{Rie-1859} \cite{Con-2003}
+\label{conj:GRH2}
  \mbox{}
  Let $E$ be an elliptic curve over $\Q$, and let $\Lams$ be the completed $L$-function attached to $E$. Then
 \begin{enumerate}
 \item $\Lambda_E(1+s) = 0 \Longrightarrow \Re(s) = 0$.
-\item $\Lambda_E(1+s) = 0$ and $\Lambda_E\pr(1+s) = 0 \Longrightarrow s=0$.
+\item $\Lambda_E(1+s) = 0 \;$ and $\; \Lambda_E\pr(1+s) = 0 \Longrightarrow s=0$.
 \end{enumerate}
 \end{conjecture}
 
 Finally, we will need strong form of the ABC conjecture of Masser and Oesterl\'{e} in order to establish lower bounds on the regulator and real period of $E$.
-\begin{conjecture}[Masser-Oesterl\'{e}] \label{conj:ABC}
+\begin{conjecture}[Masser-Oesterl\'{e}] \cite{Mas-1985} \cite{Oes-1988}
+\label{conj:ABC} \\
 Let $(a,b,c)$ be a triple of coprime positive integers such that $a+b = c$, and let $\rad(abc) = \prod_{p | abc} p$ be the product of all primes dividing $a$, $b$ and $c$. Then for any $\epsilon > 0$ there is a constant $K(\epsilon)$ such that
 \begin{equation}
 c < K(\epsilon)\rad(abc)^{1+\epsilon}.
 \end{equation}
 \end{conjecture}
-The ABC conjecture is famous for the large number of other results that it implies. Of these, we will need the following three that relate to elliptic curves:
 
-\begin{conjecture}[Szpiro]\label{conj:Szpiro}
+The ABC conjecture is famous for the large number of other results that it implies. Of these, we will need two that relate to elliptic curves. It is a relatively straightforward exercise to show that the conductor of an elliptic curve divides its minimal discriminant. Szpiro's conjecture, formulated in the 1980s, asserts that the latter cannot be too big in terms of the former:
+\begin{conjecture}[Szpiro] \cite{szp-1987}
+\label{conj:Szpiro} \\
 Let $E$ be an elliptic curve over $\QQ$ with conductor $N_E$ and minimal discriminant $D_E$. Then for any $\epsilon > 0$ there is a constant $K(\epsilon)$ such that
 \begin{equation}
 |D_E| < K(\epsilon)\cdot (N_E)^{6+\epsilon}.
@@ -435,19 +444,19 @@ Let $c_4$ and $c_6$ be the $c$-invariants of a minimal model of $E/\QQ$, as defi
 \end{equation}
 \end{conjecture}
 
-\begin{conjecture}[Lang]\label{conj:Lang}
-There is a positive constant $K$ such that for any elliptic curve $E/\QQ$ with minimal discriminant $D_E$, the N\'{e}ron-Tate canonical height of any nontorsion point $P\in E(\QQ)$ obeys
+Lang's conjecture posits that the height of a point on a rational curve cannot be too small in terms of the discriminant:
+\begin{conjecture}[Lang] \cite[pp. 73-74]{Lang-1997}
+\label{conj:Lang} \\
+There is a positive constant $M_0$ such that for any elliptic curve $E/\QQ$ with minimal discriminant $D_E$, the N\'{e}ron-Tate canonical height of any nontorsion point $P\in E(\QQ)$ obeys
 \begin{equation}
-\hat{h}(P) \ge K\log |D_E|.
+\hat{h}(P) \ge M_0\log |D_E|.
 \end{equation}
 \end{conjecture}
 
-\begin{conjecture}[Hall]\label{conj:Hall}
-For any $\epsilon > 0$ there is a constant $K(\epsilon)$ such that for any $x,y \in \ZZ$ such that $x^3-y^2 \ne 0$, we have
-\begin{equation}
-|x^3-y^2| \ge K(\epsilon)\cdot |x|^{\frac{1}{2}-\epsilon}.
-\end{equation}
-That is, if $x^3-y^2 \ne 0$, then it cannot be much smaller in magnitude than about $\sqrt{|x|}$.
-\end{conjecture}
-
-%%% Add statement: ABC implies the results we need, but the results we need are not equivalent to ABC, so don't need ABC itself (Check if true for Hindry-Silverman).
+%\begin{conjecture}[Hall]\label{conj:Hall}
+%For any $\epsilon > 0$ there is a constant $K(\epsilon)$ such that for any $x,y \in \ZZ$ such that $x^3-y^2 \ne 0$, we have
+%\begin{equation}
+%|x^3-y^2| \ge K(\epsilon)\cdot |x|^{\frac{1}{2}-\epsilon}.
+%\end{equation}
+%That is, if $x^3-y^2 \ne 0$, then it cannot be much smaller in magnitude than about $\sqrt{|x|}$.
+%\end{conjecture}

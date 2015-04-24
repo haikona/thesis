@@ -13,6 +13,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{url}
+%\usepackage{thmtools}
+%\usepackage{thm-restate}
 
 \includeonly{
 chapters/1_introduction,
@@ -55,6 +57,21 @@ chapters/6_remarks_future_work,
      \def\{{\ttfamily\char`\{}%
      \def\}{\ttfamily\char`\}}}
   {\end{alltt}}
+
+\newtheorem{innercustomthm}{Theorem}
+\newenvironment{quotedtheorem}[1]
+  {\renewcommand\theinnercustomthm{#1}\innercustomthm}
+  {\endinnercustomthm}
+  
+\newtheorem{innercustomcor}{Corollary}
+\newenvironment{quotedcorollary}[1]
+  {\renewcommand\theinnercustomcor{#1}\innercustomcor}
+  {\endinnercustomcor}
+  
+\newtheorem{innercustomconj}{Conjecture}
+\newenvironment{quotedconjecture}[1]
+  {\renewcommand\theinnercustomconj{#1}\innercustomconj}
+  {\endinnercustomconj}
  
 % metafont font.  If logo not available, use the second form
 %
@@ -66,7 +83,7 @@ chapters/6_remarks_future_work,
 \begin{document}
  
 % ==========   Preliminary pages
-2\prelimpages
+\prelimpages
  
 %
 % ----- copyright and title pages
@@ -112,14 +129,23 @@ Elliptic curves are some of the central objects of study in modern-day algebraic
 
 This dissertation consists of two parts. In the first we prove that, assuming standard conjectures, an {\it effective} algorithm exists to compute the rank of an elliptic curve that runs in polynomial time of the curve's conductor. This algorithm revolves around evaluating the $L$-function of the curve in question, and as such is practical for curves with conductors up to $\sim 10^{16}$ or so on current computer architecture. \\
 
-The second part of this work addresses the question of what can be done when the conductor is too large for the above method to be practical. To this end we exhibit a zero sum-based method to bound rank from above that doesn't rely on directly evaluating an elliptic curve's $L$-function, and as such can be used on curves with very large conductors.
+The second part of this work addresses the question of what can be done when the conductor is too large for the above method to be practical. To this end we exhibit a zero sum-based method to bound rank from above that doesn't rely on directly evaluating an elliptic curve's $L$-function, and as such can be used on curves with very large conductors. We also include results concerning the locations of the nontrivial zeros of an elliptic curve $L$-function, and an exposition of related quantities.
 }
- 
+
+\chapter*{Preface}
+Accessibility and readability has been emphasized throughout this work. Specifically, no beyond knowledge standard graduate-level complex analysis and algebra is assumed, and advanced knowledge of number theoretic topics is {\it not} required. As such, we hope that the results in this dissertation are accessible to a wide audience, even those at the advanced undergraduate level. Chapter 1 was written specifically to be a gentle introduction to the subject matter of this thesis. \\
+
+Many of the results in this work are contingent on the validity of three of the major open conjectures in number theory: The Birch and Swinnerton-Dyer conjecture (BSD), the Generalized Riemann Hypothesis (GRH) and the ABC conjecture (ABC). For ease of exposition, instead of stating explicitly in a result which of the above conjectures are assumed, we will list the three-letter initial of each assumed conjecture after the heading of each result. For example, the following result:
+\begin{proposition}[BSD, GRH]
+The rank of an elliptic curve equals the number of non-simple zeros of $L_E(s)$.
+\end{proposition}
+is a consequence of both BSD and GRH being true.
+
 %
 % ----- contents & etc.
 %
 \tableofcontents
-\listoffigures
+%\listoffigures
 %\listoftables  % I have no tables
  
 %%

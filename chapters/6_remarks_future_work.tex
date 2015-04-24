@@ -1,24 +1,34 @@
 % ----- CHAPTER 6: REMARKS AND FUTURE WORK ----- %
 
-This dissertation pulls in results from a number of disparate topics related to elliptic curves, with the general approach being ``do just enough to establish results that are sufficient to support the main theorems". As such, many of the bounds and statements obtained of the course of this work are very far from optimal, and the ultimate running time of, say, Algorithm \ref{algo:compute_rank} could be considerably improved if these bounds were tightened. In this section we hope to list (in somewhat random order) the areas where results could be improved upon, and in so doing detail directions for possible future work.
+This dissertation pulls in results from a number of disparate topics related to elliptic curves, with the general approach being ``do just enough to establish results that are sufficient to support the main theorems". As such, many of the bounds and statements obtained of the course of this work are very far from optimal, and the ultimate running time of, say, Algorithm \ref{algo:compute_rank} could be considerably improved if these bounds were tightened. Beyond this there are natural generalizations to the results in this work that should be considered, We list below (in no particular order) the areas where results could be improved upon or generalize, and in so doing detail directions for possible future work.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bounding analytic rank from above in terms of conductor}
+\subsection{Generalizing results to modular $L$-functions of arbitrary weight and level}
 
-To establish a lower bound on the regulator of an elliptic curve in terms of its conductor we require an upper bound on the analytic rank. To this end we invoke Corralaries \ref{cor:logderiv_rank_bound} and \ref{cor:better_an_bound}, stating that maximum analytic rank is bounded by $\frac{1}{2}\log N_E$ plus an explicit constant. \\
+The results in this thesis revolve around working with the $L$-function attached to a given elliptic curve. By the modularity theorem \cite{BCDT-2011}, each of these is actually the $L$-function attached to a certain weight 2 integral cuspidal eigenform of level $N_E$, where $N_E$ is the conductor of the curve in question. \\
 
-However, Corollary \ref{cor:rank_slower_than_log_N} asserts that, contingent on GRH, maximum analytic rank of in fact grows slower than log of the conductor. This result has {\it not} been used directly, mainly because the constant $K(\epsilon)$ has not been made explicit in terms of the $\epsilon$ chosen. This translates to bounding the $c_n$ sum
+In general we can attach an $L$-function to a custodial eigenform of arbitrary weight and level. As such many of the results in this dissertation should carry over naturally, allowing us address the issue of computing the analytic rank of higher-weight modular $L$-functions. Spefically, given an analogue of BSD we should be able to show that an algorithm exists to compute the analytic rank of a modular $L$-function that is polynomial-time in the level of that form. An immediate question would then be: how does such a method scale with the {\it weight} of the form? \\
+
+Moreover, the $\sinc^2$ zero sum method to bound analytic rank from above should transfer directly to higher weight forms. We hope in future to extend the functionality of the Sage code to accommodate for this -- in fact, the code layout was designed with this extensibility explicitly in mind.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Bounding analytic rank from above in terms of conductor}
+
+To establish a lower bound on the regulator of an elliptic curve in terms of its conductor we require an upper bound on the analytic rank. To this end we invoke Corralaries \ref{cor:logderiv_rank_bound} and \ref{cor:better_an_bound}, stating that maximum analytic rank is bounded by a constant times $\log N_E$ plus another explicit constant. \\
+
+However, Corollary \ref{cor:rank_slower_than_log_N} asserts that, contingent on GRH, maximum analytic rank of in fact grows slower than any multiple of $\log N_E$. We would like to use this result more effectively, but the issue lies in making the constant $K(\epsilon)$ explicit in terms of the $\epsilon$ chosen. This translates to bounding the $c_n$ sum
 \begin{equation}
 \sum_{n < e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)
 \end{equation}
 in terms of the parameter $\Delta$. \\
 
-A natural question to ask, and hopefully answer, is ``can this be done effectively"? Empirically, the $c_n$ sum is seldom more than a handful of units in magnitude; however, the fact that the sum is carried out over prime powers and large amounts of cancellation due to the changing signs of the $c_n$ coefficients means that this term is tricky to control [note that one can readily obtain a naive explicit bound, it is exponential in $\log \Delta$, and thus quite useless from a practical perspective]. \\
+A natural question to ask, and hopefully answer, is ``can this be done effectively"? Empirically, the $c_n$ sum is seldom more than a handful of units in magnitude; however, the fact that the sum is carried out over prime powers and large amounts of cancellation due to the changing signs of the $c_n$ coefficients means that this term is tricky to control [note that one can readily obtain a naive explicit bound that is exponential in $\log \Delta$, but this is of limited practical use]. \\
 
 Nevertheless, if one could show that the sum grows at most polynomial in $\log \Delta$ (regardless of $E$) and obtain explicit constants, then a direct consequence would be that the lower bound on the regulator of $E$ would go to zero more slowly than any negative power of $N$. \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The regulator}
+\subsection{The regulator}
 
 Orthogonal to the above, a lower bound on $\Reg_E$ relies on Hindry-Silverman's \cite{HiS-1988} result that, contingent on ABC, minimum point height obeys the bound
 \begin{equation}
@@ -29,7 +39,7 @@ where $D_E$ is the discriminant of $E$, and $P$ is any rational point on $E$. Th
 What is perhaps a bit more tractable is to continue in the same vein as in the beginning of the proof of Theorem \ref{thm:regulator_lower_bound}: artificially increase the size of the constant, and check computationally that it holds for all curves up to a given conductor bound. We chose a bound of $N=350000$ simply because that is where Cremona's tables currently go to, but there is no theoretical reason one has to stop there. This option of course pays the price of being computationally much more tedious. \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The real period}
+\subsubsection{The real period}
 
 We invoke ABC and Szpiro's Conjecture when proving lower bounds on the real period in terms of the conductor; however, this isn't strictly necessary. Since the minimal discriminant of a rational elliptic curve is $12$th-power free (outside of $2$ and $3$), there is a natural power bound of the minimal discriminant in terms of the conductor:
 \begin{equation}
@@ -40,7 +50,7 @@ where $K$ is an explicit constant that accounts for the potentially higher power
 Note that this line was deliberately not pursued in this dissertation, as the assumption of ABC is required for bounds on the regulator in any case. However, ultimately we would like to remove reliance on ABC (if possible) entirely; bounds on the real period are not the obstruction when it comes to this.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Convergence rate and and convexity statements on the sinc$^2$ rank bounding sum}
+\subsection{Convergence rate and and convexity statements on the sinc$^2$ rank bounding sum}
 
 Equation \ref{eqn:sincsquared_sum} gives the analytic rank of $E$ as a limit:
 \begin{align}
@@ -62,7 +72,7 @@ Furthermore, Figure \ref{fig:256944c1_zero_sum} shows that the convergence from 
 Even though this is the case, we should be able to make some sort of a convexity statement regarding the convergence of the sinc$^2$ sum. This should allow us to use point estimates in the rank estimation code to decide which $\Delta$ values to use on a given curve, and in so doing make the code more efficient. We hope to revisit this issue in future, as it has the potential to significantly increase the effectiveness of the rank estimation code.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Better bounds on the bite}
+\subsection{Better bounds on the bite}
 
 Section \ref{sec:bite} discusses at the topic of the bite of an elliptic curve, namely the quantity
 \begin{equation}
