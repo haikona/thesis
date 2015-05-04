@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Notation}\label{subsec:notation}
 
-For the rest of the body of this text (unless otherwise stated) we set the following notation:
+For the rest of the body of this text we set the following notation:
 \begin{itemize}
 \item $E$ is an elliptic curve over $\QQ$ given by minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$
 \item $D(E)$, $N(E)$ and $r_{al}(E)$  and $r_{an}(E)$ are the discriminant, conductor, algebraic rank and analytic rank of $E$ respectively. For ease of exposition, the dependence on $E$ will often be indicated by a subscript $E$ instead, and when there is no ambiguity it may be dropped entirely. Also, since much of this body of work assumes the validity of the the BSD conjecture, the algebraic and analytic rank of a curve will most often be assumed to be equal, in which case it will just be denoted $r_E$.
@@ -24,8 +24,8 @@ Furthermore, we define the following values associated to $E$ (in all cases the 
 \item $b_8 = a_1^2 a_6 + 4 a_2 a_6 - a_1 a_3 a_4 + a_2 a_3^2 - a_4^2$
 \item $c_4 = b_2^2 - 24 b_4$
 \item $c_6 = -b_2^3 + 36 b_2 b_4  - 216 b_6$
-\item $D = D_E = -b_2^2 b_8 - 8 b_4^3 - 27 b_6^2 + 9 b_2 b_4 b_6$; this is the definition of the discriminant of $E$
-\item $j = \frac{c_4}{D}$ is the $j$-invariant of $E$
+\item $D = D(E) = -b_2^2 b_8 - 8 b_4^3 - 27 b_6^2 + 9 b_2 b_4 b_6$; this is the definition of the discriminant of $E$
+\item $j = j(E) = \frac{c_4}{D}$ is the $j$-invariant of $E$
 %\item $\omega = \frac{dx}{2y + a_1 x + a_3} = \frac{dy}{3x^2 + 2a_2 x + a_4 - a_1 y}$
 \end{itemize}
 
@@ -48,24 +48,27 @@ Let $x$ be a positive input, and let $g(x)$ be some positive-valued reference fu
 \limsup_{x \to \infty} \left| \frac{f(x)}{g(x)}\right| < \infty
 \end{equation}
 That is, $f(x) = O(g(x))$ if the asymptotic growth/decay rate of $f$ is bounded by some multiple of that of $g$.
-\item We say a function $f(x) = \softO(g(x))$ (read ``$f$ is soft-Oh of $g$''), if there is some $k>0$ such that
+\item We say a function $f(x) = \softO(g(x))$ (read ``$f$ is soft-Oh of $g$''), if there is some $m>0$ such that
 \begin{equation}
-\limsup_{x \to \infty} \left| \frac{f(x)}{g(x)\left(\log g(x)\right)^k}\right| < \infty
+\limsup_{x \to \infty} \left| \frac{f(x)}{g(x)\left(\log g(x)\right)^m}\right| < \infty
 \end{equation}
 That is, $f(x) = \softO(g(x))$ if the asymptotic growth/decay rate of $f$ scales like that of $g$, up to the inclusion of log factors.
 \end{itemize}
 \end{definition}
-Note that $f(x) = \softO(g(x))$ is equivalent to the statement that $f(x) = O(g(x)^{1+\epsilon})$ for any $\epsilon>0$. \\
+Note that $f(x) = \softO(g(x))$ implies that $f(x) = O(g(x)^{1+\epsilon})$ for any $\epsilon>0$, but not vice versa; there are complexity classes strictly between the two. In this thesis we will work exclusively with soft $O$ time complexities, so there is no need to elaborate on those classes here.\\
 
 \begin{definition}
-Let $A$ be an algorithm which takes input $n$, where for simplicity we may think of $n$ as a positive integer. Let $t_A(n)$ be the running time of $A$ on the input $n$.
+Let $A$ be an algorithm which takes input of size $k$, where for simplicity we may think of $k$ as a positive integer. Let $t_A(k)$ be the running time of $A$ thought of as a function of the input size $k$.
 \begin{itemize}
-\item $A$ is said to have {\it polynomial time complexity} if there is some $k>0$ such that the running time of $t_A(n) = O(n^{k})$, i.e. the asymptotic running time of the algorithm scales like some polynomial function of $n$.
-\item If $t_A(n) = O(n^{\epsilon})$ for any $\epsilon>0$, then $A$ is said to have {\it sub-polynomial time complexity}. Note that if $t_A(n) = \softO(1)$, then $A$ has sub-polynomial time complexity.
-\item If no $k>0$ exists such that $t_A(n) = O(n^k)$, then $A$ is said to have {\it super-polynomial time complexity}. More specifically, if there is some $k>1$ such that $t_A(n) = O(k^n)$, then $A$ is said to have {\it exponential time complexity}.
+\item $A$ is said to have {\it polynomial time complexity} if there is some $m>0$ such that the running time of $t_A(k) = O(k^{m})$, i.e. the asymptotic running time of the algorithm scales like some polynomial function of $k$.
+\item If $t_A(k) = O(k^{\epsilon})$ for any $\epsilon>0$, then $A$ is said to have {\it sub-polynomial time complexity}. Note that if $t_A(k) = \softO(1)$, then $A$ has sub-polynomial time complexity.
+\item If no $m>0$ exists such that $t_A(k) = O(k^m)$, then $A$ is said to have {\it super-polynomial time complexity}. If there is some $m>1$ such that $t_A(k) = O(m^k)$, then $A$ is said to have {\it exponential time complexity}.
 \end{itemize}
 \end{definition}
-The same terminology can be applied to the space requirements of an algorithm, wherein we would replace the word `time' with `space'.
+Again, there are complexity classes strictly between polynomial and exponential complexity, but we won't consider them in this thesis. The same terminology can be applied to the space requirements of an algorithm, wherein we would replace the word `time' with `space'. \\
+
+Note that in theoretical computer science the $k$ is typically the number of bits needed to specify the input to the algorithm. However, in computational number theory the input itself is often a positive integer; many algorithms scale with some polynomial of the input magnitude as opposed to the number of bits defining the input. We therefore highlight the distinction between ``polynomial time in the number of bits of the input" and ``polynomial time in the magnitude of the input": the former is asymptotically much faster than the latter. When discussing time complexities we will always be clear to delineate what the measure of complexity $k$ is. \\
+
 
 
 %%%%%%%%%%%%
@@ -75,7 +78,7 @@ The same terminology can be applied to the space requirements of an algorithm, w
 An elliptic curve $E$ is a genus 1 smooth projective curve with a marked point $\cO$. $E$ is defined over a field $K$ if $E$ may be represented by the {\it Weierstrass equation} $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a1,\ldots a_6 \in K$.
 \end{definition}
 
-For elliptic curves defined over $\QQ$, we may always find a model for $E$ such that $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$. Furthermore, there is the notion of {\it minimality} when it comes to models for elliptic curves. Without going into the definition thereof, unless stated otherwise we will assume that any given elliptic curve Weierstrass equation is minimal and in the above form.
+For elliptic curves defined over $\QQ$, we may always find a model for $E$ such that $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$. Furthermore, there is the notion of {\it minimality} when it comes to models for elliptic curves. Without going into the definition thereof, unless stated otherwise we will assume that any given elliptic curve Weierstrass equation is specified by its global minimal model.
 
 \begin{definition}
 The set of $K$-rational points on $E$ is denoted $E(K)$. $E(K)$ comprises an abelian group, with the ``point at infinity" $\cO$ acting as the group identity element.
@@ -87,7 +90,7 @@ f(x,y) = y^2 + a_1 xy + a_3 y^2 - x^3 - a_2 x^2 - a_4 x - a_6.
 \end{equation}
  That is $E(K) = \set{(x,y) \in K^2: \; f(x,y) = 0}$, along with the point at infinity $\cO$. \\
 
-For a rational elliptic curve $E/\QQ$, we may consider the reduced curve $\tilde{E}/\Fp$ for any prime $p$. If $E/\QQ$ is given by $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, then for $p\ne 2$ or $3$ the reduced curve is given by $y^2 + \overline{a_1} xy + \overline{a_3} y^2 = x^3 + \overline{a_2} x^2 + \overline{a_4} x + \overline{a_6}$, where $\overline{a_i}$ is $a_i$ reduced modulo $p$. For $p = 2$ or $3$ we may have to move to a different model for $E$ first to avoid the reduced curve being automatically singular.
+For a rational elliptic curve $E/\QQ$, we may consider the reduced curve $\tilde{E}/\Fp$ for any prime $p$. If $E/\QQ$ is given by the global minimal model $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, then the reduced curve is given by $y^2 + \overline{a_1} xy + \overline{a_3} y^2 = x^3 + \overline{a_2} x^2 + \overline{a_4} x + \overline{a_6}$, where $\overline{a_i}$ is $a_i$ reduced modulo $p$. For $p = 2$ or $3$ we may have to move to a different model for $E$ first to avoid the reduced curve being automatically singular.
 
 \begin{definition}
 A prime $p$ is called {\it good} if $\tilde{E}/\Fp$ is non-singular. The reduced curve is an elliptic curve over $\Fp$ (by definition) which we denote by $E/\Fp$; $E$ is said to have {\it good reduction at $p$}. Otherwise, $p$ is said to be {\it bad}, the reduced (singular) curve is denoted $\tilde{E}/\Fp$, and $E$ is said to have {\it bad reduction at $p$}.
@@ -131,7 +134,7 @@ f_p(E) = \begin{cases} 0, & \text{$E$ has good reduction at $p$} \\ 1, & \text{$
 \end{equation}
 For $p=2$ and $3$, the exponent $f_p(E)$ is still zero if $p$ is good; however the exponent may be as large as $8$ and $5$ respectively if $p$ is bad.
 \end{definition}
-The ``proper" definition of the conductor is Galois representation-theoretic and is defined in terms of the representation of the inertia group at $p$ on the torsion subgroup of $E$; For $p\ne 2$ or $3$ this reduces to the definition given above, but for $2$ and $3$ there may be nontrivial wild ramification which increases the exponent up to the stated amounts. A full technical definition of the conductor is given in \cite[pp. 379-396]{Sil-1994}. In any case (including $2$ and $3$), the exponent $f_p(E)$ may be computed efficiently by Tate's algorithm, as detailed in the previous section of the same book \cite[pp. 361-379]{Sil-1994}. \\
+The ``proper" definition of the conductor is Galois representation-theoretic and is defined in terms of the representation of the inertia group at $p$ on the torsion subgroup of $E$; for $p\ne 2$ or $3$ this reduces to the definition given above, but for $2$ and $3$ there may be nontrivial wild ramification which increases the exponent up to the stated amounts. A full technical definition of the conductor is given in \cite[pp. 379-396]{Sil-1994}. In any case (including $2$ and $3$), the exponent $f_p(E)$ may be computed efficiently by Tate's algorithm, as detailed in the previous section of the same book \cite[pp. 361-379]{Sil-1994}. \\
 
 %%%%%%%%%%%%
 \subsection{Elliptic curve $L$-functions}
@@ -205,11 +208,11 @@ where $N_E$ is the conductor of $E$ and $\Gamma(s)$ the usual Gamma function on 
 \end{definition}
 
 Thanks to the modularity theorem, we may in fact analytically continue $\Les$ and $\Lams$ to be entire functions defined on all of $\CC$.
-\begin{theorem}[Breuille, Conrad, Diamond, Taylor, Wiles et al, 1995,1999,2001] \mbox{}\\
+\begin{theorem}[Breuille, Conrad, Diamond, Taylor, Wiles et al., 1995,1999,2001] \mbox{}\\
 There exists an integral newform $f = \sum_n a_n q^n$ of of weight $k=2$ and level $N_E$ such that $\Les = L_f(s)$.
 \end{theorem}
 
-The modularity theorem above is essentially the converse of the theorem by Shimura in the 1960s: if $f$ is a weight $2$ newform of level $N_E$, then there exists some elliptic curve $E/\Q$ of conductor $N_E$ such that $L_f(s) = L_E(s)$. Hence any theorem about elliptic curve $L$-functions is thus really a theorem about $L$-functions of weight 2 newforms in disguise. \\
+The modularity theorem above is essentially the converse of the theorem by Shimura in the 1960s: if $f$ is a weight $2$ newform of level $N_E$ with rational Fourier coefficients, then there exists some elliptic curve $E/\Q$ of conductor $N_E$ such that $L_f(s) = L_E(s)$. Hence any theorem about elliptic curve $L$-functions is thus really a theorem about $L$-functions of weight 2 newforms in disguise. \\
 
 \begin{corollary} \mbox{}
 \begin{itemize}
@@ -246,7 +249,7 @@ This follows immediately from the functional equation. \\
 \begin{itemize}
 \item The point $s=1$ is called the {\it central point} or the {\it critical point}.
 \item The vertical line of symmetry $\Re(s)=1$ is called the {\it critical line}.
-\item The vertical strip $\frac{1}{2} \le \Re(s) \le \frac{3}{2}$ is call the {\it critical strip}.
+\item The vertical strip $0 \le \Re(s) \le 2$ is call the {\it critical strip}.
 \end{itemize}
 \end{definition}
 
@@ -261,15 +264,15 @@ For any $E/\QQ$,
 \end{proposition}
 This can be proven by showing that the logarithmic derivative of $\Lambda_E(1+s)$ converges absolutely for $\Re(s) > \frac{1}{2}$; see the corollary to Proposition \ref{lem:ldLe_bound} for a proof. The statement can with a bit more work be strengthened to asserting that all zeros are {\it strictly} inside the critical strip). In fact, the Generalized Riemann Hypothesis asserts that
 \begin{equation}
-\Lambda_E(1+s) \ne  \;\;\mbox{when}\;\; \Re(s) \neq 0
+\Lambda_E(1+s) \ne 0  \;\;\mbox{when}\;\; \Re(s) \neq 0
 \end{equation}
-From the functional equation we get that $\Les$ has simple zeros at the nonpositive integers; these are denoted the {\it trivial} zeros of $\Les$. Zeros inside the critical strip are called {\it nontrivial}. The Generalized Riemann Hypothesis (stated in full in section \ref{sec:conjectures}) asserts that all nontrivial zeros of $\Les$ lie on the critical line $\Re(s)=1$, and all zeros with nonzero imaginary part are simple. 
+From the functional equation we get that $\Les$ has simple zeros at the nonpositive integers; these are denoted the {\it trivial} zeros of $\Les$. Zeros inside the critical strip are called {\it nontrivial}. The Generalized Riemann Hypothesis (formally stated in Section \ref{sec:conjectures}) asserts that all nontrivial zeros of $\Les$ lie on the critical line $\Re(s)=1$. 
 
-If $\Les$ has a zero at the central point, it may or may not have multiplicity greater than 1. The multiplicity of this possible zero is denoted the analytic rank of $E$:
+If $\Les$ has a zero at the central point, it may or may not have multiplicity greater than 1.
 \begin{definition}
-Let $E$ be an elliptic curve over $\Q$, and let $\Les$ be its $L$-series. The {\it analytic rank} of $E$, denoted $r_{an}(E)$ or just $r_{an}$ is the order of vanishing of $L_E(s)$ at the central point $s=1$. That is, if the Taylor series of $\Les$ about $s=1$ is
+Let $E$ be an elliptic curve over $\Q$ and let $\Les$ be its $L$-series. The {\it analytic rank} of $E$, denoted $r_{an}(E)$ or just $r_{an}$ is the order of vanishing of $L_E(s)$ at the central point $s=1$. That is, if the Taylor series of $\Les$ about $s=1$ is
 \begin{equation}
-L_E(1+s) = a_0 + a_1 s + a_2 s^2 + \ldots
+L_E(1+s) = a_0 + a_1 s + a_2 s^2 + \cdots
 \end{equation}
 then $a_n = 0$ for $0 \le n < r_{an}$ and $a_{r_{an}} \ne 0$.
 \end{definition}
@@ -290,18 +293,18 @@ We may use Equation \ref{eqn:Lams_analytic_continuation} to produce formulae for
 \end{equation}
 \item When $m$ has the same parity as $E$, the $m$th derivative of $\Lams$ at the central point is given by
 \begin{equation}\label{eqn:central_derivatives}
-\Lambda_E^{(m)}(1) = 2 \sum_{n=1}^\infty a_n \int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N_E}}\right)^m e^{-\frac{2\pi n}{\sqrt{N_E}}\cdot t} \; dx
+\Lambda_E^{(m)}(1) = 2 \sum_{n=1}^\infty a_n \int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N_E}}\right)^m e^{-\frac{2\pi n}{\sqrt{N_E}}\cdot t} \; dt
 \end{equation}
 When $m$ is opposite in parity to $E$, then $\Lambda_E^{(m)}(1) = 0$.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-Observe we may write equation \ref{eqn:Lams_analytic_continuation}, after a change of variables and swapping integration and summation signs, as
+Observe that the series in equation \ref{eqn:Lams_analytic_continuation} converges uniformly over the interval of integration; we may therefore swap the integral and summation signs. After a change of variables we get
 \begin{equation*}
 \lambda_E(1+s) = N_E^{\frac{1+s}{2}}  \int_{\frac{1}{\sqrt{N_E}}}^{\infty} x^s f_E(it) \; dt  = N_E^{\frac{1+s}{2}}  \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N_E}}}^{\infty} t^s e^{-2\pi nt} \; dt,
 \end{equation*}
-where $f_E$ is the cusp form attached to $E$. We may differentiate under the integral sign without issue and then evaluate at $s=1$ to get
+where $f_E$ is the cusp form attached to $E$. Both $t^s e^{-2\pi nt}$ and its derivative w.r.t. $s$ are continuous over the integration interval for any $n$, so by the Leibniz integration rule we may differentiate under the integral sign and evaluate at $s=1$ to get
 \begin{equation}\label{eqn:lambda_derivs}
 \lambda_E^{(m)}(1) = \sqrt{N_E}\cdot \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N_E}}}^{\infty} (\log t)^m e^{-2\pi n t} \; dt
 \end{equation}
@@ -360,7 +363,7 @@ while $\sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N_E}}}{n} \le \sum_{n=1}^{\inft
 Note that for fixed $N_E$, if we allow $m \to \infty$, we actually have that the $m$th derivative can grow like $O\left(\frac{m!!}{(2\pi e)^{m/2}}\right)$, where $m!! = m(m-2)\cdots$ is the double factorial on $m$ i.e. faster than exponentially in $m$. However, this behavior only starts to show when $m>>\log N_E$ -- hence our restriction on the magnitude of $m$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N_E$ (c.f. Corollary \ref{cor:logderiv_rank_bound}), we will never need to consider $\Lambda_E^{(m)}(1)$ for $m> \frac{1}{2}\log N_E$. \\
 
 
-Crucial to this thesis, $L_E(s)$ and its derivatives can be provably computed to a given precision in time polynomial in the the conductor of $E$:
+Crucial to this thesis, $L_E(s)$ and its derivatives can be provably computed to a given precision in time that scales with the square root of the conductor of $E$:
 \begin{proposition}\label{prop:L_E_time_complexity}
 When $m<\frac{1}{2} \log N_E$, the $m$th derivative of $L_E(s)$ at the central point can be provably computed to $k$ bits precision in $\softO(k\cdot \sqrt{N_E})$ time, where $N_E$ is the conductor of $E$.
 \end{proposition}
@@ -401,20 +404,19 @@ where
 
 For an excellent description of the conjecture and a breakdown of the arithmetic invariants mentioned above, see Andrew Wiles' official description of the BSD Conjecture on the Clay Math website \cite{Wil-BSD}. \\
 
-The Generalized Riemann Hypothesis (GRH), as the name suggests, generalizes the famous conjecture first posed by Bernhard Riemann in 1959 \cite{Rie-1859}. The (standard) Riemann Hypothesis asserts that all nontrivial zeros of the Riemann zeta function $\zeta(s)$ occur on the vertical line $\Re(s)=\frac{1}{2}$ and are simple. It is hard to track down where the Generalized Riemann Hypothesis was first formulated in its full generality (but Conrey gives a good exposition in \cite{Con-2003}), but it asserts that for a large class of suitably defined $L$-functions, the nontrivial nonreal zeros will occur on a single vertical line in the complex plane and will all be simple. We use GRH as it applies to elliptic curve $L$-functions:
+The Generalized Riemann Hypothesis (GRH), as the name suggests, generalizes the famous conjecture first posed by Bernhard Riemann in 1859 \cite{Rie-1859}. The (standard) Riemann Hypothesis asserts that all nontrivial zeros of the Riemann zeta function $\zeta(s)$ occur on the vertical line $\Re(s)=\frac{1}{2}$. It is hard to track down where the Generalized Riemann Hypothesis was first formulated in its full generality (Conrey gives a good exposition in \cite{Con-2003}), but it asserts that for a large class of suitably defined $L$-functions, the nontrivial nonreal zeros will occur on a single vertical line in the complex plane (where the exact lateral placement of said line depends on the class of $L$-function being considered). We use GRH as it applies to elliptic curve $L$-functions:
 \begin{conjecture}[Generalized Riemann Hypothesis for Elliptic Curves, version 1] \cite{Rie-1859} \cite{Con-2003}
 \label{conj:GRH1}
 \mbox{}
-Let $E$ be an elliptic curve over $\Q$, and let $\Les$ be its $L$-series. If $\rho$ is a nontrivial zero of $\Les$ with nonzero imaginary part, then $\Re(\rho) = 1$. Moreover, all nontrivial noncentral zeros of $\Les$ are simple.
+Let $E$ be an elliptic curve over $\Q$, and let $\Les$ be its $L$-series. If $\rho$ is a nontrivial zero of $\Les$ with nonzero imaginary part, then $\Re(\rho) = 1$.
 \end{conjecture}
-That is, all nontrivial zeros of $\Les$ lie on the {\it critical line} $\Re(s)=1$, and the only place zeros can lie on top of each other is at the central point $s=1$. There are numerous equivalent formulations of GRH; we will most often use the following:
+That is, $\Les$ is never zero outside of the {\it critical line} $\Re(s)=1$ and the nonpositive integers. There are numerous equivalent formulations of GRH; we will most often use the following pertaining to the shifted completed $L$-function:
 \begin{conjecture}[Generalized Riemann Hypothesis for Elliptic Curves, version 2] \cite{Rie-1859} \cite{Con-2003}
 \label{conj:GRH2}
  \mbox{}
  Let $E$ be an elliptic curve over $\Q$, and let $\Lams$ be the completed $L$-function attached to $E$. Then
 \begin{enumerate}
 \item $\Lambda_E(1+s) = 0 \Longrightarrow \Re(s) = 0$.
-\item $\Lambda_E(1+s) = 0 \;$ and $\; \Lambda_E\pr(1+s) = 0 \Longrightarrow s=0$.
 \end{enumerate}
 \end{conjecture}
 

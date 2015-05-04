@@ -46,9 +46,10 @@ chapters/6_remarks_future_work,
 \newcommand{\EQ}{E(\QQ)}
 \newcommand{\EFp}{E(\Fp)}
 \newcommand{\Ensfpe}{E_{\text{ns}}(\FF_{p^e})}
-\newcommand{\sinc}{\text{sinc}}
-\newcommand{\Li}{\text{Li}}
 \newcommand{\softO}{\tilde{O}}
+
+\DeclareMathOperator{\Li}{Li}
+\DeclareMathOperator{\sinc}{sinc}
 
 \usepackage{alltt}  % 
 \newenvironment{demo}
@@ -125,21 +126,23 @@ Analytic Algorithms with Explicit Time Complexity}
 %
 \setcounter{page}{-1}
 \abstract{%
-Elliptic curves are some of the central objects of study in modern-day algebraic number theory. The problem of how to determine the rank of a rational elliptic curve is a difficult one, and at the time of the writing this thesis an unconditional general method for doing so is not yet known. \\
+Elliptic curves are some of the central objects of study in modern-day algebraic number theory. The problem of how to determine the rank of a rational elliptic curve is a difficult one, and at the time of the writing of this thesis an unconditional general method for doing so is not known. \\
 
-This dissertation consists of two parts. In the first we prove that, assuming standard conjectures, an {\it effective} algorithm exists to compute the rank of an elliptic curve that runs in polynomial time of the curve's conductor. This algorithm revolves around evaluating the $L$-function of the curve in question, and as such is practical for curves with conductors up to $\sim 10^{16}$ or so on current computer architecture. \\
+It has been known for decades that contingent on the Birch and Swinnerton-Dyer Conjecture, an algorithm to compute rank exists, but this algorithm has unknown time complexity. In the first part of this thesis we prove that, assuming standard conjectures, an {\it effective} algorithm exists to compute rank with time complexity  that is polynomial in the curve's conductor. This method involves evaluating the $L$-function of the curve in question, and as such is practical for curves with conductors up to $\sim 10^{16}$ on current computer architecture. \\
 
-The second part of this work addresses the question of what can be done when the conductor is too large for the above method to be practical. To this end we exhibit a zero sum-based method to bound rank from above that doesn't rely on directly evaluating an elliptic curve's $L$-function, and as such can be used on curves with very large conductors. We also include results concerning the locations of the nontrivial zeros of an elliptic curve $L$-function, and an exposition of related quantities.
+The second part of this work addresses the question of what can be done when the conductor is too large for the above method to be practical. To this end we exhibit an analytic method to bound rank from above that doesn't rely on directly evaluating an elliptic curve's $L$-function, and as such can be used on curves with very large conductors. Because this method involves sums over the imaginary parts of the zeros of an elliptic curve $L$-function, we also include results concerning the locations thereof, and an exposition of related quantities.
 }
 
 \chapter*{Preface}
-Accessibility and readability has been emphasized throughout this work. Specifically, no beyond knowledge standard graduate-level complex analysis and algebra is assumed, and advanced knowledge of number theoretic topics is {\it not} required. As such, we hope that the results in this dissertation are accessible to a wide audience, even those at the advanced undergraduate level. Chapter 1 was written specifically to be a gentle introduction to the subject matter of this thesis. \\
+I have attempted to emphasize accessibility and readability throughout this work. Specifically, no beyond knowledge standard graduate-level complex analysis and algebra is assumed, and advanced knowledge of number theoretic topics is {\it not} required. As such, I hope that the results in this dissertation are accessible to a wide audience, even those at the advanced undergraduate level. Chapter 1 was written specifically to be a gentle introduction to the subject matter of this thesis. \\
 
-Many of the results in this work are contingent on the validity of three of the major open conjectures in number theory: The Birch and Swinnerton-Dyer conjecture (BSD), the Generalized Riemann Hypothesis (GRH) and the ABC conjecture (ABC). For ease of exposition, instead of stating explicitly in a result which of the above conjectures are assumed, we will list the three-letter initial of each assumed conjecture after the heading of each result. For example, the following result:
-\begin{proposition}[BSD, GRH]
-The rank of an elliptic curve equals the number of non-simple zeros of $L_E(s)$.
+For the expert I recommend skipping straight to Chapter 2, wherein the main results are stated. Proofs for these results can be found in Chapters 4 and 5 (from 5.2 onwards). \\
+
+Finally, a note on conjecture dependencies. Many of the results in this work are contingent on the validity of three of the major open conjectures in number theory: the Birch and Swinnerton-Dyer conjecture (BSD), the Generalized Riemann Hypothesis (GRH) and the ABC conjecture (ABC). For ease of exposition, instead of stating explicitly in a result which of the above conjectures are assumed, we will list the three-letter initial of each assumed conjecture after the heading of each result. For example, the following result:
+\begin{proposition}[BSD]
+A rational elliptic curve with odd parity has a point of infinite order.
 \end{proposition}
-is a consequence of both BSD and GRH being true.
+is a consequence of BSD being true.
 
 %
 % ----- contents & etc.
@@ -207,15 +210,17 @@ is a consequence of both BSD and GRH being true.
 % ----- acknowledgments
 %
 \acknowledgments{
-This dissertation was by no means produced in a vacuum. Many individuals have provided critical contributions over the course of my studies, and we are thankful to all of them. However, some we must mention specifically. Sincere thanks must be given to my advisor William Stein, who for many years has provided the patient mentorship and guidance needed to make this dissertation a reality. I would also like to extend a heartfelt thanks to the University of Washington department of Mathematics as a whole, and to the graduate student coordinator Brooke Miller in particular, for supporting me throughout my studies at UW. \\
+By no means did I produce this dissertation in a vacuum. Many individuals have provided critical contributions over the course of my studies, and we are thankful to all of them. However, some we must mention specifically. Sincere thanks must be given to my advisor William Stein, who for many years has provided the patient mentorship and guidance needed to make this dissertation a reality. I would also like to extend a heartfelt thanks to the University of Washington department of Mathematics as a whole, and to the graduate student coordinator Brooke Miller in particular, for supporting me throughout my studies at UW. \\
 
-Beyond this, a number of mathematicians have given valuable advice. We are grateful for the correspondence with Barry Mazur on the explicit formula for elliptic curves, which was my entry point into the whole topic of elliptic curve $L$-functions; moreover we thank Peter Sarnak for his input on low-lying zeros of elliptic curve $L$-functions, and helping spur the formulation of the central idea of this thesis. John Cremona and Noam Elkies gave sage insight on the topics of the real period and regulator respectively. And we are grateful to John Voight, who used an early version of my rank estimation code and highlighted some significant bugs. Finally, thanks must be given to Wei Ho, Jen Balakrishnan, Jamie Weigandt and Nathan Kaplan for putting up with my less-than-expert attempts to compute the ranks of large databases of elliptic curves.
+Beyond this, a number of mathematicians have given valuable advice. We are grateful for the correspondence with Barry Mazur on the explicit formula for elliptic curves, which was my entry point into the whole topic of elliptic curve $L$-functions; moreover we thank Peter Sarnak for his input on low-lying zeros of elliptic curve $L$-functions, and helping spur the formulation of the central idea of this thesis. John Cremona and Noam Elkies gave sage insight on the topics of the real period and regulator respectively. And we are grateful to John Voight, who used an early version of my rank estimation code and highlighted some significant bugs. Finally, thanks must be given to Wei Ho, Jen Balakrishnan, Jamie Weigandt and Nathan Kaplan for putting up with my less-than-expert attempts to compute the ranks of large databases of elliptic curves. \\
+
+And last but not least, a huge thank you to my wife Kimberly for her constant unwavering support throughout. 
 }
 
 %
 % ----- dedication
 %
-\dedication{\begin{center}To my wife Kimberly and son Bram, who comprise two thirds of the Spicer Theorem.\end{center}}
+\dedication{\begin{center}To Kimberly and Bram, who comprise two thirds of the Spicer Theorem.\end{center}}
 
 %
 % end of the preliminary pages
@@ -257,7 +262,7 @@ Beyond this, a number of mathematicians have given valuable advice. We are grate
 % ==========   Bibliography
 %
 \nocite{*}   % include everything in the thesis.bib file
-\bibliographystyle{plain}
+\bibliographystyle{acm}
 \bibliography{bibliography}
 %
 % ==========   Appendices

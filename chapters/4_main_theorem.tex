@@ -5,7 +5,8 @@
 
 In this section we prove Theorem \ref{thm:main_theorem}: specifically, that Algorithm \ref{algo:compute_rank} is guaranteed, assuming BSD and ABC and optionally GRH, to correctly output an elliptic curve's rank in time $\softO(\sqrt{N_E})$, where $N_E$ is the conductor of the input curve. Note that the proof will quote certain results established later in this work. \\
 
-\begin{proposition}\label{prop:k_bits_for_leading_coeff}[BSD, ABC, (GRH)] \\
+\begin{proposition}[BSD, ABC, (GRH)]
+\label{prop:k_bits_for_leading_coeff}
 Let $E$ have $L$-function $\Les$, conductor $N_E$ and real period $\Omega_E$, and let
 \begin{equation}\label{eqn:num_bits_without_GRH}
 k = 65 + 10.5 \log_2 N_E - \log_2 \Omega_E
@@ -53,6 +54,20 @@ O(\log N_E) + \left(\frac{1}{2}\log N_E + 1.6\right) \cdot \softO\left(k\cdot \s
 since $k$ is sub-polynomial in $N_E$. The $\frac{1}{2}\log N_E + 1.6$ in the above statements may be replaced with $0.32\log N_E + 0.5$ if GRH is assumed, but resulting time complexity remains $\softO\left(\sqrt{N_E}\right)$.
 \end{proof}
 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/rank_algorithm_timings.png}
+    \caption{A scatter plot of the time in seconds taken to compute the rank of an elliptic curve using a Sage implementation of Algorithm \ref{algo:compute_rank} (without assuming GRH) vs. conductor, plotted on a log/log scale, for 100 curves drawn randomly from the Cremona database.}
+    \label{fig:rank_algorithm_timings}
+\end{figure}
+
+For evidence supporting the validity of Theorem \ref{thm:main_theorem}, we wrote a na\"{i}ve implementation of Algorithm \ref{algo:compute_rank} in Sage and collected timings on SageMathCloud of the algorithm's runtime. 100 curves were drawn from the Cremona database according to a log-uniform distribution on their conductors; a log/log scatter plot of timings vs. conductors can be seen in Figure \ref{fig:rank_algorithm_timings} (the algorithm produced the correct output in all cases). \\
+
+The red line in the figure is the best fit straight line, which has slope $0.503$; the predicted slope of $0.5$ is within the estimate's error of $0.016$. Also note the slight upward concavity of plotted points, indicative of the log factors in front of the $\sqrt{N}$ time complexity. \\
+
+Using this best fit line, we can make predictions as to how long the algorithm will take to run on curves of longer conductor. For example, the curve of largest known rank is a rank 28 curve found by Elkies (as discussed in \cite{Bob-2011}); it has conductor $\log N_E \sim 325.9$. For this curve we estimate Algorithm \ref{algo:compute_rank} to take roughly $1.1\times 10^{62}$ years, which is about $8\times 10^{51}$ times the age of the universe. \\
+
+Clearly then, the $\softO(\sqrt{N_E})$ time complexity of Algorithm \ref{algo:compute_rank} limits its usefulness when it comes to curves of large rank. For a method that can be used on such curves, see Chapter 5.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,7 +76,7 @@ since $k$ is sub-polynomial in $N_E$. The $\frac{1}{2}\log N_E + 1.6$ in the abo
 The real period of a rational elliptic curve $E$ is a measure of the ``size'' of the set of {\it real} points on $E$. \\
 
 Recall that $E(\CC)$, the group of complex points on $E$, is isomorphic via the (inverse of the) Weierstrass $\wp$-function to $\CC$ modulo a lattice under addition; that is, $E(\CC) \simeq \CC/\Lambda$, where $\Lambda = \ZZ\omega_1 + \ZZ\omega_2$, and $\omega_1,\omega_2 \in \CC$.
-If $E$ is defined over the real numbers (as rational elliptic curves are), then we may always write $\omega_1$ as being positive real. The second generator $\omega_2$ can be written as being positive imaginary when $E$ has positive discriminant, or in the upper half plane with real part $\frac{\omega_1}{2}$ when $E$ has negative discriminant. [Note: some texts normalize $\omega_2$ to have imaginary part equal to $-\frac{\omega_1}{2}$ when $D_E<0$, as this sometimes makes the presentation more natural. However, for the work below we will always assume that $\Re(\frac{\omega_2}{\omega_1}) = 0$ or $\frac{1}{2}$.]
+If $E$ is defined over the real numbers (as rational elliptic curves are), then we may always write $\omega_1$ as being positive real. The second generator $\omega_2$ can be written as being positive imaginary when $E$ has positive discriminant, or in the upper half plane with real part $\frac{\omega_1}{2}$ when $E$ has negative discriminant. [Note: some texts normalize $\omega_2$ to have imaginary part equal to $-\frac{\omega_1}{2}$ when $D_E<0$, as this sometimes makes the presentation more natural. However, for the work below we will always assume that $\Re(\frac{\omega_2}{\omega_1}) = 0$ or $\frac{1}{2}$.] See \cite[Ch. VI]{Sil-1985} and \cite[Ch. I]{Sil-1994} for a more detailed exposition of the complex theory of elliptic curves and elliptic and modular functions respectively.
 
 \begin{definition}\label{defn:real_period}
 Let $E/\QQ$ have discriminant $D_E$, and $E(\CC) \simeq \CC/\Lambda$, where $\Lambda = \ZZ\omega_1 + \ZZ\omega_2$ and $\omega_1 \in \RR$. The {\it real period} of $E$ is defined to be
@@ -70,7 +85,7 @@ Let $E/\QQ$ have discriminant $D_E$, and $E(\CC) \simeq \CC/\Lambda$, where $\La
 \end{equation}
 \end{definition}
 
-We are interested in answering the question: For a curve of a given discriminant, how big and how small can $\Omega_0$ be? Can the real period be arbitrarily small or large, or does it scale in some meaningful way with the discriminant? For our purposes, establishing a lower bound on $\Omega_E$ is what is needed to bound the central leading Taylor coefficient of $\Les$ from below. However, we include the result giving an upper bound on $\Omega_E$, as we find its implication -- that $\Omega_E$ goes to zero as $N_E$ goes to infinity -- an interesting one. \\
+We are interested in answering the question: For a curve of a given discriminant, how big and how small can $\Omega_E$ be? Can the real period be arbitrarily small or large, or does it scale in some meaningful way with the discriminant? For our purposes, establishing a lower bound on $\Omega_E$ is what is needed to bound the central leading Taylor coefficient of $\Les$ from below. However, we include the result giving an upper bound on $\Omega_E$, as we find its implication -- that $\Omega_E$ goes to zero as $N_E$ goes to infinity -- an interesting one. \\
 
 First, an upper bound. To this end, we have the following result from the complex theory of elliptic curves:
 \begin{proposition}
@@ -80,10 +95,10 @@ Let $\Delta(z)$ be the Ramanujan Delta function on the complex upper half plane,
 \end{equation}
 where $q = e^{2\pi i z}$. Let $E/\CC$ have discriminant $D_E$ and lattice basis $(\omega_1,\omega_2)$ as defined above. Set $z = \frac{\omega_1}{\omega_2}$ (such that $\Im(z) > 0$). Then
 \begin{equation}\label{eqn:modular_discriminant}
-D = \left(\frac{2\pi}{\omega_1}\right)^{12} \Delta\left(z \right)
+D_E = \left(\frac{2\pi}{\omega_1}\right)^{12} \Delta\left(z \right)
 \end{equation}
 \end{proposition}
-A good treatment of elliptic and modular functions, including a proof of the above, can be found in \cite{Sil-1994}. Using this result we can readily establish an upper bound on $\Omega_E$:
+A proof of the above can be found in Chapter I of \cite{Sil-1994}. Using this result we can readily establish an upper bound on $\Omega_E$:
 \begin{proposition}\label{prop:real_period_upper_bound_discriminant}
 Let $E/\QQ$ have discriminant $D_E$ and real period $\Omega_E$. Then
 \begin{equation}\label{eqn:real_period_upper_bound_discriminant}
@@ -95,9 +110,11 @@ Equation \ref{eqn:modular_discriminant} yields
 \begin{equation}
 \omega_1 = 2\pi |D_E|^{-\frac{1}{12}} \left| \Delta\left(\frac{\omega_2}{\omega_1}\right)\right|^{\frac{1}{12}}
 \end{equation}
-Since $E$ is defined over $\QQ$, $z = \frac{\omega_2}{\omega_1}$ has real part either equal to zero (if $D_0>0$) or equal to $\frac{1}{2}$ (if $D_E<0$). Thus $D_E>0$ corresponds to $q = e^{2\pi i z}$ being positive real lying in the open interval $(0,1)$, while $D_E<0$ corresponds to $q \in (-1,0)$. Now $\Delta$ is a cuspidal modular form on $\SL_2(\ZZ)$, so $\Delta(q)$ is continuous on $(-1,1)$ and decays to zero at $q=-1$ and $q=1$. It must therefore achieve a maximum magnitude on $(-1,0)$ and $(0,1)$. \\
+Recall that since $E$ is defined over $\QQ$, we may choose a lattice basis $(\omega_1, \omega_2)$ such that $\omega_1 \in \RR_{+}$ and the real part of $\omega_2$ equals either $0$ or $\frac{\omega_1}{2}$. Thus we may take $z = \frac{\omega_2}{\omega_1}$ to have real part either equal to 0 or $\frac{1}{2}$. Moreover, $\Re(s)=0$ if $D_0>0$ and $\Re(z)=\frac{1}{2}$ if $D_E<0$. See Chapter I of \cite{Sil-1994} for proofs of these statements. \\
 
-The critical points of $\Delta$ have been studied in there own right -- see for example \cite{IJA-2013} and \cite{WoYo-2013}. We see that $\Delta(q)$ has precisely one critical point on each of the intervals $(-1,0)$ and $(0,1)$; these occur at $q = 0.03727681\ldots$ and $q =-0.43929305\ldots$ respectively (corresponding to $z=0.52352170\ldots i$ and $z=\frac{1}{2}+0.13091903\ldots i$ respectively). At these two values we have $|\Delta(q)|^{\frac{1}{12}}$ equal to $0.70258935\ldots$ and $1.40521323\ldots$ respectively. We conclude that
+Thus $D_E>0$ corresponds to $q = e^{2\pi i z}$ being positive real lying in the open interval $q \in (0,1)$, while $D_E<0$ corresponds to $q \in (-1,0)$. Now $\Delta$ is a cuspidal modular form on $\SL_2(\ZZ)$, so as a function of $q$, $\Delta(q)$ is continuous on $(-1,1)$, zero at the origin, and decaying to zero at $q=-1$ and $q=1$. It must therefore achieve a maximum magnitude on both open intervals $q \in (-1,0)$ and $q \in (0,1)$. \\
+
+The critical points of $\Delta$ have been studied in there own right -- see for example \cite{IJA-2013} and \cite{WoYo-2013}. We see that $\Delta(q)$ has precisely one critical point on each of the intervals $q \in (-1,0)$ and $q \in (0,1)$; these occur at $q = 0.03727681\ldots$ and $q =-0.43929305\ldots$ respectively (corresponding to $z=0.52352170\ldots i$ and $z=\frac{1}{2}+0.13091903\ldots i$ in the upper half plane respectively). At these two values we have $|\Delta(q)|^{\frac{1}{12}}$ equal to $0.70258935\ldots$ and $1.40521323\ldots$ respectively. We conclude that
 \begin{equation}
 \Omega_E \le 2\pi\cdot 1.40521323\ldots \cdot  |D_E|^{-\frac{1}{12}} = 8.82921517\ldots \cdot |D_E|^{-\frac{1}{12}}
 \end{equation} 
@@ -107,13 +124,13 @@ Note that the real period is {\it not} invariant under isomorphism over $\QQ$. A
 \begin{lemma}
 Let $E$ be the global minimal model of a rational elliptic curve, and let $D_E$ and $\Omega_E$ be its discriminant and real period respectively. Let $E\pr$ be isomorphic to $E$ over $\QQbar$, and let $D_{E^{\pr}}$ and $\Omega_{E^{\pr}}$ be defined analogously. Then there exists a $u$ such that  $u^{12}\in \ZZ$, where $D_{E^{\pr}}=u^{12} D_E$ and $\Omega_{E^{\pr}}=\frac{1}{u}\Omega_E$.
 \end{lemma}
-A proof of the result regarding the discriminant can be found on pages 48-49 of \cite{Sil-1985}; the result regarding the real period follows, for example, from Equation \ref{eqn:modular_discriminant} by chasing through how $D_E$ and $\Omega$ vary under $\CC$-isomorphism. \\
+A proof of the result regarding the discriminant can be found on pages 48-49 of \cite{Sil-1985}; the result regarding the real period follows, for example, from Equation \ref{eqn:modular_discriminant} by chasing through how $D_E$ and $\Omega_E$ vary under $\CC$-isomorphism. \\
 
 Another consequence is that the bound given in Equation \ref{eqn:real_period_upper_bound_discriminant} is optimal, in the sense that the $\frac{1}{12}$ in the negative power of the the discriminant cannot be replaced with any larger value. As an explicit example, consider the family of CM elliptic curves given by Weierstrass equations
 \begin{equation}
 E^d: \;\; y^2 = x^3 - d^2 x
 \end{equation}
-for $d \in\ZZ$ positive squarefree (this is just the family of curves related to the congruent number problem, one of the oldest open problems in mathematics. For an excellent treatment on congruent numbers and how they relate to elliptic curves, see \cite{Kob-2012}). Then $E^{d}$ is just the quadratic twist by $d$ (hence the notation) of the curve
+for $d \in\ZZ$ positive squarefree. This is just the family of curves related to the congruent number problem, one of the oldest open problems in mathematics (for an excellent treatment on congruent numbers and how they relate to elliptic curves, see \cite{Kob-2012}). Then $E^{d}$ is just the quadratic twist by $d$ (hence the notation) of the curve
 \begin{equation}
 E: \;\; y^2 = x^3-x
 \end{equation}
@@ -140,14 +157,14 @@ That is, the real period goes to zero as the conductor of the curve goes to infi
 \end{corollary}
 This follows immediately from Proposition \ref{prop:real_period_upper_bound_discriminant}, as the conductor of an elliptic curve always divides its discriminant. Again, by the same reasoning as before this bound should be optimal. Note that this result is unconditional. \\
 
-Equation \ref{eqn:modular_discriminant} fives us a way to compute the real period of $E$, but it is in general not the most efficient means of doing so (as $z = \frac{\omega_1}{\omega_2}$ must be found by, for example, inverting the $j$-invariant of $E$). Instead, $\omega_1$ may be computed using the (real version of the) Gauss arithmetic-geometric mean. Recall the definition thereof: let $a,b \in \RR_{\ge0}$. Set $a_0 = a$ and $b_0 = b$, and for $n\ge 0$ let $a_{n+1} = \frac{1}{2}(a_{n}+b_{n})$ and $b_{n+1} = \sqrt{a_{n}b_{n}}$. Then $\AGM(a,b)$ is defined to be the common limit of both the $a_n$ and the $b_n$. We omit the proof that both sequences converge to the same value, but convergence is quadratic (i.e. extremely quick).
+Equation \ref{eqn:modular_discriminant} gives us a way to compute the real period of $E$, but it is in general not the most efficient means of doing so (as $z = \frac{\omega_1}{\omega_2}$ must be found by, for example, inverting the $j$-invariant of $E$). Instead, $\omega_1$ may be computed using the (real version of the) Gauss arithmetic-geometric mean. Recall the definition thereof: let $a,b \in \RR_{\ge0}$. Set $a_0 = a$ and $b_0 = b$, and for $n\ge 0$ let $a_{n+1} = \frac{1}{2}(a_{n}+b_{n})$ and $b_{n+1} = \sqrt{a_{n}b_{n}}$. Then $\AGM(a,b)$ is defined to be the common limit of both the $a_n$ and the $b_n$. Moreover, the convergence is quadratic -- precision roughly doubles with every iteration -- and is thus very quick. A deeper exposition of the AGM including a proof of convergence and convergence rate can be found in \cite{Cox-2000}.
 
 \begin{proposition}\label{prop:real_period_by_AGM}
 Let $E/\Q$ have minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$. Write the equation in the form
 \begin{equation}\label{eqn:weierstrass_with_bn}
 \left(y + \frac{a_1x + a_3}{2}\right)^2 = x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4} = (x-e_1)(x-e_2)(x-e_3)
 \end{equation}
-where $e_1,e_2,e_3$ are the 3 complex roots of the polynomial in $x$ on the right hand side, and $b_2$, $b_4$ and $b_6$ are as defined in section \ref{subsec:notation}.
+where $e_1,e_2,e_3$ are the 3 complex roots of the polynomial in $x$ on the right hand side, and $b_2$, $b_4$ and $b_6$ are as defined in Section \ref{subsec:notation}.
 \begin{enumerate}
 \item If $D_E > 0$, then $e_1,e_2,e_3 \in \RR$, so without loss of generality we may order them as $e_3 > e_2 > e_1$. Then
 \begin{equation}\label{eqn:omega_D_pos}
@@ -183,7 +200,7 @@ d(E) < 2+\frac{1}{2}\max\set{|b_2|,2|b_4|,|b_6|}
 We apply Rouche's Theorem on the polynomial $x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4}$. Observe that $|\frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4}| < |x^3|$ when $|x| < 1+\max\set{\frac{|b_2|}{4},\frac{|b_4|}{2},\frac{|b_6|}{4}}$, so by Rouche's Theorem we must have that any root $e$ of the cubic obeys $|e| <  1+\frac{1}{4}\max\set{|b_2|,2|b_4|,|b_6|}$. The result follows.
 \end{proof}
 
-\begin{corollary}\label{cor:real_period_time_complexity}[ABC]
+\begin{corollary}[ABC]\label{cor:real_period_time_complexity}
 The real period of an elliptic curve can be computed to a specified precision in polynomial time and space in the number of bits of the curve's conductor.
 \end{corollary}
 \begin{proof}
@@ -230,7 +247,8 @@ Finally, if we assume the Szpiro conjecture, Corollary \ref{ineq:Omega_bn_bound}
 \max\set{|A|^3,|B|^2} \le K(\epsilon)\cdot (N_E)^{6+\epsilon}
 \end{equation}
 (Since for a curve in short Weierstrass form $c_4 = -48A$ and $c_6=-864B$, we see that the above statement and Modified Szpiro are equivalent). Using this, we obtain the following:
-\begin{theorem}\label{thm:real_period_lower_bound}[ABC]
+\begin{theorem}[ABC]
+\label{thm:real_period_lower_bound}
 Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal model of $E$. Then, assuming ABC, for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that 
 \begin{equation}
 \Omega_E > K(\epsilon) \cdot (N_E)^{-\frac{3}{2}-\epsilon}
@@ -252,12 +270,19 @@ where to achieve the last line we absorb 1 into $K$ and relabel as necessary to 
 \end{proof}
 
 Thankfully, we do not need to assume a specific value of $K(\epsilon)$ for a given $\epsilon$ for Theorem \ref{thm:main_theorem} to hold. However, expirical data suggests that for $\epsilon=\frac{1}{2}$ we can easily get away by choosing $K = 1$. We formalize this with the following conjecture:
-\begin{conjecture}
+\begin{conjecture}\label{conj:Omega_lower_bound_explicit}
 Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal model of $E$.Then 
 \begin{equation}
 \Omega_E > (N_E)^{-2}
 \end{equation}
 \end{conjecture}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.92\textwidth]{graphics/real_periods_vs_conductors_loglog}
+    \caption{A scatter plot of $\log \Omega_E $ on the vertical axis vs. $\log N_E$ on the horizontal axis, for all curves up to conductor 350000. The upper is the proven upper bound $\Omega_E < 8.82921517\ldots \cdot (N_E)^{-\frac{1}{12}}$, which can be seen to be sharp. The lower red line corresponds to the bound $\Omega_E > (N_E)^{-1}$. Empirically this appears to hold easily, lending credence to the validity of the weaker assertion in Conjecture \ref{conj:Omega_lower_bound_explicit}.}
+    \label{fig:real_period_vs_conductor_loglog}
+\end{figure}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -311,27 +336,27 @@ For a proof of this theorem and elaboration on the last point, see \cite[pp. 227
 \begin{definition}
 The {\it N\'eron-Tate pairing} on $E/\QQ$ is the bilinear form $\langle\;,\;\rangle: E(\QQ)\times E(\QQ) \to \RR$ by
 	\begin{equation}
-		\langle P,Q \rangle = \hat{h}(P+Q) - \hat{h}(P) - \hat{h}(Q)
+		\langle P,Q \rangle = \frac{1}{2}\left(\hat{h}(P+Q) - \hat{h}(P) - \hat{h}(Q)\right)
 	\end{equation}
 \end{definition}
 Note that this definition may be extended to all pairs of points over $\QQbar$, but the definition above suffices for our purposes. \\
 
-If $E(\QQ)$ has rank $r$, then $E(\QQ)/E_{\text{tor}}(\QQ) \hookrightarrow \RR^r$ under the quadratic form $\hat{h}$ as a (rank $r$) lattice.
+If $E(\QQ)$ has rank $r$, then $E(\QQ)/E_{\text{tor}}(\QQ) \hookrightarrow \RR^r$ as a rank $r$ lattice via the height pairing map. Specifically, if $\set{P_1,\ldots, P_r}$ is a basis for $E(\QQ)$ modulo torsion, then we send $Q \in E(\QQ)$ to the vector $\left( \langle Q,P_1 \rangle, \ldots, \langle Q,P_r \rangle \right)$. Note that the image of a given point under this embedding obviously depends on the choice of basis. However, any two lattices comprising the image of $E(\QQ)$ using two different basis choices are isomorphic, and thus always have the same covolume.
 
 \begin{definition}
-The {\it regulator} $\Reg_E$ of $E/\QQ$ is the covolume of the lattice that is the image of $E(\QQ)$ under $\hat{h}$. That is, if $\set{P_1,\ldots,P_r}$ generates $E(\QQ)$, then
+The {\it regulator} $\Reg_E$ of $E/\QQ$ is the covolume of the lattice that is the image of $E(\QQ)$ under the above pairing map. That is, if $\set{P_1,\ldots,P_r}$ generates $E(\QQ)$, then
 \begin{equation}
 	\Reg_E = \det\left(\langle P_i,P_j\rangle \right)_{1 \le i,j \le r}
 \end{equation}
 where $\left(\langle P_i,P_j\rangle \right)_{1 \le i,j \le r}$ is the matrix whose $(i,j)$th entry is the value of the pairing $\langle P_i,P_j\rangle$. If $E/\QQ$ has rank zero, then $\Reg_E$ is defined to be 1.
 \end{definition}
-Note that if $E/\QQ$ has rank 1, then its regulator is just the smallest height of a non-torsion point $P \in E(\QQ)$. \\
+Note that for any $P \in E(\QQ)$, $\langle P, P \rangle = \hat{h}(P)$. Thus the regulator of any rank 1 curve is just the smallest height of a non-torsion point on that curve. \\
 
 Loosely, the regulator measures the ``density'' of rational points on $E$: positive rank elliptic curves with small regulators have many points with small coordinates, while those with large regulators have few such points.\\
 
-It is straightforward exercise to construct elliptic curves with arbitrarily large regulators. For example, one could fix some $x_0$ and $y_0$ with large denominators, and then find $A$ and $B$ such that $P=(x,y)$ lies on $E: y^2 = x^2 + Ax + B$. The more interesting question to ask -- and the one that is relevant to this thesis -- is ``how small can the regulator be?''. Specifically, given $E/\QQ$ with (minimal) discriminant $D_E$, what is the smallest $\Reg_E$ can be as a function of $D_E$?
+There are conjectural bounds on how large a curve's regulator can be in terms of its conductor -- see for example Conjecture 6.3 in Lang's Survey of Diophantine Geometry \cite[p. 99]{Lang-1997}. This is a topic we hope to investigate more fully future work, but the question that is relevant to this thesis is not how large the regulator can be, but how small. Specifically, given $E/\QQ$ with (minimal) discriminant $D_E$, what is the smallest $\Reg_E$ can be as a function of $D_E$?
 
-This is an open question. However, recall the conjecture made by Lang \cite{Lang-1997}:
+This is an open question. However, recall Lang's Height Conjecture (Conjecture 1.4 in \cite[pp. 73-74]{Lang-1997}):
 \begin{quotedconjecture}{\ref{conj:Lang}}
 Let $E/\QQ$ have minimal discriminant $D_E$. There exists an absolute constant $M_0 >0$ independent of $E$ such that any non-torsion point $P \in E(\QQ)$ satisfies
 \begin{equation}
@@ -347,7 +372,7 @@ Note that Theorem \ref{thm:main_theorem} requires the assumption of ABC for resu
 There is general agreement in the literature is that the value of $M_0$ above is in no way close to being optimal; however, there is no strong consensus as to how much larger $M_0$ could be. A survey by Elkies \cite{ElSt-2002} reveals 54 known cases of points $P$ on curves over $\QQ$ where $\hat{h}(P) < \frac{1}{100}$, and the largest value of $\hat{h}/\log|D_E|$ is $\sim 8.46 \times 10^{-5}$, achieved by a point on a curve of conductor $N=3476880330$. Given the evidence in this and other compiled data, it seems quite likely that there are as-yet undiscovered instances of points with exceptionally low height driving the quantity down even further. \\
 
 One can make the more conservative following observation:
-\begin{corollary}\label{conj:point_height_lower_bound}[ABC]
+\begin{corollary}[ABC]\label{conj:point_height_lower_bound}
 There exists an absolute constant $M_1 >0$ independent of $E$ such that any non-torsion point $P$ on any elliptic curve $E(\QQ)$ satisfies
 \begin{equation}
 \hat{h}(P) \ge M_1 .
@@ -356,7 +381,7 @@ There exists an absolute constant $M_1 >0$ independent of $E$ such that any non-
 The smallest absolute point height found in the aforementioned survey is $\hat{h}(P) = 8.914\times 10^{-3}$, achieved by the point $P = (7107,-602054)$ and its negative on the curve with Cremona label {\tt 3990v1}, given by the equation $E: y^2+xy+y=x^3+x^2-125615x+61201397$. (note that the Elkies' table uses a slightly different definition of height, equal to half the value of the height as defined above). One can see in this table that the known points of smallest height all belong to curves with small conductor, so it is perhaps more believable that this is indeed the point of smallest height on any rational elliptic curve -- for such a point is guaranteed to exist, assuming ABC. \\
 
 Even though the Hindry-Silverman bound above would seem so small as to be useless in all practical applications, we can use it to bound a curve's regulator from below in terms of an inverse power of its conductor.
-\begin{theorem}\label{thm:regulator_lower_bound}[BSD, ABC, (GRH)]
+\begin{theorem}[BSD, ABC, (GRH)]\label{thm:regulator_lower_bound}
 Let $E/\QQ$ have conductor $N_E$. Assuming BSD and ABC, we have that
 \begin{equation}
 \Reg_E \ge 2.59 \times 10^{-15} \cdot (N_E)^{-10.49}
@@ -372,7 +397,7 @@ For curves of conductor $\le 350000$, we consulted Cremona's tables and verified
 \hat{h}(P) \ge 6\times10^{-11} \cdot \log |D_E| \ge 6\times10^{-11} \cdot \log(350000) = 7.6594 \times 10^{-10}
 \end{equation}
 
-Let $r_E$ be the algebraic rank of $E$. Since $\Reg_E$ is the volume of the co-lattice of point heights in $\RR^{r_E}$, we must have that
+Let $r_E$ be the algebraic rank of $E$. Observe that the length of the smallest vector in the pairing map lattice must exceed the minimum point height on $E(\QQ)$. Since $\Reg_E$ is the covolume of the aforementioned rank $r_E$ lattice, we must then have that
 \begin{equation*}
 \Reg_E \ge \left(\min \set{ \hat{h}(P), \; P \in E(\QQ)}\right)^{r_E} \ge  K^{r_E},
 \end{equation*}
@@ -382,7 +407,7 @@ where $K = 7.6594 \times 10^{-10}$. By BSD, the algebraic and analytic rank are 
 &= K^{1.6} \cdot (N_E)^{\frac{1}{2} \log K} \\
 &= 2.59843\ldots \times 10^{-15} \cdot (N_E)^{-10.494957\ldots}
 \end{align*}
-If one assumes GRH, the by Corollary \ref{cor:better_an_bound} we instead have $r < 0.32 \log N_E + 0.5$; proceed as above to obtain the second inequality.
+If one assumes GRH, then by Corollary \ref{cor:better_an_bound} we instead have $r < 0.32 \log N_E + 0.5$; proceed as above to obtain the second inequality.
 \end{proof}
 
 Note that the first step isn't strictly necessary; it only improves the constants in the bounds by a small amount. However, it serves to highlight that the power of $N_E$ in this bound can theoretically be improved further by exhaustively checking all curves up to a higher conductor bound. If, for example, we believe that $8.914\times 10^{-3}$ is a global minimum point height over all rational elliptic curves, then (assuming GRH) we instead get

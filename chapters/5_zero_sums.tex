@@ -1,6 +1,6 @@
 % ----- CHAPTER 5: ZERO SUMS ----- %
 
-Algorithm \ref{algo:compute_rank} allows us to compute the rank of an elliptic curve in $\softO\left(\sqrt{N_E}\right)$ time by evaluating successive derivatives of $\Les$ at the central point. However, there is an inescapable limitation of this algorithm: the $\sqrt{N_E}$ time dependence of evaluating $\Les$ means that it becomes infeasible to run on modern computer hardware when the conductor is larger than about $\sim~10^{16}$ or so. Moreover, since there is no known way to evaluate elliptic curve $L$-functions in faster than square-root-conductor time, there is essentially nothing we can do to make such a rank computation algorithm asymptotically faster. \\
+Algorithm \ref{algo:compute_rank} allows us to compute the rank of an elliptic curve in $\softO\left(\sqrt{N_E}\right)$ time by evaluating successive derivatives of $\Les$ at the central point. However, there is an inescapable limitation of this algorithm: the $\sqrt{N_E}$ time dependence of evaluating $\Les$ means that it becomes infeasible to run on modern computer hardware when the conductor is larger than about $10^{16}$. Moreover, since there is no known way to evaluate elliptic curve $L$-functions in faster than square-root-conductor time, there is essentially nothing we can do to make such a rank computation algorithm asymptotically faster. \\
 
 In this section we work toward presenting a method to bound analytic rank from above that does not require direct computation of a curve's $L$-function. The upside of such an algorithm is that it can be run on curves with much larger conductor, with the tightness of the bound scaling with how long one wants computation time to be. The downside is that we will have to sacrifice exactness: the method will only provide upper bounds on rank. \\
 
@@ -69,7 +69,7 @@ where $\#\widetilde{E}(\FF_{p^e})$ is the number of points over $\FF_{p^e}$ on t
 \end{proposition}
 
 \begin{proof}
-It is a standard result that if $(x-\alpha_p)(x-\beta_p)$ is the characteristic polynomial for Frobenius on $E$ at prime $p$ of good reduction, then
+It is a standard result that if $(x-\alpha_p)(x-\beta_p)$ is the characteristic polynomial for Frobenius on $E$ for the prime of good reduction $p$, then
 \begin{equation}
 \#E(\FF_{p^e}) = p^e + 1 - \alpha_p^e - \beta_p^e
 \end{equation}
@@ -102,27 +102,34 @@ The logarithmic derivative of the shifted $L$-function $L_E(1+s)$ is given by Di
 i.e. $c_n = b_n/n$, where the $b_n$ are as defined in Definition \ref{def:bn}.
 \end{definition}
 
-Because of its transparent Dirichlet series, we can bound the magnitude of $\ldLe{1+s}$ for $\Re(s)>\frac{1}{2}$. Let $\frac{\zeta\pr}{\zeta}$ be the logarithmic derivative of the Riemann zeta function. Then $\frac{\zeta\pr}{\zeta}(s) = \sum -\lambda(n) n^{-s}$ for $\Re(s)>1$, where $\lambda(n)$ is the von Mangoldt function, given by
+Because of its transparent Dirichlet series, we can bound the magnitude of $\ldLe{1+s}$ for $\Re(s)>\frac{1}{2}$. Let $\frac{\zeta\pr}{\zeta}$ be the logarithmic derivative of the Riemann zeta function. Then $\frac{\zeta\pr}{\zeta}(s) = \sum -\Psi(n) n^{-s}$ for $\Re(s)>1$, where $\Psi(n)$ is the von Mangoldt function, given by
 \begin{equation}\label{eqn:vonmangoldt}
-\lambda(n) = \begin{cases} \log p & n = p^e \;\;\text{a perfect prime power,} \\ 0 & \text{otherwise.} \end{cases}
+\Psi(n) = \begin{cases} \log p & n = p^e \;\;\text{a perfect prime power,} \\ 0 & \text{otherwise.} \end{cases}
 \end{equation}
-Observe that $-\frac{\zeta\pr}{\zeta}(s)$ is strictly positive for $s > 1$ real and decays to zero exponentially as $s \to \infty$. \\
+(The von Mangoldt function is typically denoted $\Lambda(n)$ in the literature, but we have already reserved $\Lambda$ for the competed $L$-function of an elliptic curve). Observe that $-\frac{\zeta\pr}{\zeta}(s)$ is strictly positive for $s > 1$ real, and decays to zero exponentially as $s \to \infty$. \\
 
 Away from the critical strip the behaviors of both $\Les$ and $\ldLe{s}$ are tightly constrained.
 \begin{lemma}\label{lem:ldLe_bound}
-Let $L_E(s)$ be the $L$-function of $E$. For any $s \in \CC$ with $\sigma := \Re(s) >\frac{3}{2}$, we have we have the following:
+Let $L_E(s)$ be the $L$-function of $E$. For any $s \in \CC$ with $\sigma := \Re(s) >\frac{3}{2}$, we have the following:
 \begin{enumerate}
 \item
 \begin{equation}\label{ineq:bounds_on_Les}
-\frac{\zeta(2s-1)^2}{\zeta(s-\frac{1}{2})^2} < \left|L_E(s)\right| < \zeta\left(\sigma-\frac{1}{2}\right)^2
+\frac{\zeta(2\sigma-1)^2}{\zeta(\sigma-\frac{1}{2})^2} < \left|L_E(s)\right| < \zeta\left(\sigma-\frac{1}{2}\right)^2
 \end{equation}
 \item
 \begin{equation}\label{ineq:bounds_on_Ldles}
-2\frac{\zeta\pr}{\zeta}\left(s-\frac{1}{2}\right) < \left| \ldLe{s}\right| < -2\frac{\zeta\pr}{\zeta}\left(s-\frac{1}{2}\right).
+2\frac{\zeta\pr}{\zeta}\left(\sigma-\frac{1}{2}\right) < \left| \ldLe{s}\right| < -2\frac{\zeta\pr}{\zeta}\left(\sigma-\frac{1}{2}\right).
 \end{equation}
 \end{enumerate}
 where $\zeta(s)$ is the Riemann Zeta function.
 \end{lemma}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{graphics/L_E_and_logderiv_bounds.png}
+    \caption{Plots of $L_E(s)$ and $\ldLes$ for $1<s<8$ for 3 elliptic curves -- one each of rank 0, 1 and 2 -- with the global bounds given in Lemma \ref{lem:ldLe_bound} drawn in.}
+    \label{fig:L_E_and_logderiv_bounds}
+\end{figure}
 
 \begin{proof}
 For the bound on $L_E(s)$, note that we may write the Euler product representation of $L_E(s)$ as
@@ -146,6 +153,11 @@ For the bound on $\ldLe{s}$, observe that Hasse's Theorem implies that $|q + 1 -
 The left inequality is proved in the same way with the signs reversed. The resulting inequalities are indeed strict, as Hasse's bound is guaranteed not to be tight when, say, $p=2$.
 \end{proof}
 Note that these bounds are global: they do not depend on the elliptic curve $E$ in any way.
+
+\begin{corollary}\label{cor:L_E_abs_convergence}
+The Dirichlet series and Euler product for $L_E(s)$ converges absolutely for $\Re(s)>\frac{3}{2}$.
+\end{corollary}
+This follows immediately from the fact that $L_E(s)$ is bounded in magnitude by the $\zeta$ function shifted a half unit to the left, and the Dirichlet series for $\zeta(s)$ converges for $\Re(s)>1$.
 
 \begin{corollary}
 $\Lambda_E(1+s)$ has no zeros outside the critical strip $|\Re(s)| \le \frac{1}{2}$.
@@ -192,16 +204,16 @@ Note this result holds independent of GRH. \\
 
 Lemma \ref{lem:ldLe_bound} and Equation \ref{eqn:ldLam_sum} may be used to provide a crude bound on the analytic rank of $E$ with respect to its conductor:
 \begin{corollary}\label{cor:logderiv_rank_bound}
-Let $E$ have analytic rank $r_E$ and conductor $N_E$. Then
+Let $E$ have analytic rank $r_{an}(E)$ and conductor $N_E$. Then
 \begin{equation}
-r_E < 1.6 + \frac{1}{2} \log N_E
+r_{an}(E) < 1.6 + \frac{1}{2} \log N_E
 \end{equation}
 Moreover, this bound is {\it unconditional}; it does not require GRH to hold.
 \end{corollary}
 \begin{proof}
 We begin by assuming GRH. From Equation \ref{eqn:ldLam_sum} we have the point estimate
 \begin{equation}\label{eqn:r_an_point_estimate}
-r < \sum_{\gamma} \frac{1}{1+\gamma^2} = \ldLam{2}
+r_{an} < \sum_{\gamma} \frac{1}{1+\gamma^2} = \ldLam{2}
 \end{equation}
 while from Lemma \ref{lem:ldLe_bound} we get
 \begin{equation}
@@ -215,10 +227,10 @@ If one does not assume GRH, then we must use a less simplified representation fo
 \end{equation}
 where $\rho$ ranges over the nontrivial zeros of $L_E(1+s)$. However, everything else proceeds as before, and the point estimate given in Equation \ref{eqn:r_an_point_estimate} still holds.
 \end{proof}
-We will later use a related technique to show firstly that the the factor in front of $\log N_E$ can be made arbitrarily small, at the expense of having to assume GRH and having to increase the added constant. \\
+We will later use a related technique to show firstly that the factor in front of $\log N_E$ can be made arbitrarily small, at the expense of having to assume GRH and having to increase the added constant. \\
 
 The following corollary of Proposition \ref{prop:logderiv_zero_rep} will be of import in obtaining explicit bounds on the number of zeros of $L_E(s)$ in a given interval on the critical strip:
-\begin{corollary}\label{cor:Re_logderiv}[GRH]
+\begin{corollary}[GRH]\label{cor:Re_logderiv}
 Let $\Re(s) > 0$, and write $s = \sigma + i\tau$, i.e. $\sigma > 0$. Then
 \begin{equation}
 \sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} = \Re\left(\ldLam{1+s}\right),
@@ -253,7 +265,7 @@ Let $E/\QQ$ have conductor $N_E$. Let $\gamma$ range over all nontrivial zeros o
 \end{proposition}
 This is the prototypical {\it explicit formula} for elliptic curves: an equation relating a sum over the nontrivial zeros of $\Les$ to a sum over the logarithmic derivative coefficients of $\Les$, plus some easily smooth part that only depends on the curve's conductor. \\
 
-In general, the phrase ``explicit formula" is not applied to a specific equation, but rather to a suite of equalities that resemble the above in some way. We reproduce lemma 2.1 from \cite{Bob-2011}, which is a more general version of the explicit formula, akin to the Weil formulation of the Riemann-von Mangoldt explicit formula for $\zeta(s)$.
+In general, the phrase ``explicit formula" is not applied to a specific equation, but rather to a suite of equalities that resemble the above in some way. We reproduce Lemma 2.1 from \cite{Bob-2011}, which is a more general version of the explicit formula, akin to the Weil formulation of the Riemann-von Mangoldt explicit formula for $\zeta(s)$.
 \begin{lemma}[GRH]
 \label{lem:exp_form_2}
 Suppose that $f(z)$ is an entire function s.t. there exists a $\delta>0$ such that $f(x+iy) = O(x^{-(1+\delta)})$ for $|y|<1+\epsilon$ for some $\epsilon>0$. Suppose that the Fourier transform of $f$
@@ -286,7 +298,9 @@ In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\varphi_E \
 
 The Explicit Formula may be used to provide computationally effective upper bounds on the analytic rank of an elliptic curve. The method appears to have first been formulated by Mestre in \cite{Me-1986}, and used by Brumer in \cite{Bru-1992} to prove that, conditional on GRH, the average rank of elliptic curves was at most 2.3. This upper bound was improved to 2 by Heath-Brown in \cite{HeBr-2004}. \\
 
-The method stems from invoking the explicit formula as stated in Lemma \ref{lem:exp_form_2} on a function $f$ of a specific form:
+[Aside: one of the most groundbreaking developments in number theory in recent years is a series of results by Manjul Bhargava and Arul Shankar \cite{BhSh-2010a} \cite{BhSh-2010b} \cite{BhSh-2013} proving that the average rank of elliptic curves is at most 0.885. These results are {\it unconditional}; the first such unconditional bound on average rank. For his work Bhargava received a Fields Medal in 2014.] \\
+
+The analytic method stems from invoking the explicit formula as stated in Lemma \ref{lem:exp_form_2} on a function $f$ of a specific form:
 \begin{lemma}[GRH]\label{lem:exp_form_nonneg_f_cpt_suppt}
 Let $\gamma$ range over the nontrivial zeros of $L_E(s)$. Let $f$ be a non-negative even real-valued function on $\RR$ such that $f(0)=1$. Suppose further that the Fourier transform $\hat{f}$ of $f$ has compact support, i.e. $\hat{f}(y) = 0$ for $|y|>R$ for some $R>0$. Then for any $\Delta>0$, we have
 \begin{equation}
@@ -303,11 +317,11 @@ While in theory any $f$ with the properties mentioned above work for bounding an
 \begin{equation}
 f(x) = \sinc^2(x) = \left(\frac{\sin(\pi x)}{\pi x}\right)^2
 \end{equation}
-is what is used by Mestre, Brumer, Heath-Brown in the publications above, and by Bober in \cite{Bob-2011}. This is due to its Fourier transform is the triangular function:
+is what is used by Mestre, Brumer, Heath-Brown in the publications above, and by Bober in \cite{Bob-2011}. This is due to its Fourier transform being compactly supported, namely is the triangular function:
 \begin{equation}
 \hat{f}(y) = \int_{-\infty}^{\infty} e^{-i x y}f(x)\; dx =  \begin{cases} 1 - \frac{|y|}{2\pi}, & |y|\le 2\pi \\ 0, & |y| > 2\pi\end{cases}
 \end{equation}
-Moreover, if $f(x) = \sinc^2(x)$, the integral $\Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt$ can be explicitly in terms of known constants and special functions:
+Moreover, if $f(x) = \sinc^2(x)$, the integral $\Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt$ can be computed explicitly in terms of known constants and special functions:
 \begin{equation}
 \Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt = - \frac{\eta}{\pi \Delta} + \frac{1}{2\pi^2 \Delta^2}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right),
 \end{equation}
@@ -322,7 +336,7 @@ Let $\gamma$ range over the nontrivial zeros of $L_E(s)$, and let $\Delta > 0$. 
 \end{align}
 \end{corollary}
 
-What's notable about the above formula is that the right hand side is a finite computation, and only requires knowledge of the elliptic curve's conductor and its $a_p$ values up to some bound. Thus the zero sum is eminently computable, and results in a value that bounds from above the analytic rank of $E$. \\
+What's notable about the above formula is that evaluation of the right hand side is a finite computation, and only requires knowledge of the elliptic curve's conductor and its $a_p$ values up to some bound. Thus the zero sum is eminently computable, and results in a value that bounds from above the analytic rank of $E$. \\
 
 \begin{figure}[!h]
     \centering
@@ -331,7 +345,7 @@ What's notable about the above formula is that the right hand side is a finite c
     \label{fig:zero_sum_visualization}
 \end{figure}
 
-The $\sinc^2$ zero sum rank estimation method has been implemented in Sage (see Appendix A), and used to successfully estimate ranks on a database of 18 million elliptic curves with conductor at most $\sim 10^{11}$. A range of $\Delta$ values was used, from $\Delta=1.0$ (for which average time per curve was $\sim 10^{-5}$ s), to $\Delta=2.0$ (average time per curve $\sim 10^{-1}$ s). See an upcoming paper by Ho, Balakrishnan, Kaplan, Weigandt and S. for details on the computations. \\
+The $\sinc^2$ zero sum rank estimation method has been implemented in Sage (see Appendix A), and used to successfully estimate ranks on a database of 18 million elliptic curves with conductor at most $\sim 10^{11}$. A range of $\Delta$ values was used, from $\Delta=1.0$ (for which average time per curve was $\sim 10^{-5}$ s), to $\Delta=2.0$ (average time per curve $\sim 10^{-1}$ s). See an upcoming paper by Ho, Balakrishnan, Kaplan, Stein, Weigandt, and S. for details on the computations. \\
 
 A neat conclusion that can immediately be drawn from the finiteness of the $\sinc^2$ explicit formula sum, is that maximum analytic rank grows more slowly than $\log N_E$:
 
@@ -377,12 +391,12 @@ Observe that for a fixed choice of $\Delta$, evaluating Equation \ref{eqn:sincsq
 \begin{definition}
 The {\it fidelity} of a sinc$^2$ sum rank estimation with a given choice of $\Delta$, is the average tightness of the rank bound as a function of conductor of the curve in question. Specifically, we may define
 \begin{equation}
-\mbox{fid}(\Delta,N) = \mbox{mean}\set{\left(\sum_{\Lambda_E(\gamma)=0}\sinc^2(\gamma \Delta)\right) - r_E:\;\; N_E = N}
+\mbox{fid}(\Delta,N) = \mbox{mean}\set{\left(\sum_{\Lambda_E(1+i\gamma)=0}\sinc^2(\gamma \Delta)\right) - r_E:\;\; N_E = N}
 \end{equation}
 where $E$ ranges over all rational elliptic curves with conductor $N$. Loosely, we may think of the fidelity of a given choice of $\Delta$ and $N$ to be the expected accuracy of the rank estimate, or the chance that the sum is tight (e.g. within 2 of the true rank, since we are always assuming parity is known) for a curve of conductor $N_E=N$. 
 \end{definition}
 
-In other words, for fixed curves fidelity increases as $\Delta$ increases, but for fixed $\Delta$ fidelity {\it decreases} as the conductor of the curve in question increases. It follows that $\Delta$ should scale with $N_E$ in order to obtain an estimates of constant fidelity. The natural question to ask then, given the statement of Equation \ref{eqn:sincsquared_sum}, is: how large does $\Delta$ need to be such that $\sum_{\Lambda_E(\gamma)=0}\sinc^2(\gamma \Delta) < r_E+2$? \\
+In other words, for fixed curves fidelity increases as $\Delta$ increases, but for fixed $\Delta$ fidelity {\it decreases} as the conductor of the curve in question increases. It follows that $\Delta$ should scale with $N_E$ in order to obtain an estimates of constant fidelity. The natural question to ask then, given the statement of Equation \ref{eqn:sincsquared_sum}, is: how large does $\Delta$ need to be such that $\sum_{\Lambda_E(1+i\gamma)=0}\sinc^2(\gamma \Delta) < r_E+2$? \\
 
 Evaluating the sum will be dominated by the final sum over the $c_n$ coefficients, whose runtime in turn is exponential in $\Delta$, so we must be judicious in the choice of $\Delta$. Experimentally, we found that choosing $\Delta(E) = \alpha \cdot \log N_E$ for any constant value of $\alpha$ produces estimates of asymptotically constant fidelity. Such a choice makes the contribution from the first two terms in Equation \ref{eqn:sincsquared_sum} -- $\frac{1}{\Delta \pi}\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) + \frac{1}{2\pi^2 \Delta^2}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)$ -- asymptotically constant, so net bias in the sum does not increase as $N_E$ increases. \\
 
@@ -672,7 +686,7 @@ Even though the above graph demonstrates that the zero dispersions are clearly n
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1.0\textwidth]{graphics/389a_zero_dispersions_histagram.png}
-    \caption{A histogram of zero dispersions for the curve 389 for the 1000th through 11000th zeros (we discard the first 1000 zeros to avoid the small-height bias observable in the the cumulative average plot above). }
+    \caption{A histogram of zero dispersions for the curve 389 for the 1000th through 11000th zeros (we discard the first 1000 zeros to avoid the small-height bias observable in the cumulative average plot above). }
     \label{fig:389a_zero_dispersions_histagram}
 \end{figure}
 
@@ -851,7 +865,7 @@ It is worth noting explicitly that one cannot hope to be able to compute the bit
 \begin{proof}
 The first line follows immediately from Proposition \ref{prop:bite_times_leading_coeff} and the fact that $C_E = \frac{\Lambda^{(r_E)}(1)}{r_E!}$. The second line comes from the formula for the $(r_E+2)$th Taylor coefficient of $L_E$ at the central point derived in Corollary \ref{cor:ldLe_expansion}.
 \end{proof}
-We can therefore compute the bite of a curve {\it without} having to compute the locations of the zeros themselves. Moreover, Theorem \ref{thm:main_theorem} implies that the bite can be provably computed to $k$ bits precision in $\softO(k\cdot \sqrt{N_E})$ time (assuming standard conjectures). This may be done, for example, via Tim Dokchitser's {\tt computel} PARI code, which can compute the Taylor series expansion of a motivic $L$-function at a given point. [Important side-note: the aforementioned package uses approximations that have not (yet) been shown to be provably correct; however, one one could certainly write code to compute in polynomial time the central Taylor expansion of $\Les$ via the work of Bradshaw in \cite{Bra-2010}, which {\it does} produce provably correct $L$-function values.] \\
+We can therefore compute the bite of a curve {\it without} having to compute the locations of the zeros themselves. Moreover, Theorem \ref{thm:main_theorem} implies that the bite can be provably computed to $k$ bits precision in $\softO(k\cdot \sqrt{N_E})$ time (assuming standard conjectures). This may be done, for example, via Tim Dokchitser's {\tt computel} PARI code, which can compute the Taylor series expansion of a motivic $L$-function at a given point. [Important side-note: the aforementioned package uses approximations that have not (yet) been shown to be provably correct; however, one one could certainly write code to compute in square root time the central Taylor expansion of $\Les$ via the work of Bradshaw in \cite{Bra-2010}, which {\it does} produce provably correct $L$-function values.] \\
 
 \begin{figure}[!h]
     \centering

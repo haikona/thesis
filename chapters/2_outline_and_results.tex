@@ -4,13 +4,14 @@ A natural question to ask in the field of computational number theory is: does a
 
 However, although conjecturally guaranteed to terminate, the above method is ineffective from a time complexity perspective -- there are no results establishing just how long it will take for the two bounds to match up. It is thus a somewhat less than satisfying answer to the question posed. \\
 
-We therefore modify the question to the following: given a rational elliptic curve $E$, does an algorithm exist to compute the rank of $E$ {\it that has provable big-Oh runtime in some measure of the arithmetic complexity of the curve}? In this work we answer this question in the affirmative. \\
+We therefore modify the question to the following: given a rational elliptic curve $E$, does an algorithm exist to compute the rank of $E$ {\it that has provable big-Oh runtime in some measure of the arithmetic complexity of the curve}? In this work we answer this question in the affirmative -- assuming standard conjectures. \\
 
-The relevant measure of arithmetic complexity is the conductor $N_E$; below we provide an algorithm to compute rank and prove that it has polynomial runtime in $N_E$. However, to do so we must pay the price of having to assume not only the Birch and Swinnerton-Dyer Conjecture, but also the ABC Conjecture. The algorithm can be further sped up by assuming the Generalized Riemann Hypothesis. From hereon out we refer to these three big conjectures as BSD, ABC and GRH respectively. \\
+The relevant measure of arithmetic complexity is the conductor $N_E$; below we provide an algorithm to compute rank and prove that it has polynomial runtime in $N_E$. However, to do so we must pay the price of having to assume not only the Birch and Swinnerton-Dyer Conjecture, but also the ABC Conjecture. The algorithm can be further sped up by assuming the Generalized Riemann Hypothesis. These will be abbreviated BSD, ABC and GRH respectively. \\
 
 Specifically, we establish the following result:
-\begin{theorem}\label{thm:main_theorem}[BSD, ABC]
-Let $E/\QQ$ have conductor $N_E$. There exists an algorithm to compute the algebraic rank $r_E$ of $E$ in $\softO\left(\sqrt{N_E}\right)$ time and $\softO(1)$ space. That is, for any $\epsilon>0$ the algorithm is guaranteed to terminate with a correct output in $O\left((N_E)^{\frac{1}{2}+\epsilon}\right)$ time, using only $O\left((N_E)^{\epsilon}\right)$ space.
+\begin{theorem}[BSD, ABC]
+\label{thm:main_theorem}
+Let $E/\QQ$ have conductor $N_E$. There exists an algorithm to compute the algebraic rank $r_E$ of $E$ in $\softO\left(\sqrt{N_E}\right)$ time.
 \end{theorem}
 The algorithm in question is as follows:
 \begin{algorithm}{Compute the rank of an elliptic curve}\label{algo:compute_rank}
@@ -31,7 +32,7 @@ This will reduce the runtime of Algorithm \ref{algo:compute_rank} by a constant 
 
 This algorithm is not new -- it is just a refinement on bounding the analytic rank of a curve with an explicitly chosen precision. What {\it is} new is the body of results in this dissertation proving that, assuming BSD and ABC (and optionally GRH), if the $m$th derivative of the $L$-series attached to $E$ is zero to $k$ bits precision, then it {\it is} identically zero. This allows us to convert an algorithm that a priori only provides upper bounds on analytic rank, to one that computes rank exactly. Furthermore, we show that the algorithm is guaranteed to terminate in time polynomial in the curve's conductor. \\
 
-Moreover, Algorithm \ref{algo:compute_rank} is in a sense optimal among analytic rank computation methods: since evaluating $\Les$ takes $\tilde{O}(\sqrt{N_E})$ time, we cannot hope to get the rank out in time faster than this. [Of course other rank computation methods do exist, but they don't involve working with $\Les$ directly.] The proof of Theorem \ref{thm:main_theorem} can be found in section \ref{sec:main_thrm_proof}, but will require results established in preceding and following sections. \\
+Moreover, Algorithm \ref{algo:compute_rank} is in a sense optimal among analytic rank computation methods: since evaluating $\Les$ takes $\tilde{O}(\sqrt{N_E})$ time, we cannot hope to get the rank out in time faster than this. [Of course other algebraic rank computation methods do exist that don't involve working with $\Les$ directly. These, however, tend to be difficult to analyze from a complexity point of view. For example they scale with the size of the Tate-Shafarevich group of $E$, which isn't even known to be finite, let alone bounded by a power of the conductor.] The proof of Theorem \ref{thm:main_theorem} can be found in Section \ref{sec:main_thrm_proof}, but will require results established in preceding and following sections. \\
 
 This work includes a number of related results; we quote below a selection which we believe are of particular interest:
 
@@ -40,11 +41,11 @@ For $E/\QQ$ with real period $\Omega_E$ and conductor $N_E$,
 \begin{equation}
 \Omega_E < 8.82921517\ldots \cdot (N_E)^{-\frac{1}{12}}
 \end{equation}
-That is, the real period goes to zero as the conductor of the curve goes to infinity. This result is unconditional.
+That is, the real period goes to zero as the conductor of the curve goes to infinity. Moreover, this bound is optimal, in that the constant in the above inequality can be computed to any given precision, and a method exists to construct a curve $E$ whose real period $\Omega_E$ is arbitrarily close to  that constant times $(N_E)^{-\frac{1}{12}}$.  This result is unconditional.
 \end{quotedcorollary}
 
 \begin{quotedtheorem}{\ref{prop:exp_form_as_distribution}}[GRH]
-Let $\gamma$ range over the imaginary parts of the zeros of $\Les$ with multiplicity. Let $\varphi_E = \sum_{\gamma} \delta(x-\gamma)$ be the complex-valued distribution on $\RR$ corresponding to summation over the zeros of $L_E(s)$, where $\delta(x)$ is the usual Dirac delta function. That is, for any test function $f: \RR \mapsto \CC$ such that $\sum_{\gamma}f(\gamma)$ converges, 
+Let $\gamma$ range over the imaginary parts of the zeros of $\Les$ with multiplicity. Let $\varphi_E = \sum_{\gamma} \delta(x-\gamma)$ be the complex-valued distribution on $\RR$ corresponding to summation over the imaginary parts of the nontrivial zeros of $L_E(s)$, where $\delta(x)$ is the usual Dirac delta function. That is, for any test function $f: \RR \mapsto \CC$ such that $\sum_{\gamma}f(\gamma)$ converges, 
 \begin{equation}
 \langle f,\varphi_E \rangle = \int_{-\infty}^{\infty} f(x)\left(\sum_{\gamma\in S_E} \delta(x-\gamma)\right) \, dx = \sum_{\gamma\in S_E} f(\gamma).
 \end{equation}
@@ -56,7 +57,7 @@ where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$, $N_E$ is the con
 \end{quotedtheorem}
 
 \begin{quotedtheorem}{\ref{thm:zero_density}}[GRH]
-Let $E$ have conductor $N_E$, and let $M_E(t)$ count the number of nontrivial zeros of $\Les$ with imaginary part at most $t$ in value. Then for $t>>0$ we have
+Let $E$ have conductor $N_E$, and let $M_E(t)$ count the number of nontrivial zeros of $\Les$ with imaginary part at most $t$ in value. Then for $t \gg 0$ we have
 \begin{equation}\label{eqn:zero_density}
 M_E(t) = \frac{t}{\pi} \, \log\left(\frac{t\sqrt{N_E}}{2\pi e}\right) + \frac{1}{4} + O(\log t),
 \end{equation}
@@ -64,23 +65,24 @@ where the error term is positive as often as it negative and contributes no net 
 \end{quotedtheorem}
 
 \begin{quotedcorollary}{\ref{cor:gamma_n_approx_value}}[GRH]
-Let $\gamma_n := \gamma_n(E)$ be the imaginary value of the $n$th nontrivial (and noncentral) zero in the upper half plane of $\Les$ with analytic rank $r_E$.  Moreover, let $W_0 (s)$ be the Lambert W-function on $\CC$ i.e. the principal branch of the functional inverse of the function $y = x e^x$. Then for $n >> 1$ we have
+Let $\gamma_n := \gamma_n(E)$ be the imaginary value of the $n$th nontrivial (and noncentral) zero in the upper half plane of $\Les$ with analytic rank $r_E$.  Moreover, let $W_0 (s)$ be the Lambert W-function on $\CC$ i.e. the principal branch of the functional inverse of the function $y = x e^x$. Then for $n \gg 1$ we have
 \begin{equation}
 \gamma_n = \frac{2\pi e}{\sqrt{N_E}} \cdot \exp \left(W_0\left[\left(\frac{r_E}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N_E}}{2 e}\right]\right) + O(\log n)
 \end{equation}
 where the error term is positive as often as it negative and contributes no net bias asymptotically.
 \end{quotedcorollary}
 
+Define the {\it bite} of $E$ to be $\beta_E = \sum_{\gamma \ne 0} \gamma^{-2}$, where $\gamma$ ranges of the imaginary parts of the noncentral nontrivial zeros of $L_E(s)$.
 \begin{quotedcorollary}{\ref{cor:sinc_squared_sum_with_bite}}[GRH]
 Let $E/\QQ$ have analytic rank $r_E$, conductor $N_E$ and bite $\beta_E$. Then $r_E$ is the largest integer less than the quantity
 \begin{equation}
-\frac{1}{\sqrt{\beta_E}}\left[\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)+ \frac{1}{2 \sqrt{\beta_E}}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\sqrt{\beta_E}}\right)\right) + \sum_{\log n<2\sqrt{\beta_E}} c_n(E) \cdot \left(1-\frac{\log n}{2\sqrt{\beta_E}}\right)\right]
+\frac{1}{\sqrt{\beta_E}}\left[\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)+ \frac{1}{2 \sqrt{\beta_E}}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\sqrt{\beta_E}}\right)\right) + \sum_{n<e^{2\sqrt{\beta_E}}} c_n(E) \cdot \left(1-\frac{\log n}{2\sqrt{\beta_E}}\right)\right]
 \end{equation}
 where $\eta$ is the Euler-Mascheroni constant $= 0.5772\ldots$, $Li_2(s)$ is the dilogarithm function on $\CC$, and $c_n(E)$ is the $n$th Dirichlet coefficient of $\ldLe{1+s}$.
 \end{quotedcorollary}
 
 \begin{quotedtheorem}{\ref{thm:compute_rank_by_logderiv}}[GRH]
-The $E$ have completed shifted $L$-function $\Lambda_E(1+s)$, analytic rank $r_E$ and bite $\beta_E$. Then
+Let $E$ have completed shifted $L$-function $\Lambda_E(1+s)$, analytic rank $r_E$ and bite $\beta_E$. Then
 \begin{equation}
 r_E = \left\lfloor\frac{1}{\sqrt{\beta_E}}\cdot \ldLam{1+\frac{1}{\sqrt{\beta_E}}}\right\rfloor
 \end{equation}
