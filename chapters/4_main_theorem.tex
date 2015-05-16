@@ -5,51 +5,55 @@
 
 In this section we prove Theorem \ref{thm:main_theorem}: specifically, that Algorithm \ref{algo:compute_rank} is guaranteed, assuming BSD and ABC and optionally GRH, to correctly output an elliptic curve's rank in time $\softO(\sqrt{N_E})$, where $N_E$ is the conductor of the input curve. Note that the proof will quote certain results established later in this work. \\
 
-\begin{proposition}[BSD, ABC, (GRH)]
+The following precision theorem establishes how many bits precision are needed to provably determine if a given $L$-function Taylor coefficient is zero or not:
+\begin{theorem}[BSD, ABC, (GRH)]
 \label{prop:k_bits_for_leading_coeff}
 Let $E$ have $L$-function $\Les$, conductor $N_E$ and real period $\Omega_E$, and let
 \begin{equation}\label{eqn:num_bits_without_GRH}
-k = 65 + 10.5 \log_2 N_E - \log_2 \Omega_E
+k = \left\lceil 34 + 3.86 \log_2 N_E + \log_2(\Gamma(1.8 + 1.25\log_2 N_E)) - \log_2 \Omega_E \right\rceil.
 \end{equation}
 Assuming BSD and ABC, we have the following:
-\begin{itemize}
-\item $k = O((\log N_E)^m)$ for some $m$
+\begin{enumerate}
+\item $k = O((\log N_E)^{1+\epsilon})$ for any $\epsilon>0$.
 \item If $L_E^{(m)}(1)=0$ for all $0 \le m < n$ and $\frac{L_E^{(n)}(1)}{n!}$ is zero to $k$ bits precision, then $L_E^{(n)}(1)$ is identically zero.
-\end{itemize}
-\end{proposition}
+\end{enumerate}
+\end{theorem}
 If one further assumes GRH, we may instead let
 \begin{equation}\label{eqn:num_bits_with_GRH}
-k = 31 + 6.7 \log_2 N_E - \log_2 \Omega_E
+k = \left\lceil 22 + 2.47 \log_2 N_E + \log_2(\Gamma(1.25 + 0.87 \log_2 N_E)) - \log_2 \Omega_E \right\rceil
 \end{equation}
 for the same results to hold.
 \begin{proof}
-The first statement follows immediately from Theorem \ref{thm:real_period_lower_bound}, which states that $\Omega_E$ is bounded away from zero by a negative power of $N_E$. To prove the second statement, observe that by BSD the leading non-zero Taylor coefficient of $\Les$ at the central point is given by Equation \ref{eqn:BSD_formula}. We thus have that
+The first statement follows from Theorem \ref{thm:real_period_lower_bound}, which states that $\Omega_E$ is bounded away from zero by a negative power of $N_E$. Also note that $\Gamma(s) = O(e^{s \log s})$, so \\
+$\log_2(\Gamma(1.8 + 1.25\log_2 N_E)) = O(\log N_E \log\log N_E)$, from which the result follows.\\
+
+To prove the second statement, observe that by BSD the leading non-zero Taylor coefficient of $\Les$ at the central point is given by Equation \ref{eqn:BSD_formula}. We thus have that
 \begin{equation}
-C_E\pr \ge \frac{1}{256} \cdot  \Reg_E \cdot\, \Omega_E
+C_E\pr \ge \frac{1}{256} \cdot  \Reg_E \cdot\, \Omega_E,
 \end{equation}
 since $\prod_p c_p \ge 1$, $\# \Sha_E \ge 1$, and by Mazur's Theorem $\# E_{\text{Tor}} \le 16$. Thus
 \begin{equation}
-\log_2 C_E\pr \ge -16 + \log_2 \Reg_E + \log_2 \Omega_E
+\log_2 C_E\pr \ge -16 + \log_2 \Reg_E + \log_2 \Omega_E.
 \end{equation}
-Now by Theorem \ref{thm:regulator_lower_bound} we have that $\Reg_E\ge 2.59 \times 10^{-15} (N_E)^{-10.49}$. Thus 
-$\log_2 \Reg_E \ge -48.46 - 10.49 \log_2 N_E$. We therefore have that
+Now by Theorem \ref{thm:regulator_lower_bound} we have that $\Reg_E \ge 4.36 \times 10^{-6} \cdot (N_E)^{-3.86} \cdot \Gamma(1.8+0.25 \log N_E)^{-1}$. Thus 
+$\log_2 \Reg_E \ge  -17.81 - 3.86 \log_2 N_E - \log_2(\Gamma(1.8 + 1.25\log_2 N_E))$, where we have changed the log inside the Gamma factor to base to for consistency with the rest of the logs). We therefore have that
 \begin{equation}
-\log_2 C_E\pr \ge -64.46 - 10.49 \log_2 N_E + \log_2 \Omega_E > -k
+\log_2 C_E\pr \ge -33.81 - 3.86 \log_2 N_E - \log_2(\Gamma(1.8 + 1.25\log_2 N_E)) + \log_2 \Omega_E > -k,
 \end{equation}
-where $k$ is as defined above. Hence if the $n$th taylor coefficient of $\Les$ at the central point is zero to $k$ bits precision and all preceding Taylor coefficients are zero, then it {\it cannot} be the leading BSD coefficient, and so must be identically zero.
+where $k$ is as defined above. Hence if the $n$th taylor coefficient of $\Les$ at the central point is zero to $k$ bits precision and all preceding Taylor coefficients are zero, then it {\it cannot} be the leading BSD coefficient, and so must be identically zero. \\
 
-If one further assumes GRH, we instead have the bound $\Reg_E \ge 3.48 \times 10^{-5} \cdot (N_E)^{-6.70}$. Repeat as before to obtain the required precision stated in Equation \ref{eqn:num_bits_with_GRH}.
+If we assume GRH, we instead have $\Reg_E \ge 2.11 \times 10^{-2} \cdot (N_E)^{-2.47} \cdot \Gamma(1.25+0.16 \log N_E)^{-1}$. Repeat as before to obtain the required precision stated in Equation \ref{eqn:num_bits_with_GRH}.
 \end{proof}
 
-In other words, the leading Taylor coefficient of $\Les$ at $s=1$ must be greater than $2^{-k}$ in magnitude. Note that the $-16$ appearing in the right hand side of the above inequalities comes from bounding the order of the torsion group of $E$; this constant can therefore be reduced or eliminated by computing the torsion order of $E$ explicitly, which is quick to do. This is something that therefore should be done in any optimized implementation of Algorithm \ref{algo:compute_rank}. \\
+In other words, when $k$ is defined as above, the leading Taylor coefficient of $\Les$ at $s=1$ must be greater than $2^{-k}$ in magnitude. Note that the $-16$ appearing in the right hand side of the above inequalities comes from bounding the order of the torsion group of $E$; this constant can therefore be reduced or eliminated by computing the torsion order of $E$ explicitly, which is quick to do. This is something that therefore should be done in any optimized implementation of Algorithm \ref{algo:compute_rank}. \\
 
 We now prove {\bf Theorem \ref{thm:main_theorem}}: that, assuming BSD and ABC and optionally GRH, Algorithm \ref{algo:compute_rank} computes the rank of an elliptic curve in $\softO\left(\sqrt{N_E}\right)$ time.
 \begin{proof}
 Let $k$ be as defined according to either Equation \ref{eqn:num_bits_without_GRH} or \ref{eqn:num_bits_with_GRH} depending on whether GRH is assumed or not. That the algorithm terminates with correct output is a direct corollary from Proposition \ref{prop:k_bits_for_leading_coeff}: if $\frac{L_E^{(r)}}{r!}$ is computed to $k$ bits precision and some of those bits are nonzero {\it and} all preceding Taylor coefficients have been shown to be zero, then $r$ must be the rank of $E$; hence the output of rank$=r$ is correct. \\
 
-In terms of time complexity, observe that $k$ is $O(\log N_E)$ in magnitude, and by Corollary \ref{cor:real_period_time_complexity}, can be computed in time polynomial in $\log N_E$. By Corollary \ref{cor:better_an_bound}, we need to evaluate at most $\frac{1}{2}\log N_E +1.6$ central Taylor coefficients of $\Les$ to $k$ bits precision; Proposition \ref{prop:L_E_time_complexity} states that each of these can be done in $\softO\left(k\cdot \sqrt{N_E}\right)$ time. Hence the algorithm is guaranteed to terminate in time at most 
+In terms of time complexity, observe that $k$ is $\softO(\log N_E)$ in magnitude, and by Corollary \ref{cor:real_period_time_complexity}, can be computed in time $O((\log N_E)^m)$ for some $m$. By Corollary \ref{cor:better_an_bound}, we need to evaluate at most $\frac{1}{2}\log N_E +1.6$ central Taylor coefficients of $\Les$ to $k$ bits precision; Proposition \ref{prop:L_E_time_complexity} states that each of these can be done in $\softO\left(k\cdot \sqrt{N_E}\right)$ time. Hence the algorithm is guaranteed to terminate in time at most 
 \begin{equation}
-O(\log N_E) + \left(\frac{1}{2}\log N_E + 1.6\right) \cdot \softO\left(k\cdot \sqrt{N_E}\right) = \softO\left(\sqrt{N_E}\right)
+O((\log N_E)^m) + \left(\frac{1}{2}\log N_E + 1.6\right) \cdot \softO\left(k\cdot \sqrt{N_E}\right) = \softO\left(\sqrt{N_E}\right),
 \end{equation}
 since $k$ is sub-polynomial in $N_E$. The $\frac{1}{2}\log N_E + 1.6$ in the above statements may be replaced with $0.32\log N_E + 0.5$ if GRH is assumed, but resulting time complexity remains $\softO\left(\sqrt{N_E}\right)$.
 \end{proof}
@@ -61,17 +65,17 @@ since $k$ is sub-polynomial in $N_E$. The $\frac{1}{2}\log N_E + 1.6$ in the abo
     \label{fig:rank_algorithm_timings}
 \end{figure}
 
-For evidence supporting the validity of Theorem \ref{thm:main_theorem}, we wrote a na\"{i}ve implementation of Algorithm \ref{algo:compute_rank} in Sage and collected timings on SageMathCloud of the algorithm's runtime. 100 curves were drawn from the Cremona database according to a log-uniform distribution on their conductors; a log/log scatter plot of timings vs. conductors can be seen in Figure \ref{fig:rank_algorithm_timings} (the algorithm produced the correct output in all cases). \\
+For evidence supporting the validity of Theorem \ref{thm:main_theorem}, I wrote a na\"{i}ve implementation of Algorithm \ref{algo:compute_rank} in Sage and collected timings on SageMathCloud of the algorithm's runtime. 100 curves were drawn from the Cremona database according to a log-uniform distribution on their conductors; a log/log scatter plot of timings vs. conductors can be seen in Figure \ref{fig:rank_algorithm_timings} (the algorithm produced the correct output in all cases). \\
 
-The red line in the figure is the best fit straight line, which has slope $0.503$; the predicted slope of $0.5$ is within the estimate's error of $0.016$. Also note the slight upward concavity of plotted points, indicative of the log factors in front of the $\sqrt{N}$ time complexity. \\
+The red line in the figure is the best fit straight line, which has slope $0.503$; the predicted slope of $0.5$ is well within the sample error of $0.016$. This is therefore good computational evidence that the runtime of the rank algorithm does indeed scale with $\sqrt{N_E}$.  \\
 
-Using this best fit line, we can make predictions as to how long the algorithm will take to run on curves of longer conductor. For example, the curve of largest known rank is a rank 28 curve found by Elkies (as discussed in \cite{Bob-2011}); it has conductor $\log N_E \sim 325.9$. For this curve we estimate Algorithm \ref{algo:compute_rank} to take roughly $1.1\times 10^{62}$ years, which is about $8\times 10^{51}$ times the age of the universe. \\
+Using this best fit line, we can make predictions as to how long the algorithm will take to run on curves of larger conductor. For example, the curve of largest known rank is a rank 28 curve found by Elkies (as discussed in \cite{Bob-2011}); it has conductor $\log N_E \sim 325.9$. For this curve we estimate Algorithm \ref{algo:compute_rank} to take roughly $1.1\times 10^{62}$ years, which is about $8\times 10^{51}$ times the age of the universe. \\
 
 Clearly then, the $\softO(\sqrt{N_E})$ time complexity of Algorithm \ref{algo:compute_rank} limits its usefulness when it comes to curves of large rank. For a method that can be used on such curves, see Chapter 5.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Real Period}
+\section{The Real Period}\label{sec:real_period}
 
 The real period of a rational elliptic curve $E$ is a measure of the ``size'' of the set of {\it real} points on $E$. \\
 
@@ -81,7 +85,7 @@ If $E$ is defined over the real numbers (as rational elliptic curves are), then 
 \begin{definition}\label{defn:real_period}
 Let $E/\QQ$ have discriminant $D_E$, and $E(\CC) \simeq \CC/\Lambda$, where $\Lambda = \ZZ\omega_1 + \ZZ\omega_2$ and $\omega_1 \in \RR$. The {\it real period} of $E$ is defined to be
 \begin{equation}
-\Omega_E = \begin{cases} 2\omega_1 & D_E > 0 \\ \omega_1 & D_E < 0 \end{cases}
+\Omega_E = \begin{cases} 2\omega_1 & D_E > 0 \\ \omega_1 & D_E < 0 \end{cases}.
 \end{equation}
 \end{definition}
 
@@ -91,24 +95,24 @@ First, an upper bound. To this end, we have the following result from the comple
 \begin{proposition}
 Let $\Delta(z)$ be the Ramanujan Delta function on the complex upper half plane, i.e.
 \begin{equation}
-\Delta(z) = q \prod_{n=1}^{\infty} (1-q^n)^{24}
+\Delta(z) = q \prod_{n=1}^{\infty} (1-q^n)^{24},
 \end{equation}
 where $q = e^{2\pi i z}$. Let $E/\CC$ have discriminant $D_E$ and lattice basis $(\omega_1,\omega_2)$ as defined above. Set $z = \frac{\omega_1}{\omega_2}$ (such that $\Im(z) > 0$). Then
 \begin{equation}\label{eqn:modular_discriminant}
-D_E = \left(\frac{2\pi}{\omega_1}\right)^{12} \Delta\left(z \right)
+D_E = \left(\frac{2\pi}{\omega_1}\right)^{12} \Delta\left(z \right).
 \end{equation}
 \end{proposition}
 A proof of the above can be found in Chapter I of \cite{Sil-1994}. Using this result we can readily establish an upper bound on $\Omega_E$:
 \begin{proposition}\label{prop:real_period_upper_bound_discriminant}
 Let $E/\QQ$ have discriminant $D_E$ and real period $\Omega_E$. Then
 \begin{equation}\label{eqn:real_period_upper_bound_discriminant}
-\Omega_E < 8.82921517\ldots \cdot (D_E)^{-\frac{1}{12}}
+\Omega_E < 8.82921517\ldots \cdot (D_E)^{-\frac{1}{12}}.
 \end{equation}
 \end{proposition}
 \begin{proof}
 Equation \ref{eqn:modular_discriminant} yields
 \begin{equation}
-\omega_1 = 2\pi |D_E|^{-\frac{1}{12}} \left| \Delta\left(\frac{\omega_2}{\omega_1}\right)\right|^{\frac{1}{12}}
+\omega_1 = 2\pi |D_E|^{-\frac{1}{12}} \left| \Delta\left(\frac{\omega_2}{\omega_1}\right)\right|^{\frac{1}{12}}.
 \end{equation}
 Recall that since $E$ is defined over $\QQ$, we may choose a lattice basis $(\omega_1, \omega_2)$ such that $\omega_1 \in \RR_{+}$ and the real part of $\omega_2$ equals either $0$ or $\frac{\omega_1}{2}$. Thus we may take $z = \frac{\omega_2}{\omega_1}$ to have real part either equal to 0 or $\frac{1}{2}$. Moreover, $\Re(s)=0$ if $D_0>0$ and $\Re(z)=\frac{1}{2}$ if $D_E<0$. See Chapter I of \cite{Sil-1994} for proofs of these statements. \\
 
@@ -116,7 +120,7 @@ Thus $D_E>0$ corresponds to $q = e^{2\pi i z}$ being positive real lying in the 
 
 The critical points of $\Delta$ have been studied in there own right -- see for example \cite{IJA-2013} and \cite{WoYo-2013}. We see that $\Delta(q)$ has precisely one critical point on each of the intervals $q \in (-1,0)$ and $q \in (0,1)$; these occur at $q = 0.03727681\ldots$ and $q =-0.43929305\ldots$ respectively (corresponding to $z=0.52352170\ldots i$ and $z=\frac{1}{2}+0.13091903\ldots i$ in the upper half plane respectively). At these two values we have $|\Delta(q)|^{\frac{1}{12}}$ equal to $0.70258935\ldots$ and $1.40521323\ldots$ respectively. We conclude that
 \begin{equation}
-\Omega_E \le 2\pi\cdot 1.40521323\ldots \cdot  |D_E|^{-\frac{1}{12}} = 8.82921517\ldots \cdot |D_E|^{-\frac{1}{12}}
+\Omega_E \le 2\pi\cdot 1.40521323\ldots \cdot  |D_E|^{-\frac{1}{12}} = 8.82921517\ldots \cdot |D_E|^{-\frac{1}{12}}.
 \end{equation} 
 \end{proof}
 
@@ -128,15 +132,15 @@ A proof of the result regarding the discriminant can be found on pages 48-49 of 
 
 Another consequence is that the bound given in Equation \ref{eqn:real_period_upper_bound_discriminant} is optimal, in the sense that the $\frac{1}{12}$ in the negative power of the the discriminant cannot be replaced with any larger value. As an explicit example, consider the family of CM elliptic curves given by Weierstrass equations
 \begin{equation}
-E^d: \;\; y^2 = x^3 - d^2 x
+E^d: \;\; y^2 = x^3 - d^2 x,
 \end{equation}
 for $d \in\ZZ$ positive squarefree. This is just the family of curves related to the congruent number problem, one of the oldest open problems in mathematics (for an excellent treatment on congruent numbers and how they relate to elliptic curves, see \cite{Kob-2012}). Then $E^{d}$ is just the quadratic twist by $d$ (hence the notation) of the curve
 \begin{equation}
-E: \;\; y^2 = x^3-x
+E: \;\; y^2 = x^3-x,
 \end{equation}
 which has discriminant 64 and conductor 32. For this family we may actually write down $\Omega_{E^d}$ in terms of a special value of the Gamma function:
 \begin{equation}
-\Omega_{E^d} = \frac{\Gamma(\frac{1}{4})^2}{\sqrt{2\pi d}}
+\Omega_{E^d} = \frac{\Gamma(\frac{1}{4})^2}{\sqrt{2\pi d}}.
 \end{equation}
 This follows from the fact that $\frac{\omega_2}{\omega_1} = i$ for any of the $E^d$, and that
 \begin{equation}
@@ -144,14 +148,14 @@ This follows from the fact that $\frac{\omega_2}{\omega_1} = i$ for any of the $
 \end{equation}
 (first shown by Ramanujan in his second notebook -- see \cite{BeZh-1992}). Furthermore, $E^{d}$ has discriminant $D_{E^{d}} = (2d)^6$. So using equation \ref{eqn:modular_discriminant}, for congruent number curves we obtain
 \begin{equation}
-\Omega_{E^d} = \frac{\Gamma(\frac{1}{4})^2}{\sqrt{\pi}} \cdot (D_{E^d})^{-\frac{1}{12}} = 7.416\ldots \cdot (D_{E^d})^{-\frac{1}{12}}
+\Omega_{E^d} = \frac{\Gamma(\frac{1}{4})^2}{\sqrt{\pi}} \cdot (D_{E^d})^{-\frac{1}{12}} = 7.416\ldots \cdot (D_{E^d})^{-\frac{1}{12}}.
 \end{equation}
 Since $4\pi = 12.566\ldots$ this result conforms with the bound given in Equation \ref{eqn:real_period_upper_bound_discriminant}. It should also be clear from the example above that any family of quadratic twists of a given curve will have the real period scale with the $-\frac{1}{12}$th power of the discriminant. Furthermore, since the $j$-invariant is surjective, we can find $E/\QQ$ with $z=j^{-1}(E)$ arbitrarily close to $\frac{1}{2}+0.13091903\ldots i$, so the constant $8.82921517\ldots$ obtained in Proposition \ref{prop:real_period_upper_bound_discriminant} is also optimal. \\
 
 \begin{corollary}\label{cor:real_period_upper_bound}
 For $E/\QQ$ with real period $\Omega_E$ and conductor $N_E$,
 \begin{equation}
-\Omega_E < 8.82921517\ldots \cdot (N_E)^{-\frac{1}{12}}
+\Omega_E < 8.82921517\ldots \cdot (N_E)^{-\frac{1}{12}}.
 \end{equation}
 That is, the real period goes to zero as the conductor of the curve goes to infinity.
 \end{corollary}
@@ -162,17 +166,17 @@ Equation \ref{eqn:modular_discriminant} gives us a way to compute the real perio
 \begin{proposition}\label{prop:real_period_by_AGM}
 Let $E/\Q$ have minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$. Write the equation in the form
 \begin{equation}\label{eqn:weierstrass_with_bn}
-\left(y + \frac{a_1x + a_3}{2}\right)^2 = x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4} = (x-e_1)(x-e_2)(x-e_3)
+\left(y + \frac{a_1x + a_3}{2}\right)^2 = x^3 + \frac{b_2}{4} x^2 + \frac{b_4}{2} x + \frac{b_6}{4} = (x-e_1)(x-e_2)(x-e_3),
 \end{equation}
 where $e_1,e_2,e_3$ are the 3 complex roots of the polynomial in $x$ on the right hand side, and $b_2$, $b_4$ and $b_6$ are as defined in Section \ref{subsec:notation}.
 \begin{enumerate}
 \item If $D_E > 0$, then $e_1,e_2,e_3 \in \RR$, so without loss of generality we may order them as $e_3 > e_2 > e_1$. Then
 \begin{equation}\label{eqn:omega_D_pos}
-\omega_1 = \frac{\pi}{\AGM(\sqrt{e_3-e_1},\sqrt{e_3-e_2})}
+\omega_1 = \frac{\pi}{\AGM(\sqrt{e_3-e_1},\sqrt{e_3-e_2})}.
 \end{equation}
 \item If $D_E < 0$, then the RHS polynomial has only one real root; we may write $e_3 \in \RR$ and $e_1 = \conj{e_2}$. Let $z = \sqrt{e_3-e_1} = s + it$; choose the root such that $s>0$. Then
 \begin{equation}\label{eqn:omega_D_neg}
-\omega_1 = \frac{\pi}{\AGM(|z|,s)}
+\omega_1 = \frac{\pi}{\AGM(|z|,s)}.
 \end{equation}
 \end{enumerate}
 \end{proposition}
@@ -193,7 +197,7 @@ Observe that for both the positive and negative discriminant cases, the AGM in t
 \begin{lemma}\label{lem:root_separation_bound}
 Given the above setup,
 \begin{equation}
-d(E) < 2+\frac{1}{2}\max\set{|b_2|,2|b_4|,|b_6|}
+d(E) < 2+\frac{1}{2}\max\set{|b_2|,2|b_4|,|b_6|}.
 \end{equation}
 \end{lemma}
 \begin{proof}
@@ -242,62 +246,60 @@ On the other hand, for a given $n$
 \end{equation}
 for $n\ge 2$. So for this family of curves the lower bound given by inequality \ref{ineq:Omega_bn_bound} is $\frac{\pi}{\sqrt{1+n^2}}$. Since $\Omega_{E_n}$ asymptotes to twice this value, it is clear that the bound would be violated for sufficiently large $n$ if the square root were replaced with a smaller power. \\
 
-Finally, if we assume the Szpiro conjecture, Corollary \ref{ineq:Omega_bn_bound} allows us to the real period of a minimal model of $E$ from below in terms of that curve's conductor. We will invoke a slight reformulation of Modified Szpiro (Conjecture \ref{conj:modified_szpiro}): Suppose the minimal short Weierstrass model of $E$ is $y^2 = x^3+Ax+B$, i.e. there does not exist any prime $p$ such that $p^4|A$ and $p^6|B$. Then for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that
+Finally, if we assume the Szpiro conjecture, Corollary \ref{ineq:Omega_bn_bound} allows us to the real period of a minimal model of $E$ from below in terms of that curve's conductor. We will invoke a slight reformulation of Modified Szpiro (Conjecture \ref{conj:modified_szpiro}): Suppose the minimal short Weierstrass model of $E$ is $y^2 = x^3+Ax+B$, i.e. there does not exist any prime $p$ such that $p^4|A$ and $p^6|B$. Then for any $\epsilon>0$ there is a constant $K_{\epsilon}$ independent of $E$ such that
 \begin{equation}
-\max\set{|A|^3,|B|^2} \le K(\epsilon)\cdot (N_E)^{6+\epsilon}
+\max\set{|A|^3,|B|^2} \le K_{\epsilon}\cdot (N_E)^{6+\epsilon}.
 \end{equation}
 (Since for a curve in short Weierstrass form $c_4 = -48A$ and $c_6=-864B$, we see that the above statement and Modified Szpiro are equivalent). Using this, we obtain the following:
 \begin{theorem}[ABC]
 \label{thm:real_period_lower_bound}
-Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal model of $E$. Then, assuming ABC, for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that 
+Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal model of $E$. Then, assuming ABC, for any $\epsilon>0$ there is a constant $K_{\epsilon}$ independent of $E$ such that 
 \begin{equation}
-\Omega_E > K(\epsilon) \cdot (N_E)^{-\frac{3}{2}-\epsilon}
+\Omega_E > K_{\epsilon} \cdot (N_E)^{-\frac{3}{2}-\epsilon}.
 \end{equation}
 \end{theorem}
 \begin{proof}
 Let $E$ be given by its minimal short Weierstrass equation $y^2 = x^3+Ax+B$. $E$ then has $b$-invariants $b_2=0$, $b_4 = 2A$ and $b_6 = 4B$, so by Lemma \ref{ineq:Omega_bn_bound} the real period of $E$ obeys
 \begin{equation}\label{eqn:Omega_bound_short_weierstrass}
-\Omega_E > \frac{\pi}{2\sqrt{1+\max\set{|A|,|B|}}}
+\Omega_E > \frac{\pi}{2\sqrt{1+\max\set{|A|,|B|}}}.
 \end{equation}
 Now by the aforementioned version of Szpiro, for any $\epsilon>0$ we have
 \begin{align*}
 \sqrt{1+\max\set{|A|,|B|}} &<  1 + \max\set{|A|^2,|B|^2}^\frac{1}{4} \\
 &\le 1 + \max\set{|A|^3,|B|^2}^\frac{1}{4} \quad\quad\mbox{since $A \in \ZZ$} \\
-&\le 1 +\left[K(\epsilon) (N_E)^{6+\epsilon} \right]^\frac{1}{4} \\
-\Longrightarrow \sqrt{1+\max\set{|A|,|B|}} &< K(\epsilon) (N_E)^{\frac{3}{2}+\epsilon}
+&\le 1 +\left[K_{\epsilon} (N_E)^{6+\epsilon} \right]^\frac{1}{4} \\
+\Longrightarrow \sqrt{1+\max\set{|A|,|B|}} &< K_{\epsilon} (N_E)^{\frac{3}{2}+\epsilon},
 \end{align*}
 where to achieve the last line we absorb 1 into $K$ and relabel as necessary to account for the $\frac{1}{4}$th power, and relabel $\frac{\epsilon}{2} \mapsto \epsilon$. Again, after absorbing the factor of $\frac{\pi}{2}$ into $K$ in equation \ref{eqn:Omega_bound_short_weierstrass}, the result follows.
 \end{proof}
 
-Thankfully, we do not need to assume a specific value of $K(\epsilon)$ for a given $\epsilon$ for Theorem \ref{thm:main_theorem} to hold. However, expirical data suggests that for $\epsilon=\frac{1}{2}$ we can easily get away by choosing $K = 1$. We formalize this with the following conjecture:
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.92\textwidth]{graphics/real_periods_vs_conductors_loglog}
+    \caption{A scatter plot of $\log \Omega_E $ on the vertical axis vs. $\log N_E$ on the horizontal axis, for all curves up to conductor 350000. The upper red line is the proven upper bound $\Omega_E < 8.82921517\ldots \cdot (N_E)^{-\frac{1}{12}}$, which can be seen to be sharp. The lower red line corresponds to the bound $\Omega_E > (N_E)^{-1}$. Empirically this appears to hold easily, lending credence to the validity of the weaker assertion in Conjecture \ref{conj:Omega_lower_bound_explicit}.}
+    \label{fig:real_period_vs_conductor_loglog}
+\end{figure}
+
+Thankfully, we do not need to assume a specific value of $K_{\epsilon}$ for a given $\epsilon$ for Theorem \ref{thm:main_theorem} to hold. However, expirical data suggests that for $\epsilon=\frac{1}{2}$ we can easily get away by choosing $K = 1$. We formalize this with the following conjecture:
 \begin{conjecture}\label{conj:Omega_lower_bound_explicit}
 Let $E$ have conductor $N_E$, and let $\Omega_E$ be the real period of a minimal model of $E$.Then 
 \begin{equation}
-\Omega_E > (N_E)^{-2}
+\Omega_E > (N_E)^{-2}.
 \end{equation}
 \end{conjecture}
-
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.92\textwidth]{graphics/real_periods_vs_conductors_loglog}
-    \caption{A scatter plot of $\log \Omega_E $ on the vertical axis vs. $\log N_E$ on the horizontal axis, for all curves up to conductor 350000. The upper is the proven upper bound $\Omega_E < 8.82921517\ldots \cdot (N_E)^{-\frac{1}{12}}$, which can be seen to be sharp. The lower red line corresponds to the bound $\Omega_E > (N_E)^{-1}$. Empirically this appears to hold easily, lending credence to the validity of the weaker assertion in Conjecture \ref{conj:Omega_lower_bound_explicit}.}
-    \label{fig:real_period_vs_conductor_loglog}
-\end{figure}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Regulator}
 
-To define the regulator of a rational elliptic curve, we must first define the na\"ive logarithmic height, N\'eron-Tate canonical height and the N\'eron-Tate pairing on points on $E$.
+To define the regulator of a rational elliptic curve, we must first define the na\"ive logarithmic height, N\'eron-Tate canonical height and the N\'eron-Tate pairing on points on $E$. \\
 
-Let $E$ be an elliptic curve over $\QQ$ and $P \in E(\QQ)$ a rational point on $E$. 
-
+Let $E$ be an elliptic curve over $\QQ$ and $P \in E(\QQ)$ a rational point on $E$. The {\it na\"ive logarithmic height} of $P$ is a measure of the size' of the coordinates of $P$. 
 \begin{definition}
-The {\it na\"ive logarithmic height} of $P$ is a measure of the ``complexity'' of the coefficients of $P$. Specifically, any non-identity rational point $P$ may be written as $P = (\frac{a}{d^2},\frac{b}{d^3})$, with $a,b,d \in \ZZ$, $d>0$ and $\gcd(a,b,d) = 1$; we then define the na\"ive height of $P$ to be
+Define $h(\cO) = 0$. For $P\ne \cO$, we may write $P = (x,y) \in \QQ^2$, with $x = \frac{a}{b}, a,b \in \ZZ$, $b>0$ and $\gcd(a,b) = 1$. We then define the na\"ive height of $P$ to be
 \begin{equation}
-	h(P) := \ln(d).
+	h(P) := \max\set{\log|a|,\log|b|}.
 \end{equation}
-Moreover, define $h(\cO) = 0$.
 \end{definition}
 If you compute the na\"ive heights of a number of points on an elliptic curve, you'll notice that the na\"ive height function is ``almost a quadratic form'' on $E$. That is $h(nP) \sim n^2 h(P)$ for integers $n$, up to some constant that doesn't depend on $P$. We can turn $h$ into a true quadratic form as follows:
 
@@ -310,20 +312,20 @@ where $h$ is the na\"ive logarithmic height defined above.
 \end{definition}
 
 \begin{theorem}[N\'eron-Tate]
-N\'eron-Tate has defines a canonical quadratic form on $E(\QQ)$ modulo torsion. That is,
+N\'eron-Tate defines a canonical quadratic form on $E(\QQ)$ modulo torsion. That is,
 \begin{enumerate}
 	\item For all $P,Q \in E(\QQ)$,
 	\begin{equation}
-		\hat{h}(P+Q) + \hat{h}(P-Q) = 2\left[ \hat{h}(P) + \hat{h}(Q)\right]
+		\hat{h}(P+Q) + \hat{h}(P-Q) = 2\left[ \hat{h}(P) + \hat{h}(Q)\right],
 	\end{equation}
 	i.e. $\hat{h}$ obeys the parallelogram law;
 	\item For all $P \in E(\QQ)$ and $n \in \ZZ$,
 	\begin{equation}
-		\hat{h}(nP) = n^2 \hat{h}(P)
+		\hat{h}(nP) = n^2 \hat{h}(P).
 	\end{equation}
 	\item $\hat{h}$ is even, and the pairing $\langle\;,\;\rangle: E(\QQ)\times E(\QQ) \to \RR$ by
 	\begin{equation}
-		\langle P,Q \rangle = \hat{h}(P+Q) - \hat{h}(P) - \hat{h}(Q)
+		\langle P,Q \rangle = \frac{1}{2}\left(\hat{h}(P+Q) - \hat{h}(P) - \hat{h}(Q)\right)
 	\end{equation}
 	is bilinear;
 	\item $\hat{h}(P) = 0$ iff $P$ is torsion;
@@ -336,7 +338,7 @@ For a proof of this theorem and elaboration on the last point, see \cite[pp. 227
 \begin{definition}
 The {\it N\'eron-Tate pairing} on $E/\QQ$ is the bilinear form $\langle\;,\;\rangle: E(\QQ)\times E(\QQ) \to \RR$ by
 	\begin{equation}
-		\langle P,Q \rangle = \frac{1}{2}\left(\hat{h}(P+Q) - \hat{h}(P) - \hat{h}(Q)\right)
+		\langle P,Q \rangle = \frac{1}{2}\left(\hat{h}(P+Q) - \hat{h}(P) - \hat{h}(Q)\right).
 	\end{equation}
 \end{definition}
 Note that this definition may be extended to all pairs of points over $\QQbar$, but the definition above suffices for our purposes. \\
@@ -346,7 +348,7 @@ If $E(\QQ)$ has rank $r$, then $E(\QQ)/E_{\text{tor}}(\QQ) \hookrightarrow \RR^r
 \begin{definition}
 The {\it regulator} $\Reg_E$ of $E/\QQ$ is the covolume of the lattice that is the image of $E(\QQ)$ under the above pairing map. That is, if $\set{P_1,\ldots,P_r}$ generates $E(\QQ)$, then
 \begin{equation}
-	\Reg_E = \det\left(\langle P_i,P_j\rangle \right)_{1 \le i,j \le r}
+	\Reg_E = \det\left(\langle P_i,P_j\rangle \right)_{1 \le i,j \le r},
 \end{equation}
 where $\left(\langle P_i,P_j\rangle \right)_{1 \le i,j \le r}$ is the matrix whose $(i,j)$th entry is the value of the pairing $\langle P_i,P_j\rangle$. If $E/\QQ$ has rank zero, then $\Reg_E$ is defined to be 1.
 \end{definition}
@@ -365,55 +367,124 @@ Let $E/\QQ$ have minimal discriminant $D_E$. There exists an absolute constant $
 \end{quotedconjecture}
 That is, the minimum height of a non-torsion point on $E$ scales with the log of the absolute value of the curve's minimal discriminant. Hindry and Silverman in \cite{HiS-1988} show that the ABC conjecture implies Lang's height conjecture and, better yet, gives an explicit lower bound on $M_0$:
 \begin{equation}
-M_0 \ge 6\times 10^{-11}
+M_0 \ge 6\times 10^{-11}.
+\end{equation}
+The bound was further improved  by Elkies (albeit still contingent on ABC) in the early 2000s \cite{Elk-2006} to
+\begin{equation}
+M_0 \ge 3.9479\times 10^{-5}.
 \end{equation}
 Note that Theorem \ref{thm:main_theorem} requires the assumption of ABC for results regarding the real period of $E$; quoting the above result therefore requires no further unproven results. \\
 
-There is general agreement in the literature is that the value of $M_0$ above is in no way close to being optimal; however, there is no strong consensus as to how much larger $M_0$ could be. A survey by Elkies \cite{ElSt-2002} reveals 54 known cases of points $P$ on curves over $\QQ$ where $\hat{h}(P) < \frac{1}{100}$, and the largest value of $\hat{h}/\log|D_E|$ is $\sim 8.46 \times 10^{-5}$, achieved by a point on a curve of conductor $N=3476880330$. Given the evidence in this and other compiled data, it seems quite likely that there are as-yet undiscovered instances of points with exceptionally low height driving the quantity down even further. \\
+There is general agreement in the literature is that the value of $M_0$ above is not optimal; however, there is no strong consensus as to how much larger $M_0$ could be. A survey by Elkies \cite{ElSt-2002} reveals 54 known cases of points $P$ on curves over $\QQ$ where $\hat{h}(P) < \frac{1}{100}$, and the largest value of $\hat{h}/\log|D_E|$ is $\sim 8.46 \times 10^{-5}$, achieved by a point on a curve of conductor $N=3476880330$. Given the evidence in this and other compiled data, it seems quite likely that there are as-yet undiscovered instances of points with low height driving the observed lower bound down closer to the value of $3.9479\times 10^{-5}$. \\
 
-One can make the more conservative following observation:
+One can therefor make the more conservative following observation:
 \begin{corollary}[ABC]\label{conj:point_height_lower_bound}
 There exists an absolute constant $M_1 >0$ independent of $E$ such that any non-torsion point $P$ on any elliptic curve $E(\QQ)$ satisfies
-\begin{equation}
+\begin{equation}\label{eqn:Elkies_height_lower_bound}
 \hat{h}(P) \ge M_1 .
 \end{equation}
 \end{corollary}
-The smallest absolute point height found in the aforementioned survey is $\hat{h}(P) = 8.914\times 10^{-3}$, achieved by the point $P = (7107,-602054)$ and its negative on the curve with Cremona label {\tt 3990v1}, given by the equation $E: y^2+xy+y=x^3+x^2-125615x+61201397$. (note that the Elkies' table uses a slightly different definition of height, equal to half the value of the height as defined above). One can see in this table that the known points of smallest height all belong to curves with small conductor, so it is perhaps more believable that this is indeed the point of smallest height on any rational elliptic curve -- for such a point is guaranteed to exist, assuming ABC. \\
+The smallest absolute point height found in the aforementioned survey by Elkies is $\hat{h}(P) = 8.914\times 10^{-3}$, achieved by the point $P = (7107,-602054)$ and its negative on the curve with Cremona label {\tt 3990v1}, given by the equation $E: y^2+xy+y=x^3+x^2-125615x+61201397$. (note that the Elkies' table uses a slightly different definition of height, equal to half the value of the height as defined above). One can see in this table that the known points of smallest height all belong to curves with small conductor, so it is perhaps more believable that this is indeed the point of smallest height on any rational elliptic curve -- for such a point is guaranteed to exist, assuming ABC. \\
 
-Even though the Hindry-Silverman bound above would seem so small as to be useless in all practical applications, we can use it to bound a curve's regulator from below in terms of an inverse power of its conductor.
+%Even though the Elkies bound above would seem so small as to be  of limited use in practical applications, we can use it to bound a curve's regulator from below in terms of an inverse power of its conductor. For this we will need the following geometric lemma:
+%\begin{lemma}
+%Let $L$ be a lattice in $\RR^r$ with covolume $V_L$. If $h$ is the minimum nonzero vector length in $L$, then
+%\begin{equation}
+%V _L \ge \frac{\sqrt{r+1}}{2^{r/2}} \cdot h^r
+%\end{equation}
+%\end{lemma}
+%\begin{proof}
+%Let $L \subset \RR^r$ be a lattice with basis $\set{v_1,\ldots,v_r}$ subject to the constraint that the minimum nonzero vector length in $L$ is $h$. We want to minimize the covolume $V_L$ by varying the basis vectors $v_i$. Let $\en{\cdot}$ be the Euclidean norm on $\RR^r$; observe that to minimize $V_L$ we must have
+%\begin{equation*}
+%\en{v_1}=\en{v_2}=\cdots=\en{v_r} = h,
+%\end{equation*}
+%as $V_L$ scales directly with the basis vector lengths. Next, we vary the angles between the basis vectors to minimize covolume, and get
+%\begin{equation*}
+%\en{v_i-v_j}=h \;\;\text{for all $i\ne j$},
+%\end{equation*}
+%i.e. every basis vector is at an angle of $\frac{\pi}{3}$ from every other basis vector. This is because increasing the angle between any 2 basis vectors beyond $\frac{\pi}{3}$ increases the covolume, while reducing the angle between any$v_i$ and $v_j$ beyond $\frac{\pi}{3}$ would then have that $\en{v_i-v_j} <h$, violating the minimum vector length constraint. \\
+%
+%Thus the polytope whose vertices are $\set{v_1,\ldots,v_r}$ along with the zero vector is just the regular $r$-simplex (i.e. the $r$-dimensional generalization of the equilateral triangle/tetrahedron) of side length $h$, whose volume is
+%\begin{equation}
+%\frac{\sqrt{r+1}}{2^{r/2} \, r!} \cdot h^r
+%\end{equation}
+%(see for a proof). Finally, note that the volume of a $r$-parallelotope is $r!$ times the volume of any $r$-simplex that shares $r$ converging edges with it. But the lattice covolume $V_L$ is just the volume of the regular $r$-parallelotope with side lengths all equal to $h$ and all interior angles between edges connected to the origin being equal to $\frac{\pi}{3}$. We thus get
+%\begin{equation}
+%V_L = \frac{\sqrt{r+1}}{2^{r/2}} \cdot h^r
+%\end{equation}
+%This is therefore the minimum covolume an $r$-dimensional lattice can have such that every nonzero vector has length at least $h$, from which the result follows.
+%\end{proof}
+
+Even though the Elkies bound above would seem so small as to be  of limited use in practical applications, we can use it to bound a curve's regulator from below in terms of an inverse power of its conductor. For this we will need the following geometric lemma:
+
+%\begin{lemma}\label{lem:hermite_covolume_bound}
+%Let $L$ be a lattice in $\RR^r$ with covolume $V_L$. If $h$ is the minimum nonzero vector length in $L$, then
+%\begin{equation}
+%V _L \ge \left(\frac{3}{4}\right)^{\frac{r(r-1)}{2}} h^r.
+%\end{equation}
+%\end{lemma}
+%A proof can be found in Lang's Survey of Diophantine Geometry \cite[Chapter 5, Corollary 7.8]{Lang-1983}. With this we then have the following:
+
+\begin{lemma}\label{lem:covolume_lower_bound}
+Let $L$ be a lattice in $\RR^r$ with covolume $V_L$. If $h$ is the minimum nonzero vector length in $L$, then
+\begin{equation}
+V _L \ge \left(\frac{\sqrt{\pi}}{2}\cdot h\right)^{r} \cdot \frac{1}{\Gamma(1+\frac{r}{2})},
+\end{equation}
+where $\Gamma(s)$ is the usual Gamma function on $\CC$.
+\end{lemma}
+\begin{proof}
+Recall Minkowski's Theorem: Let $L$ be a lattice in $\RR^r$ with covolume $V_L$, and let $S$ be convex symmetric subset of $\RR^r$ with volume $\Vol(S)$. If $\Vol(S)>2^r V_L$, then $S$ contains a nonzero element of $L$ -- see \cite[p. 80]{st-2012} for a proof. \\
+
+So let $S = B(0,h)$, i.e. the open ball of radius $h$ centered at the origin, where $h$ is minimum nonzero vector length in $L$. By construction $S$ contains no nonzero lattice elements, so by Minkowski's theorem we must have that
+\begin{equation}
+\Vol(S) \le 2^r V_L.
+\end{equation}
+The volume of the $r$-sphere with radius $L$ is given by
+\begin{equation}
+\Vol(S) = \frac{\pi^{\frac{r}{2}}}{\Gamma(1+\frac{r}{2})} \cdot h^r;
+\end{equation}
+combining the above two statements and solving for $V_L$ completes the result.
+\end{proof}
+
+With the above lemma we can then prove the following:
 \begin{theorem}[BSD, ABC, (GRH)]\label{thm:regulator_lower_bound}
 Let $E/\QQ$ have conductor $N_E$. Assuming BSD and ABC, we have that
 \begin{equation}
-\Reg_E \ge 2.59 \times 10^{-15} \cdot (N_E)^{-10.49}
+\Reg_E \ge 4.36 \times 10^{-6} \cdot (N_E)^{-3.86} \cdot \frac{1}{\Gamma(1.8+0.25 \log N_E)}.
 \end{equation}
 If one further assumes GRH, then one has the improved bound
 \begin{equation}
-\Reg_E \ge 3.48 \times 10^{-5} \cdot (N_E)^{-6.70}
+\Reg_E \ge 2.11 \times 10^{-2} \cdot (N_E)^{-2.47} \cdot \frac{1}{\Gamma(1.25+0.16 \log N_E)}.
 \end{equation}
 \end{theorem}
 \begin{proof}
-For curves of conductor $\le 350000$, we consulted Cremona's tables and verified numerically that the above inequalities holds. Thus without loss of generality we may assume $D_E > N_E > 350000$. Thus for any point $P \in E(\QQ)$, by Conjecture \ref{conj:Lang} we have that
+For curves of conductor $\le 350000$, we consulted Cremona's tables and verified numerically that the above statements. Thus without loss of generality we may assume $D_E > N_E > 350000$. Thus for any point $P \in E(\QQ)$, by Conjecture \ref{conj:Lang} and the Elkies' bound in Equation \ref{eqn:Elkies_height_lower_bound} we have that
 \begin{equation}
-\hat{h}(P) \ge 6\times10^{-11} \cdot \log |D_E| \ge 6\times10^{-11} \cdot \log(350000) = 7.6594 \times 10^{-10}
+\hat{h}(P) \ge 3.9479\times 10^{-5} \cdot \log |D_E| \ge 6\times10^{-11} \cdot \log(350000) = 5.0397 \times 10^{-4}.
 \end{equation}
-
-Let $r_E$ be the algebraic rank of $E$. Observe that the length of the smallest vector in the pairing map lattice must exceed the minimum point height on $E(\QQ)$. Since $\Reg_E$ is the covolume of the aforementioned rank $r_E$ lattice, we must then have that
+Let $h = 5.0397 \times 10^{-4}$, and let $L$ be the rank $r$ lattice that is the image of $E(\QQ)$ under the height pairing map (for a given choice of basis of $E(\QQ)$), where $r$ is the rank of $E$. It follows that any nonzero vector in $L$ has length at least $h$. Thus by Lemma \ref{lem:covolume_lower_bound} we must then have that
 \begin{equation*}
-\Reg_E \ge \left(\min \set{ \hat{h}(P), \; P \in E(\QQ)}\right)^{r_E} \ge  K^{r_E},
+\Reg_E \ge \left(\frac{\sqrt{\pi}}{2}\cdot h\right)^{r} \cdot \frac{1}{\Gamma(1+\frac{r}{2})}.
 \end{equation*}
-where $K = 7.6594 \times 10^{-10}$. By BSD, the algebraic and analytic rank are equal so by Corollary \ref{cor:logderiv_rank_bound} we have
-\begin{align*}
-\Reg_E &\ge K^{\frac{1}{2} \log N_E + 1.6} \\
-&= K^{1.6} \cdot (N_E)^{\frac{1}{2} \log K} \\
-&= 2.59843\ldots \times 10^{-15} \cdot (N_E)^{-10.494957\ldots}
-\end{align*}
-If one assumes GRH, then by Corollary \ref{cor:better_an_bound} we instead have $r < 0.32 \log N_E + 0.5$; proceed as above to obtain the second inequality.
-\end{proof}
-
-Note that the first step isn't strictly necessary; it only improves the constants in the bounds by a small amount. However, it serves to highlight that the power of $N_E$ in this bound can theoretically be improved further by exhaustively checking all curves up to a higher conductor bound. If, for example, we believe that $8.914\times 10^{-3}$ is a global minimum point height over all rational elliptic curves, then (assuming GRH) we instead get
+By BSD, the algebraic and analytic rank are equal, so we have that
 \begin{equation}
-\Reg_E \ge 6.6064 \, (N_E)^{-2.36}
+r < a\log N_E + b,
 \end{equation}
-Even so, we do {\it not} expect this bound to be anywhere close to optimal; almost certainly more careful analysis could further reduce the negative exponent of $N$ or increase the size of the constant in front of it. In practice, we see the smallest regulators tend to {\it grow} with conductor, further highlighting that the above bound is rather crude. However, the statement in Theorem \ref{thm:regulator_lower_bound} is good enough for our purposes: it will help establish that the central leading coefficient of $\Les$ cannot be exponentially small in $N_E$. \\
+where by Corollary \ref{cor:logderiv_rank_bound} we may take $a=0.5, b=1.6$ if we aren't assuming GRH, and by Corollary \ref{cor:better_an_bound} $a=0.32, b=0.5$ if we are. Thus
+\begin{align*}
+\Reg_E &\ge \left(\frac{\sqrt{\pi}}{2}\cdot h\right)^{a \log N_E + b} \cdot \frac{1}{\Gamma\left(1+\frac{a \log N_E + b}{2}\right)} \\
+&= \left(\frac{\sqrt{\pi}}{2}\cdot h\right)^{b} \cdot \left(N_E\right)^{a\log \left(\frac{\sqrt{\pi}}{2}\cdot h\right)} \cdot \frac{1}{\Gamma\left((1+\frac{b}{2})+\frac{a}{2} \log N_E \right)}.
+\end{align*}
+Substituting the respective values of $a$ and $b$ and simplifying produces the two inequalities stated in the theorem.
+\end{proof}
+There are a few things worth pointing out about this result. Firstly, the Gamma factor means that the proven lower bound on the regulator eventually decreases more rapidly than any negative power of the conductor. However, since $\Gamma(s) = O(e^{s\log s})$, we see that $\Gamma\left((1+\frac{b}{2})+\frac{a}{2} \log N \right) = O(N^{c\log\log N})$ for some constant $c$. That is, the exponent in the negative power of $N_E$ coming from the Gamma factor grows, albeit very slowly. \\
+
+Note that (without assuming GRH), the number of bits extra precision needed in Algorithm $\ref{algo:compute_rank}$ required to compensate for the Gamma factor is $\log_2(\Gamma(1.8+0.25\log N_E))$. Even though this quantity grows faster than $\log N_E$, the constant in front of $\log N_E$ inside the Gamma factor is small enough that for all practical purposes the number of bits precision needed to account for the Gamma factor grows linearly with log of the conductor over the range of conductors for which the rank algorithm is practical. For example, when $N_E=350000$ the number of extra bits precision needed to accommodate for the Gamma factor is just 5 (even without assuming GRH). And even for $N_E = 10^{20}$ -- which is about the upper limit for what is practical on modern architecture -- the number of extra bits needed is 30. Either way, the number of bits needed to account for the regulator isn't an issue in any way since the computational bottleneck in the rank algorithm is the $\sqrt{N_E}$ dependence coming from evaluating $L_E(s)$, which grows faster than any power or $\log N_E$. \\
+
+Also note that the first step in the proof -- manual verification for all curves below conductor $35000$ --  isn't strictly necessary; it only improves the constants in the bounds by a small amount. However, it serves to highlight that the power of $N_E$ in the two bounds can theoretically be improved further by exhaustively checking all curves up to a higher conductor bound. If, for example, we believe that $8.914\times 10^{-3}$ is a global minimum point height over all rational elliptic curves, then (assuming GRH) we would instead get
+\begin{equation}
+\Reg_E \ge 8.89 \times 10^{-2} \cdot (N_E)^{-1.55} \cdot \frac{1}{\Gamma(1.25+0.16 \log N_E)}.
+\end{equation}
+Even so, we do {\it not} expect either bound to be anywhere close to optimal; almost certainly more careful analysis could further reduce the negative exponent of $N$ or increase the size of the constant in front of it -- or better yet, eliminate the Gamma factor. In practice, we see the smallest regulators tend to {\it grow} with conductor, further highlighting that the above bound is rather crude. However, the statement in Theorem \ref{thm:regulator_lower_bound} is good enough for our purposes: it will help establish that the central leading coefficient of $\Les$ cannot be exponentially small in $N_E$. \\
 
 We invite the interested reader to improve upon this result, and thus ultimately speed up the runtime of Algorithm \ref{algo:compute_rank}. 

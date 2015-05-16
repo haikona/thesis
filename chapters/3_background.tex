@@ -5,15 +5,20 @@
 
 For the rest of the body of this text we set the following notation:
 \begin{itemize}
-\item $E$ is an elliptic curve over $\QQ$ given by minimal Weierstrass equation $y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6$, where $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$
-\item $D(E)$, $N(E)$ and $r_{al}(E)$  and $r_{an}(E)$ are the discriminant, conductor, algebraic rank and analytic rank of $E$ respectively. For ease of exposition, the dependence on $E$ will often be indicated by a subscript $E$ instead, and when there is no ambiguity it may be dropped entirely. Also, since much of this body of work assumes the validity of the the BSD conjecture, the algebraic and analytic rank of a curve will most often be assumed to be equal, in which case it will just be denoted $r_E$.
-\item $p$ is a (rational) prime number and $q$ is a prime power
-\item $s$ and $z$ are generic complex numbers
+\item $E$ is an elliptic curve over $\QQ$ given by minimal Weierstrass equation
+\begin{equation*}
+y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6,
+\end{equation*}
+ where $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$.
+\item $D(E)$, $N(E)$ and $r_{al}(E)$  and $r_{an}(E)$ are the discriminant, conductor, algebraic rank and analytic rank of $E$ respectively. For ease of exposition, the dependence on $E$ will most often be indicated by a subscript $E$ instead, and when there is no ambiguity it may be dropped entirely. Also, since much of this body of work assumes the validity of the the BSD conjecture, the algebraic and analytic rank of a curve will most often be assumed to be equal, in which case it will just be denoted $r_E$.
+\item $p$ is a (rational) prime number and $q$ is a prime power.
+\item $s$ is the generic complex variable.
 \item $L(E,s)$ and $\Lambda(E,s)$ are the standard and completed $L$-functions attached to $E$ respectively. Again, for ease of exposition we will in general subsume the $E$ into a subscript and write $\Les$ and $\Lams$.
 \item $C(E) = C_E$ is the leading nonzero coefficient of the Taylor series of $\Lambda_E(s)$ about $s=1$.
 \item $\gamma$ will always be used to denote the imaginary parts of nontrivial zeros of an $L$-function.
-\item $\beta(E) = B_E$ is the bite of $E$, defined as $\beta_E = \sum_{\gamma\ne 0} \gamma^{-2}$, where $\gamma$ ranges over the noncentral nontrivial zeros of $\Les$
-\item $\eta$ is the Euler-Mascheroni constant $= 0.5772156649\ldots$ \\
+\item $\beta(E) = \beta_E$ is the bite of $E$, defined as $\beta_E = \sum_{\gamma\ne 0} \gamma^{-2}$, where $\gamma$ ranges over the noncentral nontrivial zeros of $\Les$.
+\item $\eta$ is the Euler-Mascheroni constant $= 0.5772156649\ldots$
+\item $\Gamma(s)$ is the standard Gamma function on $\CC$, and $\digamma(s) = \frac{\Gamma\pr}{\Gamma}(s)$ is its logarithmic derivative.
 \end{itemize}
 
 Furthermore, we define the following values associated to $E$ (in all cases the dependence on $E$ is understood):
@@ -45,12 +50,12 @@ Let $x$ be a positive input, and let $g(x)$ be some positive-valued reference fu
 \begin{itemize}
 \item We say a function $f(x) = O(g(x))$ (read ``$f$ is big-Oh of $g$''), if
 \begin{equation}
-\limsup_{x \to \infty} \left| \frac{f(x)}{g(x)}\right| < \infty
+\limsup_{x \to \infty} \left| \frac{f(x)}{g(x)}\right| < \infty.
 \end{equation}
 That is, $f(x) = O(g(x))$ if the asymptotic growth/decay rate of $f$ is bounded by some multiple of that of $g$.
 \item We say a function $f(x) = \softO(g(x))$ (read ``$f$ is soft-Oh of $g$''), if there is some $m>0$ such that
 \begin{equation}
-\limsup_{x \to \infty} \left| \frac{f(x)}{g(x)\left(\log g(x)\right)^m}\right| < \infty
+\limsup_{x \to \infty} \left| \frac{f(x)}{g(x)\left(\log g(x)\right)^m}\right| < \infty.
 \end{equation}
 That is, $f(x) = \softO(g(x))$ if the asymptotic growth/decay rate of $f$ scales like that of $g$, up to the inclusion of log factors.
 \end{itemize}
@@ -162,7 +167,7 @@ Hasse's theorem states that the number of points on $E$ modulo $p$ can never be 
 \begin{theorem}[Hasse, 1936]
 For all elliptic curves $E/\QQ$ and all primes $p$,
 \begin{equation}
-|a_p(E)| \le \sqrt{p}
+|a_p(E)| \le 2\sqrt{p}.
 \end{equation}
 \end{theorem}
 
@@ -179,7 +184,7 @@ The $L$-function attached to $E$ is a complex analytic function $L_E(s)$, define
 \begin{itemize}
 \item The Euler product of the $L$-function attached to $E$ is given by
 \begin{equation}
-L(E,s) = \prod_{p} \frac{1}{1 - a_p p^{-s} + \epsilon(p)p^{1-2s}}
+L(E,s) = \prod_{p} \frac{1}{1 - a_p p^{-s} + \epsilon(p)p^{1-2s}},
 \end{equation}
 where $\epsilon(p) = 0$ for bad $p$, and $1$ for good $p$.
 \item The Dirichlet series for $L_E(s)$ is given by
@@ -231,7 +236,7 @@ We reproduce the analytic continuation for $\Lams$ explicitly below. Define the 
 \end{equation}
 where all the quantities are as defined previously, and $\Gamma(s,x)$ is the upper incomplete Gamma function on $\CC\cross \RR_{>0}$. The sum converges absolutely for any $s$, so $\lambda_E(s)$ is entire. Then
 \begin{equation}
-\Lambda_E(s) = \lambda_E(s) + w_E \lambda_E(2-s)
+\Lambda_E(s) = \lambda_E(s) + w_E \lambda_E(2-s).
 \end{equation}
 Knapp goes through the proof of this formula in \cite[pp. 270-271]{Kna-1992}. \\
 
@@ -259,12 +264,12 @@ A standard result with $L$-functions of Hecke eigenforms (of elliptic curve $L$-
 \begin{proposition}
 For any $E/\QQ$,
 \begin{equation}
-\Lambda_E(1+s) \ne 0 \;\;\mbox{when}\;\; |\Re(s)| > \frac{1}{2}
+\Lambda_E(1+s) \ne 0 \;\;\mbox{when}\;\; |\Re(s)| > \frac{1}{2}.
 \end{equation}
 \end{proposition}
 This can be proven by showing that the logarithmic derivative of $\Lambda_E(1+s)$ converges absolutely for $\Re(s) > \frac{1}{2}$; see the corollary to Proposition \ref{lem:ldLe_bound} for a proof. The statement can with a bit more work be strengthened to asserting that all zeros are {\it strictly} inside the critical strip). In fact, the Generalized Riemann Hypothesis asserts that
 \begin{equation}
-\Lambda_E(1+s) \ne 0  \;\;\mbox{when}\;\; \Re(s) \neq 0
+\Lambda_E(1+s) \ne 0  \;\;\mbox{when}\;\; \Re(s) \neq 0.
 \end{equation}
 From the functional equation we get that $\Les$ has simple zeros at the nonpositive integers; these are denoted the {\it trivial} zeros of $\Les$. Zeros inside the critical strip are called {\it nontrivial}. The Generalized Riemann Hypothesis (formally stated in Section \ref{sec:conjectures}) asserts that all nontrivial zeros of $\Les$ lie on the critical line $\Re(s)=1$. 
 
@@ -272,14 +277,14 @@ If $\Les$ has a zero at the central point, it may or may not have multiplicity g
 \begin{definition}
 Let $E$ be an elliptic curve over $\Q$ and let $\Les$ be its $L$-series. The {\it analytic rank} of $E$, denoted $r_{an}(E)$ or just $r_{an}$ is the order of vanishing of $L_E(s)$ at the central point $s=1$. That is, if the Taylor series of $\Les$ about $s=1$ is
 \begin{equation}
-L_E(1+s) = a_0 + a_1 s + a_2 s^2 + \cdots
+L_E(1+s) = a_0 + a_1 s + a_2 s^2 + \cdots,
 \end{equation}
 then $a_n = 0$ for $0 \le n < r_{an}$ and $a_{r_{an}} \ne 0$.
 \end{definition}
 We will work a lot with the leading coefficient of the $L$-seres at the central point, so it's worth giving it a name. To this end:
 \begin{definition} \mbox{}
 \begin{itemize}
-\item Let $C\pr_E$ (or just $C\pr$ when $E$ is fixed) be the leading coefficient of $L_E(s)$ at the central point (the constant $a_{r_{an}}$ in the definition above)
+\item Let $C\pr_E$ (or just $C\pr$ when $E$ is fixed) be the leading coefficient of $L_E(s)$ at the central point (the constant $a_{r_{an}}$ in the definition above).
 \item Let $C_E$ (or just $C$ when $E$ is fixed) be the leading coefficient of $\Lams$ at the central point.
 \end{itemize}
 \end{definition}
@@ -289,11 +294,11 @@ We may use Equation \ref{eqn:Lams_analytic_continuation} to produce formulae for
 \begin{proposition} \mbox{}
 \begin{enumerate}
 \item \begin{equation}
-\Lambda_E(1) = \begin{cases} \frac{\sqrt{N_E}}{\pi} \sum_{n=1}^{\infty}\frac{a_n}{n} e^{-\frac{2\pi}{\sqrt{N_E}}\cdot n}, & w_E = 1 \\ 0, & w_E = -1 \end{cases}
+\Lambda_E(1) = \begin{cases} \frac{\sqrt{N_E}}{\pi} \sum_{n=1}^{\infty}\frac{a_n}{n} e^{-\frac{2\pi}{\sqrt{N_E}}\cdot n}, & w_E = 1 \\ 0, & w_E = -1 \end{cases}.
 \end{equation}
 \item When $m$ has the same parity as $E$, the $m$th derivative of $\Lams$ at the central point is given by
 \begin{equation}\label{eqn:central_derivatives}
-\Lambda_E^{(m)}(1) = 2 \sum_{n=1}^\infty a_n \int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N_E}}\right)^m e^{-\frac{2\pi n}{\sqrt{N_E}}\cdot t} \; dt
+\Lambda_E^{(m)}(1) = 2 \sum_{n=1}^\infty a_n \int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N_E}}\right)^m e^{-\frac{2\pi n}{\sqrt{N_E}}\cdot t} \; dt.
 \end{equation}
 When $m$ is opposite in parity to $E$, then $\Lambda_E^{(m)}(1) = 0$.
 \end{enumerate}
@@ -306,7 +311,7 @@ Observe that the series in equation \ref{eqn:Lams_analytic_continuation} converg
 \end{equation*}
 where $f_E$ is the cusp form attached to $E$. Both $t^s e^{-2\pi nt}$ and its derivative w.r.t. $s$ are continuous over the integration interval for any $n$, so by the Leibniz integration rule we may differentiate under the integral sign and evaluate at $s=1$ to get
 \begin{equation}\label{eqn:lambda_derivs}
-\lambda_E^{(m)}(1) = \sqrt{N_E}\cdot \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N_E}}}^{\infty} (\log t)^m e^{-2\pi n t} \; dt
+\lambda_E^{(m)}(1) = \sqrt{N_E}\cdot \sum_{n=1}^\infty a_n \int_{\frac{1}{\sqrt{N_E}}}^{\infty} (\log t)^m e^{-2\pi n t} \; dt.
 \end{equation}
 Equation \ref{eqn:central_derivatives} follows by substituting $t \mapsto \sqrt{N_E} \cdot t$. For $m=0$ the integrals may be evaluated directly: $\int_{1}^{\infty} e^{-\frac{2\pi n t}{\sqrt{N_E}}} \; dt = \frac{\sqrt{N_E}}{2\pi n} e^{-\frac{2\pi n}{\sqrt{N_E}}}$.
 \end{proof}
@@ -322,11 +327,11 @@ Let $N_E,n \in \ZZ_{>0}$, and suppose $m$ is a positive integer such that $m < \
 \begin{proof}
 We split the integral in two, dealing with the intervals $\frac{1}{\sqrt{N_E}}$ to $\sqrt{N_E}$ and $\sqrt{N_E}$ to $\infty$ separately. Now $(\log t)^{m}$ is at most $(\frac{1}{2}\log N_E)^m$ in magnitude on $[\frac{1}{\sqrt{N_E}},\sqrt{N_E}]$, so
 \begin{equation*}
-\left| \int_{\frac{1}{\sqrt{N_E}}}^{\sqrt{N_E}} (\log t)^{m} e^{-2\pi n t} \; dt \right| < \left(\frac{1}{2} \log N_E\right)^m \int_{\frac{1}{\sqrt{N_E}}}^{\sqrt{N_E}} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\left(e^{-\frac{2\pi n}{\sqrt{N_E}}} - e^{-2\pi n\sqrt{N_E}}\right)
+\left| \int_{\frac{1}{\sqrt{N_E}}}^{\sqrt{N_E}} (\log t)^{m} e^{-2\pi n t} \; dt \right| < \left(\frac{1}{2} \log N_E\right)^m \int_{\frac{1}{\sqrt{N_E}}}^{\sqrt{N_E}} e^{-2\pi n t} \; dt < \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\left(e^{-\frac{2\pi n}{\sqrt{N_E}}} - e^{-2\pi n\sqrt{N_E}}\right).
 \end{equation*}
 For the integral on $[\sqrt{N_E},\infty)$, we use integration by parts to get
 \begin{equation*}
-\int_{\sqrt{N_E}}^{\infty} \left(\log t \right)^{m} e^{-2\pi n t} \; dt = \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\cdot e^{-2\pi n\sqrt{N_E}} + \frac{m}{2\pi n} \int_{\sqrt{N_E}}^{\infty} \frac{\left(\log t \right)^{m-1}}{t} e^{-2\pi n t} \; dt 
+\int_{\sqrt{N_E}}^{\infty} \left(\log t \right)^{m} e^{-2\pi n t} \; dt = \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\cdot e^{-2\pi n\sqrt{N_E}} + \frac{m}{2\pi n} \int_{\sqrt{N_E}}^{\infty} \frac{\left(\log t \right)^{m-1}}{t} e^{-2\pi n t} \; dt.
 \end{equation*}
 If $m < \frac{1}{2}\log N_E$, then $\frac{\left(\log t \right)^{m-1}}{t}$ is decreasing for $t > \sqrt{N_E}$, so we have
 \begin{equation*}
@@ -347,11 +352,11 @@ That is, for fixed $m$ the $m$th Taylor coefficient of $\Lams$ is $O\left( N_E(\
 \begin{proof}
 From Lemma \ref{lem:central_deriv_int_bounds} and Equation \ref{eqn:lambda_derivs} we have that
 \begin{equation*}
-\left| \Lambda_E^{(m)}(1)\right| < 2 \sqrt{N_E} \sum_{n=1}^{\infty} |a_n| \cdot \left[\frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\left( e^{-\frac{2\pi n}{\sqrt{N_E}}} + \frac{e^{-2\pi n\sqrt{N_E}}}{2\pi n \sqrt N_E} \right)\right]
+\left| \Lambda_E^{(m)}(1)\right| < 2 \sqrt{N_E} \sum_{n=1}^{\infty} |a_n| \cdot \left[\frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi n}\left( e^{-\frac{2\pi n}{\sqrt{N_E}}} + \frac{e^{-2\pi n\sqrt{N_E}}}{2\pi n \sqrt N_E} \right)\right].
 \end{equation*}
 Using the bound $|a_n(E)| \le n$ for any $E$, we get
 \begin{equation*}
-\left| \Lambda_E^{(m)}(1)\right| < \frac{ \sqrt{N_E}\left(\frac{1}{2} \log N_E\right)^{m}}{\pi} \sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N_E}}} + \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi^2} \sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N_E}}}{n}
+\left| \Lambda_E^{(m)}(1)\right| < \frac{ \sqrt{N_E}\left(\frac{1}{2} \log N_E\right)^{m}}{\pi} \sum_{n=1}^{\infty} e^{-\frac{2\pi n}{\sqrt{N_E}}} + \frac{\left(\frac{1}{2} \log N_E\right)^{m}}{2\pi^2} \sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N_E}}}{n}.
 \end{equation*}
 Now
 \begin{equation*}
@@ -368,15 +373,17 @@ Crucial to this thesis, $L_E(s)$ and its derivatives can be provably computed to
 When $m<\frac{1}{2} \log N_E$, the $m$th derivative of $L_E(s)$ at the central point can be provably computed to $k$ bits precision in $\softO(k\cdot \sqrt{N_E})$ time, where $N_E$ is the conductor of $E$.
 \end{proposition}
 This is proven in full in the PhD thesis of Robert Bradshaw \cite{Bra-2010}. The basic argument is as follows:
-\begin{itemize}
+\begin{enumerate}
 \item Since the two differ by an exponential and a Gamma factor, computing $L_E^{(m)}(1)$ takes the same order of magnitude time as computing $\Lambda_E^{(m)}(1)$. This may be achieved, for example, by the formula given in Equation \ref{eqn:central_derivatives};
 \item The integral $\int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N_E}}\right)^m e^{-\frac{2\pi n}{\sqrt{N_E}}\cdot t} \; dx$ can be computed to $k$ bits precision in time that scales proportional to $k$, is independant of $n$ and subpolynomial in $N_E$;
 \item The number of terms needed in the sum to achieve $k$ bits precision is $O\left( \log(N_E)^m\sqrt{N_E}\right)$;
 \item Computing $a_n$ can be done in time polynomial in $\log n$;
 \item Combining the above, computation time is dominated by evaluating $O( \log(N_E)^m\sqrt{N_E})$ integrals and $a_n$ values. That is, the sum can be evaluated to $k$ bits precision in time scaling with $k \sqrt{N_E}$ times some power of $\log N_E$.
-\end{itemize}
+\end{enumerate}
 We will use the result of Proposition \ref{prop:L_E_time_complexity} directly in the proof of Theorem \ref{thm:main_theorem}. In fact, the $\softO(\sqrt{N_E})$ time needed to evaluate central derivatives of $\Les$ is the computational bottleneck in algorithm \ref{algo:compute_rank}; all other steps scale in time subpolynomial in $N_E$. 
 
+
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Three Big Conjectures}\label{sec:conjectures}
 
@@ -423,26 +430,26 @@ That is, $\Les$ is never zero outside of the {\it critical line} $\Re(s)=1$ and 
 Finally, we will need strong form of the ABC conjecture of Masser and Oesterl\'{e} in order to establish lower bounds on the regulator and real period of $E$.
 \begin{conjecture}[Masser-Oesterl\'{e}] \cite{Mas-1985} \cite{Oes-1988}
 \label{conj:ABC} \\
-Let $(a,b,c)$ be a triple of coprime positive integers such that $a+b = c$, and let $\rad(abc) = \prod_{p | abc} p$ be the product of all primes dividing $a$, $b$ and $c$. Then for any $\epsilon > 0$ there is a constant $K(\epsilon)$ such that
+Let $(a,b,c)$ be a triple of coprime positive integers such that $a+b = c$, and let $\rad(abc) = \prod_{p | abc} p$ be the product of all primes dividing $a$, $b$ and $c$. Then for any $\epsilon > 0$ there is a constant $K_{\epsilon}$ such that
 \begin{equation}
-c < K(\epsilon)\rad(abc)^{1+\epsilon}.
+c < K_{\epsilon}\rad(abc)^{1+\epsilon}.
 \end{equation}
 \end{conjecture}
 
 The ABC conjecture is famous for the large number of other results that it implies. Of these, we will need two that relate to elliptic curves. It is a relatively straightforward exercise to show that the conductor of an elliptic curve divides its minimal discriminant. Szpiro's conjecture, formulated in the 1980s, asserts that the latter cannot be too big in terms of the former:
 \begin{conjecture}[Szpiro] \cite{szp-1987}
 \label{conj:Szpiro} \\
-Let $E$ be an elliptic curve over $\QQ$ with conductor $N_E$ and minimal discriminant $D_E$. Then for any $\epsilon > 0$ there is a constant $K(\epsilon)$ such that
+Let $E$ be an elliptic curve over $\QQ$ with conductor $N_E$ and minimal discriminant $D_E$. Then for any $\epsilon > 0$ there is a constant $K_{\epsilon}$ such that
 \begin{equation}
-|D_E| < K(\epsilon)\cdot (N_E)^{6+\epsilon}.
+|D_E| < K_{\epsilon}\cdot (N_E)^{6+\epsilon}.
 \end{equation}
 \end{conjecture}
 
 We will also invoke a equivalent version of the above conjecture:
 \begin{conjecture}[Modified Szpiro]\label{conj:modified_szpiro}
-Let $c_4$ and $c_6$ be the $c$-invariants of a minimal model of $E/\QQ$, as defined in Section \ref{subsec:notation}. Then for any $\epsilon>0$ there is a constant $K(\epsilon)$ independent of $E$ such that
+Let $c_4$ and $c_6$ be the $c$-invariants of a minimal model of $E/\QQ$, as defined in Section \ref{subsec:notation}. Then for any $\epsilon>0$ there is a constant $K_{\epsilon}$ independent of $E$ such that
 \begin{equation}
-\max\set{|c_4|^3,|c_6|^2} \le K(\epsilon)\cdot (N_E)^{6+\epsilon}
+\max\set{|c_4|^3,|c_6|^2} \le K_{\epsilon}\cdot (N_E)^{6+\epsilon}.
 \end{equation}
 \end{conjecture}
 
@@ -456,9 +463,9 @@ There is a positive constant $M_0$ such that for any elliptic curve $E/\QQ$ with
 \end{conjecture}
 
 %\begin{conjecture}[Hall]\label{conj:Hall}
-%For any $\epsilon > 0$ there is a constant $K(\epsilon)$ such that for any $x,y \in \ZZ$ such that $x^3-y^2 \ne 0$, we have
+%For any $\epsilon > 0$ there is a constant $K_{\epsilon}$ such that for any $x,y \in \ZZ$ such that $x^3-y^2 \ne 0$, we have
 %\begin{equation}
-%|x^3-y^2| \ge K(\epsilon)\cdot |x|^{\frac{1}{2}-\epsilon}.
+%|x^3-y^2| \ge K_{\epsilon}\cdot |x|^{\frac{1}{2}-\epsilon}.
 %\end{equation}
 %That is, if $x^3-y^2 \ne 0$, then it cannot be much smaller in magnitude than about $\sqrt{|x|}$.
 %\end{conjecture}

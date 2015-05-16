@@ -6,6 +6,7 @@ In this section we work toward presenting a method to bound analytic rank from a
 
 Because the aforementioned method relies on sums over the zeros of $\Les$, for this entire section we will assume GRH unless explicitly stated otherwise.
 
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Logarithmic Derivatives}\label{sec:log_derivs}
 
@@ -27,7 +28,7 @@ This follows immediately from the definition of $\Lams = (N_E)^{\frac{s}{2}}(2\p
 
 Note that the digamma function is well-understood and easily computable. It has simple poles at the negative integers, and it has the following infinite sum expansion about $s=1$:
 \begin{equation}\label{eqn:digamma_sum}
-\digamma(1+s) = -\eta + \sum_{k=1}^{\infty} \frac{s}{k(k+s)}
+\digamma(1+s) = -\eta + \sum_{k=1}^{\infty} \frac{s}{k(k+s)}.
 \end{equation}
 This series converges absolutely for any $s$ not equal to a negative integer, and uniformly on bounded sets (excluding the aforementioned negative integers).\\
 
@@ -39,14 +40,14 @@ For $n \in \NN$, let
 b_n(E) := \begin{cases}
 -\left(\alpha_p^e+\beta_p^e\right)\cdot \log(p), & n=p^e\;\;\text{a prime power ($e\ge1$), and $p \nmid N_E$} \\
 -a_p^e \cdot \log(p), & n=p^e\;\;\text{and $p \mid N_E$} \\
-0, & \text{otherwise,} \end{cases}
+0, & \text{otherwise.} \end{cases}
 \end{equation}
 \end{definition}
 
 \begin{lemma}
 The Dirichlet series for $\ldLes$ is given by
 \begin{equation}
-\ldLes = \sum_{n=1}^{\infty} b_n(E)\, n^{-s}
+\ldLes = \sum_{n=1}^{\infty} b_n(E)\, n^{-s},
 \end{equation}
 where the coefficients $b_n(E)$ are defined as in Definition \ref{def:bn}. \\
 \end{lemma}
@@ -63,7 +64,7 @@ The Dirichlet coefficients for $\ldLes$ have a beautiful characterization in ter
 \begin{equation}
 b_n(E) = \begin{cases}
 -\left(p^e + 1 - \#\widetilde{E}(\FF_{p^e})\right)\cdot \log(p), & n=p^e\;\;\text{a prime power,} \\
-0, & \text{otherwise} \end{cases}
+0, & \text{otherwise.} \end{cases}
 \end{equation}
 where $\#\widetilde{E}(\FF_{p^e})$ is the number of points over $\FF_{p^e}$ on the (possibly singular) curve obtained by reducing $E$ modulo $p$.
 \end{proposition}
@@ -80,7 +81,7 @@ For primes of bad reduction, recall
 a_p(E) := \begin{cases}
 +1, & \text{$E$ has split multiplicative reduction at $p$} \\
 -1, & \text{$E$ has non-split multiplicative reduction at $p$} \\
-0, & \text{$E$ has additive reduction at $p$}
+0, & \text{$E$ has additive reduction at $p$.}
 \end{cases}
 \end{equation}
 Let $\Ensfpe$ be the group of nonsingular points on $\widetilde{E}(\FF_{p^e})$. \\
@@ -114,7 +115,7 @@ Let $L_E(s)$ be the $L$-function of $E$. For any $s \in \CC$ with $\sigma := \Re
 \begin{enumerate}
 \item
 \begin{equation}\label{ineq:bounds_on_Les}
-\frac{\zeta(2\sigma-1)^2}{\zeta(\sigma-\frac{1}{2})^2} < \left|L_E(s)\right| < \zeta\left(\sigma-\frac{1}{2}\right)^2
+\frac{\zeta(2\sigma-1)^2}{\zeta(\sigma-\frac{1}{2})^2} < \left|L_E(s)\right| < \zeta\left(\sigma-\frac{1}{2}\right)^2.
 \end{equation}
 \item
 \begin{equation}\label{ineq:bounds_on_Ldles}
@@ -134,11 +135,11 @@ where $\zeta(s)$ is the Riemann Zeta function.
 \begin{proof}
 For the bound on $L_E(s)$, note that we may write the Euler product representation of $L_E(s)$ as
 \begin{equation}
-L_E(s) = \prod_{p \mid N_E} \left(\frac{1}{1-a_p p^{-s}}\right) \cdot \prod_{n \nmid N_E} \left(\frac{1}{1-\alpha_p p^{-s}}\right)\left(\frac{1}{1-\beta_p p^{-s}}\right)
+L_E(s) = \prod_{p \mid N_E} \left(\frac{1}{1-a_p p^{-s}}\right) \cdot \prod_{n \nmid N_E} \left(\frac{1}{1-\alpha_p p^{-s}}\right)\left(\frac{1}{1-\beta_p p^{-s}}\right),
 \end{equation}
 where for good $p$, $\alpha_p$ and $\beta_p$ are the two complex conjugate roots of the characteristic equation of Frobenius at $p$ for $E$. Hasse's Theorem has that these are both precisely $\sqrt{p}$ in magnitude; since $|a_p|\le 1$ for bad $p$ we thus derive the inequality
 \begin{equation}
-\prod_p \left(\frac{1}{1+ \sqrt{p}\cdot p^{-s}}\right)^2 < \left|L_E(s)\right| < \prod_p \left(\frac{1}{1- \sqrt{p}\cdot p^{-s}}\right)^2
+\prod_p \left(\frac{1}{1+ \sqrt{p}\cdot p^{-s}}\right)^2 < \left|L_E(s)\right| < \prod_p \left(\frac{1}{1- \sqrt{p}\cdot p^{-s}}\right)^2.
 \end{equation}
 We then note that 
 \[ \prod_p \left(\frac{1}{1- \sqrt{p}\cdot p^{-s}}\right)^2 = \left(\prod_p \frac{1}{1- p^{-s+\frac{1}{2}}}\right)^2 = \zeta(s-\frac{1}{2})^2,\] 
@@ -171,7 +172,7 @@ If one assumes GRH, $\Lambda_E(1+s)$ has a particularly simple representation as
 \label{prop:logderiv_zero_rep} We have
 \begin{enumerate}
 \item \begin{equation}\label{eqn:Lams_prod}
-\Lambda_E(1+s) = C_E\cdot s^{r_E} \cdot \prod_{\gamma > 0} \left(1+\frac{s^2}{\gamma^2}\right) 
+\Lambda_E(1+s) = C_E\cdot s^{r_E} \cdot \prod_{\gamma > 0} \left(1+\frac{s^2}{\gamma^2}\right),
 \end{equation}
 where $C_E$ is the leading coefficient of $\Les$ at the central point (i.e. that defined in Conjecture \ref{conj:BSD}), and the product is taken over the imaginary parts of all nontrivial zeros of $\Lambda_E(1+s)$ in the upper half plane. The product converges absolutely for any $s$, and uniformly on any bounded set.
 \item \begin{equation}\label{eqn:ldLam_sum}
@@ -206,14 +207,14 @@ Lemma \ref{lem:ldLe_bound} and Equation \ref{eqn:ldLam_sum} may be used to provi
 \begin{corollary}\label{cor:logderiv_rank_bound}
 Let $E$ have analytic rank $r_{an}(E)$ and conductor $N_E$. Then
 \begin{equation}
-r_{an}(E) < 1.6 + \frac{1}{2} \log N_E
+r_{an}(E) < 1.6 + \frac{1}{2} \log N_E.
 \end{equation}
 Moreover, this bound is {\it unconditional}; it does not require GRH to hold.
 \end{corollary}
 \begin{proof}
 We begin by assuming GRH. From Equation \ref{eqn:ldLam_sum} we have the point estimate
 \begin{equation}\label{eqn:r_an_point_estimate}
-r_{an} < \sum_{\gamma} \frac{1}{1+\gamma^2} = \ldLam{2}
+r_{an} < \sum_{\gamma} \frac{1}{1+\gamma^2} = \ldLam{2},
 \end{equation}
 while from Lemma \ref{lem:ldLe_bound} we get
 \begin{equation}
@@ -223,7 +224,7 @@ where $\digamma(s)$ is the digamma function on $\CC$ and $\eta$ is the Euler-Mas
 
 If one does not assume GRH, then we must use a less simplified representation for the logarithmic derivative:
 \begin{equation}
-\ldLam{1+s} = \sum_{\rho} \frac{1}{2}\left( \frac{1}{s-\rho} + \frac{1}{s-\bar{\rho}}\right)
+\ldLam{1+s} = \sum_{\rho} \frac{1}{2}\left( \frac{1}{s-\rho} + \frac{1}{s-\bar{\rho}}\right),
 \end{equation}
 where $\rho$ ranges over the nontrivial zeros of $L_E(1+s)$. However, everything else proceeds as before, and the point estimate given in Equation \ref{eqn:r_an_point_estimate} still holds.
 \end{proof}
@@ -242,7 +243,7 @@ By equation \ref{eqn:ldLam_sum} we have
 \begin{align*}
 \Re\left(\ldLam{1+s}\right) &= \Re\left(\sum_{\gamma} \frac{s}{s^2+\gamma^2}\right) \\
 & = \frac{1}{2} \sum_{\gamma} \Re\left(\frac{1}{s - i \gamma} + \frac{1}{s + i \gamma}\right) \\
-&= \frac{1}{2} \sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} +  \frac{\sigma}{\sigma^2+(\gamma+\tau)^2}
+&= \frac{1}{2} \sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} +  \frac{\sigma}{\sigma^2+(\gamma+\tau)^2}.
 \end{align*}
 However, absolute convergence for $\sum_{\gamma} \frac{s}{s^2+\gamma^2}$ for any $s$ in the right half plane implies absolute convergence for the individual sums $\sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2}$ and $\sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma+\tau)^2}$. We may thus write
 \begin{align*}
@@ -260,7 +261,7 @@ Combining equations \ref{eqn:logderiv_relation}, \ref{eqn:digamma_sum} and \ref{
 \begin{proposition}[GRH]
 Let $E/\QQ$ have conductor $N_E$. Let $\gamma$ range over all nontrivial zeros of $\Les$ with multiplicity, let $\eta$ be the Euler-Mascheroni constant, and let the $c_n = c_n(E)$ be as given by definitions \ref{def:bn} and \ref{def:cn}. Then
 \begin{equation}\label{eqn:exp_form_1}
-\sum_{\gamma} \frac{s}{s^2 + \gamma^2} = \left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right] + \sum_{k=1}^{\infty} \frac{s}{k(s+k)} + \sum_{n=1}^{\infty} c_n n^{-s}
+\sum_{\gamma} \frac{s}{s^2 + \gamma^2} = \left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right] + \sum_{k=1}^{\infty} \frac{s}{k(s+k)} + \sum_{n=1}^{\infty} c_n n^{-s}.
 \end{equation}
 \end{proposition}
 This is the prototypical {\it explicit formula} for elliptic curves: an equation relating a sum over the nontrivial zeros of $\Les$ to a sum over the logarithmic derivative coefficients of $\Les$, plus some easily smooth part that only depends on the curve's conductor. \\
@@ -274,7 +275,7 @@ Suppose that $f(z)$ is an entire function s.t. there exists a $\delta>0$ such th
 \end{equation}
 exists and is such that $\sum_{n=1}^{\infty} c_n \hat{f}\left(\log n\right)$ converges absolutely. Then
 \begin{equation}\label{eqn:exp_form_2}
-\sum_{\gamma} f(\gamma) = \frac{1}{\pi}\left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\hat{f}(0) + \Re\int_{-\infty}^{\infty} \digamma(1+it)f(t) \; dt  + \frac{1}{2} \sum_{n=1}^{\infty} c_n \left( \hat{f}\left(\log n\right) + \hat{f}\left(-\log n\right)\right) \right]
+\sum_{\gamma} f(\gamma) = \frac{1}{\pi}\left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\hat{f}(0) + \Re\int_{-\infty}^{\infty} \digamma(1+it)f(t) \; dt  + \frac{1}{2} \sum_{n=1}^{\infty} c_n \left( \hat{f}\left(\log n\right) + \hat{f}\left(-\log n\right)\right) \right].
 \end{equation}
 \end{lemma}
 A proof can be found in \cite[Theorem 5.12]{IwKo-2004}. Note that Equation \ref{eqn:exp_form_1} can be recovered by setting $f$ to be the Poisson kernel $f_s(x) = \frac{s}{s^2+x^2}$; then $\hat{f_s}(y) = e^{-s|y|}$, so $\hat{f_s}(\log n) = n^{-s}$. \\
@@ -294,7 +295,7 @@ In the above language, $\ldLam{1+s} = \left\langle \frac{s}{s^2+x^2},\varphi_E \
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Estimating Analytic Rank with the sinc$^2$ Sum}
+\section{Estimating Analytic Rank with the sinc$^2$ Sum}\label{sec:sinc_squared_sum}
 
 The Explicit Formula may be used to provide computationally effective upper bounds on the analytic rank of an elliptic curve. The method appears to have first been formulated by Mestre in \cite{Me-1986}, and used by Brumer in \cite{Bru-1992} to prove that, conditional on GRH, the average rank of elliptic curves was at most 2.3. This upper bound was improved to 2 by Heath-Brown in \cite{HeBr-2004}. \\
 
@@ -304,7 +305,7 @@ The analytic method stems from invoking the explicit formula as stated in Lemma 
 \begin{lemma}[GRH]\label{lem:exp_form_nonneg_f_cpt_suppt}
 Let $\gamma$ range over the nontrivial zeros of $L_E(s)$. Let $f$ be a non-negative even real-valued function on $\RR$ such that $f(0)=1$. Suppose further that the Fourier transform $\hat{f}$ of $f$ has compact support, i.e. $\hat{f}(y) = 0$ for $|y|>R$ for some $R>0$. Then for any $\Delta>0$, we have
 \begin{equation}
-\sum_{\gamma} f(\Delta \gamma) = \frac{1}{\Delta \pi}\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt  + \frac{1}{\Delta \pi}\sum_{n<e^{\Delta R}} c_n \hat{f}\left(\frac{\log n}{\Delta}\right)
+\sum_{\gamma} f(\Delta \gamma) = \frac{1}{\Delta \pi}\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt  + \frac{1}{\Delta \pi}\sum_{n<e^{\Delta R}} c_n \hat{f}\left(\frac{\log n}{\Delta}\right).
 \end{equation}
 Moreover, the value of the sum bounds from above the analytic rank of $E$ for any given value of $\Delta$, and sum converges to $r_{\an}(E)$ as $\Delta \to \infty$.
 \end{lemma}
@@ -319,7 +320,7 @@ f(x) = \sinc^2(x) = \left(\frac{\sin(\pi x)}{\pi x}\right)^2
 \end{equation}
 is what is used by Mestre, Brumer, Heath-Brown in the publications above, and by Bober in \cite{Bob-2011}. This is due to its Fourier transform being compactly supported, namely is the triangular function:
 \begin{equation}
-\hat{f}(y) = \int_{-\infty}^{\infty} e^{-i x y}f(x)\; dx =  \begin{cases} 1 - \frac{|y|}{2\pi}, & |y|\le 2\pi \\ 0, & |y| > 2\pi\end{cases}
+\hat{f}(y) = \int_{-\infty}^{\infty} e^{-i x y}f(x)\; dx =  \begin{cases} 1 - \frac{|y|}{2\pi}, & |y|\le 2\pi \\ 0, & |y| > 2\pi.\end{cases}
 \end{equation}
 Moreover, if $f(x) = \sinc^2(x)$, the integral $\Re\int_{-\infty}^{\infty} \digamma(1+it)f(\Delta t) \; dt$ can be computed explicitly in terms of known constants and special functions:
 \begin{equation}
@@ -332,7 +333,7 @@ Combining the above, we get a specialization of Lemma \ref{lem:exp_form_nonneg_f
 Let $\gamma$ range over the nontrivial zeros of $L_E(s)$, and let $\Delta > 0$. Then
 \begin{align}\label{eqn:sincsquared_sum}
 \sum_{\gamma} \sinc^2(\Delta \gamma) = \quad &\frac{1}{\Delta \pi}\left[\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)+ \frac{1}{2\pi \Delta}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\pi \Delta}\right)\right)  \right. \nonumber \\
-&+ \left.\sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)\right]
+&+ \left.\sum_{n<e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)\right].
 \end{align}
 \end{corollary}
 
@@ -352,7 +353,7 @@ A neat conclusion that can immediately be drawn from the finiteness of the $\sin
 \begin{corollary}[GRH]\label{cor:rank_slower_than_log_N}
 For any $\epsilon >0$ there is a constant $K_{\epsilon}>0$ such that for any $E/\QQ$ with conductor $N_E$, we have
 \begin{equation}
-r_E < \epsilon \log N_E + K_{\epsilon}
+r_E < \epsilon \log N_E + K_{\epsilon}.
 \end{equation}
 \end{corollary}
 \begin{proof}
@@ -365,7 +366,7 @@ The above allows us to provide bounds on analytic rank via point estimates by ch
 \begin{corollary}[GRH]\label{cor:better_an_bound}
 Let $E$ have analytic rank $r_E$ and conductor $N_E$. Then
 \begin{equation}
-r_E < 0.32 \log N_E + 0.5
+r_E < 0.32 \log N_E + 0.5.
 \end{equation}
 \end{corollary}
 We leave the details of the proof to the reader as a fun analysis exercise.\\
@@ -391,7 +392,7 @@ Observe that for a fixed choice of $\Delta$, evaluating Equation \ref{eqn:sincsq
 \begin{definition}
 The {\it fidelity} of a sinc$^2$ sum rank estimation with a given choice of $\Delta$, is the average tightness of the rank bound as a function of conductor of the curve in question. Specifically, we may define
 \begin{equation}
-\mbox{fid}(\Delta,N) = \mbox{mean}\set{\left(\sum_{\Lambda_E(1+i\gamma)=0}\sinc^2(\gamma \Delta)\right) - r_E:\;\; N_E = N}
+\mbox{fid}(\Delta,N) = \mbox{mean}\set{\left(\sum_{\Lambda_E(1+i\gamma)=0}\sinc^2(\gamma \Delta)\right) - r_E:\;\; N_E = N},
 \end{equation}
 where $E$ ranges over all rational elliptic curves with conductor $N$. Loosely, we may think of the fidelity of a given choice of $\Delta$ and $N$ to be the expected accuracy of the rank estimate, or the chance that the sum is tight (e.g. within 2 of the true rank, since we are always assuming parity is known) for a curve of conductor $N_E=N$. 
 \end{definition}
@@ -432,7 +433,7 @@ To this end, we define the {\it zero counting function}, which counts the number
 \begin{definition}\label{defn:zero_counting_function}
 For non-negative $t$, let $M_E(t)$ be the modified non-trivial zero counting function for $\Les$, i.e.
 \begin{equation}
-M_E(t) := \sideset{}{\pr}\sum_{|\gamma| \le t} \frac{1}{2}
+M_E(t) := \sideset{}{\pr}\sum_{|\gamma| \le t} \frac{1}{2},
 \end{equation}
 where $\gamma$ runs over the imaginary parts of nontrivial zeros of $L_E(s)$, and the prime indicates that the final $\gamma$ is taken with half weight if $\gamma = t$. The central zero is taken with with multiplicity $r_E$, where $r_E$ is the analytic rank of $E$.
 \end{definition}
@@ -447,7 +448,7 @@ We may obtain bounds on $M_E(t)$ via the shifted completed logarithmic derivativ
 \label{thm:poisson_sum_bound}
 Let $E$ be an elliptic curve with conductor $N_E$ and L-function $L_E(s)$. Let $\sigma > \frac{1}{2}$ and $\tau \in \RR$, and let $\gamma$ range over the imaginary parts of the nontrivial zeros of $L_E(s)$. Then
 \begin{equation}
- \left| \sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right)\right] \right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
+ \left| \sum_\gamma \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} - \left[\log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right)\right] \right| < - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right).
 \end{equation}
 \end{theorem}
 
@@ -455,7 +456,7 @@ Let $E$ be an elliptic curve with conductor $N_E$ and L-function $L_E(s)$. Let $
 Let $s = \sigma + i \tau$. By equations \ref{eqn:logderiv_relation} and \ref{cor:Re_logderiv} we have
 \begin{align*}
 \sum_{\gamma} \frac{\sigma}{\sigma^2+(\gamma-\tau)^2} &= \Re\left(\ldLam{1+s}\right) \\
-&= \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right) + \Re\left(\sum_n c_n n^{-s}\right)
+&= \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \Re\left(\digamma(1+\sigma+i \tau)\right) + \Re\left(\sum_n c_n n^{-s}\right).
 \end{align*}
 But by lemma \ref{lem:ldLe_bound}
 \begin{equation*}
@@ -521,11 +522,11 @@ Finally, recall the definition of the bite of $E$: $\beta_E = \sum_{\gamma \ne 0
 \begin{corollary}[GRH]\label{cor:sum_tail_bound}
 For $\sigma \ge 1$ and $\tau \in \RR$ we have
 \begin{equation}
-\sum_{|\gamma-\tau|>\sigma} \frac{1}{(\gamma-\tau)^2} \le \frac{\log(N_E) + 2\log(|\tau|+1)}{\sigma}
+\sum_{|\gamma-\tau|>\sigma} \frac{1}{(\gamma-\tau)^2} \le \frac{\log(N_E) + 2\log(|\tau|+1)}{\sigma}.
 \end{equation}
 Specifically, when $\tau=0$ we have
 \begin{equation}
-\sum_{|\gamma|>\sigma} \frac{1}{\gamma^2} \le \frac{\log(N_E)}{\sigma}
+\sum_{|\gamma|>\sigma} \frac{1}{\gamma^2} \le \frac{\log(N_E)}{\sigma}.
 \end{equation}
 \end{corollary}
 \begin{proof}
@@ -547,7 +548,7 @@ Corollary \ref{cor:zero_density} gives us explicit bounds on zero density, but t
 \begin{proposition}[GRH]
 We have
 \begin{equation}\label{eqn:M_E(t)}
-M_E(t) = \frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) + \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n)\right]
+M_E(t) = \frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) + \sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n)\right].
 \end{equation}
 Convergence on the RHS is pointwise with respect to $t$ for both sums; for fixed $t$ convergence for the sums over $k$ and $n$ is absolute and conditional respectively (and {\it extremely} slow for the latter).
 \end{proposition}
@@ -555,7 +556,7 @@ Convergence on the RHS is pointwise with respect to $t$ for both sums; for fixed
 \begin{proof}
 Observe we may write $M_E(t) = \sum_{\gamma}f_t(\gamma)$, where
 \begin{equation}
-f_t(x) = \begin{cases} \frac{1}{2}, & |x|<t \\ \frac{1}{4}, & |x| = t \\ 0 & |x|> t \end{cases}
+f_t(x) = \begin{cases} \frac{1}{2}, & |x|<t \\ \frac{1}{4}, & |x| = t \\ 0 & |x|> t. \end{cases}
 \end{equation}
 Informally, we obtain the above formula by integrating both sides of Equation \ref{eqn:exp_form_3} against $f = f_t(x)$, noting that $\hat{f}_t(y) = \frac{\sin(ty)}{y}$. The integrals in the sum over $k$ give us no issue and we may swap the order of the integral and summation signs, since convergence there is absolute. However, some care must be taken when it comes to the sum over $n$, since here convergence is only conditional. 
 
@@ -568,14 +569,14 @@ for some $\epsilon>0$, and invoke the Cauchy Residue Theorem. We may then shrink
 
 Equation \ref{eqn:M_E(t)} may be though of having two components. The first two terms comprise a smooth part that gives the ``expected number of zeros'' up to $t$; and the trigonometric sum over $n$ comprises the discretization information that yields the zeros' exact values relative to their general expected location. We expect the trigonometric sum to be zero infinitely often, and asymptotically it should be positive as often as it is negative. As such the sum should average out to zero and shouldn't contribute any asymptotic bias to the density of zeros on the critical line. We can therefore talk in a real sense of the expected number of zeros up to $t$, which is given by
 \begin{equation}\label{eqn:M_E_smooth_part}
-\frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right)\right]
+\frac{1}{\pi}\left[\left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right) t + \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right)\right].
 \end{equation}
 
 Moreover, the trigonometric sum should grow very slowly with $t$. Put more formally, we have the following:
 \begin{conjecture}[GRH]\label{conj:trig_sum_size}
 GRH implies that
 \begin{equation}
-\sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n) = O(\log t)
+\sum_{n=1}^{\infty} \frac{c_n}{\log n}\cdot \sin(t\log n) = O(\log t).
 \end{equation}
 \end{conjecture}
 
@@ -586,7 +587,7 @@ GRH implies that
     \label{fig:M_E_trig_sum_bounds}
 \end{figure}
 
-We won't say much more about bounding the error term in this thesis (or attemp to prove anything about its magnitude), since it requires more advanced analytical tools not mentioned or developed here. \\
+We won't say much more about bounding the error term in this thesis (or attempt to prove anything about its magnitude), since it requires more advanced analytical tools not mentioned or developed here. \\
 
 \begin{lemma}\label{lem:arctan_sum_size}
 For $t >> 0$, 
@@ -642,20 +643,20 @@ Neglecting the oscilating error term in Equation \ref{eqn:zero_density}, we may 
 \begin{corollary}[GRH]\label{cor:gamma_n_approx_value}
 Let $\gamma_n := \gamma_n(E)$ be the imaginary value of the $n$th nontrivial (and noncentral) zero in the upper half plane of $\Les$ with analytic rank $r_E$. Then
 \begin{equation}\label{approx:gamma_n}
-\gamma_n \sim \frac{2\pi e}{\sqrt{N_E}} \cdot \exp \left(W_0\left[\left(\frac{r_E}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N_E}}{2 e}\right]\right)
+\gamma_n \sim \frac{2\pi e}{\sqrt{N_E}} \cdot \exp \left(W_0\left[\left(\frac{r_E}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N_E}}{2 e}\right]\right),
 \end{equation}
 in the sense that for a given curve, the difference between the above value and the true value of $\gamma_n$ will on average be zero as $n \to \infty$.
 \end{corollary}
 \begin{proof}
 Observe that the $n$th nontrivial noncentral zero has imaginary part $t$ when $M_E(t) = \frac{r}{2} + n - \frac{1}{2}$ (since the final zero is counted with half weight). Hence using Equation \ref{eqn:zero_density} sans the oscillating error term, we solve for $t$ in
 \begin{equation*}
-\frac{t}{\pi} \, \log\left(\frac{t\sqrt{N_E}}{2\pi e}\right) + \frac{1}{4} = \frac{r_E}{2} + n - \frac{1}{2}
+\frac{t}{\pi} \, \log\left(\frac{t\sqrt{N_E}}{2\pi e}\right) + \frac{1}{4} = \frac{r_E}{2} + n - \frac{1}{2}.
 \end{equation*}
 \end{proof}
 
 [Aside: The principle branch of the Lambert $W$-function has the asymptotic expansion $W_0(x) = \log x - \log \log x + o\left(1\right)$, for $n >> 0$ we recover the known asymptotic for the location of the $n$th nontrivial zero: $\gamma_n = O\left(\frac{n}{\log n} \right)$. Better yet, after some manipulation the asymptotic expansion gives us the proportionality constant explicitly:
 \begin{equation}
-\lim_{n \to \infty} \frac{\gamma_n}{\frac{n}{\log n}} = \pi
+\lim_{n \to \infty} \frac{\gamma_n}{\frac{n}{\log n}} = \pi.
 \end{equation}
 Note, however, that the convergence rate is slow: $O(\frac{1}{\log n})$, and the constant in front scales with the log of the conductor of $E$.] \\
 
@@ -663,7 +664,7 @@ A natural question to ask, given that we now have an expected value for $\gamma_
 \begin{definition}
 The dispersion $\delta_n(E) := \delta_n$ of the imaginary part of the $n$th nontrivial zero in the upper half plane is the difference between the true and predicted values of $\gamma_n$, i.e.
 \begin{equation}
-\delta_n = \gamma_n - \frac{2\pi e}{\sqrt{N_E}} \cdot \exp \left(W_0\left[\left(\frac{r_E}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N_E}}{2 e}\right]\right)
+\delta_n = \gamma_n - \frac{2\pi e}{\sqrt{N_E}} \cdot \exp \left(W_0\left[\left(\frac{r_E}{2} +n - \frac{3}{4}\right)\cdot \frac{\sqrt{N_E}}{2 e}\right]\right).
 \end{equation}
 \end{definition}
 
@@ -694,9 +695,9 @@ For the data set used the graph above, the mean was $3.16\times10^{-5}$ (a good 
 
 Finally, we may also go in the other direction and use Equation \ref{eqn:M_E(t)} to make a guess as to the expected imaginary part of the {\it lowest} noncentral nontrivial zero of $\Les$ as a function of increasing conductor $N_E$:
 \begin{proposition}[GRH]
-For a curve $E$ with large conductor $N_E$ and analytic rank $r_E$, the best guess for the imaginary part of the first nontrivial noncentral zero $\gamma_1$ of $\Les$ in the upper half plane is
+For a curve $E$ with large conductor $N_E$ and analytic rank $r_E$, the best guess for the imaginary part of the first nontrivial noncentral zero $\gamma_0$ of $\Les$ in the upper half plane is
 \begin{equation}
-\gamma_1 = \frac{(r_E+1)\pi}{\log(N_E) -2\log(2\pi) -2\eta}
+\gamma_0 = \frac{(r_E+1)\pi}{\log(N_E) -2\log(2\pi) -2\eta}.
 \end{equation}
 \end{proposition}
 The derivation is similar to before. The location of the first nontrivial noncentral zero is given by the value of $t$ for which $M_E(t)$ jumps from $r_E/2$ to $r_E/2+1$; at that point $M_E(t) = r_E/2 + 1/2 = \frac{r_E+1}{2}$, so the expected value of $\gamma_1$ is given by setting equation \ref{eqn:M_E(t)} equal to $\frac{r_E+1}{2}$ and solving for $t$. \\
@@ -731,7 +732,7 @@ Equation \ref{eqn:ldLam_sum} gives us a description of the Laurent expansion of 
 The Laurent expansion of $\ldLam{1+s}$ about zero is given by
 \begin{align}
 \ldLam{1+s} &= \frac{r_E}{s} + \beta_2\cdot s - \beta_4\cdot s^3 + \beta_6\cdot  s^5 - \ldots \\
-& = \frac{r_E}{s} + \sum_{k=1}^{\infty} (-1)^{k-1}\beta_{2k}\cdot s^{2k-1}
+& = \frac{r_E}{s} + \sum_{k=1}^{\infty} (-1)^{k-1}\beta_{2k}\cdot s^{2k-1},
 \end{align}
 and this converges for $|s|<\gamma_0$, where $\gamma_0$ is the imaginary part of the lowest noncentral nontrivial zero of $\Les$ in the upper half plane.
 \end{proposition}
@@ -758,11 +759,11 @@ We note that the digamma function has the following Taylor expansion about $s=1$
 where $\eta$ is the Euler-Mascheroni constant, and $\zeta(s)$ is the Riemann zeta function. \\
 Thus by equation \ref{eqn:logderiv_relation} and Proposition \ref{prop:ldLam_series_at_zero} we have that
 \begin{equation*}
-\ldLe{1+s} = \frac{r_E}{s} - \left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right] + \left[-\zeta(2) + \sum_{\gamma\ne0} \gamma^{-2}\right]\cdot s + O(s^2)
+\ldLe{1+s} = \frac{r_E}{s} - \left[-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right] + \left[-\zeta(2) + \sum_{\gamma\ne0} \gamma^{-2}\right]\cdot s + O(s^2).
 \end{equation*}
 But if $L_E(1+s) = C_E\pr \, s^{r_E}\left[1 + a\cdot s + b\cdot s^2 + O(s^3)\right]$, then careful logarithmic differentiation yields
 \begin{equation*}
-\ldLe{1+s} = \frac{r_E}{s} + a + \left(-a^2 + 2b\right)\cdot s + O(s^2)
+\ldLe{1+s} = \frac{r_E}{s} + a + \left(-a^2 + 2b\right)\cdot s + O(s^2).
 \end{equation*}
 Comparing terms and solving for the relevant quantities produces the desired formulae.
 \end{proof}
@@ -774,20 +775,20 @@ As can be seen from the above, the bite of a curve is of interest is due to it b
 \begin{lemma}[GRH]\label{lem:bite_rank_sigma_inequality}
 Let $\sigma > \frac{1}{2}$. The bite $\beta_E$ and analytic rank $r_E$ of a curve $E$ obey
 \begin{equation}
-\sigma \cdot \beta_E + \frac{r_E}{\sigma} > \frac{1}{2} \log N_E + \digamma(1+\sigma)-\log(2\pi) - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
+\sigma \cdot \beta_E + \frac{r_E}{\sigma} > \frac{1}{2} \log N_E + \digamma(1+\sigma)-\log(2\pi) - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right),
 \end{equation}
 where $\digamma(s) = \frac{\Gamma\pr}{\Gamma}(s)$ is the digamma function on $\CC$, $\zeta(s)$ is the Riemann zeta function and $N_E$ is the conductor of $E$.
 \end{lemma}
 \begin{proof}
 From Equation \ref{thm:poisson_sum_bound}, letting $\tau=0$, we get
 \begin{equation}
-\sum_\gamma \frac{\sigma}{\sigma^2+\gamma^2} > \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \digamma(1+\sigma) - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right)
+\sum_\gamma \frac{\sigma}{\sigma^2+\gamma^2} > \log\left(\frac{\sqrt{N_E}}{2\pi}\right) + \digamma(1+\sigma) - 2\frac{\zeta\pr}{\zeta}\left(\frac{1}{2}+\sigma\right).
 \end{equation}
 But
 \begin{align*}
 \sum_\gamma \frac{\sigma}{\sigma^2+\gamma^2} &= \frac{1}{\sigma} \sum_\gamma \frac{1}{1+\left(\frac{\gamma}{\sigma}\right)^2} \\
 &< \frac{1}{\sigma}\left(r_E + \sum_{\gamma\ne 0} \frac{1}{\left(\frac{\gamma}{\sigma}\right)^2} \right) \\
-&= \frac{r_E}{\sigma} + \sigma\cdot \beta_E,
+&= \frac{r_E}{\sigma} + \sigma\cdot \beta_E.
 \end{align*}
 Combining inequalities completes the proof.
 \end{proof}
@@ -796,9 +797,9 @@ We then have the following:
 \begin{proposition}[GRH]\label{prop:beta_C_r_bounds}
 Let $\beta_E$, $C_E$, $r_E$ and $N_E$ be the bite, completed $L$-function leading central Taylor coefficient, analytic rank and conductor of $E$ respectively. Then
 \begin{align}
-(1+\beta_E)\cdot C_E & < 0.173 \cdot N_E \\
-\beta_E + \log C_E &> \frac{1}{2} \log N_E - 5.229  \\
-\beta_E + r_E & > \frac{1}{2} \log N_E - 4.426
+(1+\beta_E)\cdot C_E & < 0.173 \cdot N_E, \\
+\beta_E + \log C_E &> \frac{1}{2} \log N_E - 5.229,  \\
+\beta_E + r_E & > \frac{1}{2} \log N_E - 4.426.
 \end{align}
 \end{proposition}
 \begin{proof}
@@ -812,9 +813,9 @@ The take-away from Proposition \ref{prop:beta_C_r_bounds} is that the bite and t
 
 We can go even further and establish a lower bound on $\beta_E$ in terms of $N_E$ independent of $C_E$ and $r_E$, at the expense of introducing a non-explicit constant. As asymptotic zero density on the critical line grows proportional to $\log N_E$ (see Theorem \ref{thm:zero_density}), we expect the bite to grow at least like $\log N_E$ too, regardless of the limiting behavior of zeros near the central point. This is indeed the case:
 \begin{proposition}[GRH]
-For all $\epsilon>0$ there is a constant $K(\epsilon)>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
+For all $\epsilon>0$ there is a constant $K_{\epsilon}>0$ such that for all elliptic curves $E$, the bite of $E$ obeys
 \begin{equation}\label{eqn:bite_lower_bound}
-\beta_E = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{1+\epsilon} \log N_E - K(\epsilon).
+\beta_E = \sum_{\gamma\ne 0} \frac{1}{\gamma^2} > \frac{1}{1+\epsilon} \log N_E - K_{\epsilon}.
 \end{equation}
 where $N_E$ is the conductor of $E$.
 \end{proposition}
@@ -843,14 +844,14 @@ Instead, the following result allows us to relate the bite directly to the leadi
 \begin{proposition}[GRH]\label{prop:bite_times_leading_coeff}
 Let $E$ have completed $L$-function $\Lams$ and analytic rank $r_E$. Then
 \begin{equation}
-\beta_E\cdot C_E = \frac{\Lambda_E^{(r_E+2)}(1)}{(r_E+2)!},.
+\beta_E\cdot C_E = \frac{\Lambda_E^{(r_E+2)}(1)}{(r_E+2)!},
 \end{equation}
 where $\beta_E$ is the bite of $E$, and $C_E$ is the leading coefficient of $\Lams$ at the central point.
 \end{proposition}
 \begin{proof}
 From equation \ref{eqn:Lams_prod} we have that 
 \begin{equation}
-\Lambda_E(1+s) = C_E\left(s^{r_E} + \beta_E s^{r_E+2} + O(s^{r_E+4})\right)
+\Lambda_E(1+s) = C_E\left(s^{r_E} + \beta_E s^{r_E+2} + O(s^{r_E+4})\right).
 \end{equation}
 Differentiating $r_E+2$ times and evaluating at $s=0$ achieves the desired result.
 \end{proof}
@@ -859,7 +860,7 @@ It is worth noting explicitly that one cannot hope to be able to compute the bit
 \begin{corollary}[GRH]
 \begin{align}\
 \beta_E \quad &= \frac{1}{(r_E+1)(r_E+2)} \cdot \frac{\Lambda_E^{(r_E+2)}(1)}{\Lambda_E^{(r_E)}(1)} \label{eqn:bite_via_Lams} \\
-&= \frac{2}{(r_E+1)(r_E+2)} \cdot \frac{L_E^{(r_E+2)}(1)}{L_E^{(r_E)}(1)} - \left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)^2 + \frac{\pi^2}{6} \label{eqn:bite_via_L_E}
+&= \frac{2}{(r_E+1)(r_E+2)} \cdot \frac{L_E^{(r_E+2)}(1)}{L_E^{(r_E)}(1)} - \left(-\eta+\log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)^2 + \frac{\pi^2}{6} \label{eqn:bite_via_L_E}.
 \end{align}
 \end{corollary}
 \begin{proof}
@@ -882,13 +883,13 @@ Let $\sum_{\gamma} \sinc^2(\Delta \gamma)$ be the $\sinc^2$ sum for $E$ with par
 \begin{corollary}[GRH]\label{cor:sinc_squared_sum_with_bite}
 The analytic rank of $E$ is the largest integer less than
 \begin{equation}\label{eqn:sinc_squared_sum_with_bite}
-\frac{1}{\sqrt{\beta_E}}\left[\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)+ \frac{1}{2 \sqrt{\beta_E}}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\sqrt{\beta_E}}\right)\right) + \sum_{\log n<2\sqrt{\beta_E}} c_n \cdot \left(1-\frac{\log n}{2\sqrt{\beta_E}}\right)\right]
+\frac{1}{\sqrt{\beta_E}}\left[\left(-\eta + \log\left(\frac{\sqrt{N_E}}{2\pi}\right)\right)+ \frac{1}{2 \sqrt{\beta_E}}\left(\frac{\pi^2}{6} - \Li_2\left(e^{-2\sqrt{\beta_E}}\right)\right) + \sum_{\log n<2\sqrt{\beta_E}} c_n \cdot \left(1-\frac{\log n}{2\sqrt{\beta_E}}\right)\right].
 \end{equation}
 \end{corollary}
 \begin{proof}
 We note that 
 \begin{equation}
-\sum_{\gamma} \sinc^2(\Delta \gamma) = r_E + \sum_{\gamma\ne 0} \sinc^2(\Delta \gamma) <  r_E + \sum_{\gamma\ne 0} \frac{1}{(\pi \Delta \gamma)^2} = r_E + \frac{1}{\pi^2 \Delta^2} \cdot \beta_E
+\sum_{\gamma} \sinc^2(\Delta \gamma) = r_E + \sum_{\gamma\ne 0} \sinc^2(\Delta \gamma) <  r_E + \sum_{\gamma\ne 0} \frac{1}{(\pi \Delta \gamma)^2} = r_E + \frac{1}{\pi^2 \Delta^2} \cdot \beta_E.
 \end{equation}
 So choosing $\Delta = \frac{1}{\pi}\cdot \sqrt{\frac{\beta_E}{n}}$ bounds the sum value from above by $r_E + n$. The corollary follows immediately from Equation \ref{eqn:sincsquared_sum} the case with $n=1$.
 \end{proof}
@@ -898,12 +899,12 @@ This formula comes with one giant caveat that renders it of little use practical
 Using the bite we have an even simpler way to compute the analytic rank of an elliptic curve:
 \begin{theorem}[GRH]\label{thm:compute_rank_by_logderiv}
 \begin{equation}
-r_E = \left\lfloor\frac{1}{\sqrt{\beta_E}}\cdot \ldLam{1+\frac{1}{\sqrt{\beta_E}}}\right\rfloor
+r_E = \left\lfloor\frac{1}{\sqrt{\beta_E}}\cdot \ldLam{1+\frac{1}{\sqrt{\beta_E}}}\right\rfloor.
 \end{equation}
 \end{theorem}
 \begin{proof}
 By Equation \ref{eqn:ldLam_sum}, the Hadamard product expansion of $\ldLam{1+s}$ gives us \begin{equation}
-s\cdot \ldLam{1+s} = s\cdot \prod_{\gamma} \frac{s}{s^2+\gamma^2} = r_E + \prod_{\gamma\ne 0} \frac{1}{1+(\frac{\gamma}{s})^2} < r_E + s^2\cdot \beta_E
+s\cdot \ldLam{1+s} = s\cdot \prod_{\gamma} \frac{s}{s^2+\gamma^2} = r_E + \prod_{\gamma\ne 0} \frac{1}{1+(\frac{\gamma}{s})^2} < r_E + s^2\cdot \beta_E.
 \end{equation}
 So, analogous to the method used in the proof of Theorem \ref{thm:sinc_squared_sum_with_bite}, evaluating at $s = \sqrt{\frac{n}{\beta_E}}$ gives a real value bounded by $r_E+n$.
 \end{proof}
