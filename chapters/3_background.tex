@@ -346,7 +346,7 @@ Let $E$ have conductor $N_E$ and completed $L$-function $\Lams$. Then so long as
 \begin{equation}
 \left| \Lambda_E^{(m)}(1)\right| < \frac{(\frac{1}{2}\log N_E)^m}{2\pi^2}\left(N_E + \frac{1}{e^{2\pi\sqrt{N_E}}-1} \right).
 \end{equation}
-That is, for fixed $m$ the $m$th Taylor coefficient of $\Lams$ is $O\left( N_E(\frac{1}{2}\log N_E)^m\right)$; the second term inside the final parentheses is negligible for $N_E>>1$.
+That is, for fixed $m$ the $m$th Taylor coefficient of $\Lams$ is $O\left( N_E(\frac{1}{2}\log N_E)^m\right)$; the second term inside the final parentheses is negligible for $N_E\gg1$.
 \end{proposition}
 
 \begin{proof}
@@ -365,7 +365,7 @@ Now
 while $\sum_{n=1}^{\infty} \frac{e^{-2\pi n\sqrt{N_E}}}{n} \le \sum_{n=1}^{\infty} e^{-2\pi n\sqrt{N_E}} = \frac{1}{e^{2\pi\sqrt{N_E}}-1}$.
 \end{proof}
 
-Note that for fixed $N_E$, if we allow $m \to \infty$, we actually have that the $m$th derivative can grow like $O\left(\frac{m!!}{(2\pi e)^{m/2}}\right)$, where $m!! = m(m-2)\cdots$ is the double factorial on $m$ i.e. faster than exponentially in $m$. However, this behavior only starts to show when $m>>\log N_E$ -- hence our restriction on the magnitude of $m$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N_E$ (c.f. Corollary \ref{cor:logderiv_rank_bound}), we will never need to consider $\Lambda_E^{(m)}(1)$ for $m> \frac{1}{2}\log N_E$. \\
+Note that for fixed $N_E$, if we allow $m \to \infty$, we actually have that the $m$th derivative can grow like $O\left(\frac{m!!}{(2\pi e)^{m/2}}\right)$, where $m!! = m(m-2)\cdots$ is the double factorial on $m$ i.e. faster than exponentially in $m$. However, this behavior only starts to show when $m\gg\log N_E$ -- hence our restriction on the magnitude of $m$. This will in practice never be an issue: we are primarily interested in the central derivatives in order to establish results about the analytic rank of $E$. Since maximum analytic rank grows more slowly than $\log N_E$ (c.f. Corollary \ref{cor:logderiv_rank_bound}), we will never need to consider $\Lambda_E^{(m)}(1)$ for $m> \frac{1}{2}\log N_E$. \\
 
 
 Crucial to this thesis, $L_E(s)$ and its derivatives can be provably computed to a given precision in time that scales with the square root of the conductor of $E$:

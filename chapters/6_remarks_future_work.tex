@@ -19,9 +19,9 @@ There are several optimizations that should be included in any implementation. T
 
 The results in this thesis revolve around working with the $L$-function attached to a given elliptic curve. By the modularity theorem \cite{BCDT-2011}, each of these is actually the $L$-function attached to a certain weight 2 integral cuspidal eigenform of level $N_E$, where $N_E$ is the conductor of the curve in question. \\
 
-In general we can attach an $L$-function to a cuspidal eigenform of arbitrary weight and level. Many of the results in this dissertation should carry over naturally, allowing us address the issue of computing the analytic rank of higher-weight modular $L$-functions. Specifically, given an analogue of BSD we should be able to show that an algorithm exists to compute the analytic rank of a modular $L$-function that is polynomial-time in the level of that form. An immediate question would then be: how does such a method scale with the {\it weight} of the form? \\
+In general we can attach an $L$-function to a cuspidal eigenform of arbitrary weight and level. Many of the results in this dissertation should carry over naturally, allowing us to address the issue of computing the analytic rank of higher-weight modular $L$-functions. Specifically, given an analogue of BSD we should be able to show that an algorithm exists to compute the analytic rank of a modular $L$-function that is polynomial-time in the level of that form. An immediate question would then be: how does such a method scale with the {\it weight} of the form? \\
 
-Moreover, the $\sinc^2$ zero sum method to bound analytic rank from above should transfer directly to higher weight forms. We hope in future to extend the functionality of the Sage code to accommodate for this -- in fact, the code layout was designed with this extensibility explicitly in mind.
+Moreover, the $\sinc^2$ zero sum method to bound analytic rank from above should transfer directly to higher weight forms. We hope in future to extend the functionality of the Sage code to accommodate for this -- in fact, we designed the code layout with this extensibility explicitly in mind.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{CM curves and families of quadratic twists}
@@ -41,15 +41,15 @@ Some work has already gone into considering the case of quadratic twists of a gi
 
 To establish a lower bound on the regulator of an elliptic curve in terms of its conductor we require an upper bound on the analytic rank. To this end we invoke Corollaries \ref{cor:logderiv_rank_bound} and \ref{cor:better_an_bound}, stating that maximum analytic rank is bounded by a constant times $\log N_E$ plus another explicit constant. \\
 
-However, Corollary \ref{cor:rank_slower_than_log_N} asserts that, contingent on GRH, maximum analytic rank of in fact grows slower than any multiple of $\log N_E$. We would like to use this result more effectively, but the issue lies in making the constant $K_\epsilon$ explicit in terms of the $\epsilon$ chosen. This translates to bounding the $c_n$ sum
+However, Corollary \ref{cor:rank_slower_than_log_N} asserts that, contingent on GRH, the maximum analytic rank of a curve with conductor at most $N$ in fact grows slower than any multiple of $\log N$. We would like to use this result more effectively, but the issue lies in making the constant $K_\epsilon$ explicit in terms of the $\epsilon$ chosen. This translates to bounding the $c_n$ sum
 \begin{equation}
 \sum_{n < e^{2\pi \Delta}} c_n \cdot \left(1-\frac{\log n}{2\pi \Delta}\right)
 \end{equation}
 in terms of the parameter $\Delta$. \\
 
-A natural question we can ask, and hopefully answer, is ``can this be done effectively"? Empirically, the $c_n$ sum is seldom more than a handful of units in magnitude; however, the fact that the sum is carried out over prime powers and large amounts of cancellation due to the changing signs of the $c_n$ coefficients means that this term is tricky to control [note that one can readily obtain a naive explicit bound that is exponential in $\log \Delta$, but this is of limited practical use]. \\
+A natural question we can ask, and hopefully answer, is ``can this be done effectively"? One can readily obtain a naive explicit bound on the $c_n$ sum that is exponential in $\Delta$, but this is clearly of limited practical use. Empirically, even when $\Delta$ is large the $c_n$ sum is seldom more than one or two units in magnitude (because as $\Delta \to \infty$ the $c_n$ sum $\to$ the rank of $E$). The obstruction is that the sum is carried out over prime powers and large amounts of cancellation occurs due to the changing signs of the $c_n$ coefficients, so this this term is tricky to control without more advanced analytic tools.  \\
 
-Nevertheless, if one could show that the sum grows at most polynomial in $\log \Delta$ (regardless of $E$) and obtain explicit constants, then we should be able to show that the lower bound on the regulator of $E$ would go to zero more slowly than any negative power of $N$, as appears to be the case in practice. \\
+Nevertheless, if one could show that the sum grows in magnitude at most polynomial in $\Delta$ (regardless of $E$) and obtain explicit constants, then we should be able to show that the lower bound on the regulator of $E$ would go to zero more slowly than any negative power of $N$, as appears to be the case in practice. \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The regulator}

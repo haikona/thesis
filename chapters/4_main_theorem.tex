@@ -386,45 +386,7 @@ There exists an absolute constant $M_1 >0$ independent of $E$ such that any non-
 \end{corollary}
 The smallest absolute point height found in the aforementioned survey by Elkies is $\hat{h}(P) = 8.914\times 10^{-3}$, achieved by the point $P = (7107,-602054)$ and its negative on the curve with Cremona label {\tt 3990v1}, given by the equation $E: y^2+xy+y=x^3+x^2-125615x+61201397$. (note that the Elkies' table uses a slightly different definition of height, equal to half the value of the height as defined above). One can see in this table that the known points of smallest height all belong to curves with small conductor, so it is perhaps more believable that this is indeed the point of smallest height on any rational elliptic curve -- for such a point is guaranteed to exist, assuming ABC. \\
 
-%Even though the Elkies bound above would seem so small as to be  of limited use in practical applications, we can use it to bound a curve's regulator from below in terms of an inverse power of its conductor. For this we will need the following geometric lemma:
-%\begin{lemma}
-%Let $L$ be a lattice in $\RR^r$ with covolume $V_L$. If $h$ is the minimum nonzero vector length in $L$, then
-%\begin{equation}
-%V _L \ge \frac{\sqrt{r+1}}{2^{r/2}} \cdot h^r
-%\end{equation}
-%\end{lemma}
-%\begin{proof}
-%Let $L \subset \RR^r$ be a lattice with basis $\set{v_1,\ldots,v_r}$ subject to the constraint that the minimum nonzero vector length in $L$ is $h$. We want to minimize the covolume $V_L$ by varying the basis vectors $v_i$. Let $\en{\cdot}$ be the Euclidean norm on $\RR^r$; observe that to minimize $V_L$ we must have
-%\begin{equation*}
-%\en{v_1}=\en{v_2}=\cdots=\en{v_r} = h,
-%\end{equation*}
-%as $V_L$ scales directly with the basis vector lengths. Next, we vary the angles between the basis vectors to minimize covolume, and get
-%\begin{equation*}
-%\en{v_i-v_j}=h \;\;\text{for all $i\ne j$},
-%\end{equation*}
-%i.e. every basis vector is at an angle of $\frac{\pi}{3}$ from every other basis vector. This is because increasing the angle between any 2 basis vectors beyond $\frac{\pi}{3}$ increases the covolume, while reducing the angle between any$v_i$ and $v_j$ beyond $\frac{\pi}{3}$ would then have that $\en{v_i-v_j} <h$, violating the minimum vector length constraint. \\
-%
-%Thus the polytope whose vertices are $\set{v_1,\ldots,v_r}$ along with the zero vector is just the regular $r$-simplex (i.e. the $r$-dimensional generalization of the equilateral triangle/tetrahedron) of side length $h$, whose volume is
-%\begin{equation}
-%\frac{\sqrt{r+1}}{2^{r/2} \, r!} \cdot h^r
-%\end{equation}
-%(see for a proof). Finally, note that the volume of a $r$-parallelotope is $r!$ times the volume of any $r$-simplex that shares $r$ converging edges with it. But the lattice covolume $V_L$ is just the volume of the regular $r$-parallelotope with side lengths all equal to $h$ and all interior angles between edges connected to the origin being equal to $\frac{\pi}{3}$. We thus get
-%\begin{equation}
-%V_L = \frac{\sqrt{r+1}}{2^{r/2}} \cdot h^r
-%\end{equation}
-%This is therefore the minimum covolume an $r$-dimensional lattice can have such that every nonzero vector has length at least $h$, from which the result follows.
-%\end{proof}
-
 Even though the Elkies bound above would seem so small as to be  of limited use in practical applications, we can use it to bound a curve's regulator from below in terms of an inverse power of its conductor. For this we will need the following geometric lemma:
-
-%\begin{lemma}\label{lem:hermite_covolume_bound}
-%Let $L$ be a lattice in $\RR^r$ with covolume $V_L$. If $h$ is the minimum nonzero vector length in $L$, then
-%\begin{equation}
-%V _L \ge \left(\frac{3}{4}\right)^{\frac{r(r-1)}{2}} h^r.
-%\end{equation}
-%\end{lemma}
-%A proof can be found in Lang's Survey of Diophantine Geometry \cite[Chapter 5, Corollary 7.8]{Lang-1983}. With this we then have the following:
-
 \begin{lemma}\label{lem:covolume_lower_bound}
 Let $L$ be a lattice in $\RR^r$ with covolume $V_L$. If $h$ is the minimum nonzero vector length in $L$, then
 \begin{equation}
@@ -433,9 +395,9 @@ V _L \ge \left(\frac{\sqrt{\pi}}{2}\cdot h\right)^{r} \cdot \frac{1}{\Gamma(1+\f
 where $\Gamma(s)$ is the usual Gamma function on $\CC$.
 \end{lemma}
 \begin{proof}
-Recall Minkowski's Theorem: Let $L$ be a lattice in $\RR^r$ with covolume $V_L$, and let $S$ be convex symmetric subset of $\RR^r$ with volume $\Vol(S)$. If $\Vol(S)>2^r V_L$, then $S$ contains a nonzero element of $L$ -- see \cite[p. 80]{st-2012} for a proof. \\
+Recall Minkowski's Theorem: Let $L$ be a lattice in $\RR^r$ with covolume $V_L$, and let $S$ be a convex symmetric subset of $\RR^r$ with volume $\Vol(S)$. If $\Vol(S)>2^r \cdot V_L$, then $S$ contains a nonzero element of $L$ -- see \cite[p. 80]{st-2012} for a proof. \\
 
-So let $S = B(0,h)$, i.e. the open ball of radius $h$ centered at the origin, where $h$ is minimum nonzero vector length in $L$. By construction $S$ contains no nonzero lattice elements, so by Minkowski's theorem we must have that
+So let $S = B(0,h)$, i.e. the open ball of radius $h$ centered at the origin, where $h$ is the minimum nonzero vector length in $L$. By construction $S$ contains no nonzero lattice elements, so by Minkowski's theorem we must have that
 \begin{equation}
 \Vol(S) \le 2^r V_L.
 \end{equation}
@@ -458,7 +420,7 @@ If one further assumes GRH, then one has the improved bound
 \end{equation}
 \end{theorem}
 \begin{proof}
-For curves of conductor $\le 350000$, we consulted Cremona's tables and verified numerically that the above statements. Thus without loss of generality we may assume $D_E > N_E > 350000$. Thus for any point $P \in E(\QQ)$, by Conjecture \ref{conj:Lang} and the Elkies' bound in Equation \ref{eqn:Elkies_height_lower_bound} we have that
+For curves of conductor $\le 350000$, we consulted Cremona's tables and verified numerically that the above statements. Thus without loss of generality we may assume $D_E \ge N_E > 350000$. Hence for any point $P \in E(\QQ)$, by Conjecture \ref{conj:Lang} and the Elkies' bound in Equation \ref{eqn:Elkies_height_lower_bound} we have that
 \begin{equation}
 \hat{h}(P) \ge 3.9479\times 10^{-5} \cdot \log |D_E| \ge 6\times10^{-11} \cdot \log(350000) = 5.0397 \times 10^{-4}.
 \end{equation}
@@ -475,6 +437,8 @@ where by Corollary \ref{cor:logderiv_rank_bound} we may take $a=0.5, b=1.6$ if w
 \Reg_E &\ge \left(\frac{\sqrt{\pi}}{2}\cdot h\right)^{a \log N_E + b} \cdot \frac{1}{\Gamma\left(1+\frac{a \log N_E + b}{2}\right)} \\
 &= \left(\frac{\sqrt{\pi}}{2}\cdot h\right)^{b} \cdot \left(N_E\right)^{a\log \left(\frac{\sqrt{\pi}}{2}\cdot h\right)} \cdot \frac{1}{\Gamma\left((1+\frac{b}{2})+\frac{a}{2} \log N_E \right)}.
 \end{align*}
+[Note that replacing $r$ with $a\log N_E +b$ inside the Gamma factor is only valid in the region where the Gamma function is monotonically increasing, i.e. for $a\log N_E + b \ge 1$. However, we are in this case in both the non-GRH and GRH versions of the proof, since we are assuming $N_E > 350000$.] \\
+
 Substituting the respective values of $a$ and $b$ and simplifying produces the two inequalities stated in the theorem.
 \end{proof}
 There are a few things worth pointing out about this result. Firstly, the Gamma factor means that the proven lower bound on the regulator eventually decreases more rapidly than any negative power of the conductor. However, since $\Gamma(s) = O(e^{s\log s})$, we see that $\Gamma\left((1+\frac{b}{2})+\frac{a}{2} \log N \right) = O(N^{c\log\log N})$ for some constant $c$. That is, the exponent in the negative power of $N_E$ coming from the Gamma factor grows, albeit very slowly. \\

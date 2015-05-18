@@ -590,7 +590,7 @@ GRH implies that
 We won't say much more about bounding the error term in this thesis (or attempt to prove anything about its magnitude), since it requires more advanced analytical tools not mentioned or developed here. \\
 
 \begin{lemma}\label{lem:arctan_sum_size}
-For $t >> 0$, 
+For $t \gg 0$, 
 \begin{equation}
 \sum_{k=1}^{\infty} \left(\frac{t}{k} - \arctan\left(\frac{t}{k}\right)\right) = t\log t + (\eta-1)t + \frac{\pi}{4} + O\left(\frac{1}{t}\right),
 \end{equation}
@@ -615,7 +615,7 @@ The result follows.
 Conjecture \ref{conj:trig_sum_size} and lemma \ref{lem:arctan_sum_size} combine to give us a precise asymptotic statement on the distribution of zeros up to $t$, in the same vein as von Mangoldt's asymptotic formula for the number of zeros up to $t$ for $\zeta$:
 
 \begin{theorem}[GRH]\label{thm:zero_density}
-Let $E$ have conductor $N_E$. Then for $t>>0$ we have
+Let $E$ have conductor $N_E$. Then for $t\gg0$ we have
 \begin{equation}\label{eqn:zero_density}
 M_E(t) = \frac{t}{\pi} \, \log\left(\frac{t\sqrt{N_E}}{2\pi e}\right) + \frac{1}{4} + O(\log t),
 \end{equation}
@@ -630,7 +630,7 @@ where the error term is positive as often as it negative and contributes no net 
 \end{figure}
 
 \begin{corollary}[GRH]
-For $t>>0$, the number of zeros on the critical line in a unit interval
+For $t\gg0$, the number of zeros on the critical line in a unit interval
 \begin{equation}
 M_E(t)-M_E(t-1) = \frac{1}{\pi}\log\left(\frac{t\sqrt{N_E}}{2\pi}\right) + O(\log t),
 \end{equation}
@@ -654,7 +654,7 @@ Observe that the $n$th nontrivial noncentral zero has imaginary part $t$ when $M
 \end{equation*}
 \end{proof}
 
-[Aside: The principle branch of the Lambert $W$-function has the asymptotic expansion $W_0(x) = \log x - \log \log x + o\left(1\right)$, for $n >> 0$ we recover the known asymptotic for the location of the $n$th nontrivial zero: $\gamma_n = O\left(\frac{n}{\log n} \right)$. Better yet, after some manipulation the asymptotic expansion gives us the proportionality constant explicitly:
+[Aside: The principle branch of the Lambert $W$-function has the asymptotic expansion $W_0(x) = \log x - \log \log x + o\left(1\right)$, for $n \gg 0$ we recover the known asymptotic for the location of the $n$th nontrivial zero: $\gamma_n = O\left(\frac{n}{\log n} \right)$. Better yet, after some manipulation the asymptotic expansion gives us the proportionality constant explicitly:
 \begin{equation}
 \lim_{n \to \infty} \frac{\gamma_n}{\frac{n}{\log n}} = \pi.
 \end{equation}
@@ -866,7 +866,7 @@ It is worth noting explicitly that one cannot hope to be able to compute the bit
 \begin{proof}
 The first line follows immediately from Proposition \ref{prop:bite_times_leading_coeff} and the fact that $C_E = \frac{\Lambda^{(r_E)}(1)}{r_E!}$. The second line comes from the formula for the $(r_E+2)$th Taylor coefficient of $L_E$ at the central point derived in Corollary \ref{cor:ldLe_expansion}.
 \end{proof}
-We can therefore compute the bite of a curve {\it without} having to compute the locations of the zeros themselves. Moreover, Theorem \ref{thm:main_theorem} implies that the bite can be provably computed to $k$ bits precision in $\softO(k\cdot \sqrt{N_E})$ time (assuming standard conjectures). This may be done, for example, via Tim Dokchitser's {\tt computel} PARI code, which can compute the Taylor series expansion of a motivic $L$-function at a given point. [Important side-note: the aforementioned package uses approximations that have not (yet) been shown to be provably correct; however, one one could certainly write code to compute in square root time the central Taylor expansion of $\Les$ via the work of Bradshaw in \cite{Bra-2010}, which {\it does} produce provably correct $L$-function values.] \\
+We can therefore compute the bite of a curve {\it without} having to compute the locations of the zeros themselves. Moreover, Theorem \ref{thm:main_theorem} implies that the bite can be provably computed to $k$ bits precision in $\softO(k\cdot \sqrt{N_E})$ time (assuming standard conjectures). This may be done, for example, via Tim Dokchitser's {\tt computel} PARI code, which can compute the Taylor series expansion of a motivic $L$-function at a given point. [Important side-note: the aforementioned package uses approximations that have not (yet) been shown to be provably correct; however, one could certainly write code to compute in square root time the central Taylor expansion of $\Les$ via the work of Bradshaw in \cite{Bra-2010}, which {\it does} produce provably correct $L$-function values.] \\
 
 \begin{figure}[!h]
     \centering
