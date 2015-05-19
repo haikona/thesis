@@ -10,7 +10,7 @@ For the rest of the body of this text we set the following notation:
 y^2 + a_1 xy + a_3 y^2 = x^3 + a_2 x^2 + a_4 x + a_6,
 \end{equation*}
  where $a_1, a_3 \in \set{0,1}$, $a_2 \in \set{-1,0,1}$ and $a_4,a_6 \in \ZZ$.
-\item $D(E)$, $N(E)$ and $r_{al}(E)$  and $r_{an}(E)$ are the discriminant, conductor, algebraic rank and analytic rank of $E$ respectively. For ease of exposition, the dependence on $E$ will most often be indicated by a subscript $E$ instead, and when there is no ambiguity it may be dropped entirely. Also, since much of this body of work assumes the validity of the the BSD conjecture, the algebraic and analytic rank of a curve will most often be assumed to be equal, in which case it will just be denoted $r_E$.
+\item $D(E)$, $N(E)$ and $r_{al}(E)$  and $r_{an}(E)$ are the discriminant, conductor, algebraic rank and analytic rank of $E$ respectively. For ease of exposition, the dependence on $E$ will most often be indicated by a subscript $E$ instead, and when there is no ambiguity it may be dropped entirely. Also, since much of this body of work assumes the validity of the BSD conjecture, the algebraic and analytic rank of a curve will most often be assumed to be equal, in which case it will just be denoted $r_E$.
 \item $p$ is a (rational) prime number and $q$ is a prime power.
 \item $s$ is the generic complex variable.
 \item $L(E,s)$ and $\Lambda(E,s)$ are the standard and completed $L$-functions attached to $E$ respectively. Again, for ease of exposition we will in general subsume the $E$ into a subscript and write $\Les$ and $\Lams$.
@@ -111,7 +111,7 @@ Singular reduced curves may be thought of as finite-field analogues of singular 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1.0\textwidth]{graphics/singular_cubics.png}
-    \caption{An example of two singular cubics over the rationals. The singular point for both curves is at the origin; for the the left curve the singular point is a {\it cusp}, and for the right curve it is a {\it node}.}
+    \caption{An example of two singular cubics over the rationals. The singular point for both curves is at the origin; for the left curve the singular point is a {\it cusp}, and for the right curve it is a {\it node}.}
     \label{fig:singular_cubics}
 \end{figure}
 
@@ -282,7 +282,7 @@ L_E(1+s) = a_0 + a_1 s + a_2 s^2 + \cdots,
 \end{equation}
 then $a_n = 0$ for $0 \le n < r_{an}$ and $a_{r_{an}} \ne 0$.
 \end{definition}
-We will work a lot with the leading coefficient of the $L$-seres at the central point, so it's worth giving it a name. To this end:
+We will work a lot with the leading coefficient of the $L$-series at the central point, so it's worth giving it a name. To this end:
 \begin{definition} \mbox{}
 \begin{itemize}
 \item Let $C\pr_E$ (or just $C\pr$ when $E$ is fixed) be the leading coefficient of $L_E(s)$ at the central point (the constant $a_{r_{an}}$ in the definition above).
@@ -376,7 +376,7 @@ When $m<\frac{1}{2} \log N_E$, the $m$th derivative of $L_E(s)$ at the central p
 This is proven in full in the PhD thesis of Robert Bradshaw \cite{Bra-2010}. The basic argument is as follows:
 \begin{enumerate}
 \item Since the two differ by an exponential and a Gamma factor, computing $L_E^{(m)}(1)$ takes the same order of magnitude time as computing $\Lambda_E^{(m)}(1)$. This may be achieved, for example, by the formula given in Equation \ref{eqn:central_derivatives};
-\item The integral $\int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N_E}}\right)^m e^{-\frac{2\pi n}{\sqrt{N_E}}\cdot t} \; dx$ can be computed to $k$ bits precision in time that scales proportional to $k$, is independant of $n$ and subpolynomial in $N_E$;
+\item The integral $\int_{1}^{\infty} \left(\log \frac{t}{\sqrt{N_E}}\right)^m e^{-\frac{2\pi n}{\sqrt{N_E}}\cdot t} \; dx$ can be computed to $k$ bits precision in time that scales proportional to $k$, is independent of $n$ and subpolynomial in $N_E$;
 \item The number of terms needed in the sum to achieve $k$ bits precision is $O\left( \log(N_E)^m\sqrt{N_E}\right)$;
 \item Computing $a_n$ can be done in time polynomial in $\log n$;
 \item Combining the above, computation time is dominated by evaluating $O( \log(N_E)^m\sqrt{N_E})$ integrals and $a_n$ values. That is, the sum can be evaluated to $k$ bits precision in time scaling with $k \sqrt{N_E}$ times some power of $\log N_E$.

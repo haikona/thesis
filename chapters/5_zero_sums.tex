@@ -32,7 +32,7 @@ Note that the digamma function is well-understood and easily computable. It has 
 \end{equation}
 This series converges absolutely for any $s$ not equal to a negative integer, and uniformly on bounded sets (excluding the aforementioned negative integers).\\
 
-What is perhaps surprising, however, is that $\ldLe{s}$ can be represented by an elegant Dirichlet series. Recall that for $p \nmid N_E$, the characteristic polynomial of Frobenius w.r.t.~$f$ at $p$ is $x^2 - a_p x + p^2$, where $a_p$ is as given by Definition \ref{def:a_p}. Let this quadratic polynomial split as $(x-\alpha_p)(x-\beta_p)$ in $\CC$, where for $\alpha_p$ and $\beta_p$ the dependance on $E$ is understood. \\
+What is perhaps surprising, however, is that $\ldLe{s}$ can be represented by an elegant Dirichlet series. Recall that for $p \nmid N_E$, the characteristic polynomial of Frobenius w.r.t.~$f$ at $p$ is $x^2 - a_p x + p^2$, where $a_p$ is as given by Definition \ref{def:a_p}. Let this quadratic polynomial split as $(x-\alpha_p)(x-\beta_p)$ in $\CC$, where for $\alpha_p$ and $\beta_p$ the dependence on $E$ is understood. \\
 
 \begin{definition}\label{def:bn}
 For $n \in \NN$, let
@@ -639,7 +639,7 @@ where again the error term contributes no net bias.
 
 That is, zero density on the critical line grows like $\frac{1}{2}\log N_E + \log t$, where $N_E$ is the conductor of $E$ and $t$ the distance from the real axis. \\
 
-Neglecting the oscilating error term in Equation \ref{eqn:zero_density}, we may solve for $t$ in terms of the Lambert $W$-function to obtain an explicit formula for the expected value of the imaginary part of the $n$th zero on the critical line. Recall the definition of the Lambert $W$-function: if $y = x e^x$, then $x = W(y)$. $W$ is a multiple-valued function; we make use of the principle branch $W_0$ below:
+Neglecting the oscillating error term in Equation \ref{eqn:zero_density}, we may solve for $t$ in terms of the Lambert $W$-function to obtain an explicit formula for the expected value of the imaginary part of the $n$th zero on the critical line. Recall the definition of the Lambert $W$-function: if $y = x e^x$, then $x = W(y)$. $W$ is a multiple-valued function; we make use of the principle branch $W_0$ below:
 \begin{corollary}[GRH]\label{cor:gamma_n_approx_value}
 Let $\gamma_n := \gamma_n(E)$ be the imaginary value of the $n$th nontrivial (and noncentral) zero in the upper half plane of $\Les$ with analytic rank $r_E$. Then
 \begin{equation}\label{approx:gamma_n}
@@ -716,7 +716,7 @@ The {\it bite} of $\Les$ is
 \end{equation}
 where the sum runs over the imaginary parts of all {\it noncentral} nontrivial zeros of $\Les$.
 \end{definition}
-This quantity is of interest for a variety of reasons: it controls the rate of convergence in many explicit formula-type sums for $\Les$, and is intimately linked with the analytic rank and leading central Taylor coefficient for the $L$-series of $E$. Again, the explicit dependence on $E$ may be left as understood if the choice of $E$ is unambiguous, or we may subsume the dependance on $E$ into a subscript and write $\beta_E$. In this final section we establish some bounds involving the bite, show how one can compute it efficiently without having to compute the locations of the zeros of $\Les$ explicitly, and give some zero sum examples relevant to this thesis where the bite comes into play. \\
+This quantity is of interest for a variety of reasons: it controls the rate of convergence in many explicit formula-type sums for $\Les$, and is intimately linked with the analytic rank and leading central Taylor coefficient for the $L$-series of $E$. Again, the explicit dependence on $E$ may be left as understood if the choice of $E$ is unambiguous, or we may subsume the dependence on $E$ into a subscript and write $\beta_E$. In this final section we establish some bounds involving the bite, show how one can compute it efficiently without having to compute the locations of the zeros of $\Les$ explicitly, and give some zero sum examples relevant to this thesis where the bite comes into play. \\
 
 Since sums of inverse higher powers of zeros also crop up, we generalize the notion of bite as follows:
 \begin{definition}
